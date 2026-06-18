@@ -1,0 +1,29 @@
+{
+  "name": "spine-json-mcp",
+  "version": "0.1.0",
+  "description": "用于受控读取、校验和修改 Spine 4.1.24 JSON 动画时间线的 MCP 工具。",
+  "type": "module",
+  "bin": {
+    "spine-json-mcp": "dist/server.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsx --test test/*.test.ts",
+    "preview": "node dist/previewServer.js",
+    "observer": "powershell -ExecutionPolicy Bypass -File scripts/start-observer.ps1",
+    "observer:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop-observer.ps1"
+  },
+  "dependencies": {
+    "@esotericsoftware/spine-core": "4.1.56",
+    "@esotericsoftware/spine-player": "^4.1.56",
+    "@modelcontextprotocol/sdk": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

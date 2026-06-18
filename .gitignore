@@ -1,0 +1,8 @@
+node_modules/
+dist/
+test-output/
+backups/
+.spine-mcp/
+bin/
+obj/
+*.log
