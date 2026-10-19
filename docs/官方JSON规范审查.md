@@ -34,7 +34,7 @@
 | bone `rotate` | `time`、旋转角度、`curve` | `time`、`value`、`curve` | `/animations/*/bones/*/rotate` | 官方在线文档中旋转角度字段可能写作 `angle`；当前 4.1.24 样本导出使用 `value`，因此 V1 写入 `value`。 |
 | bone `translate` | `time`、`x`、`y`、`curve` | 同官方字段 | `/animations/*/bones/*/translate` | `x/y` 至少写入一个。 |
 | bone `scale` | `time`、`x`、`y`、`curve` | 同官方字段 | `/animations/*/bones/*/scale` | 不修改 setup pose 中的 `scaleX/scaleY`。 |
-| bone `shear` | `time`、`x`、`y`、`curve` | 同官方字段 | `/animations/*/bones/*/shear` | 不计算世界坐标。 |
+| bone `shear` | `time`、`x`、`y`、`curve` | 同官方字段 | `/animations/*/bones/*/shear` | 底层只写局部值；世界坐标由 runtime 层计算。 |
 | slot `attachment` | `time`、`name` | 同官方字段 | `/animations/*/slots/*/attachment` | 缺少 `name` 表示隐藏附件；有 `name` 时必须能在 skins 中找到。 |
 | `drawOrder` / `draworder` | `time`、`offsets` | 同官方字段 | `/animations/*/{drawOrder,draworder}` | `offsets` 元素必须是 `{ slot, offset }`，slot 必须存在。 |
 | 通用 `curve` | 当前关键帧到下一关键帧的插值 | `"stepped"` 或数字数组 | 各可写 timeline 关键帧 | 最后一帧不能包含 `curve`，因为最后一帧没有下一关键帧。 |
@@ -60,3 +60,15 @@
 - Agent 在解释写入结果时，应优先引用 `officialSpecValidation`、`operationValidation` 和 `summary`。
 - 对复杂自然语言请求，Agent 应先形成 MCP 调用计划，说明目标动画、目标 timeline、预期 JSON path 和是否需要查询关键帧表。
 - 当前不支持的结构编辑必须明确拒绝，不应通过直接改 JSON 规避。
+
+spine_set_curve 只修改已有骨骼关键帧曲线，复用既有官方规范、结构审查、hash、备份和 diff 白名单；最后一帧非空曲线会被拒绝。
+
+## 解剖持杖手、身体视角及切片遮挡检查
+
+参考 observation.actionSemantics 支持 `version:1 / weaponHand:left|right / identityStatus:confirmed / anatomicalBasis / bodyView / bodyViewBasis / occlusion`。身体视角可为 `frontThreeQuarter`、`side`、`backThreeQuarter`，参考有不确定性时可用 `sideOrBackThreeQuarter`。遮挡项保存 `{front,back,basis}`，语义部位可为 `body` 或已有肢体线段编号（如 `rightArm.1`）。缺少必要遮挡关系返回无法验证，不默认为通过。
+
+`spine_calibrate_visual_rig` 增加 `anatomicalSides` 与 `viewProfiles`，均绑定确认指纹。解剖左右映射保持跨阶段稳定；视角配置保存实际附件状态、躯干插槽和看图校准依据。姿态 `frame.action.driver` 明确实际目标驱动手（如 `rightHand`），骨架比较独立输出 `action.weaponHand`、`action.bodyView`、`action.occlusion.*`。身体视角从 runtime 实际附件配置匹配已确认 profile；未经校准不能只传一个“背面”标签通过。遮挡用 runtime 绘制顺序回读。Agent 判断仍参与视角配置校准，这不是自动像素识别或数学上的视觉保证。
+
+`frame.presentation` 支持受控 `attachments` 和完整 `drawOrder` 插槽排列，沿用 `spine_adjust_pose`、`spine_solve_pose` 和 v2 motion。显示状态在阶段边界离散切换，导出为已有 attachment/drawOrder 时间线；不改 setup、绑定、mesh、atlas 或 PNG。现有后发、面部显隐及背包层序可构造转身诊断候选，但不代表有完整三维转身模型。需要逐姿态查看轮廓并重新校准，不能自动批准隐藏五官后的身体视角。
+
+中文验证：右手参考对应左手驱动必须失败；正面配置不能覆盖侧背参考；缺失视角/遮挡信息必须无法验证；同一附件状态不能标记成两种不同视角；遮挡层序反转必须失败。切片状态修改使配置匹配和旧审查失效。官方 runtime 回读 attachment/drawOrder 的阶段切换必须与单姿态一致。

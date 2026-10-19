@@ -1,5 +1,6 @@
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { activeProjectId } from './workspaceTools.js';
 import { AtlasAttachmentLoader, FakeTexture, SkeletonJson, TextureAtlas } from "@esotericsoftware/spine-core";
 import { getAnimations, readSpineDocument, resolveWorkspacePath, validateSpineJson, type ToolContext } from "./spineJson.js";
 
@@ -18,6 +19,7 @@ export const PREVIEW_DEFAULTS = {
 };
 
 export interface PreviewUrlOptions {
+  projectId?: string;
   filePath?: string;
   atlasPath?: string;
   animation?: string;
@@ -38,6 +40,7 @@ export interface RuntimeValidationOptions {
 }
 
 export interface ValidationPipelineOptions extends RuntimeValidationOptions {
+  preview?: boolean;
   baseUrl?: string;
   speed?: number;
   premultipliedAlpha?: boolean;
@@ -67,6 +70,8 @@ export function getPreviewConfig(baseUrl?: string) {
 export function getPreviewUrl(options: PreviewUrlOptions = {}) {
   const base = normalizeBaseUrl(options.baseUrl);
   const url = new URL(base);
+  const projectId = options.projectId ?? activeProjectId();
+  if (projectId) url.searchParams.set('projectId', projectId);
   url.searchParams.set("json", options.filePath ?? PREVIEW_DEFAULTS.defaultJson);
   url.searchParams.set("atlas", options.atlasPath ?? PREVIEW_DEFAULTS.defaultAtlas);
   url.searchParams.set("animation", options.animation ?? PREVIEW_DEFAULTS.defaultAnimation);
@@ -296,6 +301,12 @@ export async function runValidationPipeline(
       note: "生成浏览器预览链接，不写入 JSON。",
     },
   ];
+  let visualPreview: any = null;
+  if (checks.every(check => check.ok) && args.preview !== false) {
+    try { visualPreview = await (await import('./previewRenderTools.js')).renderContactSheet({ filePath, atlasPath, animation, skin: args.skin, frames: 8 }, context); }
+    catch (e) { visualPreview = { ok: false, error: String(e) }; }
+    checks.push({ name: 'spine_render_contact_sheet', ok: visualPreview.ok, note: '固定相机 PNG 联系图供 Agent 视觉检查；不修改角色 JSON。' });
+  }
   const ok = checks.every((check) => check.ok);
 
   return {
@@ -309,6 +320,7 @@ export async function runValidationPipeline(
     checks,
     structureValidation,
     runtimeValidation,
+    visualPreview,
     previewUrl,
     recommendedNextSteps: ok
       ? [

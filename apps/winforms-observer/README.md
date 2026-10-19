@@ -4,6 +4,10 @@
 
 ## 启动前提
 
+便携版使用 `scripts/publish-observer.ps1` 发布 Windows x64 自包含 exe。双击发布目录的 `SpineMcp.WinFormsObserver.exe` 后选择项目，自动启动随附 runtime 中的预览服务；包内自带 .NET 和 Node，只需安装 WebView2。不能只复制 exe，必须保留 runtime 目录。可传 `--workspace "项目路径"` 跳过目录选择；`--self-test --workspace "测试目录"` 检查随附预览服务与 WebView2，结果写入发布目录 `self-test.json`。退出时仅停止本实例启动的服务。
+
+以下手动启动方式适用于开发版本：
+
 先在项目根目录启动预览服务：
 
 ```bash
@@ -106,10 +110,10 @@ WinForms 左侧提供 Agent 类型选择和连接诊断：
 状态灯含义：
 
 - 红灯：未检测到连接。
-- 黄灯：检测到项目规则或配置提示，但 Agent 尚未真实调用 MCP 握手。
-- 绿灯：对应 Agent 已调用 `spine_agent_ping`，连接确认可用。
+- 黄灯：已配置待连接或协议暂未响应。
+- 绿灯：进程存活，近期 MCP 协议 ping 成功；历史握手不能保持在线状态。
 
-连接向导只生成配置片段和诊断提示，不会静默写入用户全局配置。
+连接向导支持“一键配置”：默认当前项目，可明确选择 Codex 用户级配置；显示目标路径，确认后备份并合并写入。客户端需要重新加载。完整说明见 [Agent一键配置与实时连接](../../docs/Agent一键配置与实时连接.md)。
 
 ## 第一版边界
 

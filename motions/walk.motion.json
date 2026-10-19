@@ -1,0 +1,13 @@
+{
+  "name": "walk",
+  "version": 1,
+  "duration": 1.2,
+  "loop": true,
+  "parameters": { "bodyBob": 4, "sway": 2, "armSwing": 16, "stepAngle": 28 },
+  "events": [
+    { "time": 0, "type": "contact", "side": "left" },
+    { "time": 0.3, "type": "passing", "side": "left" },
+    { "time": 0.6, "type": "contact", "side": "right" },
+    { "time": 0.9, "type": "passing", "side": "right" }
+  ]
+}

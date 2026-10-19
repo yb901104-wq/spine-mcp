@@ -1,0 +1,16 @@
+{
+  "character": "example-4.1",
+  "version": 1,
+  "bones": {
+    "root": "root",
+    "body": "bone2",
+    "head": "juese-2",
+    "leftArm": ["bone3", "bone4", "10"],
+    "rightArm": ["bone6", "bone7", "bone8"],
+    "leftLeg": ["11", "12"],
+    "rightLeg": ["13", "14"],
+    "footContacts": { "left": [-25, 0], "right": [27, 0] },
+    "jointLimits": {}
+  },
+  "notes": "示例角色 mapping；使用前请通过 spine_validate_mapping 检查当前 JSON 是否包含这些骨骼。"
+}

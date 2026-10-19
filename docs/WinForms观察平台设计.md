@@ -1,5 +1,13 @@
 # WinForms 观察平台设计
 
+## 参考与姿态审查
+
+新增姿态工具复用现有 session 操作日志与产物路径，报告处理成功/失败；离线参考节点图、关键姿态上下对比和 GIF 通过产物入口查看。第一版不增加骨骼拖拽编辑器，日志“完成”只代表工具执行完成，不能代替 Agent 视觉批准。新工具已在源码 MCP server 注册，旧启动进程及旧便携发布包需更新后才可调用。
+
+WebView2 预览的 PMA 勾选通过预览服务生成对应的内存纹理，并使用官方 Player rawDataURIs；保留源 atlas/PNG。切换选项会重建播放器，销毁旧实例，避免残留 WebGL 上下文。
+
+便携发布由 `scripts/publish-observer.ps1` 构建自包含 Windows x64 exe，并打包 Node、dist、preview 与生产依赖。exe 启动时选择项目或读取 --workspace，按可用端口自动启动本实例预览服务、检查工作区匹配后进入主窗口。关闭窗口停止自身预览子进程；开发目录无 runtime 时沿用外部服务方式。运行仍需 WebView2，支持 --self-test 输出 headless 启动检测报告。
+
 本文档记录未来 WinForms 壳的定位和第一版边界。WinForms 不是动画编辑器，也不是操作主体；它是 Agent/MCP 驱动的验证、观察、日志和预览平台。
 
 ## 定位
@@ -37,7 +45,7 @@ WinForms 不直接自由编辑 Spine JSON，也不内置动画制作逻辑。
 | 预览画面 | WebView2 嵌入浏览器预览页 | 复用现有 `preview/index.html`。 |
 | 操作控制台 | 当前自然语言请求、MCP 工具名、dryRun/写入/验证状态、日志 | 读取会话状态和后续日志接口。 |
 | 验证结果 | 结构校验、runtime 加载、资源检查、预览 URL | 来源于 `spine_run_validation_pipeline`。 |
-| Agent 连接 | Codex、Claude Code、opencode、自定义 MCP Client 的连接灯、配置片段和握手状态 | 读取 `GET /api/agent-connection`，绿灯必须来自真实 MCP 握手。 |
+| Agent 连接 | 客户端连接灯、一键配置、历史语义握手 | 读取 `GET /api/agent-connection`，绿灯必须来自近期 MCP 协议 ping。 |
 | 备份观察 | 备份列表、备份 hash、备份校验状态、恢复 dryRun 结果 | 恢复动作仍由 Agent/MCP 发起。 |
 | 连接文档 | Codex MCP 配置片段、AGENTS.md、MCP 操作清单、安全流程入口 | 方便复制和排查连接问题。 |
 
@@ -156,17 +164,22 @@ WinForms 应优先读取 `/api/session`，并把其中的 `previewUrl.url` 载�
 
 ## Agent 连接向导
 
-连接向导不负责直接编辑 JSON，也不静默写入用户全局 Agent 配置。它只做三件事：
+Codex 桌面入口默认推荐用户级并提示完全退出重开，其他客户端默认项目级。预览服务状态与 Agent 状态分别显示。无会话时从当前项目内根目录、目标或 characters 中查找配套 JSON/atlas；空项目显示路径选择提示，不带入不存在的开发示例文件。
+
+连接向导支持配置安装和实时协议检测，不修改角色 JSON：
 
 1. 根据 Agent 类型生成 MCP 配置片段。
 2. 检测项目内规则文件和构建产物是否存在。
-3. 读取 `.spine-mcp/agent-handshake.json`，判断对应 Agent 是否真实调用过 `spine_agent_ping`。
+3. 用户明确点击“一键配置”并核对路径后，备份、合并并写入当前项目配置；另可明确选择 Codex 用户级配置。
+4. 读取历史语义握手与实时 MCP 协议心跳记录，分别显示身份与在线状态。
 
 状态灯含义：
 
-- 红灯：未检测到项目规则或 Agent 握手。
-- 黄灯：检测到项目规则或配置提示，但 Agent 尚未握手。
-- 绿灯：对应 Agent 已经通过 MCP 调用 `spine_agent_ping`。
+- 红灯：连接离线、进程死亡或心跳过期。
+- 黄灯：待连接或暂未响应。
+- 绿灯：进程存活，近期 MCP 协议 ping 成功；不是模型工作状态。
+
+检测每 10 秒执行，超时 5 秒，有效期 25 秒；多进程会话隔离。接口、备份与配置范围见 [Agent一键配置与实时连接](Agent一键配置与实时连接.md)。
 
 第一版支持的 Agent 类型：
 
@@ -174,3 +187,15 @@ WinForms 应优先读取 `/api/session`，并把其中的 `previewUrl.url` 载�
 - `Claude Code`
 - `opencode`
 - 自定义 MCP Client
+
+## 离线视觉验证与项目工作区升级
+新增离线 PNG 帧、联系图、GIF、参考 GIF 分析、对比报告及 projectId/MCP Roots 支持。默认重定向生成数值报告和联系图；Agent 查看后提交。详细工具、参数、局部调整、缓存/锁和已知验证边界见 [离线视觉验证与工作区](D:/AI_cc/spine-mcp/docs/离线视觉验证与工作区.md)。
+
+
+## 视觉绑定与关系审查状态
+
+本轮继续复用观察平台的 MCP 会话日志与产物路径：校准返回 visual-rig-calibration.json、角色图、切片图、节点图；参考比较返回逐项错误报告。没有新增拖拽编辑器，也未重新发布便携 exe。日志中的操作完成只表示产物生成，不能表示动作参考关系通过；必须分别读取绑定、关系、视觉与 runtime 状态。
+
+## 动作身份与转身诊断
+
+观察平台继续使用现有预览和日志展示姿态产物。报告新增持杖解剖手、身体切片视角及实际遮挡层序的独立状态。附件显隐和drawOrder仅经动画核心/MCP时间线计算，不由WinForms重绑定切片；背发显隐候选不自动标记为转身验收通过。当前npc1三姿态实例仍为退回诊断。

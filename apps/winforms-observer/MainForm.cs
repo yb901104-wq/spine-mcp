@@ -23,6 +23,8 @@ public sealed class MainForm : Form
     private readonly TextBox agentConfigBox = new();
     private readonly Button refreshAgentButton = new();
     private readonly Button copyAgentConfigButton = new();
+    private readonly Button installAgentConfigButton = new();
+    private readonly ComboBox agentConfigScopeCombo = new();
     private readonly Label contextLabel = new();
     private readonly Label operationLabel = new();
     private readonly Label validationLabel = new();
@@ -203,7 +205,10 @@ public sealed class MainForm : Form
             new AgentChoice("自定义", "custom"),
         ]);
         agentTypeCombo.SelectedIndex = 0;
-        agentTypeCombo.SelectedIndexChanged += async (_, _) => await RefreshAgentConnectionAsync(NormalizeBaseUrl(previewServerInput.Text));
+        agentTypeCombo.SelectedIndexChanged += async (_, _) => {
+            if (agentConfigScopeCombo.Items.Count > 0) agentConfigScopeCombo.SelectedIndex = GetSelectedAgentClientType() == "codex" ? 1 : 0;
+            await RefreshAgentConnectionAsync(NormalizeBaseUrl(previewServerInput.Text));
+        };
         refreshAgentButton.Text = "检测";
         refreshAgentButton.AutoSize = true;
         refreshAgentButton.Click += async (_, _) => await RefreshAgentConnectionAsync(NormalizeBaseUrl(previewServerInput.Text));
@@ -217,6 +222,17 @@ public sealed class MainForm : Form
         agentRow.Controls.Add(refreshAgentButton);
         agentRow.Controls.Add(copyAgentConfigButton);
         side.Controls.Add(agentRow);
+        var installRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Top };
+        agentConfigScopeCombo.DropDownStyle = ComboBoxStyle.DropDownList;
+        agentConfigScopeCombo.Items.AddRange(["当前项目", "用户级（Codex 桌面推荐）"]);
+        agentConfigScopeCombo.SelectedIndex = 1;
+        agentConfigScopeCombo.Width = 190;
+        installAgentConfigButton.Text = "一键配置";
+        installAgentConfigButton.AutoSize = true;
+        installAgentConfigButton.Click += async (_, _) => await InstallAgentConfigAsync();
+        installRow.Controls.Add(agentConfigScopeCombo);
+        installRow.Controls.Add(installAgentConfigButton);
+        side.Controls.Add(installRow);
 
         agentConnectionLabel.Text = "Agent：等待检测";
         agentConnectionLabel.AutoSize = true;
@@ -318,13 +334,13 @@ public sealed class MainForm : Form
             session = JsonSerializer.Deserialize<PreviewSessionResponse>(json, jsonOptions);
             if (session is null || !session.Ok) throw new InvalidOperationException("会话返回为空或 ok=false。");
 
-            connectionLabel.Text = $"连接：正常，revision={session.Revision}，updatedAt={session.UpdatedAt}";
+            connectionLabel.Text = session.Revision == 0 ? "预览服务：正常；尚无 Agent 制作记录。Agent 连接见下方状态灯。" : $"预览服务：正常，会话 revision={session.Revision}，updatedAt={session.UpdatedAt}";
             RenderSession(session);
 
             var shouldNavigate = forceNavigate || lastRevision != session.Revision || lastPreviewUrl != session.PreviewUrl.Url;
             lastRevision = session.Revision;
             lastPreviewUrl = session.PreviewUrl.Url;
-            if (shouldNavigate)
+            if (shouldNavigate && !string.IsNullOrWhiteSpace(session.Context.FilePath))
             {
                 await RefreshValidationAsync(baseUrl, session);
             }
@@ -337,6 +353,7 @@ public sealed class MainForm : Form
         catch (Exception ex)
         {
             connectionLabel.Text = $"连接：失败。{ex.Message}";
+            agentConnectionLabel.Text = "Agent：灰灯，预览服务不可用，实时连接状态未知。";
             AppendLocalLog($"无法读取 /api/session：{ex.Message}");
         }
     }
@@ -417,6 +434,40 @@ public sealed class MainForm : Form
         }
     }
 
+    private async Task InstallAgentConfigAsync()
+    {
+        installAgentConfigButton.Enabled = false;
+        try
+        {
+            var client = GetSelectedAgentClientType();
+            var scope = agentConfigScopeCombo.SelectedIndex == 1 ? "user" : "project";
+            if (client == "custom" || scope == "user" && client != "codex") throw new InvalidOperationException("请选择支持的客户端；用户级目前只支持 Codex。自定义客户端可复制配置。");
+            var baseUrl = NormalizeBaseUrl(previewServerInput.Text);
+            var uri = new Uri(baseUrl);
+            if (!uri.IsLoopback || uri.Scheme != "http") throw new InvalidOperationException("一键配置只允许本机预览服务。");
+            var previewResponse = await httpClient.GetAsync($"{baseUrl}api/agent-config?clientType={client}&scope={scope}");
+            previewResponse.EnsureSuccessStatusCode();
+            using var preview = JsonDocument.Parse(await previewResponse.Content.ReadAsStringAsync());
+            var root = preview.RootElement;
+            var target = root.GetProperty("targetPath").GetString();
+            var note = root.GetProperty("note").GetString();
+            if (MessageBox.Show(this, $"将配置写入：\n{target}\n\n{note}\n已有文件会备份，其他设置保留。\n是否继续？", "配置 Agent", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK) return;
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{baseUrl}api/agent-config");
+            request.Headers.Add("X-Spine-Config-Action", "install");
+            request.Content = new StringContent(JsonSerializer.Serialize(new { clientType = client, scope, expectedHash = root.GetProperty("expectedHash").GetString() }), Encoding.UTF8, "application/json");
+            var response = await httpClient.SendAsync(request);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode) throw new InvalidOperationException(content);
+            using var result = JsonDocument.Parse(content);
+            var backup = result.RootElement.TryGetProperty("backupPath", out var b) ? b.GetString() : null;
+            var reload = client == "codex" ? "请完全退出并重新打开 Codex，再打开此项目检查 MCP 列表。项目级配置仍需项目受信任。" : "请在 Agent 中打开该项目并重新加载 MCP。";
+            MessageBox.Show(this, $"配置已完成：\n{target}\n备份：{backup ?? "无（新配置或无需变更）"}\n\n{reload}\n连接灯在协议检测成功后变绿。", "配置已写入，等待客户端加载");
+            await RefreshAgentConnectionAsync(baseUrl);
+        }
+        catch (Exception ex) { MessageBox.Show(this, ex.Message, "配置失败", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        finally { installAgentConfigButton.Enabled = true; }
+    }
+
     private void RefreshRuntimeState()
     {
         try
@@ -471,6 +522,8 @@ public sealed class MainForm : Form
 
     private static string GetWorkspaceRoot()
     {
+        var configured = Environment.GetEnvironmentVariable("SPINE_MCP_WORKSPACE");
+        if (!string.IsNullOrWhiteSpace(configured)) return Path.GetFullPath(configured);
         var candidates = new[]
         {
             Environment.CurrentDirectory,
@@ -528,9 +581,9 @@ public sealed class MainForm : Form
     {
         return light switch
         {
-            "green" => "绿灯：已握手",
-            "yellow" => "黄灯：待握手",
-            "red" => "红灯：未连接",
+            "green" => "绿灯：MCP 在线（近期协议响应）",
+            "yellow" => "黄灯：等待连接或响应",
+            "red" => "红灯：离线或心跳过期",
             _ => "灰灯：未知",
         };
     }

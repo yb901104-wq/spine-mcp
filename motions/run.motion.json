@@ -1,0 +1,11 @@
+{
+  "name": "run",
+  "version": 1,
+  "duration": 0.6667,
+  "loop": true,
+  "parameters": { "bodyBob": 9, "sway": 4, "armSwing": 26, "stepAngle": 42 },
+  "events": [
+    { "time": 0, "type": "contact", "side": "left" },
+    { "time": 0.33335, "type": "contact", "side": "right" }
+  ]
+}

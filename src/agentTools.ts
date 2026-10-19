@@ -1,6 +1,9 @@
+import { getWorkspaceRoot as resolveRegisteredWorkspace } from "./workspaceTools.js";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, readdir } from "node:fs/promises";
+import { CONNECTION_TTL_MS } from './agentConnectionMonitor.js';
 import path from "node:path";
+import { fileURLToPath } from 'node:url';
 import type { ToolContext } from "./spineJson.js";
 
 export type AgentClientType = "codex" | "claude-code" | "opencode" | "custom";
@@ -53,20 +56,26 @@ export async function agentPing(args: AgentPingOptions = {}, context: ToolContex
   await writeHandshakeState(state, context);
 
   return {
-    ...buildAgentConnectionStatus({ clientType }, context, state),
-    message: "Agent 握手已记录。WinForms 连接向导可据此将对应 Agent 状态显示为绿色。",
+    ...buildAgentConnectionStatus({ clientType }, context, state, await readLiveConnections(context)),
+    message: "语义握手已记录；绿灯另需 MCP 协议 ping 实时成功。",
   };
 }
 
 export async function getAgentConnectionStatus(args: AgentStatusOptions = {}, context: ToolContext = {}) {
   const state = await readHandshakeState(context).catch(() => defaultHandshakeState());
-  return buildAgentConnectionStatus(args, context, state);
+  return buildAgentConnectionStatus(args, context, state, await readLiveConnections(context));
 }
 
-function buildAgentConnectionStatus(args: AgentStatusOptions, context: ToolContext, state: AgentHandshakeState) {
+async function readLiveConnections(context:ToolContext) {
+  const dir=path.join(getWorkspaceRoot(context),'.spine-mcp','connections');
+  const names=await readdir(dir).catch(()=>[]);
+  const sessions=await Promise.all(names.filter(n=>n.endsWith('.json')).map(async n=>{try{return JSON.parse(await readFile(path.join(dir,n),'utf8'));}catch{return null;}}));
+  return sessions.filter(Boolean).map(s=>{const age=Date.now()-Date.parse(s.lastSeenAt??'');let processAlive=false;if(Number.isInteger(s.pid)&&s.pid>0){try{process.kill(s.pid,0);processAlive=true;}catch(e:any){processAlive=e.code==='EPERM';}}return {...s,processAlive,ageMs:Number.isFinite(age)?age:null,live:processAlive&&s.status==='connected'&&age>=0&&age<=CONNECTION_TTL_MS};});
+}
+function buildAgentConnectionStatus(args: AgentStatusOptions, context: ToolContext, state: AgentHandshakeState, sessions:any[]) {
   const workspaceRoot = getWorkspaceRoot(context);
   const selectedClientType = args.clientType ? normalizeClientType(args.clientType) : undefined;
-  const clients = supportedClients.map((clientType) => buildClientStatus(clientType, workspaceRoot, state));
+  const clients = supportedClients.map((clientType) => buildClientStatus(clientType, workspaceRoot, state, sessions));
   const selected = selectedClientType
     ? clients.find((client) => client.clientType === selectedClientType) ?? null
     : null;
@@ -76,7 +85,8 @@ function buildAgentConnectionStatus(args: AgentStatusOptions, context: ToolConte
     ok: true,
     workspaceRoot,
     selectedClientType: selectedClientType ?? null,
-    light: selected ? selected.light : latestHandshake ? "green" : "red",
+    light: selected ? selected.light : clients.some(c=>c.light==='green')?'green':clients.some(c=>c.light==='yellow')?'yellow':'red',
+    heartbeat: { intervalMs:10000,timeoutMs:5000,ttlMs:CONNECTION_TTL_MS,sessions },
     summary: selected ? selected.summary : buildOverallSummary(clients),
     handshake: {
       revision: state.revision,
@@ -87,18 +97,23 @@ function buildAgentConnectionStatus(args: AgentStatusOptions, context: ToolConte
     projectChecks: getProjectChecks(workspaceRoot),
     clients,
     selected,
-    message: "已读取 Agent 连接状态。绿色表示对应 Agent 真实调用过 spine_agent_ping；黄色表示仅存在配置提示或项目规则；红色表示尚未检测到连接。",
+    message: "绿灯表示近期 MCP 协议 ping 成功；黄灯表示已配置等待连接或检测暂未响应；红灯表示离线/心跳过期。绿灯不代表 Agent 正在执行任务。",
   };
 }
 
-function buildClientStatus(clientType: AgentClientType, workspaceRoot: string, state: AgentHandshakeState) {
+function buildClientStatus(clientType: AgentClientType, workspaceRoot: string, state: AgentHandshakeState, sessions:any[]) {
   const latest = [...state.handshakes].reverse().find((entry) => entry.clientType === clientType) ?? null;
   const template = getClientTemplate(clientType, workspaceRoot);
   const projectChecks = getProjectChecks(workspaceRoot);
   const hasProjectRule = projectChecks.some((check) => check.name === "AGENTS.md" && check.exists);
-  const light = latest ? "green" : hasProjectRule ? "yellow" : "red";
-  const summary = latest
-    ? `${template.displayName} 已完成握手：${latest.agentName}，${latest.time}`
+  const own=sessions.filter(s=>s.clientType===clientType), live=own.filter(s=>s.live).sort((a,b)=>Date.parse(b.lastSeenAt)-Date.parse(a.lastSeenAt))[0];
+  const pending=own.some(s=>s.processAlive&&['connecting','unresponsive'].includes(s.status)&&Date.now()-Date.parse(s.checkedAt)<CONNECTION_TTL_MS);
+  const configured=clientType==='codex'?existsSync(path.join(workspaceRoot,'.codex','config.toml')):clientType==='claude-code'?existsSync(path.join(workspaceRoot,'.mcp.json')):clientType==='opencode'?existsSync(path.join(workspaceRoot,'opencode.json')):false;
+  const light = live?'green':pending?'yellow':own.length?'red':configured||hasProjectRule||latest?'yellow':'red';
+  const summary = live
+    ? `${template.displayName} MCP 在线，最近协议响应：${live.lastSeenAt}`
+    : own.length&&!pending?`${template.displayName} MCP 离线或心跳过期；历史握手不代表在线。`
+    : pending?`${template.displayName} 等待协议响应。`
     : hasProjectRule
       ? `${template.displayName} 尚未握手；已检测到项目规则，可按配置片段接入后调用 spine_agent_ping。`
       : `${template.displayName} 尚未握手；未检测到项目规则文件。`;
@@ -109,20 +124,22 @@ function buildClientStatus(clientType: AgentClientType, workspaceRoot: string, s
     light,
     summary,
     latestHandshake: latest,
+    connected:!!live,
+    lastSeenAt:live?.lastSeenAt??own.sort((a,b)=>Date.parse(b.checkedAt)-Date.parse(a.checkedAt))[0]?.lastSeenAt??null,
     config: template,
   };
 }
 
 function getClientTemplate(clientType: AgentClientType, workspaceRoot: string) {
-  const serverJs = normalizePath(path.join(workspaceRoot, "dist", "server.js"));
+  const serverJs = normalizePath(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist', 'server.js'));
   const workspace = normalizePath(workspaceRoot);
   switch (clientType) {
     case "codex":
       return {
         displayName: "Codex",
         configTargets: ["用户级 Codex 配置，例如 %USERPROFILE%/.codex/config.toml", "项目规则 AGENTS.md"],
-        autoWriteSupported: false,
-        note: "WinForms 第一版只生成配置片段和检测握手，不静默写入 Codex 全局配置。",
+        autoWriteSupported: true,
+        note: "点击一键配置写入当前项目 .codex/config.toml；可明确选择用户级配置。保留其他设置并备份，需客户端信任项目并重新加载。",
         snippet: [
           "[mcp_servers.spine-json-mcp]",
           "command = \"node\"",
@@ -136,8 +153,8 @@ function getClientTemplate(clientType: AgentClientType, workspaceRoot: string) {
       return {
         displayName: "Claude Code",
         configTargets: ["Claude Code 项目级 .mcp.json", "或使用 claude mcp add 命令添加 stdio server"],
-        autoWriteSupported: false,
-        note: "建议优先使用 Claude Code 自带 MCP 命令写入配置；本项目只提供片段和握手检测。",
+        autoWriteSupported: true,
+        note: "点击一键配置写入当前项目 .mcp.json，备份并保留其他 MCP。客户端可能需要批准项目 MCP 并重新加载。",
         snippet: JSON.stringify({
           mcpServers: {
             "spine-json-mcp": {
@@ -156,15 +173,15 @@ function getClientTemplate(clientType: AgentClientType, workspaceRoot: string) {
       return {
         displayName: "opencode",
         configTargets: ["opencode 项目配置文件", "或 opencode 支持的用户级 MCP 配置"],
-        autoWriteSupported: false,
-        note: "opencode 不同版本的配置文件名和字段可能变化；这里提供通用 MCP stdio 配置语义，写入前应按当前 opencode 文档确认。",
+        autoWriteSupported: true,
+        note: "点击一键配置写入当前项目 opencode.json。已有 JSONC 配置不自动修改，请使用复制配置。",
         snippet: JSON.stringify({
           mcp: {
             "spine-json-mcp": {
-              type: "stdio",
-              command: "node",
-              args: [serverJs],
-              env: {
+              type: "local",
+              command: ["node",serverJs],
+              enabled: true,
+              environment: {
                 SPINE_MCP_WORKSPACE: workspace,
               },
             },
@@ -277,12 +294,12 @@ function trimOptional(value: unknown) {
 
 function buildOverallSummary(clients: ReturnType<typeof buildClientStatus>[]) {
   const connected = clients.filter((client) => client.light === "green");
-  if (connected.length > 0) return `已有 ${connected.length} 个 Agent 完成握手：${connected.map((client) => client.displayName).join("、")}。`;
-  return "尚未检测到任何 Agent 握手。请选择 Agent 类型，按配置片段接入后调用 spine_agent_ping。";
+  if (connected.length > 0) return `已有 ${connected.length} 个 Agent MCP 在线：${connected.map((client) => client.displayName).join("、")}。`;
+  return "尚无实时 MCP 连接。配置后在 Agent 中重新加载；历史握手不会保持绿灯。";
 }
 
 function getWorkspaceRoot(context: ToolContext) {
-  return path.resolve(context.workspaceRoot ?? process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  return path.resolve(context.workspaceRoot ?? resolveRegisteredWorkspace(context.projectId));
 }
 
 function getHandshakePath(context: ToolContext) {

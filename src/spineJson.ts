@@ -1,6 +1,10 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fitCubicBezierTimeline } from "./motionMath.js";
+import { getWorkspaceRoot } from "./workspaceTools.js";
+import { realpathSync, existsSync } from 'node:fs';
+import { withFileLock } from './jobTools.js';
 
 export const SUPPORTED_SPINE_VERSION = "4.1.24";
 export const OFFICIAL_JSON_SPEC_URL = "https://esotericsoftware.com/spine-json-format#JSON-export-format";
@@ -13,6 +17,7 @@ type TargetType = "bone" | "slot" | "drawOrder" | "draworder";
 export interface ToolContext {
   workspaceRoot?: string;
   backupRoot?: string;
+  projectId?: string;
 }
 
 export interface SpineDocument {
@@ -182,7 +187,7 @@ const WRITABLE_TIMELINE_SPECS: TimelineSpecSummary[] = [
     spine4124Fields: ["time", "x", "y", "curve"],
     allowedKeys: ["time", "x", "y", "curve"],
     writablePath: "/animations/*/bones/*/shear",
-    note: "x/y 至少写入一个；V1 不计算世界坐标或运行时姿态。",
+    note: "x/y 至少写入一个；底层写入局部值，世界坐标由 runtime 采样层计算。",
   },
   {
     targetType: "slot",
@@ -237,12 +242,16 @@ export function resolveWorkspacePath(filePath: string, context: ToolContext = {}
   if (!filePath || typeof filePath !== "string") {
     throw new Error("filePath must be a non-empty string.");
   }
-  const workspaceRoot = path.resolve(context.workspaceRoot ?? process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  const workspaceRoot = path.resolve(context.workspaceRoot ?? getWorkspaceRoot(context.projectId));
   const absolutePath = path.resolve(workspaceRoot, filePath);
   const relative = path.relative(workspaceRoot, absolutePath);
   if (relative === "" || relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error(`filePath must stay inside workspace root: ${workspaceRoot}`);
   }
+  let ancestor = absolutePath;
+  while (!existsSync(ancestor)) ancestor = path.dirname(ancestor);
+  const realRelative = path.relative(realpathSync(workspaceRoot), realpathSync(ancestor));
+  if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) throw new Error('路径符号链接越过工作区边界。');
   return absolutePath;
 }
 
@@ -721,6 +730,53 @@ export async function applyPoseSequence(
   });
 }
 
+export async function fitAnimationCurves(
+  filePath: string,
+  args: { animation: string; rotationTolerance?: number; translationTolerance?: number; vertexTolerance?: number; atlasPath?: string; skin?: string; useCurves?: boolean } & WriteOptions,
+  context: ToolContext = {},
+): Promise<WriteResult & { curveFitReport: any }> {
+  let report: any;
+  const result = await writeTransaction(filePath, args, context, animationOnlyGuard("spine_fit_animation_curves"), async (json, diff) => {
+    const fitted = await (await import('./runtimeCurveFit.js')).fitRuntimeAnimation(json,args.animation,{...args,useCurves:args.useCurves??false},context);
+    report=fitted.report;
+    const before=deepClone(json.animations[args.animation]);json.animations[args.animation]=fitted.animation;
+    pushDiffIfChanged(diff,`/animations/${escapePath(args.animation)}`,before,fitted.animation);
+    return `已拟合 '${args.animation}'，关键帧 ${report.originalCount} → ${report.compressedCount}，runtime 验证=${report.runtimeVerified}。`;
+  });
+  return {...result,curveFitReport:report};
+}
+
+/** 完整动画结果通过已有事务层提交；求解层不直接写 Spine 文件。 */
+export async function writeGeneratedAnimation(filePath: string, args: { animation: string; value: JsonObject; overwrite?: boolean } & WriteOptions, context: ToolContext = {}) {
+  return writeTransaction(filePath, args, context, animationOnlyGuard("spine_retarget_motion"), (json, diff) => {
+    json.animations ??= {};
+    if (json.animations[args.animation] && !args.overwrite) throw new Error(`动画 '${args.animation}' 已存在。若要覆盖，请传 overwrite: true。`);
+    const before = json.animations[args.animation];
+    json.animations[args.animation] = deepClone(args.value);
+    diff.push({ path: `/animations/${escapePath(args.animation)}`, before, after: deepClone(args.value) });
+    return `已提交求解完成的动画 '${args.animation}'。`;
+  });
+}
+
+function reduceTimeline(frames: JsonObject[], tolerance: number) {
+  if (frames.length < 3) return frames;
+  const keep = [frames[0]];
+  for (let i = 1; i < frames.length - 1; i++) {
+    const previous = keep[keep.length - 1];
+    const next = frames[i + 1];
+    const t0 = previous.time ?? 0; const t1 = next.time ?? 0; const t = frames[i].time ?? 0;
+    const u = t1 === t0 ? 0 : (t - t0) / (t1 - t0);
+    const error = ["value", "x", "y"].reduce((max, key) => {
+      if (frames[i][key] === undefined || previous[key] === undefined || next[key] === undefined) return max;
+      const expected = previous[key] + (next[key] - previous[key]) * u;
+      return Math.max(max, Math.abs(frames[i][key] - expected));
+    }, 0);
+    if (error > tolerance) keep.push(frames[i]);
+  }
+  keep.push(frames[frames.length - 1]);
+  return keep.map((frame) => { const next = deepClone(frame); delete next.curve; return next; });
+}
+
 function applyPoseToAnimation(
   json: JsonObject,
   animation: JsonObject,
@@ -1022,6 +1078,18 @@ export async function setBoneKeyframe(
   });
 }
 
+export async function setCurve(filePath: string, args: { animation: string; bone: string; timeline: 'rotate' | 'translate' | 'scale' | 'shear'; time: number; curve: string | number[] | null } & WriteOptions, context: ToolContext = {}) {
+  return writeTransaction(filePath, args, context, animationOnlyGuard('spine_set_curve'), (json) => {
+    const frames = json.animations?.[args.animation]?.bones?.[args.bone]?.[args.timeline];
+    if (!Array.isArray(frames)) throw new Error('骨骼 timeline 不存在。');
+    const index = frames.findIndex(f => sameTime(f.time ?? 0, args.time));
+    if (index < 0) throw new Error('关键帧不存在。');
+    if (args.curve !== null && index === frames.length - 1) throw new Error('最后一帧不能设置 curve。');
+    if (args.curve === null) delete frames[index].curve; else frames[index].curve = args.curve;
+    return '已调整现有关键帧曲线。';
+  });
+}
+
 export async function setSlotAttachmentKeyframe(
   filePath: string,
   args: {
@@ -1133,8 +1201,11 @@ async function writeTransaction(
   options: WriteOptions,
   context: ToolContext,
   guard: WriteGuard,
-  mutate: (json: JsonObject, diff: JsonDiff[]) => string,
+  mutate: (json: JsonObject, diff: JsonDiff[]) => string | Promise<string>,
 ): Promise<WriteResult> {
+  return withFileLock(filePath, context, () => writeTransactionLocked(filePath, options, context, guard, mutate));
+}
+async function writeTransactionLocked(filePath: string, options: WriteOptions, context: ToolContext, guard: WriteGuard, mutate: (json: JsonObject, diff: JsonDiff[]) => string | Promise<string>): Promise<WriteResult> {
   const document = await readSpineDocument(filePath, context);
   const version = getVersion(document.json);
   if (version !== SUPPORTED_SPINE_VERSION && !options.allowUnsupportedVersion) {
@@ -1146,7 +1217,7 @@ async function writeTransaction(
 
   const nextJson = deepClone(document.json);
   const reportedDiff: JsonDiff[] = [];
-  const message = mutate(nextJson, reportedDiff);
+  const message = await mutate(nextJson, reportedDiff);
   const actualDiff = collectJsonDiffs(document.json, nextJson);
   const operationValidation = validateOperationDiff(guard, actualDiff);
   if (!operationValidation.ok) {
@@ -1873,7 +1944,7 @@ function getDrawOrderKey(animation: JsonObject): "drawOrder" | "draworder" | nul
 }
 
 async function backupFile(document: SpineDocument, context: ToolContext): Promise<string> {
-  const workspaceRoot = path.resolve(process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  const workspaceRoot = path.resolve(context.workspaceRoot ?? getWorkspaceRoot(context.projectId));
   const backupsDir = context.backupRoot ? path.resolve(context.backupRoot) : path.join(workspaceRoot, "backups");
   await mkdir(backupsDir, { recursive: true });
   const parsed = path.parse(document.absolutePath);
@@ -1919,3 +1990,4 @@ function normalizeNumber(value: number) {
 function escapePath(value: string) {
   return value.replaceAll("~", "~0").replaceAll("/", "~1");
 }
+

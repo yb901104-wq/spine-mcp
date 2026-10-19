@@ -193,10 +193,10 @@
         <h1>Spine JSON 预览</h1>
 
         <label for="jsonPath">JSON 路径</label>
-        <input id="jsonPath" value="example-json/skeleton-4.1.json">
+        <input id="jsonPath" value="" placeholder="当前项目内的角色 JSON 路径">
 
         <label for="atlasPath">Atlas 路径</label>
-        <input id="atlasPath" value="preview/xiaoren.atlas">
+        <input id="atlasPath" value="" placeholder="配套 atlas 路径">
 
         <label for="animationSelect">动画</label>
         <select id="animationSelect"></select>
@@ -271,11 +271,20 @@
       skinNameSelect.addEventListener("change", () => {
         preferredSkin = skinNameSelect.value;
       });
+      premultipliedAlphaInput.addEventListener('change', () => { if(player) loadPlayer(); });
 
       applyInitialParams(initialParams);
       initialize();
 
       async function initialize() {
+        if (!initialParams.json || !initialParams.atlas) {
+          const session = await getJson('/api/session');
+          if (session.context) {
+            if (!initialParams.json) jsonPathInput.value = session.context.filePath || '';
+            if (!initialParams.atlas) atlasPathInput.value = session.context.atlasPath || '';
+            if (!initialParams.animation) preferredAnimation = session.context.animation || '';
+          }
+        }
         await refreshAnimations();
         startSessionPolling();
         startHashPolling();
@@ -283,6 +292,7 @@
       }
 
       async function refreshAnimations() {
+        if (!jsonPathInput.value) { setStatus('请填写当前项目的 JSON 和 atlas 路径。'); return; }
         try {
           const data = await getJson(`/api/animations?file=${encodeURIComponent(jsonPathInput.value)}`);
           if (!data.ok) throw new Error(data.message || "读取动画列表失败。");
@@ -308,6 +318,7 @@
         }
       }
 
+      function projectUrl(url) { const projectId = new URLSearchParams(window.location.search).get("projectId"); return projectId ? "/projects/" + encodeURIComponent(projectId) + url : url; }
       async function loadPlayer() {
         clearTimeout(reloadTimer);
         const jsonPath = jsonPathInput.value.trim();
@@ -332,10 +343,18 @@
           lastHash = hashData.hash;
           const skeletonData = await getJson(`/workspace/${encodePath(jsonPath)}?v=${lastHash}`);
           const viewport = buildViewport(skeletonData);
+          const atlasUrl=projectUrl(`/workspace/${encodePath(atlasPath)}?v=${lastHash}`);
+          const alphaAssets=await getJson(`/api/preview-alpha-assets?atlas=${encodeURIComponent(atlasPath)}&pma=${premultipliedAlpha}`);
+          if(!alphaAssets.ok)throw new Error(alphaAssets.message||'预览纹理 Alpha 转换失败。');
+          const rawDataURIs={};
+          const parent=atlasUrl.substring(0,atlasUrl.lastIndexOf('/')+1);
+          for(const [page,dataUri] of Object.entries(alphaAssets.images))rawDataURIs[parent+page]=dataUri;
+          if(player&&typeof player.dispose==='function')player.dispose();
           playerElement.innerHTML = "";
           player = new spine.SpinePlayer("player", {
-            jsonUrl: `/workspace/${encodePath(jsonPath)}?v=${lastHash}`,
-            atlasUrl: `/workspace/${encodePath(atlasPath)}?v=${lastHash}`,
+            jsonUrl: projectUrl(`/workspace/${encodePath(jsonPath)}?v=${lastHash}`),
+            atlasUrl,
+            rawDataURIs,
             animation,
             skin: skin || undefined,
             alpha: true,
@@ -347,7 +366,8 @@
             viewport,
             success: (instance) => {
               if (Number.isFinite(speed) && speed > 0) instance.speed = speed;
-              setStatus(`已载入 ${animation}。PMA=${premultipliedAlpha ? "开" : "关"}，Mipmaps=${mipmaps ? "开" : "关"}，hash=${lastHash.slice(0, 12)}。`);
+              const conversions=alphaAssets.pages.filter(p=>p.converted).length;
+              setStatus(`已载入 ${animation}。PMA=${premultipliedAlpha ? "开" : "关"}（${conversions ? `${conversions} 张预览纹理已转换` : '原贴图格式匹配'}），Mipmaps=${mipmaps ? "开" : "关"}，hash=${lastHash.slice(0, 12)}。`);
             },
             error: (_instance, message) => {
               setStatus(`预览载入失败：${message}`, true);
@@ -437,7 +457,7 @@
       }
 
       async function getJson(url) {
-        const response = await fetch(url, { cache: "no-store" });
+        const response = await fetch(projectUrl(url), { cache: "no-store" });
         return response.json();
       }
 

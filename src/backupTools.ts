@@ -1,3 +1,4 @@
+import { getWorkspaceRoot as resolveRegisteredWorkspace } from "./workspaceTools.js";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -195,7 +196,7 @@ function toWorkspaceRelative(absolutePath: string, context: ToolContext) {
 }
 
 function getWorkspaceRoot(context: ToolContext) {
-  return path.resolve(context.workspaceRoot ?? process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  return path.resolve(context.workspaceRoot ?? resolveRegisteredWorkspace(context.projectId));
 }
 
 function sha256(value: string) {

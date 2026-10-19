@@ -1,0 +1,8 @@
+{
+  "name": "idle",
+  "version": 1,
+  "duration": 2,
+  "loop": true,
+  "parameters": { "bodyBob": 2, "sway": 1, "armSwing": 5, "stepAngle": 4 },
+  "events": []
+}

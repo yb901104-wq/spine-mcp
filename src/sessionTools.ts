@@ -1,4 +1,5 @@
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { getWorkspaceRoot as resolveRegisteredWorkspace } from "./workspaceTools.js";
+import { mkdir, readFile, rm, writeFile, readdir, access } from "node:fs/promises";
 import path from "node:path";
 import { getPreviewUrl, PREVIEW_DEFAULTS, type PreviewUrlOptions } from "./previewTools.js";
 import { resolveWorkspacePath, type ToolContext } from "./spineJson.js";
@@ -94,13 +95,35 @@ export async function setPreviewSession(args: SetPreviewSessionOptions, context:
 }
 
 export async function getPreviewSession(args: { baseUrl?: string } = {}, context: ToolContext = {}) {
-  const state = await readPreviewSession(context).catch(() => defaultSessionState());
+  const state = await readPreviewSession(context).catch(async () => {
+    const state=defaultSessionState();const available=await findProjectPreview(context);
+    state.context={...state.context,...available};
+    if(!state.context.filePath)state.operation={status:'idle',title:'等待选择角色',detail:'当前项目没有找到配套 JSON/atlas，请填写角色资源路径。'};
+    return state;
+  });
   return {
     ...state,
     previewUrl: buildSessionPreviewUrl(state, args.baseUrl),
     sessionPath: toWorkspaceRelative(getSessionPath(context), context),
     message: "已读取当前预览会话状态。",
   };
+}
+async function findProjectPreview(context:ToolContext):Promise<Partial<PreviewSessionContext>> {
+  try{await access(resolveWorkspacePath(PREVIEW_DEFAULTS.defaultJson,context));await access(resolveWorkspacePath(PREVIEW_DEFAULTS.defaultAtlas,context));return {};}catch{}
+  for(const folder of ['目标','','characters']) {
+    const root=path.resolve(context.workspaceRoot??resolveRegisteredWorkspace(context.projectId));
+    const names=await readdir(path.join(root,folder)).catch(()=>[]);
+    for(const name of names.filter(n=>n.endsWith('.json')).slice(0,50)) {
+      const filePath=path.posix.join(folder,name),atlasPath=filePath.replace(/\.json$/,'.atlas');
+      try {
+        await access(resolveWorkspacePath(atlasPath,context));
+        const json=JSON.parse((await readFile(resolveWorkspacePath(filePath,context),'utf8')).replace(/^\uFEFF/,''));
+        if(!Array.isArray(json.bones)||!json.animations)continue;
+        return {filePath,atlasPath,animation:Object.keys(json.animations)[0]??'',autoload:true};
+      }catch{}
+    }
+  }
+  return {filePath:'',atlasPath:'',animation:'',autoload:false};
 }
 
 export async function clearPreviewSession(context: ToolContext = {}) {
@@ -189,11 +212,11 @@ function assertPositiveNumber(value: number, name: string) {
 }
 
 function getSessionPath(context: ToolContext) {
-  const workspaceRoot = path.resolve(context.workspaceRoot ?? process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  const workspaceRoot = path.resolve(context.workspaceRoot ?? resolveRegisteredWorkspace(context.projectId));
   return path.join(workspaceRoot, ".spine-mcp", "preview-session.json");
 }
 
 function toWorkspaceRelative(absolutePath: string, context: ToolContext) {
-  const workspaceRoot = path.resolve(context.workspaceRoot ?? process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
+  const workspaceRoot = path.resolve(context.workspaceRoot ?? resolveRegisteredWorkspace(context.projectId));
   return path.relative(workspaceRoot, absolutePath).replaceAll("\\", "/");
 }

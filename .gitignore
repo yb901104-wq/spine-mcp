@@ -3,6 +3,9 @@ dist/
 test-output/
 backups/
 .spine-mcp/
+previews/
+.codex-temp/
 bin/
 obj/
 *.log
+releases/

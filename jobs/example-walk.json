@@ -1,0 +1,10 @@
+{
+  "name": "example-walk",
+  "version": 1,
+  "filePath": "example-json/skeleton-4.1.json",
+  "mappingPath": "mappings/example-4.1.mapping.json",
+  "motionPath": "motions/walk.motion.json",
+  "animation": "mcp-walk",
+  "overwrite": false,
+  "dryRun": true
+}

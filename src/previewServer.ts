@@ -4,18 +4,28 @@ import { createReadStream } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import path from "node:path";
+import { fileURLToPath } from 'node:url';
+import { getWorkspaceRoot, runInWorkspace } from './workspaceTools.js';
+import { resolveWorkspacePath as safeWorkspacePath } from './spineJson.js';
 import { getAgentConnectionStatus } from "./agentTools.js";
+import { configureAgent } from './agentConfigTools.js';
+import {getPreviewAlphaAssets} from './previewAlpha.js';
 import { checkPreviewAssets, getPreviewConfig, PREVIEW_DEFAULTS, runValidationPipeline, validatePreviewRuntime } from "./previewTools.js";
 import { getPreviewSession } from "./sessionTools.js";
 
 const workspaceRoot = path.resolve(process.env.SPINE_MCP_WORKSPACE ?? process.cwd());
-const previewRoot = path.join(workspaceRoot, "preview");
+const installRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const previewRoot = path.join(installRoot, "preview");
 const port = Number(process.env.SPINE_PREVIEW_PORT ?? getArgValue("--port") ?? 5177);
 const host = process.env.SPINE_PREVIEW_HOST ?? "127.0.0.1";
 
 const server = createServer(async (request, response) => {
   try {
-    await handleRequest(request, response);
+    const incoming = new URL(request.url ?? '/', 'http://localhost');
+    const match = incoming.pathname.match(/^\/projects\/([^/]+)(\/.*)$/);
+    const projectId = match ? decodeURIComponent(match[1]) : incoming.searchParams.get('projectId') ?? undefined;
+    if (match) request.url = match[2] + incoming.search;
+    await runInWorkspace(projectId, () => handleRequest(request, response));
   } catch (error) {
     sendJson(response, 500, {
       ok: false,
@@ -31,6 +41,14 @@ server.listen(port, host, () => {
 
 async function handleRequest(request: IncomingMessage, response: ServerResponse) {
   const url = new URL(request.url ?? "/", `http://${request.headers.host ?? `${host}:${port}`}`);
+  if(url.pathname==='/api/agent-config'&&request.method==='POST') {
+    if(!['127.0.0.1','localhost','[::1]'].includes(url.hostname)||request.headers['x-spine-config-action']!=='install'||request.headers['content-type']?.split(';')[0]!=='application/json'||request.headers.origin&&request.headers.origin!==`http://${host}:${port}`) {
+      sendJson(response,403,{ok:false,message:'配置写入只允许本机观察平台明确点击触发。'});return;
+    }
+    let body='';for await(const part of request){body+=part;if(Buffer.byteLength(body)>8192){sendJson(response,413,{ok:false,message:'请求过大。'});return;}}
+    const args=JSON.parse(body);
+    sendJson(response,200,await configureAgent({clientType:args.clientType,scope:args.scope,expectedHash:args.expectedHash,dryRun:false}));return;
+  }
   if (request.method !== "GET") {
     sendJson(response, 405, { ok: false, message: "只支持 GET 请求。" });
     return;
@@ -42,7 +60,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
   }
 
   if (url.pathname === "/api/config") {
-    sendJson(response, 200, { ...getPreviewConfig(`http://${host}:${port}`), workspaceRoot });
+    sendJson(response, 200, { ...getPreviewConfig(`http://${host}:${port}`), workspaceRoot: getWorkspaceRoot() });
     return;
   }
 
@@ -56,6 +74,13 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
       clientType: parseOptionalClientType(url.searchParams.get("clientType")),
     }));
     return;
+  }
+  if(url.pathname==='/api/preview-alpha-assets') {
+    const atlasPath=url.searchParams.get('atlas');if(!atlasPath)throw new Error('必须指定 atlas。');
+    sendJson(response,200,await getPreviewAlphaAssets({atlasPath,targetPma:url.searchParams.get('pma')==='true'}));return;
+  }
+  if(url.pathname==='/api/agent-config') {
+    sendJson(response,200,await configureAgent({clientType:parseOptionalClientType(url.searchParams.get('clientType')) as any,scope:(url.searchParams.get('scope')??'project') as any,dryRun:true}));return;
   }
 
   if (url.pathname === "/api/check-assets") {
@@ -148,7 +173,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
 
   if (url.pathname.startsWith("/vendor/spine-player/")) {
     const filePath = decodeURIComponent(url.pathname.slice("/vendor/spine-player/".length));
-    const packageRoot = path.join(workspaceRoot, "node_modules", "@esotericsoftware", "spine-player");
+    const packageRoot = path.join(installRoot, "node_modules", "@esotericsoftware", "spine-player");
     await sendFile(response, resolveInside(packageRoot, filePath));
     return;
   }
@@ -176,7 +201,7 @@ async function sendFile(response: ServerResponse, absolutePath: string) {
 }
 
 function resolveWorkspacePath(filePath: string) {
-  return resolveInside(workspaceRoot, filePath);
+  return safeWorkspacePath(filePath);
 }
 
 function resolveInside(root: string, filePath: string) {

@@ -48,6 +48,17 @@ import {
   validateOfficialAnimationSpec,
   validateSpineJson,
 } from "../src/spineJson.js";
+import {
+  batchRetarget,
+  generateMotionPoses,
+  readCharacterMapping,
+  readMotionDefinition,
+  retargetMotion,
+  validateMapping,
+  validateMotion,
+} from "../src/motionEngine.js";
+import { fitCubicBezierTimeline, solveTwoBoneIK } from "../src/motionMath.js";
+import { calibrateMapping, confirmMapping, createMappingDraft } from "../src/mappingTools.js";
 
 const workspaceRoot = process.cwd();
 const outputDir = path.join(workspaceRoot, "test-output");
@@ -77,6 +88,95 @@ test("summarizes blank and content fixtures", async () => {
   assert.equal(content.counts.slots, 33);
   assert.equal(content.counts.skins, 3);
   assert.ok(content.counts.animations >= 17);
+});
+
+test("motion mapping and standard walk validate against the example character", async () => {
+  const document = await readSpineDocument(contentFixture);
+  const mapping = await readCharacterMapping("mappings/example-4.1.mapping.json");
+  const motion = await readMotionDefinition("motions/walk.motion.json");
+  assert.equal(validateMapping(mapping, document.json).ok, true);
+  assert.equal(validateMotion(motion).ok, true);
+  const poses = generateMotionPoses(mapping, motion);
+  assert.equal(poses.length, 9);
+  assert.equal(poses[0].time, 0);
+  assert.equal(poses.at(-1)?.time, motion.duration);
+  assert.equal(poses[0].bones.bone2.translate.y, poses.at(-1)?.bones.bone2.translate.y);
+});
+
+test("generic IK solves reachable and clamps unreachable targets", () => {
+  const reachable = solveTwoBoneIK([0, 0], [6, 8], 5, 5, 1);
+  assert.equal(reachable.reachable, true);
+  assert.ok(Math.hypot(reachable.endpoint[0] - 6, reachable.endpoint[1] - 8) < 1e-6);
+  const unreachable = solveTwoBoneIK([0, 0], [20, 0], 5, 5, 1);
+  assert.equal(unreachable.reachable, false);
+  assert.ok(unreachable.error > 9);
+});
+
+test("cubic curve fitting preserves tolerance and removes redundant samples", () => {
+  const frames = Array.from({ length: 25 }, (_, i) => ({ time: i / 24, value: Math.sin(i / 24 * Math.PI * 2) }));
+  const fit = fitCubicBezierTimeline(frames, ["value"], 0.03);
+  assert.ok(fit.compressedCount < fit.originalCount);
+  assert.ok(fit.maxError <= 0.03 + 1e-9);
+  assert.equal(fit.frames.at(-1)?.curve, undefined);
+});
+
+test("mapping lifecycle requires calibration and semantic confirmation", async () => {
+  const mapping = {
+    character: "example-v2", version: 2,
+    atlasPath: "preview/xiaoren.atlas", skin: "default",
+    bones: {
+      root: "root", body: "bone2", head: "juese-2",
+      leftLeg: ["bone6", "13", "14"], rightLeg: ["bone5", "11", "12"],
+      leftArm: ["5", "6", "7"], rightArm: ["29", "30", "31"],
+      anchors: { leftFoot: { bone: "14", point: [0, 0] }, rightFoot: { bone: "12", point: [0, 0] }, leftHand: { bone: "7", point: [0, 0] }, rightHand: { bone: "31", point: [0, 0] } },
+      bendDirections: { leftLeg: 1, rightLeg: -1, leftArm: 1, rightArm: -1 },
+    },
+  } as any;
+  await createMappingDraft({ filePath: contentFixture, mappingPath: "test-output/example-v2.mapping.json", mapping, dryRun: false }, testContext);
+  await calibrateMapping({ filePath: contentFixture, mappingPath: "test-output/example-v2.mapping.json", reportPath: "test-output/example-v2.calibration.json", dryRun: false }, testContext);
+  const confirmed = await confirmMapping({ filePath: contentFixture, mappingPath: "test-output/example-v2.mapping.json", confirmedBy: "test", semanticChecks: ["body", "head", "sides", "chains", "anchors", "bendDirections", "setupPose", "followBones"], dryRun: false }, testContext);
+  assert.equal(confirmed.ok, true);
+  assert.equal(confirmed.mapping.status, "confirmed");
+});
+
+test("retarget dry-run preserves the target hash and rejects missing mapped bones", async () => {
+  const target = await copyFixture(contentFixture, "motion-dry-run.json");
+  const before = await readSpineDocument(target);
+  const result = await retargetMotion({
+    filePath: target,
+    mappingPath: "mappings/example-4.1.mapping.json",
+    motionPath: "motions/walk.motion.json",
+    animation: "mcp-walk",
+    dryRun: true,
+    expectedHash: before.hash,
+  }, testContext);
+  assert.equal(result.dryRun, true);
+  assert.equal((await readSpineDocument(target)).hash, before.hash);
+  assert.equal(result.validation.ok, true);
+
+  const badMapping = "test-output/missing.mapping.json";
+  await writeFile(path.join(workspaceRoot, badMapping), JSON.stringify({
+    character: "bad", version: 1, bones: { body: "does-not-exist" },
+  }), "utf8");
+  await assert.rejects(
+    () => retargetMotion({ filePath: target, mappingPath: badMapping, animation: "bad", dryRun: true }, testContext),
+    /不存在的骨骼/,
+  );
+});
+
+test("batch retarget reports one failed job while continuing other jobs", async () => {
+  const goodTarget = await copyFixture(contentFixture, "batch-good.json");
+  const jobPath = "test-output/batch.json";
+  await writeFile(path.join(workspaceRoot, jobPath), JSON.stringify({ jobs: [
+    { name: "good", filePath: goodTarget, mappingPath: "mappings/example-4.1.mapping.json", motionPath: "motions/walk.motion.json", animation: "batch-walk", dryRun: true },
+    { name: "bad", filePath: goodTarget, mappingPath: "mappings/missing.mapping.json", animation: "batch-bad", dryRun: true },
+  ] }), "utf8");
+  const result = await batchRetarget(jobPath, testContext);
+  assert.equal(result.total, 2);
+  assert.equal(result.succeeded, 1);
+  assert.equal(result.failed, 1);
+  assert.equal(result.results[0].ok, true);
+  assert.equal(result.results[1].ok, false);
 });
 
 test("queries hierarchy, slots, and animations", async () => {
@@ -680,7 +780,9 @@ test("validation pipeline combines structure, runtime, and preview URL checks", 
   assert.equal(result.ok, true);
   assert.equal(result.structureValidation.ok, true);
   assert.equal(result.runtimeValidation.ok, true);
-  assert.equal(result.checks.length, 3);
+  assert.equal(result.checks.length, 4);
+  assert.equal(result.visualPreview.ok, true);
+  assert.match(result.visualPreview.contactSheet, /\.png$/);
   assert.ok(result.previewUrl.url.includes("animation=walktest2"));
   assert.ok(result.recommendedNextSteps.some((step) => step.includes("人工动作观感确认")));
 });
@@ -817,7 +919,7 @@ test("preview session stores Agent-driven context for observers", async () => {
   assert.equal(cleared.context.animation, "walktest2");
 });
 
-test("agent connection status turns green after MCP handshake", async () => {
+test("historical semantic handshake does not claim a live MCP connection", async () => {
   const agentWorkspace = path.join(outputDir, "agent-workspace");
   await mkdir(path.join(agentWorkspace, "dist"), { recursive: true });
   await writeFile(path.join(agentWorkspace, "AGENTS.md"), "# 项目规则\n", "utf8");
@@ -832,7 +934,7 @@ test("agent connection status turns green after MCP handshake", async () => {
     agentName: "Codex",
     note: "测试握手",
   }, context);
-  assert.equal(ping.selected?.light, "green");
+  assert.equal(ping.selected?.light, "yellow");
   assert.equal(ping.handshake.revision, 1);
 
   const after = await getAgentConnectionStatus({ clientType: "codex" }, context);
