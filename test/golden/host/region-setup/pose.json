@@ -1,0 +1,513 @@
+{
+  "skeleton": {
+    "spine": "4.1.24"
+  },
+  "bones": [
+    {
+      "name": "root",
+      "x": 4,
+      "y": 2,
+      "rotation": 3
+    },
+    {
+      "name": "body",
+      "parent": "root",
+      "x": 2,
+      "y": 80,
+      "rotation": 4
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "x": 1,
+      "y": 25,
+      "rotation": 5
+    },
+    {
+      "name": "leftLeg1",
+      "parent": "body",
+      "x": -12,
+      "y": -5,
+      "rotation": -90,
+      "length": 40
+    },
+    {
+      "name": "leftLeg2",
+      "parent": "leftLeg1",
+      "x": 40,
+      "length": 40
+    },
+    {
+      "name": "leftLeg3",
+      "parent": "leftLeg2",
+      "x": 40
+    },
+    {
+      "name": "leftArm1",
+      "parent": "body",
+      "x": -12,
+      "y": 25,
+      "rotation": -90,
+      "length": 60
+    },
+    {
+      "name": "leftArm2",
+      "parent": "leftArm1",
+      "x": 60,
+      "length": 60
+    },
+    {
+      "name": "leftArm3",
+      "parent": "leftArm2",
+      "x": 60
+    },
+    {
+      "name": "rightLeg1",
+      "parent": "body",
+      "x": 12,
+      "y": -5,
+      "rotation": -90,
+      "length": 40
+    },
+    {
+      "name": "rightLeg2",
+      "parent": "rightLeg1",
+      "x": 40,
+      "length": 40
+    },
+    {
+      "name": "rightLeg3",
+      "parent": "rightLeg2",
+      "x": 40
+    },
+    {
+      "name": "rightArm1",
+      "parent": "body",
+      "x": 12,
+      "y": 25,
+      "rotation": -90,
+      "length": 60
+    },
+    {
+      "name": "rightArm2",
+      "parent": "rightArm1",
+      "x": 60,
+      "length": 60
+    },
+    {
+      "name": "rightArm3",
+      "parent": "rightArm2",
+      "x": 60
+    }
+  ],
+  "slots": [
+    {
+      "name": "bodySlot",
+      "bone": "body",
+      "attachment": "body"
+    },
+    {
+      "name": "accentSlot",
+      "bone": "root",
+      "attachment": "body"
+    }
+  ],
+  "skins": [
+    {
+      "name": "default",
+      "attachments": {
+        "bodySlot": {
+          "body": {
+            "type": "region",
+            "path": "body",
+            "width": 12,
+            "height": 24
+          },
+          "alternate": {
+            "type": "region",
+            "path": "body",
+            "width": 18,
+            "height": 24
+          }
+        },
+        "accentSlot": {
+          "body": {
+            "type": "region",
+            "path": "body",
+            "width": 12,
+            "height": 24
+          }
+        }
+      }
+    },
+    {
+      "name": "alternate",
+      "attachments": {
+        "bodySlot": {
+          "body": {
+            "type": "region",
+            "path": "body",
+            "width": 12,
+            "height": 18
+          }
+        },
+        "accentSlot": {
+          "body": {
+            "type": "region",
+            "path": "body",
+            "width": 12,
+            "height": 24
+          }
+        }
+      }
+    }
+  ],
+  "animations": {
+    "original": {},
+    "__host_pose": {
+      "bones": {
+        "body": {
+          "rotate": [
+            {
+              "value": 0
+            },
+            {
+              "time": 1,
+              "value": 0
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 4.000000006459047
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 4.000000006459047
+            }
+          ]
+        },
+        "head": {
+          "rotate": [
+            {
+              "value": 0
+            },
+            {
+              "time": 1,
+              "value": 0
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftLeg1": {
+          "rotate": [
+            {
+              "value": 8.375492504875638
+            },
+            {
+              "time": 1,
+              "value": 8.375492504875638
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftLeg2": {
+          "rotate": [
+            {
+              "value": -28.239604157983138
+            },
+            {
+              "time": 1,
+              "value": -28.239604157983138
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftLeg3": {
+          "rotate": [
+            {
+              "value": 12.864110468788112
+            },
+            {
+              "time": 1,
+              "value": 12.864110468788112
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightLeg1": {
+          "rotate": [
+            {
+              "value": -5.662554674538114
+            },
+            {
+              "time": 1,
+              "value": -5.662554674538114
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightLeg2": {
+          "rotate": [
+            {
+              "value": -0.0001810939254482946
+            },
+            {
+              "time": 1,
+              "value": -0.0001810939254482946
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightLeg3": {
+          "rotate": [
+            {
+              "value": -1.3372655667817526
+            },
+            {
+              "time": 1,
+              "value": -1.3372655667817526
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftArm1": {
+          "rotate": [
+            {
+              "value": 58.38786611986143
+            },
+            {
+              "time": 1,
+              "value": 58.38786611986143
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftArm2": {
+          "rotate": [
+            {
+              "value": -120.46035699050441
+            },
+            {
+              "time": 1,
+              "value": -120.46035699050441
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "leftArm3": {
+          "rotate": [
+            {
+              "value": 55.07249136240978
+            },
+            {
+              "time": 1,
+              "value": 55.07249136240978
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightArm1": {
+          "rotate": [
+            {
+              "value": 56.6855711889724
+            },
+            {
+              "time": 1,
+              "value": 56.6855711889724
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightArm2": {
+          "rotate": [
+            {
+              "value": -117.21115996699109
+            },
+            {
+              "time": 1,
+              "value": -117.21115996699109
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "rightArm3": {
+          "rotate": [
+            {
+              "value": 53.52558912038444
+            },
+            {
+              "time": 1,
+              "value": 53.52558912038444
+            }
+          ],
+          "translate": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "time": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        }
+      },
+      "slots": {
+        "bodySlot": {
+          "attachment": [
+            {
+              "time": 0,
+              "name": "body"
+            }
+          ]
+        },
+        "accentSlot": {
+          "attachment": [
+            {
+              "time": 0,
+              "name": "body"
+            }
+          ]
+        }
+      },
+      "drawOrder": [
+        {
+          "time": 0,
+          "offsets": [
+            {
+              "slot": "bodySlot",
+              "offset": 0
+            },
+            {
+              "slot": "accentSlot",
+              "offset": 0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

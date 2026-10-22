@@ -1,0 +1,13 @@
+{
+  "source": "既有真实 player 证据与当前重新计算的合成夹具；仅诊断，不新签发截图准入。",
+  "vertexError": 6.450221690101898e-9,
+  "changedRatio": 0.0015234375,
+  "maximumChannelError": 1,
+  "overLimitPixels": 0,
+  "worst": [],
+  "diagnostic4xMsaa": {
+    "changedRatio": 0.0015234375,
+    "maximumChannelError": 1,
+    "note": "仅独立复算旧 region 样本；不作为通用渲染证明或正式三张基线。"
+  }
+}

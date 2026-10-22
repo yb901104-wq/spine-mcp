@@ -1,5 +1,10 @@
 # 官方 JSON 规范审查
 
+## 2026-10-21 Host 只读导出适配
+
+Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后，只在 `.spine-mcp/live/` 生成不可变 player 候选；发布前复用现有结构与官方规范审查，并用官方 runtime 比较骨骼世界变换、附件、完整 drawOrder 与可见顶点，最大误差上限仍为 1e-4。live 文件不是可提交源资产，也不能借此修改 setup。规范字段、曲线敏感规则和 4.1.24 写入边界未放宽。C2 动画提交尚未接入。
+
+
 本文档记录当前 MCP 如何把 Spine 官方 JSON 导出格式转成可执行的写入审查规则。后续新增、修改或删除写入能力时，必须同步更新本文档和 `docs/MCP操作清单.md`。
 
 ## 规范来源
@@ -66,6 +71,8 @@ spine_set_curve 只修改已有骨骼关键帧曲线，复用既有官方规范�
 ## 解剖持杖手、身体视角及切片遮挡检查
 
 参考 observation.actionSemantics 支持 `version:1 / weaponHand:left|right / identityStatus:confirmed / anatomicalBasis / bodyView / bodyViewBasis / occlusion`。身体视角可为 `frontThreeQuarter`、`side`、`backThreeQuarter`，参考有不确定性时可用 `sideOrBackThreeQuarter`。遮挡项保存 `{front,back,basis}`，语义部位可为 `body` 或已有肢体线段编号（如 `rightArm.1`）。缺少必要遮挡关系返回无法验证，不默认为通过。
+
+参考 v2 的 `depth.evidence` 与 actionSemantics.occlusion 不同：前者按语义部位（`leftArm/rightArm/leftLeg/rightLeg/torso/head`）成对声明前后，只读目标 `drawOrder` 与 `slot.attachment` 判定，不写任何 JSON；`kind:scale`（靠投影缩短推断前后）不做自动判定。这些判定都不修改角色文件，属于只读校验。
 
 `spine_calibrate_visual_rig` 增加 `anatomicalSides` 与 `viewProfiles`，均绑定确认指纹。解剖左右映射保持跨阶段稳定；视角配置保存实际附件状态、躯干插槽和看图校准依据。姿态 `frame.action.driver` 明确实际目标驱动手（如 `rightHand`），骨架比较独立输出 `action.weaponHand`、`action.bodyView`、`action.occlusion.*`。身体视角从 runtime 实际附件配置匹配已确认 profile；未经校准不能只传一个“背面”标签通过。遮挡用 runtime 绘制顺序回读。Agent 判断仍参与视角配置校准，这不是自动像素识别或数学上的视觉保证。
 

@@ -59,3 +59,31 @@
 - Spine 编辑器导入：未验证。
 
 本轮增加快速稀疏姿态和参考帧浮点边界回归。旧已启动 MCP 进程/便携包不会自动获得源码修正，需重新加载或更新发布包。
+
+## 2026-10-20 v3 复测（同一份数据，未修改目标 JSON）
+
+v2 策略下 27 项全 pass 却被真人退回，说明指标维度不足。v3 结构指标在同一份 `ready-v4.pose.json` 与 `ready.reference.json` 上给出 6 项失败：
+
+| 指标 | 误差 | 门限 | 含义 |
+|---|---:|---:|---|
+| `body.shoulderLine` | 14.50° | 12° | 参考肩线更斜，目标肩线接近水平 |
+| `body.twist` | 25.38° | 12° | 参考肩髋同向，目标出现拧腰 |
+| `arm.left.wristReach` | 0.210 | 0.15 | 目标手臂比参考收得更近，外伸不足 |
+| `arm.left.wristTorsoHeight` | 0.279 | 0.12 | 目标腕位明显低于参考 |
+| `arm.left.wristHeadGap` | 0.379 | 0.20 | 目标手离头部过远（参考是跨身握持） |
+| `arm.right.wristHeadGap` | 0.330 | 0.20 | 后侧手同样偏离 |
+
+`leftArm.wrist` 旧方向指标仍为 0.138（门限 0.15）通过，印证「方向对、画面错」：只看方向角无法区分外伸与贴身。
+
+`body.shoulderSilhouette`、`head.orientation`、`head.turnBand`、`depth.*` 目前为 `unverifiable`，因为参考仍是 v1，没有轮廓点、面部锚点和前后证据。**这是预期状态，不是通过**；完成 v2 重标注后才具备判定力。
+
+结论：v3 能把原来的「说不出哪里不对」变成可量化的失败项，但 npc1 的正式验收仍需按 [准备姿态适配与修正闭环](准备姿态适配与修正闭环.md) 重标注四个阶段参考后重跑。
+
+
+## 2026-10-20 晚：参考 v2 重标注后的实测
+
+四个阶段已升级为参考 v2（面部锚点、可见轮廓、朝向档位、前后证据），visualRig 升 v2 并新增 face 锚点，参考与绑定均重新审查确认。同一份未修改的 `ready-v4.pose.json` 重跑比较，`ok:false`，7 项必要指标失败：
+
+`body.shoulderLine` 14.50°、`body.twist` 25.38°、`arm.left.wristReach` 0.210、`arm.left.wristTorsoHeight` 0.279、`arm.left.wristOutsideTorso`（参考在外、目标在内）、`arm.left.wristHeadGap` 0.379、`arm.right.wristHeadGap` 0.330。
+
+其中 `wristOutsideTorso` 直接对应原视觉判断「拳头收进躯干轮廓」，`leftArm.wrist` 旧方向指标仍以 0.138 通过。轮廓绝对宽度与头部朝向因体型差异与锚点语义不等价，降为诊断项。thrust 阶段另有 `resourceCapability`：参考声明侧背视角，当前资源没有已校准的侧背躯干切片。

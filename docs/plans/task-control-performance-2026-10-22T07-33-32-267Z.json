@@ -1,0 +1,47 @@
+{
+  "measuredAt": "2026-10-22T07:33:32.266Z",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "scope": "标准高维 Rosenbrock、共享 60 次数值迭代器；当前进程任务控制回调，不含 MCP 通知传输，不是实际美术角色/参考修正。",
+  "dimension": 96,
+  "iterations": 60,
+  "pairCount": 1,
+  "alternatingOrder": true,
+  "pairs": [
+    {
+      "syncMs": 375.07270000000017,
+      "taskMs": 351.6821,
+      "overheadPercent": -6.236284325678776,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.1782999999995809
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 202.9079999999999
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 351.6724999999997
+        }
+      ]
+    }
+  ],
+  "syncMedianMs": 375.07270000000017,
+  "taskMedianMs": 351.6821,
+  "overheadPercent": -6.236284325678776,
+  "cancellation": {
+    "requestedAfterMs": 53.21799999999985,
+    "stoppedAfterRequestMs": 0.5576999999998407,
+    "evaluations": 781,
+    "noBackgroundWork": true,
+    "code": "CANCELLED"
+  },
+  "notificationDensityPassed": false,
+  "overheadPassed": true,
+  "cancellationPassed": true
+}

@@ -55,6 +55,10 @@ export async function listBackups(args: ListBackupsOptions = {}, context: ToolCo
 }
 
 export async function restoreBackup(args: RestoreBackupOptions, context: ToolContext = {}) {
+  if(args.dryRun===false) return (await import('./writerOwnership.js')).withWorkspaceWrite(context,()=>restoreBackupUnlocked(args,context));
+  return restoreBackupUnlocked(args,context);
+}
+async function restoreBackupUnlocked(args: RestoreBackupOptions, context: ToolContext) {
   if (!args.confirm) throw new Error("恢复备份属于高风险操作，必须显式传 confirm: true。");
   const dryRun = args.dryRun ?? true;
   const target = await readSpineDocument(args.targetFilePath, context);

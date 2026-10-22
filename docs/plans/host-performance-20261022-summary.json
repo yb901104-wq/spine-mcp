@@ -1,0 +1,89 @@
+{
+  "summarizedAt": "2026-10-22T02:23:01.740Z",
+  "files": [
+    "docs/plans/host-performance-20261022-final-round1.json",
+    "docs/plans/host-performance-20261022-final-round2.json",
+    "docs/plans/host-performance-20261022-final-round3.json"
+  ],
+  "renderer": "canvas-region-msaa4-v4",
+  "workloadFingerprint": "d912b1b72da3b86e0824090278f7abfd756f520025e5f4b096e029a7b9adfca4",
+  "sampleCount": 90,
+  "scope": "合成关节与两个 region，非真实美术验收",
+  "coldStartMs": [
+    85.93669999999997,
+    68.77300000000002,
+    103.5548
+  ],
+  "phases": {
+    "patchMs": {
+      "p50": 6.913800000000265,
+      "p95": 12.917400000000043,
+      "maximum": 21.499500000000126
+    },
+    "snapshotMs": {
+      "p50": 3.686100000000124,
+      "p95": 7.001599999999598,
+      "maximum": 8.139899999999898
+    },
+    "evaluateCompareExportMs": {
+      "p50": 17.27469999999994,
+      "p95": 33.38110000000006,
+      "maximum": 43.01170000000002
+    },
+    "publishMs": {
+      "p50": 5.161000000000058,
+      "p95": 8.298000000000002,
+      "maximum": 13.546199999999999
+    },
+    "frameMs": {
+      "p50": 22.648899999999912,
+      "p95": 33.83279999999991,
+      "maximum": 49.82069999999999
+    },
+    "endToEndMs": {
+      "p50": 56.19309999999996,
+      "p95": 82.35009999999966,
+      "maximum": 124.26970000000006
+    },
+    "stateMs": {
+      "p50": 4.386700000000019,
+      "p95": 8.689200000000028,
+      "maximum": 12.730000000000018
+    }
+  },
+  "roundP95": [
+    {
+      "patchMs": 8.372299999999996,
+      "snapshotMs": 4.760299999999916,
+      "evaluateCompareExportMs": 19.30470000000014,
+      "publishMs": 6.569599999999809,
+      "frameMs": 25.354700000000093,
+      "endToEndMs": 62.29080000000022,
+      "stateMs": 5.981199999999717
+    },
+    {
+      "patchMs": 15.951299999999947,
+      "snapshotMs": 7.333299999999781,
+      "evaluateCompareExportMs": 38.83100000000013,
+      "publishMs": 8.674200000000155,
+      "frameMs": 33.83279999999991,
+      "endToEndMs": 93.76369999999997,
+      "stateMs": 11.941000000000031
+    },
+    {
+      "patchMs": 11.40359999999987,
+      "snapshotMs": 5.780500000000075,
+      "evaluateCompareExportMs": 33.38110000000006,
+      "publishMs": 9.563699999999926,
+      "frameMs": 39.249000000000024,
+      "endToEndMs": 105.5752,
+      "stateMs": 9.36239999999998
+    }
+  ],
+  "budgets": {
+    "stateMs": 20,
+    "frameMs": 50,
+    "endToEndMs": 120
+  },
+  "allRoundsPassed": true
+}

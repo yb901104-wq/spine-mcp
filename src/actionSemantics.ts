@@ -18,7 +18,11 @@ export function readActionState(skeleton:any,rig:any,frame:any) {
  const attachments=Object.fromEntries(skeleton.slots.map((s:any)=>[s.data.name,s.getAttachment()?.name??null]));
  const profiles=(rig.viewProfiles??[]).filter((p:any)=>Object.entries(p.attachments).every(([s,n])=>attachments[s]===n));
  const views=[...new Set(profiles.map((p:any)=>p.bodyView))];
- return {driver:frame.action?.driver??null,anatomicalSides:rig.anatomicalSides??null,observedView:views.length===1?views[0]:null,viewEvidence:profiles,attachments,drawOrder:skeleton.drawOrder.map((s:any)=>s.data.name)};
+ const headBone=rig.nodes?.head?.bone;
+ return {driver:frame.action?.driver??null,anatomicalSides:rig.anatomicalSides??null,observedView:views.length===1?views[0]:null,viewEvidence:profiles,attachments,drawOrder:skeleton.drawOrder.map((s:any)=>s.data.name),
+  // 躯干切片与头部切片供轮廓宽度、层序回读使用；缺失时相关指标按 unverifiable 处理，不猜测。
+  torsoSlots:[...new Set(profiles.flatMap((p:any)=>p.bodySlots??[]))] as string[],
+  headSlot:headBone?((skeleton.slots as any[]).find((s:any)=>s.bone?.data?.name===headBone)?.data?.name??null):null};
 }
 export function compareActionSemantics(reference:any,target:any,correspondence:any) {
  const a=reference.actionSemantics;if(!a)return [];
@@ -36,4 +40,33 @@ export function compareActionSemantics(reference:any,target:any,correspondence:a
   add(`action.occlusion.${i}`,pair,known?{front:f,back:b}:null,known,known&&Math.min(...f.map(x=>order.indexOf(x)))>Math.max(...b.map(x=>order.indexOf(x))),['body']);
  }
  return metrics;
+}
+// 前后层序：参考声明 {a,b,relation,kind}，目标只用 drawOrder 索引回读，不做三维推断。
+function depthNodes(part:string){
+ const side=part.startsWith('left')?'left':part.startsWith('right')?'right':null;
+ if(!side)return [part==='torso'?'body':'head'];
+ return part.endsWith('Arm')?[side+'Shoulder',side+'Elbow',side+'Wrist']:[side+'Hip',side+'Knee',side+'Ankle'];
+}
+export function compareDepth(reference:any,target:any){
+ const d=reference.depth;if(!d?.evidence?.length)return [];
+ const s=target.actionState,order:string[]=s?.drawOrder??[];
+ const slotsFor=(part:string)=>part==='torso'?(s?.torsoSlots??[]):part==='head'?(s?.headSlot?[s.headSlot]:[]):['0','1'].flatMap(i=>target.segments?.[part+'.'+i]?.attachments?.map((p:any)=>p.slot)??[]);
+ const visible=(list:string[])=>list.filter(x=>!!s?.attachments&&s.attachments[x]!==null&&order.includes(x));
+ const bounds=(list:string[])=>{const idx=list.map(x=>order.indexOf(x));return [Math.min(...idx),Math.max(...idx)];};
+ return (d.evidence as any[]).map(e=>{
+  const a=visible(slotsFor(e.a)),b=visible(slotsFor(e.b));
+  // kind:'scale' 靠投影缩短推断前后，2D 不能自动验证，交视觉审查。
+  const base=a.length>0&&b.length>0&&e.kind!=='scale';
+  const [front,back]=e.relation==='front'?[a,b]:[b,a];
+  const fIdx=front.map(x=>order.indexOf(x)),bIdx=back.map(x=>order.indexOf(x));
+  // 严格层序：前层每个槽都必须晚于后层的最晚槽；交错时不做猜测，交人工判断。
+  const strictFront=base&&Math.min(...fIdx)>Math.max(...bIdx),strictBack=base&&Math.max(...fIdx)<Math.min(...bIdx);
+  const known=base&&(strictFront||strictBack);
+  return {
+   id:`depth.${e.id}`,nodes:[...depthNodes(e.a),...depthNodes(e.b)],
+   reference:{a:e.a,b:e.b,relation:e.relation,kind:e.kind},
+   target:base?{aSlots:a,bSlots:b,orderA:bounds(a),orderB:bounds(b),interleaved:!strictFront&&!strictBack}:{aSlots:a,bSlots:b},
+   error:known?(strictFront?0:1):null,tolerance:0,required:true,status:known?(strictFront?'pass':'fail'):'unverifiable',
+  };
+ });
 }

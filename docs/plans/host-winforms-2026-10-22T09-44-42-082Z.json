@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-10-22T09:44:42.085Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-22T09-44-42-082Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "native": {
+    "ok": false,
+    "checks": [
+      "当前 Host 为观察模式",
+      "页面 URL 不含凭据",
+      "未开放原生对象或 WebMessage 桥"
+    ],
+    "error": "System.InvalidOperationException: 等待失败：后台可见性；Host：已连接 · spine-host-iuJ01i · 会话 eb2c3543。写入、资源和审查状态以工作台为准。；导航结果：True / Unknown\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>g__Wait|1>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 28\r\n--- End of stack trace from previous location ---\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 47",
+    "time": "2026-10-22T09:45:04.277705+00:00"
+  },
+  "error": "{\"ok\":false,\"checks\":[\"当前 Host 为观察模式\",\"页面 URL 不含凭据\",\"未开放原生对象或 WebMessage 桥\"],\"error\":\"System.InvalidOperationException: 等待失败：后台可见性；Host：已连接 · spine-host-iuJ01i · 会话 eb2c3543。写入、资源和审查状态以工作台为准。；导航结果：True / Unknown\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>g__Wait|1>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 28\\r\\n--- End of stack trace from previous location ---\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 47\",\"time\":\"2026-10-22T09:45:04.277705+00:00\"}\n\n1 !== 0\n",
+  "passed": false,
+  "finishedAt": "2026-10-22T09:45:06.128Z"
+}

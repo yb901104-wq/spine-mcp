@@ -1,0 +1,124 @@
+{
+  "startedAt": "2026-10-22T09:24:52.307Z",
+  "scope": "实际 MCP SDK stdio 与合成 region 渲染；不是实际参考修正、美术批准或编辑器导入验收。",
+  "pid": 34836,
+  "noTokenNotifications": 0,
+  "completed": {
+    "elapsedMs": 3505.7125,
+    "progress": [
+      {
+        "progress": 1,
+        "message": "逐帧生成预览",
+        "elapsedMs": 15.731400000000122
+      },
+      {
+        "progress": 2,
+        "message": "逐帧生成预览",
+        "elapsedMs": 243.92620000000034
+      },
+      {
+        "progress": 3,
+        "message": "逐帧生成预览",
+        "elapsedMs": 462.61410000000024
+      },
+      {
+        "progress": 4,
+        "message": "逐帧生成预览",
+        "elapsedMs": 709.2698
+      },
+      {
+        "progress": 5,
+        "message": "逐帧生成预览",
+        "elapsedMs": 954.7361000000001
+      },
+      {
+        "progress": 6,
+        "message": "逐帧生成预览",
+        "elapsedMs": 1158.1112000000003
+      },
+      {
+        "progress": 7,
+        "message": "逐帧生成预览",
+        "elapsedMs": 1370.9397000000004
+      },
+      {
+        "progress": 8,
+        "message": "逐帧生成预览",
+        "elapsedMs": 1583.8661000000002
+      },
+      {
+        "progress": 9,
+        "message": "逐帧生成预览",
+        "elapsedMs": 1785.6692000000003
+      },
+      {
+        "progress": 10,
+        "message": "逐帧生成预览",
+        "elapsedMs": 1997.8470000000002
+      },
+      {
+        "progress": 11,
+        "message": "逐帧生成预览",
+        "elapsedMs": 2200.2131000000004
+      },
+      {
+        "progress": 12,
+        "message": "逐帧生成预览",
+        "elapsedMs": 2422.1132000000002
+      },
+      {
+        "progress": 13,
+        "message": "逐帧生成预览",
+        "elapsedMs": 2639.4982999999997
+      },
+      {
+        "progress": 14,
+        "message": "逐帧生成预览",
+        "elapsedMs": 2846.0627
+      },
+      {
+        "progress": 15,
+        "message": "逐帧生成预览",
+        "elapsedMs": 3045.1926
+      },
+      {
+        "progress": 16,
+        "message": "逐帧生成预览",
+        "elapsedMs": 3246.0072999999998
+      },
+      {
+        "progress": 17,
+        "message": "逐帧生成预览",
+        "elapsedMs": 3469.1542999999997
+      },
+      {
+        "progress": 18,
+        "message": "动画预览已完成",
+        "elapsedMs": 3503.793
+      },
+      {
+        "progress": 19,
+        "total": 19,
+        "message": "本次工具执行结束；执行成功不代表视觉批准。",
+        "elapsedMs": 3504.9636000000005
+      }
+    ],
+    "count": 19,
+    "frameCount": 120
+  },
+  "cancelled": {
+    "clientOutcome": {
+      "error": "McpError: MCP error -32001: AbortError: This operation was aborted"
+    },
+    "statusLatencyMs": 30.837500000000546,
+    "locksReleasedAfterMs": 34.05789999999979,
+    "renderedFrames": 4,
+    "failedStatus": "failed",
+    "partialCachePublished": false,
+    "noFramesAfterStop": true,
+    "serverStillResponds": true,
+    "sourceUnchanged": true
+  },
+  "passed": true,
+  "finishedAt": "2026-10-22T09:24:57.231Z"
+}

@@ -1,17 +1,28 @@
+import {withStrict} from './runtimeCache.js';
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { readSpineDocument, resolveWorkspacePath, type ToolContext } from "./spineJson.js";
 import { readCharacterMapping, validateMapping, type CharacterMapping } from "./motionEngine.js";
 import { loadMotionRuntime } from "./motionRuntime.js";
+import { withWorkspaceWrite } from './writerOwnership.js';
+import { checkpoint } from './taskControl.js';
+import { invalidate } from './runtimeCache.js';
 
 export const hashObject = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 export const rigHash = (json: any) => hashObject(Object.fromEntries(Object.entries(json).filter(([k]) => k !== "animations" && k !== "skeleton")));
 export const mappingFingerprint = (mapping: CharacterMapping) => hashObject({ bones: mapping.bones, calibration: mapping.calibration, atlasPath: mapping.atlasPath, skin: mapping.skin });
 export async function saveJson(filePath: string, value: any, context: ToolContext = {}) {
+  checkpoint('保存 JSON');
+  const asset = value?.skeleton?.spine || value?.frame && ['standing','action'].includes(value.kind) || value?.bones?.body && value?.character || value?.nodes && value?.filePath && value?.mappingPath || value?.name && Number.isFinite(value?.duration);
+  const write = () => saveJsonUnlocked(filePath, value, context);
+  return asset ? withWorkspaceWrite(context, write) : write();
+}
+async function saveJsonUnlocked(filePath: string, value: any, context: ToolContext) {
   const absolute = resolveWorkspacePath(filePath, context);
   await mkdir(path.dirname(absolute), { recursive: true });
   await writeFile(absolute, JSON.stringify(value, null, 2) + "\n", "utf8");
+  invalidate(absolute);
 }
 export async function createMappingDraft(args: { filePath: string; mappingPath: string; mapping: CharacterMapping; dryRun?: boolean }, context: ToolContext = {}) {
   const document = await readSpineDocument(args.filePath, context);
@@ -65,6 +76,8 @@ export async function assertConfirmedMapping(mapping: CharacterMapping, json: an
   return report;
 }
 export async function confirmMapping(args: { filePath: string; mappingPath: string; confirmedBy: string; semanticChecks: string[]; dryRun?: boolean }, context: ToolContext = {}) {
+ return withStrict(async()=>{
+
   const document = await readSpineDocument(args.filePath, context), mapping = await readCharacterMapping(args.mappingPath, context);
   if (mapping.status !== "calibrated" || !mapping.reportPath || mapping.sourceHash !== document.hash) throw new Error("请先对当前角色执行校准。");
   if (!args.confirmedBy?.trim()) throw new Error("必须记录确认者。");
@@ -82,4 +95,6 @@ export async function confirmMapping(args: { filePath: string; mappingPath: stri
   Object.assign(report, { status: "confirmed", confirmedBy: mapping.confirmedBy, confirmedAt: mapping.confirmedAt, semanticChecks: args.semanticChecks });
   if (args.dryRun === false) { await saveJson(mapping.reportPath, report, context); await saveJson(args.mappingPath, mapping, context); }
   return { ok: true, dryRun: args.dryRun ?? true, mapping, report };
+
+ });
 }

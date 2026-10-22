@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-10-22T09:40:15.524Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-22T09-40-15-519Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "native": {
+    "ok": false,
+    "checks": [],
+    "error": "System.InvalidOperationException: CoreWebView2 members cannot be accessed after the WebView2 control is disposed.\r\n ---> System.Runtime.InteropServices.COMException (0x8007139F): 组或资源的状态不是执行请求操作的正确状态。 (0x8007139F)\r\n   at Microsoft.Web.WebView2.Core.Raw.ICoreWebView2.ExecuteScript(String javaScript, ICoreWebView2ExecuteScriptCompletedHandler handler)\r\n   at Microsoft.Web.WebView2.Core.CoreWebView2.ExecuteScriptAsync(String javaScript)\r\n   --- End of inner exception stack trace ---\r\n   at Microsoft.Web.WebView2.Core.CoreWebView2.ExecuteScriptAsync(String javaScript)\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_1.<<Run>g__Js|5>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 40\r\n--- End of stack trace from previous location ---\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<Run>g__Wait|0_1(Func`1 condition, String label) in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 27\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 41",
+    "time": "2026-10-22T09:40:24.5993656+00:00"
+  },
+  "error": "{\"ok\":false,\"checks\":[],\"error\":\"System.InvalidOperationException: CoreWebView2 members cannot be accessed after the WebView2 control is disposed.\\r\\n ---> System.Runtime.InteropServices.COMException (0x8007139F): 组或资源的状态不是执行请求操作的正确状态。 (0x8007139F)\\r\\n   at Microsoft.Web.WebView2.Core.Raw.ICoreWebView2.ExecuteScript(String javaScript, ICoreWebView2ExecuteScriptCompletedHandler handler)\\r\\n   at Microsoft.Web.WebView2.Core.CoreWebView2.ExecuteScriptAsync(String javaScript)\\r\\n   --- End of inner exception stack trace ---\\r\\n   at Microsoft.Web.WebView2.Core.CoreWebView2.ExecuteScriptAsync(String javaScript)\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_1.<<Run>g__Js|5>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 40\\r\\n--- End of stack trace from previous location ---\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<Run>g__Wait|0_1(Func`1 condition, String label) in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 27\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 41\",\"time\":\"2026-10-22T09:40:24.5993656+00:00\"}\n\n1 !== 0\n",
+  "passed": false,
+  "finishedAt": "2026-10-22T09:40:26.226Z"
+}

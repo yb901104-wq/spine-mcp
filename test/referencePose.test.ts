@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { createCanvas } from '@napi-rs/canvas';
 import { referenceRoles, referenceChecks, createReferencePose, renderReferencePoseSheet, reviewReferencePose, requireReferencePose, drawReferenceSkeleton } from '../src/referencePose.js';
+import { withV2 } from './helpers/referenceV2.js';
 import {referenceFrameAt} from '../src/animationReview.js';
 
 test('synchronized reference frames respect floating point event boundaries',()=>{
@@ -18,7 +19,7 @@ test('reference annotations must declare every joint, inferred visibility, and b
   const cv=createCanvas(100,100);await writeFile(path.join(root,'ref.png'),cv.toBuffer('image/png'));
   const points:any=Object.fromEntries(referenceRoles.map((r,i)=>[r,{visibility:'visible',x:20+i,y:20+i,confidence:.7,basis:'测试轮廓'}]));
   points.leftElbow={visibility:'occluded',x:30,y:30,estimated:true,confidence:.3,basis:'测试推测'};points.rightElbow={visibility:'unknown'};
-  const observation={imagePath:'ref.png',time:0,facing:'right',crop:[0,0,100,100],height:80,groundY:90,basis:'测试参考',points};
+  const observation=withV2({imagePath:'ref.png',time:0,facing:'right',crop:[0,0,100,100],height:80,groundY:90,basis:'测试参考',points});
   await assert.rejects(()=>createReferencePose({referencePosePath:'bad.json',observation:{...observation,points:{head:points.head}}},c),/必须声明/);
   await assert.rejects(()=>createReferencePose({referencePosePath:'bad.json',observation:{...observation,points:{...points,leftElbow:{...points.leftElbow,estimated:false}}}},c),/estimated/);
   await createReferencePose({referencePosePath:'ref.pose.json',observation,dryRun:false},c);

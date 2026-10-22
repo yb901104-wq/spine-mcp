@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-10-21T16:32:47.906Z",
+  "goldenPassed": true,
+  "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+  "reasons": [],
+  "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。",
+  "cases": [
+    {
+      "id": "region-setup",
+      "changedRatio": 0.0015234375,
+      "maximumChannelError": 1
+    },
+    {
+      "id": "region-presentation",
+      "changedRatio": 0.000810546875,
+      "maximumChannelError": 1
+    },
+    {
+      "id": "region-rotated-overlap",
+      "changedRatio": 0.00146484375,
+      "maximumChannelError": 1
+    }
+  ]
+}

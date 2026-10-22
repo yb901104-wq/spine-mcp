@@ -2,6 +2,25 @@
 
 这是 Spine MCP 的 WinForms 观察壳。它不是动画编辑器，也不是操作主体；它只读取 Agent/MCP 写入的预览会话状态，并展示当前预览画面、操作说明、日志、验证流水线结果和 Agent 连接状态。
 
+## Host v1.8 源码进展与 WinForms 边界
+
+2026-10-22 已在源码加入“动画预览 / Host 工作台”双页签，真实 WinForms/WebView2 自检通过 23 项检查。便携发布包仍未重新打包，旧 exe 不自动升级。完整状态见 [实施与验收](../../docs/Host实施与验收-20261021.md)。
+
+[动画工作区主工单](../../docs/plans/host-evolution.md) 定义独立工程/会话内核，WinForms 继续负责观察。Host 页复用既有页面和版本/审查状态，左侧明确区分旧预览会话日志与当前 Host 状态；C2 的完整能力面板仍待后续扩展。截图分层已确认并实现，连接成功不代表可写、动作通过或编辑器导入通过。
+
+选择“Host 工作台”时，从当前本机预览服务的 `/api/config` 确定工作区，再核对 `.spine-mcp/host-port.json` 与实际 Host 的 API/session/instance/startedAt/project 身份。只读取观察发现文件，不读取 `host-control.json`；URL 不含 token，不启动、停止或接管 Host。没有服务时提示由 Agent 打开。原启动脚本、预览端口策略和 Agent 配置流程未改；Host 仍为本机独立高端口服务，公开写入保持关闭。
+
+切到旧预览或最小化时卸载 Host 页面，`pagehide` 上报 hidden；切回或还原后重新核对并加载当前状态，不复用旧 DOM。文档、revision、历史和相机仍由 Host 保留。不能只依赖 WebView2 控件 Visible 或 DOM visibilityState，实测它们不总随页签同步。外部导航、新窗口及根外 HTTP 资源被阻止；未启用原生对象/WebMessage 桥。
+
+构建与隔离自检：
+
+```powershell
+dotnet build apps/winforms-observer/SpineMcp.WinFormsObserver.csproj --no-restore
+npx tsx scripts/acceptance-winforms-host.ts
+```
+
+自检会启动真实旧预览服务、观察 Host 和 WebView2，在合成夹具中验证身份负例、后台卸载、最小化恢复、来源限制、重连及浏览器退出，生成独立时间戳报告和诊断图；不自动批准姿态。需要正常桌面进程权限；受限进程的 WebView2 导航失败不能当成功。自检内部使用显式 `--host-self-test --workspace ... --preview-url ... --report ... --screenshot ...`，输出必须在该隔离工作区内且不得覆盖已有文件。原 `--self-test` 便携启动检测保持独立。
+
 ## 启动前提
 
 便携版使用 `scripts/publish-observer.ps1` 发布 Windows x64 自包含 exe。双击发布目录的 `SpineMcp.WinFormsObserver.exe` 后选择项目，自动启动随附 runtime 中的预览服务；包内自带 .NET 和 Node，只需安装 WebView2。不能只复制 exe，必须保留 runtime 目录。可传 `--workspace "项目路径"` 跳过目录选择；`--self-test --workspace "测试目录"` 检查随附预览服务与 WebView2，结果写入发布目录 `self-test.json`。退出时仅停止本实例启动的服务。

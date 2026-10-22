@@ -34,14 +34,25 @@ public sealed class MainForm : Form
     private readonly Button openExternalButton = new();
     private readonly Button refreshButton = new();
     private readonly WebView2 webView = new();
+    private readonly TabControl previewTabs = new() { Dock = DockStyle.Fill };
+    private readonly HostObserverPanel hostPanel = new();
     private int? lastRevision;
     private string? lastPreviewUrl;
     private string? lastValidationKey;
     private string? lastStopCommand;
     private string? lastLogDirectory;
+    private readonly bool hostSelfTest;
+    internal HostObserverPanel HostPanel => hostPanel;
+    internal void SelectPreviewTab(int index) => previewTabs.SelectedIndex = index;
+    internal void ClosePreviewBrowsersForSelfTest()
+    {
+        if (!hostSelfTest) throw new InvalidOperationException("仅显式 Host 自检可调用。");
+        webView.Dispose(); hostPanel.Dispose();
+    }
 
     public MainForm(string[]? args = null)
     {
+        hostSelfTest = args?.Contains("--host-self-test") == true;
         Text = "Spine MCP 观察平台";
         Width = 1280;
         Height = 820;
@@ -58,7 +69,7 @@ public sealed class MainForm : Form
         await InitializeWebViewAsync();
         RefreshRuntimeState();
         await RefreshSessionAsync(forceNavigate: true);
-        pollTimer.Start();
+        if (!hostSelfTest) pollTimer.Start();
     }
 
     protected override void Dispose(bool disposing)
@@ -292,19 +303,44 @@ public sealed class MainForm : Form
         };
         openExternalButton.Text = "外部打开";
         openExternalButton.AutoSize = true;
-        openExternalButton.Click += (_, _) => OpenExternal(lastPreviewUrl);
+        openExternalButton.Click += (_, _) => OpenExternal(previewTabs.SelectedIndex == 1 ? hostPanel.Connection?.Endpoint.AbsoluteUri : lastPreviewUrl);
         buttonRow.Controls.Add(copyUrlButton);
         buttonRow.Controls.Add(openExternalButton);
         side.Controls.Add(buttonRow);
 
         webView.Dock = DockStyle.Fill;
-        root.Controls.Add(webView, 1, 0);
+        var legacyPage = new TabPage("动画预览"); legacyPage.Controls.Add(webView);
+        var hostPage = new TabPage("Host 工作台"); hostPage.Controls.Add(hostPanel);
+        hostPanel.PreviewBaseUrl = () => NormalizeBaseUrl(previewServerInput.Text);
+        previewTabs.TabPages.Add(legacyPage); previewTabs.TabPages.Add(hostPage);
+        hostPanel.SetPresentationVisible(false);
+        previewTabs.SelectedIndexChanged += async (_, _) =>
+        {
+            hostPanel.SetPresentationVisible(previewTabs.SelectedTab == hostPage && WindowState != FormWindowState.Minimized);
+            if (previewTabs.SelectedTab == hostPage)
+            {
+                webView.CoreWebView2?.Navigate("about:blank");
+                await hostPanel.RefreshFromPreviewAsync();
+            }
+            await RefreshSessionAsync(forceNavigate: true);
+        };
+        Resize += async (_, _) =>
+        {
+            var visible = previewTabs.SelectedIndex == 1 && WindowState != FormWindowState.Minimized;
+            hostPanel.SetPresentationVisible(visible);
+            if (visible) await hostPanel.RefreshFromPreviewAsync();
+        };
+        root.Controls.Add(previewTabs, 1, 0);
     }
 
     private void ConfigureTimer()
     {
         pollTimer.Interval = 1200;
-        pollTimer.Tick += async (_, _) => await RefreshSessionAsync(forceNavigate: false);
+        pollTimer.Tick += async (_, _) =>
+        {
+            if (previewTabs.SelectedIndex == 1) await hostPanel.RefreshFromPreviewAsync();
+            await RefreshSessionAsync(forceNavigate: false);
+        };
     }
 
     private async Task InitializeWebViewAsync()
@@ -340,11 +376,11 @@ public sealed class MainForm : Form
             var shouldNavigate = forceNavigate || lastRevision != session.Revision || lastPreviewUrl != session.PreviewUrl.Url;
             lastRevision = session.Revision;
             lastPreviewUrl = session.PreviewUrl.Url;
-            if (shouldNavigate && !string.IsNullOrWhiteSpace(session.Context.FilePath))
+            if (previewTabs.SelectedIndex == 0 && shouldNavigate && !string.IsNullOrWhiteSpace(session.Context.FilePath))
             {
                 await RefreshValidationAsync(baseUrl, session);
             }
-            if (shouldNavigate && !string.IsNullOrWhiteSpace(lastPreviewUrl) && webView.CoreWebView2 is not null)
+            if (previewTabs.SelectedIndex == 0 && shouldNavigate && !string.IsNullOrWhiteSpace(lastPreviewUrl) && webView.CoreWebView2 is not null)
             {
                 webView.CoreWebView2.Navigate(lastPreviewUrl);
             }
@@ -383,6 +419,14 @@ public sealed class MainForm : Form
             .Select(entry => $"{entry.Time} {entry.Level} {FormatTool(entry.ToolName)}{entry.Message}"));
 
         urlBox.Text = session.PreviewUrl.Url ?? string.Empty;
+        if (previewTabs.SelectedIndex == 1)
+        {
+            contextLabel.Text = "当前上下文：以 Host 工作台内的工程、文档和完整版本为准。";
+            operationLabel.Text = "Host 操作与审查：以工作台状态为准；下方日志属于预览服务会话。";
+            validationLabel.Text = "验证：Host 内分别显示数值、截图准入、视觉和编辑器导入状态。";
+            logBox.Text = "预览服务会话日志（不代表当前 Host 操作）" + Environment.NewLine + logBox.Text;
+            urlBox.Text = hostPanel.Connection?.Endpoint.AbsoluteUri ?? string.Empty;
+        }
     }
 
     private async Task RefreshValidationAsync(string baseUrl, PreviewSessionResponse session)

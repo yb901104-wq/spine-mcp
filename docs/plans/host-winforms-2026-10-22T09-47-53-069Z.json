@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-10-22T09:47:53.073Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-22T09-47-53-069Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "native": {
+    "ok": false,
+    "checks": [
+      "当前 Host 为观察模式",
+      "页面 URL 不含凭据",
+      "未开放原生对象或 WebMessage 桥",
+      "切到旧预览后卸载 Host 页，服务实际收到 hidden",
+      "切回后从当前 Host 重新加载页面",
+      "跨来源导航在请求前阻止"
+    ],
+    "error": "System.InvalidOperationException: 阻止导航后保留原 Host 页面\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<Run>g__Check|2(Boolean value, String label) in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 30\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 71",
+    "time": "2026-10-22T09:48:07.2336187+00:00"
+  },
+  "error": "{\"ok\":false,\"checks\":[\"当前 Host 为观察模式\",\"页面 URL 不含凭据\",\"未开放原生对象或 WebMessage 桥\",\"切到旧预览后卸载 Host 页，服务实际收到 hidden\",\"切回后从当前 Host 重新加载页面\",\"跨来源导航在请求前阻止\"],\"error\":\"System.InvalidOperationException: 阻止导航后保留原 Host 页面\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<Run>g__Check|2(Boolean value, String label) in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 30\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 71\",\"time\":\"2026-10-22T09:48:07.2336187+00:00\"}\n\n1 !== 0\n",
+  "passed": false,
+  "finishedAt": "2026-10-22T09:48:08.929Z"
+}

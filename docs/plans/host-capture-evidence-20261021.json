@@ -1,0 +1,73 @@
+{
+  "fixture": "合成夹具；不代表美术验收",
+  "elapsedMs": 142.16019999999997,
+  "evidenceSchema": 2,
+  "captureId": "1fdb3f80-5f8d-4db8-a2ad-1b6dc0553d38",
+  "capturedAt": "2026-10-21T13:25:44.116Z",
+  "version": {
+    "sessionId": "1df5e8db-d7f0-4f57-9576-9660cb437e3c",
+    "documentId": "988822d9afca19d6b245e48acc88792378464ede262bf16ffd79b3e0cd9b4a2c",
+    "openEpoch": "5b678623-efc1-4437-bd6c-b9eca4508208",
+    "revision": 0
+  },
+  "snapshotHash": "bce7d0e160124d1b125181126ac70da4e4aa9643c262574b5da252ac424d25d7",
+  "source": "player",
+  "contentHash": "3784eeeebbd1825f086cf3b64eed09840542b6780737bb70d315a6fc22d2090b",
+  "dependencyFingerprint": "f7a956618eedcd6860c3d305146fe95d00e037f1fcad9483868358eb717e122b",
+  "derivedHash": "5793519c6e1c06feef49ee03f316a1b377915946af34c75689fe56126fe3b216",
+  "candidateHash": "6e5aaec99ebd0f584a19b9a6bf2c59dea88d9d1b8443ce61b20a36d8ace43634",
+  "camera": {
+    "minX": -116.00000019377153,
+    "maxX": 124.00000019377153,
+    "minY": -18.000000032295254,
+    "maxY": 222.0000003552478
+  },
+  "viewport": {
+    "width": 320,
+    "height": 320
+  },
+  "canvas": {
+    "width": 320,
+    "height": 320
+  },
+  "dpr": 1,
+  "runtime": {
+    "player": "4.1.56",
+    "core": "4.1.56",
+    "replaySchema": 1
+  },
+  "rendererParity": {
+    "status": "unverified",
+    "reportHash": null,
+    "reasons": [
+      "尚无可验证的三张真实 player 黄金帧基线，或基线清单无法读取。"
+    ]
+  },
+  "captureValidity": {
+    "status": "verified",
+    "checks": {
+      "version": true,
+      "dependencies": true,
+      "candidate": true,
+      "runtimeReadback": true,
+      "resourceHashes": true,
+      "playerScript": true,
+      "fixedCamera": true,
+      "visible": true,
+      "canvas": true,
+      "viewport": true
+    },
+    "reasons": []
+  },
+  "evidenceEligible": true,
+  "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+  "resourceHashes": {
+    "pose.json": "6e5aaec99ebd0f584a19b9a6bf2c59dea88d9d1b8443ce61b20a36d8ace43634",
+    "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+    "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+  },
+  "note": "临时合成工程中的真实官方 player；不是美术视觉、性能分位数或编辑器导入验收。Host 重启后须重新采集。",
+  "pngHash": "0fe3b222f0b8c6e9634fda4fd998bb2d2b7fa51f59e8876c6b6ddd097a1cd3eb",
+  "boneReadbackCount": 15,
+  "visibleAttachmentReadbackCount": 2
+}

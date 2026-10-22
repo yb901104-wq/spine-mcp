@@ -1,0 +1,256 @@
+{
+  "measuredAt": "2026-10-22T09:28:43.835Z",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "scope": "标准高维 Rosenbrock、共享 60 次数值迭代器；当前进程任务控制回调，不含 MCP 通知传输，不是实际美术角色/参考修正。",
+  "notificationPolicy": "200ms 节流；60 次迭代持续不足 1000ms 时至少首末 2 条，持续至少 1000ms 时至少 6 条；最后 current=total。2026-10-22 用户确认。",
+  "dimension": 96,
+  "iterations": 60,
+  "pairCount": 10,
+  "alternatingOrder": true,
+  "pairs": [
+    {
+      "syncMs": 370.1092000000001,
+      "taskMs": 417.3026000000002,
+      "overheadPercent": 12.751209642991878,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.18100000000004002
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 208.17650000000003
+        },
+        {
+          "current": 59,
+          "total": 60,
+          "elapsedMs": 411.33349999999996
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 417.29700000000025
+        }
+      ]
+    },
+    {
+      "syncMs": 387.9737,
+      "taskMs": 584.4044999999996,
+      "overheadPercent": 50.62992671925948,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.1574999999997999
+        },
+        {
+          "current": 17,
+          "total": 60,
+          "elapsedMs": 201.73579999999993
+        },
+        {
+          "current": 40,
+          "total": 60,
+          "elapsedMs": 404.0356999999999
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 584.3847999999998
+        }
+      ]
+    },
+    {
+      "syncMs": 365.9769000000001,
+      "taskMs": 363.5747000000001,
+      "overheadPercent": -0.6563802250907025,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.20929999999998472
+        },
+        {
+          "current": 33,
+          "total": 60,
+          "elapsedMs": 206.48660000000018
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 363.5666000000001
+        }
+      ]
+    },
+    {
+      "syncMs": 454.76810000000023,
+      "taskMs": 374.2551999999996,
+      "overheadPercent": -17.704166145338817,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.11309999999957654
+        },
+        {
+          "current": 31,
+          "total": 60,
+          "elapsedMs": 201.72429999999986
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 374.2440999999999
+        }
+      ]
+    },
+    {
+      "syncMs": 382.5546999999997,
+      "taskMs": 376.78229999999985,
+      "overheadPercent": -1.5089083992432584,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.16499999999996362
+        },
+        {
+          "current": 35,
+          "total": 60,
+          "elapsedMs": 204.23670000000038
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 376.7691999999997
+        }
+      ]
+    },
+    {
+      "syncMs": 344.7019,
+      "taskMs": 361.4544999999998,
+      "overheadPercent": 4.860025430669168,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.1239000000005035
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 203.71650000000045
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 361.4427000000005
+        }
+      ]
+    },
+    {
+      "syncMs": 337.97420000000056,
+      "taskMs": 353.66409999999996,
+      "overheadPercent": 4.642336604391506,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.14609999999993306
+        },
+        {
+          "current": 35,
+          "total": 60,
+          "elapsedMs": 204.1884
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 353.65310000000045
+        }
+      ]
+    },
+    {
+      "syncMs": 510.8171000000002,
+      "taskMs": 358.2383,
+      "overheadPercent": -29.869556050492474,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.09689999999955035
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 204.52990000000045
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 358.22710000000006
+        }
+      ]
+    },
+    {
+      "syncMs": 378.6082999999999,
+      "taskMs": 364.33290000000034,
+      "overheadPercent": -3.7704931455542656,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.2992000000003827
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 201.69700000000103
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 364.3231999999998
+        }
+      ]
+    },
+    {
+      "syncMs": 375.59879999999976,
+      "taskMs": 364.1980000000003,
+      "overheadPercent": -3.0353664601695862,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.2673999999988155
+        },
+        {
+          "current": 33,
+          "total": 60,
+          "elapsedMs": 203.8799999999992
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 364.1913999999997
+        }
+      ]
+    }
+  ],
+  "syncMedianMs": 377.1035499999998,
+  "taskMedianMs": 364.2654500000003,
+  "overheadPercent": -3.404396484731975,
+  "cancellation": {
+    "requestedAfterMs": 57.080299999999625,
+    "stoppedAfterRequestMs": 0.33289999999942665,
+    "evaluations": 389,
+    "noBackgroundWork": true,
+    "code": "CANCELLED"
+  },
+  "notificationDensityPassed": true,
+  "overheadPassed": true,
+  "cancellationPassed": true
+}

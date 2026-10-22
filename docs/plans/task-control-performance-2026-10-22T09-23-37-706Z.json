@@ -1,0 +1,545 @@
+{
+  "measuredAt": "2026-10-22T09:23:37.704Z",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "scope": "标准高维 Rosenbrock、共享 60 次数值迭代器；当前进程任务控制回调，不含 MCP 通知传输，不是实际美术角色/参考修正。",
+  "dimension": 160,
+  "iterations": 60,
+  "pairCount": 10,
+  "alternatingOrder": true,
+  "pairs": [
+    {
+      "syncMs": 1504.2186000000002,
+      "taskMs": 1505.7807999999995,
+      "overheadPercent": 0.1038545860288842,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.5302999999994427
+        },
+        {
+          "current": 7,
+          "total": 60,
+          "elapsedMs": 216.01490000000013
+        },
+        {
+          "current": 16,
+          "total": 60,
+          "elapsedMs": 434.78589999999986
+        },
+        {
+          "current": 25,
+          "total": 60,
+          "elapsedMs": 652.3667999999998
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 867.6569
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1087.1270999999997
+        },
+        {
+          "current": 52,
+          "total": 60,
+          "elapsedMs": 1306.2236000000003
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1505.7748999999994
+        }
+      ]
+    },
+    {
+      "syncMs": 1513.397399999999,
+      "taskMs": 1471.8644999999997,
+      "overheadPercent": -2.7443485762562614,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.48800000000028376
+        },
+        {
+          "current": 9,
+          "total": 60,
+          "elapsedMs": 221.3189999999995
+        },
+        {
+          "current": 18,
+          "total": 60,
+          "elapsedMs": 440.5533999999998
+        },
+        {
+          "current": 27,
+          "total": 60,
+          "elapsedMs": 662.0212000000001
+        },
+        {
+          "current": 35,
+          "total": 60,
+          "elapsedMs": 865.7637999999997
+        },
+        {
+          "current": 44,
+          "total": 60,
+          "elapsedMs": 1082.7344999999996
+        },
+        {
+          "current": 53,
+          "total": 60,
+          "elapsedMs": 1298.9578000000001
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1471.8555999999999
+        }
+      ]
+    },
+    {
+      "syncMs": 1520.4840000000004,
+      "taskMs": 1490.0535999999993,
+      "overheadPercent": -2.001362723974809,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.21379999999953725
+        },
+        {
+          "current": 9,
+          "total": 60,
+          "elapsedMs": 223.53399999999965
+        },
+        {
+          "current": 17,
+          "total": 60,
+          "elapsedMs": 423.15660000000025
+        },
+        {
+          "current": 25,
+          "total": 60,
+          "elapsedMs": 623.589899999999
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 846.7926000000007
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1067.0334999999995
+        },
+        {
+          "current": 51,
+          "total": 60,
+          "elapsedMs": 1267.2075999999997
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1490.0424999999996
+        }
+      ]
+    },
+    {
+      "syncMs": 1492.7340000000004,
+      "taskMs": 1495.2070000000003,
+      "overheadPercent": 0.16566916811702193,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.18610000000080618
+        },
+        {
+          "current": 8,
+          "total": 60,
+          "elapsedMs": 205.4970000000012
+        },
+        {
+          "current": 17,
+          "total": 60,
+          "elapsedMs": 427.1121000000003
+        },
+        {
+          "current": 26,
+          "total": 60,
+          "elapsedMs": 647.4570999999996
+        },
+        {
+          "current": 34,
+          "total": 60,
+          "elapsedMs": 849.9639999999999
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1068.4318000000003
+        },
+        {
+          "current": 52,
+          "total": 60,
+          "elapsedMs": 1291.3328000000001
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1495.196
+        }
+      ]
+    },
+    {
+      "syncMs": 1984.398699999998,
+      "taskMs": 1689.1290999999983,
+      "overheadPercent": -14.879550162978838,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.1841999999996915
+        },
+        {
+          "current": 8,
+          "total": 60,
+          "elapsedMs": 219.0043000000005
+        },
+        {
+          "current": 16,
+          "total": 60,
+          "elapsedMs": 441.3064000000013
+        },
+        {
+          "current": 24,
+          "total": 60,
+          "elapsedMs": 653.0463999999993
+        },
+        {
+          "current": 32,
+          "total": 60,
+          "elapsedMs": 859.1879999999983
+        },
+        {
+          "current": 38,
+          "total": 60,
+          "elapsedMs": 1072.410899999999
+        },
+        {
+          "current": 46,
+          "total": 60,
+          "elapsedMs": 1294.3106999999982
+        },
+        {
+          "current": 53,
+          "total": 60,
+          "elapsedMs": 1495.3470000000016
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1689.1156999999985
+        }
+      ]
+    },
+    {
+      "syncMs": 2080.8223,
+      "taskMs": 2108.5552000000025,
+      "overheadPercent": 1.3327856011540629,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.1216999999996915
+        },
+        {
+          "current": 7,
+          "total": 60,
+          "elapsedMs": 228.96039999999994
+        },
+        {
+          "current": 12,
+          "total": 60,
+          "elapsedMs": 445.6078000000016
+        },
+        {
+          "current": 19,
+          "total": 60,
+          "elapsedMs": 662.969000000001
+        },
+        {
+          "current": 25,
+          "total": 60,
+          "elapsedMs": 891.3865000000005
+        },
+        {
+          "current": 32,
+          "total": 60,
+          "elapsedMs": 1107.9997000000003
+        },
+        {
+          "current": 37,
+          "total": 60,
+          "elapsedMs": 1323.5699999999997
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1534.2488000000012
+        },
+        {
+          "current": 50,
+          "total": 60,
+          "elapsedMs": 1759.6592000000019
+        },
+        {
+          "current": 56,
+          "total": 60,
+          "elapsedMs": 1965.0914000000012
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 2108.542700000002
+        }
+      ]
+    },
+    {
+      "syncMs": 2051.2967000000026,
+      "taskMs": 1583.1159000000007,
+      "overheadPercent": -22.823651010602287,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.6594999999979336
+        },
+        {
+          "current": 4,
+          "total": 60,
+          "elapsedMs": 200.60870000000068
+        },
+        {
+          "current": 12,
+          "total": 60,
+          "elapsedMs": 404.5904999999984
+        },
+        {
+          "current": 21,
+          "total": 60,
+          "elapsedMs": 624.0738999999994
+        },
+        {
+          "current": 30,
+          "total": 60,
+          "elapsedMs": 842.7065999999977
+        },
+        {
+          "current": 38,
+          "total": 60,
+          "elapsedMs": 1042.6460999999981
+        },
+        {
+          "current": 47,
+          "total": 60,
+          "elapsedMs": 1260.7883000000002
+        },
+        {
+          "current": 56,
+          "total": 60,
+          "elapsedMs": 1482.4798999999985
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1583.105599999999
+        }
+      ]
+    },
+    {
+      "syncMs": 1952.4884999999995,
+      "taskMs": 1799.3607999999986,
+      "overheadPercent": -7.842694079888357,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.4216999999989639
+        },
+        {
+          "current": 8,
+          "total": 60,
+          "elapsedMs": 204.4471999999987
+        },
+        {
+          "current": 16,
+          "total": 60,
+          "elapsedMs": 417.467099999998
+        },
+        {
+          "current": 24,
+          "total": 60,
+          "elapsedMs": 639.836800000001
+        },
+        {
+          "current": 31,
+          "total": 60,
+          "elapsedMs": 856.2453999999998
+        },
+        {
+          "current": 36,
+          "total": 60,
+          "elapsedMs": 1117.8623999999982
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1326.172599999998
+        },
+        {
+          "current": 51,
+          "total": 60,
+          "elapsedMs": 1544.2713999999978
+        },
+        {
+          "current": 59,
+          "total": 60,
+          "elapsedMs": 1770.870899999998
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1799.3439999999973
+        }
+      ]
+    },
+    {
+      "syncMs": 1638.4038,
+      "taskMs": 1789.0587000000014,
+      "overheadPercent": 9.195224034514649,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.13999999999941792
+        },
+        {
+          "current": 5,
+          "total": 60,
+          "elapsedMs": 214.66229999999996
+        },
+        {
+          "current": 9,
+          "total": 60,
+          "elapsedMs": 418.3701000000001
+        },
+        {
+          "current": 16,
+          "total": 60,
+          "elapsedMs": 620.713499999998
+        },
+        {
+          "current": 25,
+          "total": 60,
+          "elapsedMs": 843.5731999999989
+        },
+        {
+          "current": 33,
+          "total": 60,
+          "elapsedMs": 1043.280899999998
+        },
+        {
+          "current": 42,
+          "total": 60,
+          "elapsedMs": 1265.553200000002
+        },
+        {
+          "current": 48,
+          "total": 60,
+          "elapsedMs": 1484.0851000000039
+        },
+        {
+          "current": 56,
+          "total": 60,
+          "elapsedMs": 1689.9388000000035
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1789.0498000000007
+        }
+      ]
+    },
+    {
+      "syncMs": 1721.9536999999982,
+      "taskMs": 1713.6527999999962,
+      "overheadPercent": -0.4820629033174373,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.08879999999771826
+        },
+        {
+          "current": 9,
+          "total": 60,
+          "elapsedMs": 220.4481999999989
+        },
+        {
+          "current": 16,
+          "total": 60,
+          "elapsedMs": 430.1843999999983
+        },
+        {
+          "current": 23,
+          "total": 60,
+          "elapsedMs": 632.5755999999965
+        },
+        {
+          "current": 31,
+          "total": 60,
+          "elapsedMs": 840.2402000000002
+        },
+        {
+          "current": 40,
+          "total": 60,
+          "elapsedMs": 1066.4689999999973
+        },
+        {
+          "current": 46,
+          "total": 60,
+          "elapsedMs": 1319.0960999999952
+        },
+        {
+          "current": 53,
+          "total": 60,
+          "elapsedMs": 1527.3917000000001
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1713.6412999999957
+        }
+      ]
+    }
+  ],
+  "syncMedianMs": 1680.1787499999991,
+  "taskMedianMs": 1636.1224999999995,
+  "overheadPercent": -2.622116843222766,
+  "cancellation": {
+    "requestedAfterMs": 49.96809999999823,
+    "stoppedAfterRequestMs": 1.007499999999709,
+    "evaluations": 162,
+    "noBackgroundWork": true,
+    "code": "CANCELLED"
+  },
+  "notificationDensityPassed": true,
+  "overheadPassed": true,
+  "cancellationPassed": true
+}

@@ -3,8 +3,11 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fitCubicBezierTimeline } from "./motionMath.js";
 import { getWorkspaceRoot } from "./workspaceTools.js";
-import { realpathSync, existsSync } from 'node:fs';
+import { realpathSync, existsSync, lstatSync } from 'node:fs';
 import { withFileLock } from './jobTools.js';
+import { withWorkspaceWrite } from './writerOwnership.js';
+import { checkpoint } from './taskControl.js';
+import { cachedDocument,invalidate } from './runtimeCache.js';
 
 export const SUPPORTED_SPINE_VERSION = "4.1.24";
 export const OFFICIAL_JSON_SPEC_URL = "https://esotericsoftware.com/spine-json-format#JSON-export-format";
@@ -223,18 +226,17 @@ const WRITABLE_TIMELINE_SPECS: TimelineSpecSummary[] = [
 
 export async function readSpineDocument(filePath: string, context: ToolContext = {}): Promise<SpineDocument> {
   const absolutePath = resolveWorkspacePath(filePath, context);
-  const raw = await readFile(absolutePath, "utf8");
-  let json: JsonObject;
+  let loaded:Awaited<ReturnType<typeof cachedDocument>>;
   try {
-    json = JSON.parse(raw);
+    loaded = await cachedDocument(absolutePath);
   } catch (error) {
     throw new Error(`Invalid JSON at ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
   }
   return {
     filePath,
     absolutePath,
-    hash: sha256(raw),
-    json,
+    hash: loaded.hash,
+    json:loaded.json,
   };
 }
 
@@ -249,8 +251,15 @@ export function resolveWorkspacePath(filePath: string, context: ToolContext = {}
     throw new Error(`filePath must stay inside workspace root: ${workspaceRoot}`);
   }
   let ancestor = absolutePath;
-  while (!existsSync(ancestor)) ancestor = path.dirname(ancestor);
-  const realRelative = path.relative(realpathSync(workspaceRoot), realpathSync(ancestor));
+  let ancestorStat: ReturnType<typeof lstatSync>;
+  while (true) {
+    try { ancestorStat=lstatSync(ancestor); break; }
+    catch (error: any) { if (error.code !== 'ENOENT') throw error; ancestor = path.dirname(ancestor); }
+  }
+  // 断开的符号链接也必须拒绝；existsSync 会把它当作「尚不存在」，写入时可能跟随到根外。
+  if (ancestorStat.isSymbolicLink() && !existsSync(ancestor)) throw new Error('路径包含断开的符号链接，无法确认工作区边界。');
+  // 原生 realpath 仍逐次核验实际目标；避免 JS 实现为每个路径分量重复执行 lstat。
+  const realRelative = path.relative(realpathSync.native(workspaceRoot), realpathSync.native(ancestor));
   if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) throw new Error('路径符号链接越过工作区边界。');
   return absolutePath;
 }
@@ -1203,7 +1212,8 @@ async function writeTransaction(
   guard: WriteGuard,
   mutate: (json: JsonObject, diff: JsonDiff[]) => string | Promise<string>,
 ): Promise<WriteResult> {
-  return withFileLock(filePath, context, () => writeTransactionLocked(filePath, options, context, guard, mutate));
+  const transaction = () => withFileLock(filePath, context, () => writeTransactionLocked(filePath, options, context, guard, mutate));
+  return options.dryRun === false ? withWorkspaceWrite(context, transaction) : transaction();
 }
 async function writeTransactionLocked(filePath: string, options: WriteOptions, context: ToolContext, guard: WriteGuard, mutate: (json: JsonObject, diff: JsonDiff[]) => string | Promise<string>): Promise<WriteResult> {
   const document = await readSpineDocument(filePath, context);
@@ -1253,9 +1263,11 @@ async function writeTransactionLocked(filePath: string, options: WriteOptions, c
     };
   }
 
+  checkpoint('动画提交');
   const backupPath = await backupFile(document, context);
   const serialized = `${JSON.stringify(nextJson, null, 2)}\n`;
   await writeFile(document.absolutePath, serialized, "utf8");
+  invalidate(document.absolutePath);
   return {
     dryRun,
     filePath,

@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-22T10:01:48.8331283+00:00",
+  "scope": "最后的附加防护已撤回，当前五个 C# 文件与通过桌面自检的构建 PDB 源码 SHA-256 一致；没有绕过自动审批重建。",
+  "acceptedRun": "host-winforms-2026-10-22T09-52-01-207Z.json",
+  "checks": [
+    {
+      "file": "HostConnection.cs",
+      "pdbSourceSha256": "5C728770B2DF56F076627A017A48C3598265F20CE03673B486F259CE8E8A4ED0",
+      "currentSourceSha256": "5C728770B2DF56F076627A017A48C3598265F20CE03673B486F259CE8E8A4ED0",
+      "matches": true
+    },
+    {
+      "file": "HostObserverPanel.cs",
+      "pdbSourceSha256": "95814FDFAFAB8EB228F874F9744FD9D34ED4B122B9C24DB3EB95423158C33F2D",
+      "currentSourceSha256": "95814FDFAFAB8EB228F874F9744FD9D34ED4B122B9C24DB3EB95423158C33F2D",
+      "matches": true
+    },
+    {
+      "file": "HostObserverSelfTest.cs",
+      "pdbSourceSha256": "8E321302AC0D8600D6EA0879764ED2BF07C5DD89955DE916333AF1F0C3202137",
+      "currentSourceSha256": "8E321302AC0D8600D6EA0879764ED2BF07C5DD89955DE916333AF1F0C3202137",
+      "matches": true
+    },
+    {
+      "file": "MainForm.cs",
+      "pdbSourceSha256": "BC7C0308837CBC31BA11D11BED9819B70B2F841351C9A390016C1EF3CA604BF0",
+      "currentSourceSha256": "BC7C0308837CBC31BA11D11BED9819B70B2F841351C9A390016C1EF3CA604BF0",
+      "matches": true
+    },
+    {
+      "file": "Program.cs",
+      "pdbSourceSha256": "3A4E9A1D383E630D8DD4DE38000597208F6503A1400BFD5921018DF0DD8D60FA",
+      "currentSourceSha256": "3A4E9A1D383E630D8DD4DE38000597208F6503A1400BFD5921018DF0DD8D60FA",
+      "matches": true
+    }
+  ],
+  "passed": true
+}

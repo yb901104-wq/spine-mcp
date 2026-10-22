@@ -1,5 +1,33 @@
 # MCP 操作清单
 
+## Host 入口与当前开放范围（2026-10-21）
+
+新增以下 10 个入口，当前共 101 个 MCP 工具。工程初始化、观察、镜像与截图已接入；C1 已在真实 npc1 无参考站姿的隔离工程完成单手编辑、独立视觉审查、保存和重开复验，生产 Host 保持观察模式。**接口已注册不代表阶段通过或写入已开放**。完整状态见 [实施与验收](Host实施与验收-20261021.md)，契约仍以 [主工单](plans/host-evolution.md) 为准。
+
+| 工具 | 当前行为与边界 |
+|---|---|
+| spine_create_project | 显式初始化根 `.spine-workflow.json`；先登记工作区；默认 dryRun，`expectedAbsent:true` 必填；验证角色/文档/纹理/引用，不覆盖已有清单或修改角色资源 |
+| spine_host_open | 打开工程与显式文档；同路径未变幂等，切换/重载使用当前完整版本；无 Host 时建立 mirror |
+| spine_preview_state | 只读工程、版本、能力/readiness 与分层状态；不隐式求解，`includeCapabilities:false` 可省略能力明细 |
+| spine_preview_frame | 当前 pose 的 320/480 PNG；必须给完整 `expectedRevision`；无结果、过期与不支持的 kind 明确拒绝 |
+| spine_preview_capture | 真实可见 player 摆帧；320/480/960；分别返回 rendererParity、captureValidity、evidenceEligible；当前 Host 登记核验通过才可进入视觉审查，旧图不升级 |
+| spine_host_pin | 绑定当前文档与磁盘基线；不授予批准；观察/镜像模式拒绝 |
+| spine_host_patch | C1 只允许一个既有手目标的 x/y/angle；默认 dryRun；隔离真实编辑经 MCP 重算并返回 image 内容块；生产未开放 |
+| spine_host_commit | C1 只支持 pose 新路径草稿；默认 dryRun；真实保存须稳定 requestId、精确候选审查、一次性控制授权、备份与原子创建；生产未开放 |
+| spine_host_undo / spine_host_redo | 当前未提交历史；默认 dryRun；真实操作产生新 revision、清除旧结果和批准，再显式重算；生产未开放 |
+
+`expectedRevision={sessionId,documentId,openEpoch,revision}` 四项均必需；不能仅传 revision 数字。快照、派生、review 与 authorize 为独立控制通道，不开放给页面自由填写批准。C2 操作与动画提交未开放；掉线不自动退回直写。
+
+2026-10-22：frame/capture 使用首次可信回放初始化的完整角色相机（实际可见边界加 5% 边距，并与校准初值取并集），同一 openEpoch 的编辑和撤销保持固定。无可信结果须显式求解。严格依赖门禁每轮重读字节，最多并发 8 个文件，不复用上轮校验；路径每次重新核实真实边界。没有新增工具或放宽批准规则。
+
+长任务通知按 [L1/L2 v1.4](plans/mcp-l1-l2.md) 保持 200ms 节流、无 token 静默、末条必发；用户已确认不足 1 秒任务验首末，至少 1 秒的 60 次迭代验至少六条。`spine_refine_reference_pose` 已取消时不做初始评估，回调取消后不继续下一轮；实际渲染取消另验后台停止和锁释放，已完成事务不自动回滚。工具参数和工具总数不变。
+
+WinForms 源码已嵌入 Host 工作台，读取相同工作区的观察发现文件并核对实际身份，展示现有工具产生的状态；没有新增 MCP 工具或授权入口。切走/最小化时卸载页面，pagehide 上报 hidden，恢复后重新读取当前状态；不读取 host-control.json、不自动 pin 或开启写入。桌面 CapturePreview 自检图不是 `spine_preview_capture` 证据，不能拿来批准姿态。旧便携包未更新。
+
+`spine_get_workspace_info` 新增只读 `project`：legacy / managed / unsupported。损坏清单返回结构化错误，不当作 legacy。
+
+`spine_get_pose_state`、`spine_explain_pose` 默认返回已有结果与 freshness，`solveCount:0`；旧结果缺少完整输入/依赖证明时为 unknown。显式 `recheck:true` 才重算。`spine_set_pose_channel.rotate` 已在 schema 公布；target/channel/batch 使用各自参数表，拒绝未知字段与非有限数。depth 的提示路径统一为 `frame.presentation.drawOrder`。
+
 ## 参考先行与关键姿态工具
 
 `spine_retarget_motion` 对稀疏语义关键姿态（最多64个）增加区间内部求解采样，随后压缩输出；旋转拟合限制单段跨度，报告包含最大误差发生的时间/手部。接口参数不变。实际实例见 [npc1姿态实例复验](npc1姿态实例复验.md)。
@@ -8,17 +36,36 @@
 
 | 工具 | 功能 |
 |---|---|
-| spine_create_reference_pose | 记录参考头身及四肢节点、可见性、置信度和依据 |
-| spine_render_reference_pose_sheet | 上原图下参考节点连线；可见实线、遮挡虚线、未知不连线 |
+| spine_create_reference_pose | 记录参考 15 个点（含面部锚点 face）、可见性、置信度和依据；记录级为 version:2 |
+| spine_upgrade_reference_pose | v1→v2 骨架升级；缺 face/轮廓/朝向/前后证据时列出 pending 且不落盘，不自动编造 |
+| spine_render_reference_pose_sheet | 上原图下参考节点连线；可见实线、遮挡虚线、未知不连线；另画可见轮廓四边形与面部朝向射线 |
 | spine_review_reference_pose | 绑定参考标注及图像证据的独立审查 |
 | spine_create_pose_draft | 建立标准站姿/动作姿态，referencePosePath 关联已审查参考 |
 | spine_solve_pose | 单姿态 IK、膝部阈值、实际关节与握持误差 |
 | spine_adjust_pose | 批量调整并输出新修订，清除原审查 |
 | spine_render_pose_comparison | 上参考下目标，干净/诊断图，显式阶段时间、分页与局部放大 |
-| spine_review_pose | 记录单姿态数值和视觉审查 |
+| spine_review_pose | detached 保留既有流程；attached 必填 expectedRevision 和当前 player manifest，默认预演，false 才登记；重验数值/参考/阶段/七项独立理由，批准与退回均保留 |
 | spine_build_motion_from_poses | 已确认姿态构建 v2 motion |
 | spine_render_animation_comparison | 单调阶段对应的上下同步 GIF，保留目标原速 GIF |
 | spine_review_animation | 审查完整候选并返回最终写入 token |
+| spine_get_pose_state | 默认只读已有 frame/结果与新鲜度，不求解；recheck:true 显式重算，不写报告 |
+| spine_explain_pose | 默认解释已有数值摘要；recheck:true 明确重算关系指标与旋钮，不写报告 |
+| spine_set_pose_target | 只改一个末端目标，输出新修订并清掉旧求解与审查 |
+| spine_set_pose_channel | 只改一个语义通道（如 torso 的 rotate），用于肩线朝向与扭转 |
+| spine_batch_pose_ops | 一次应用多个 target/channel/weapon 操作后求解并比较，可顺带出图 |
+
+### 骨架比较 v3 指标（`spine_compare_pose_graphs`）
+
+策略文件 `policies/pose-comparison.v3.json`。除原有方向/屈曲/站距/腕向量/握距外，新增三组结构指标，长度以躯干长归一；除轮廓绝对宽度与头部朝向为诊断项外均 `required:true`：
+
+- 躯干线：`body.shoulderLine`、`body.hipLine`（无向线 ≤12°）、`body.twist`（肩髋线夹角差 ≤12°）。
+- 轮廓与朝向（诊断，required:false）：`body.shoulderSilhouette`、`body.hipSilhouette`（绝对宽度含体型差异）、`head.orientation`、`head.turnBand`（参考为面部前缘、目标为嘴部支点，语义不等价）。
+- 肢体相对躯干：`arm.*.wristReach`(0.15)、`arm.*.wristTorsoHeight`(0.12)、`arm.*.wristTorsoOffset`(0.15)、`arm.*.wristOutsideTorso`(二元)、`arm.*.wristHeadGap`(0.20)、`leg.*.ankleTorsoOffset`(0.20)。
+- 前后层序：`depth.<evidence.id>`，参考声明 + 目标 `drawOrder` 严格回读；交错或 `kind:scale` 判 `unverifiable`。
+
+三态语义：`pass` / `fail` / `unverifiable`。缺标注、缺切片或证据不足一律 `unverifiable`，并使 `ok:false`；不允许用其他指标的低误差抵消。`report.headBox` 与 `report.headIntrusions` 记录手腕进入头部包围盒的重叠量，属硬门禁。
+
+比较报告过期判定改用 `comparisonFingerprint`（只绑定 `version/policyFingerprint/ok/各指纹/指标的 id+required+status+error`），文案或非判据字段变化不再让历史报告失效。
 
 `spine_analyze_reference_gif` 兼容静态图片、GIF 和动画 WebP；名称为兼容旧客户端保留。渲染帧接口支持显式 `times`，原速 GIF 不接受非均匀指定时间。
 
@@ -323,3 +370,51 @@ v2 重定向的真实写入约定：
 | spine_refine_reference_pose | posePath、outputPosePath | 根据最新静态 comparisonPath 做有界阻尼最小二乘，新修订不继承审查；默认 dryRun |
 
 spine_retarget_reference_pose 增加 sequencePath、stageId，默认在内存中联合修正；持久化时保存方向初值和新修订。spine_compare_pose_graphs 增加肩髋躯干轴、关节弯曲侧、前后站位；头中心连线仅为诊断。spine_review_pose 必须身份、实际比较、数值及图像证据均有效。具体格式、错误分类及实际失败证据见 [闭环说明](准备姿态适配与修正闭环.md)。
+
+
+### 图像直接回传
+
+渲染类工具（`spine_render_pose_comparison`、`spine_render_reference_pose_sheet`）与 `spine_batch_pose_ops{render:true}` 除文本结果外，会把页面 PNG 以 MCP `image` 内容块直接返回（最多 3 张），客户端无需再按路径打开文件。
+
+### 显式开关
+
+`spine_retarget_reference_pose` 新增两个默认关闭的开关：
+
+- `headFromReference:true`：用参考面部锚点补偿 `frame.head`。注意 head 节点在头骨上有偏移，转动头部会同时移动头节点，实测会让 `wristHeadGap` 变差，默认不开。
+- `weaponFromReference:true`：把双手目标吸附到参考握持轴构成的假想杆上。实测在臂长不足时会把两手推到更远位置、整体变差，默认不开。
+
+两个开关都存在同一个原因：自由度接上了，但在这套绑定上它们与其它指标互相冲突，需要按阶段显式选择。
+
+## C1 附着姿态审查（2026-10-21）
+
+沿用 spine_review_pose，没有新增公开工具。附着调用示例：
+
+```json
+{
+  "posePath": "poses/current.json",
+  "expectedRevision": {"sessionId":"当前会话","documentId":"当前文档","openEpoch":"当前打开周期","revision":1},
+  "manifestPath":"当前 spine_preview_capture 返回的 manifestPath",
+  "decision":"rejected",
+  "reviewedBy":"实际审查者",
+  "reason":"记录当前姿态具体不匹配之处",
+  "checks":["standingOrAction","silhouette","jointDirections","support","grip","occlusion","referenceDifferences"],
+  "issues":["仍未解决的具体问题"],
+  "dryRun":true
+}
+```
+
+批准另须七项 checkResults，每项 status:pass、具体 reason 且理由不同；参考动作要求 stageId 与当前 sequence 阶段一致，当前不可变 comparison.json 通过。comparisonPath 可省略自动使用当前派生报告；显式给旧报告拒绝。默认只验证，不修改审查、文档或历史。dryRun:false 才通过独立控制通道登记，发 review-updated 并使旧授权失效。证据变化返回 REVIEW_STALE；登记后的批准不代替保存授权或编辑器导入验收。state/capabilities 提供 review readiness；可调用不代表可批准，执行时仍严格重验。
+
+## MCP 只读协议与运行控制补充（2026-10-21）
+
+新增 spine_get_workspace_tree（depth 0–6、总条目预算最多 2000、目录最多 40、分页快照 60 秒）与 spine_recheck_pose（显式重算，不改资产）。现有 spine_get_pose_state / spine_explain_pose 默认零求解，分别报告输入/证据新鲜度与已有指标。
+
+resources/list/read/templates 已实现：spine://session、pose/reference/rig/metrics/{编码路径}、doc/{编码路径}/bones|slots；支持 projectId 查询，所有路径限制在工作区，8MB 原文上限。attached 姿态只读当前 snapshot；资源不会自动启动 Host。prompts 包含 pose-prepare、pose-diagnose、preview-verify，仅生成说明，不执行或批准；logging/setLevel 由 SDK 实现。
+
+所有工具在执行前按公开 schema 验证，未知顶层字段拒绝；姿态工具使用独立参数表。错误保留顶层 code/message/detail，同时返回 error.code/category/issues/remediation/tool。长任务提供节流进度与取消检查点；默认严格哈希和七个严格门禁不因缓存省略。
+
+0.2.0 的 frame/weapon/patch 显式声明 body/head/channels/targets/bendDirections/action/presentation 等嵌套参数，拒绝未知字段、批准注入、原型字段和非有限数。`spine_get_pose_state` 默认省略详细 joints，仅返回新鲜度及摘要；用 `spine_recheck_pose` 显式重算读取。资源列表每页小于 5KB，识别 manifest 已登记且不带 pose 后缀的姿态；翻页快照沿用工程树边界。
+
+`spine_preview_frame` 的不透明 region 渲染路径已修正四样本覆盖率；`spine_preview_capture` 的 rendererParity 现在携带 scope，登记的三张真实 player 合成 region 基线通过。范围之外不据此推断一致，截图准入与视觉批准仍独立；没有新增公开工具。
+
+`spine_host_open` 等需要连接 Host 的调用由工程生命周期协调器串行切换：旧 Host shutdown→等待事务/锁/发现文件退役→连接新工程；未确认旧写入权时返回 WRITE_OWNERSHIP_UNCERTAIN。`spine://session` 等只读探测不触发关闭或启动。协议版本变更需重新加载 MCP 并刷新 tools/list。

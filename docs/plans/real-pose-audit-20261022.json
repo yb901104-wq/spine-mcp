@@ -1,0 +1,2047 @@
+{
+  "auditedAt": "2026-10-22T02:08:53.714Z",
+  "workspace": "D:\\AI_cc\\spine test",
+  "readOnly": true,
+  "found": 204,
+  "truncated": false,
+  "poses": 195,
+  "confirmed": 57,
+  "verified": 1,
+  "records": [
+    {
+      "path": "previews/ready-refinement-2026-10-10T04-03-50.693Z/ready-v4.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ready-refinement-2026-10-10T04-03-50.693Z/ready-v3.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ready-refinement-2026-10-10T04-03-50.693Z/ready-v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ready-refinement-2026-10-10T04-03-50.693Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/up.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/down.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/up.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/down.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/down-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/visual-rig-20261009/old-ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/up.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/down.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/down-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/up.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/down.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/down-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/anticipation.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-56-00.215Z/anticipation-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/anticipation.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-51-07.318Z/anticipation-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-49-42.525Z/anticipation.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/visual-rig-20261009/ready.retarget.v4.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/visual-rig-20261009/ready.retarget.v3.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/visual-rig-20261009/ready.retarget.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/visual-rig-20261009/ready.retarget.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ready-refinement-2026-10-10T04-03-50.693Z/before.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/anticipation-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-53-08.523Z/anticipation.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/up.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/down.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/down-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/thrust.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/thrust-hold.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/thrust-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep-step.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep-land.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep-hold.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/sweep-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/step-out.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/step-in.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/standing.pose.json",
+      "kind": "standing",
+      "declaredStatus": "confirmed",
+      "hasReference": false,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": true
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready-recheck.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/anticipation.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/right-attack-full-2026-10-09T10-54-51.223Z/anticipation-start.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reverse.v3.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reverse.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reverse.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2b.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2b-t5.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2b-t4.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2b-t3.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2b-t2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/ref-v2-2026-10-20T10-09-22.529Z/ready.v2-r2.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust-hold.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/thrust-hold.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-land.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-land.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-land.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-land.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-hold.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-hold.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/sweep-hold.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-out.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-out.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-out.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-in.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-in.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-in.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/step-in.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/reverse.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/reverse.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/reverse.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/rest.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/rest.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/release-back.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/release-back.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/release-back.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/thrust.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/sweep.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover-release.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover-release.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/recover-release.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/ready.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/ready.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/reverse.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/rest.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/ready.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/reference-skeleton/lift.target.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/ready-correction/ready.v1.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-up-swing.presentation.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-up-swing.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-thrust-turn.presentation.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-thrust-turn.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-down-swing.presentation.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-keypose-correction-20261009/right-down-swing.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/thrust.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/thrust.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/thrust-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/thrust-hold.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/sweep.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/sweep.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/sweep-hold.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/sweep-hold.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/recover.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/low-turn.v3.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/low-turn.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/low-turn.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/lift.v2.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/reverse.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/lift.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/left-step-in.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/reverse.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/rest.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/rest.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/recover.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/recover.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/ready.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/ready.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/lift.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/lift.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/low-turn.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/attack-diagnostic-2026-10-09T09-33-10-307Z/end.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/low-turn.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/low-turn.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/lift.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/lift.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/lift.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-step-in.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-step-in.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-step-in.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-release.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-release.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/left-release.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/pose-workflow-20261009/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "solved",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": true,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-workflow-20261009/crouch-negative.pose.json",
+      "kind": "standing",
+      "declaredStatus": "failed",
+      "hasReference": false,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/end.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/end.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/end.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/pose-instance-2026-10-09T09-06-56-129Z/ready.refined.pose.json",
+      "kind": "action",
+      "declaredStatus": "rejected",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/pose-instance-2026-10-09T09-06-56-129Z/ready.generated.pose.json",
+      "kind": "action",
+      "declaredStatus": "failed",
+      "hasReference": true,
+      "hasRig": true,
+      "weaponControlled": false,
+      "verified": false
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/back-land.unwrapped.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/back-land.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "path": "previews/npc1-attack-retest-20261009/back-land.continuous.pose.json",
+      "kind": "action",
+      "declaredStatus": "confirmed",
+      "hasReference": true,
+      "hasRig": false,
+      "weaponControlled": false,
+      "verified": false,
+      "reason": "参考标注当前为 v1，需升级为 v2：先用 spine_upgrade_reference_pose 补 face/轮廓/朝向/前后依据，再重新审查。",
+      "numeric": {
+        "ok": true,
+        "issues": []
+      }
+    }
+  ]
+}

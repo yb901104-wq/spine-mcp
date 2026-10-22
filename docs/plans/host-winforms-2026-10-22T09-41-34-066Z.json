@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-10-22T09:41:34.071Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-22T09-41-34-066Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "native": {
+    "ok": false,
+    "checks": [],
+    "error": "System.InvalidOperationException: 等待失败：工作台连接\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<Run>g__Wait|0_1(Func`1 condition, String label) in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 28\r\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\AI_cc\\spine-mcp\\apps\\winforms-observer\\HostObserverSelfTest.cs:line 38",
+    "time": "2026-10-22T09:41:55.7847151+00:00"
+  },
+  "error": "{\"ok\":false,\"checks\":[],\"error\":\"System.InvalidOperationException: 等待失败：工作台连接\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<Run>g__Wait|0_1(Func`1 condition, String label) in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 28\\r\\n   at SpineMcp.WinFormsObserver.HostObserverSelfTest.<>c__DisplayClass0_0.<<Run>b__3>d.MoveNext() in D:\\\\AI_cc\\\\spine-mcp\\\\apps\\\\winforms-observer\\\\HostObserverSelfTest.cs:line 38\",\"time\":\"2026-10-22T09:41:55.7847151+00:00\"}\n\n1 !== 0\n",
+  "passed": false,
+  "finishedAt": "2026-10-22T09:41:57.406Z"
+}

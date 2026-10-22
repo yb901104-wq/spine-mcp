@@ -11,6 +11,7 @@ import {renderAnimationFrames} from '../src/previewRenderTools.js';
 import {analyzeReferenceGif} from '../src/referenceTools.js';
 import {readSpineDocument} from '../src/spineJson.js';
 import {createReferencePose,renderReferencePoseSheet,reviewReferencePose,referenceRoles,referenceChecks} from '../src/referencePose.js';
+import { withV2 } from './helpers/referenceV2.js';
 import {fitCubicBezierTimeline} from '../src/motionMath.js';
 
 async function fixture(prefix='a',factor=1,root?:string){const workspaceRoot=root??await mkdtemp(path.join(os.tmpdir(),'spine-pose-')),c={workspaceRoot},n=(v:string)=>prefix+'_'+v;
@@ -36,7 +37,7 @@ test('fast sparse poses solve internally without baking output, and long rotatio
 test('target image-referenced pose cannot approve before independent reference review, and reference changes invalidate it',async()=>{
  const f=await fixture();try{
   const standing=await confirmedStanding(f),cv=createCanvas(100,100);await writeFile(path.join(f.c.workspaceRoot,'ref.png'),cv.toBuffer('image/png'));
-  const observation={imagePath:'ref.png',time:0,facing:'right',crop:[0,0,100,100],height:80,groundY:90,basis:'测试',points:Object.fromEntries(referenceRoles.map(k=>[k,{visibility:'unknown'}]))};
+  const observation=withV2({imagePath:'ref.png',time:0,facing:'right',crop:[0,0,100,100],height:80,groundY:90,basis:'测试',points:Object.fromEntries(referenceRoles.map(k=>[k,{visibility:'unknown'}]))});
   await createReferencePose({referencePosePath:'ref.pose.json',observation,dryRun:false},f.c);
   await assert.rejects(()=>createPoseDraft({...f,posePath:'linked.json',kind:'action',standardPosePath:standing,referencePosePath:'ref.pose.json',dryRun:false},f.c),/尚未审查/);
   await createPoseDraft({...f,posePath:'legacy.json',kind:'action',standardPosePath:standing,reference:observation,dryRun:false},f.c);await solvePose({posePath:'legacy.json',dryRun:false},f.c);

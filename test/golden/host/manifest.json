@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。",
+  "runtime": {
+    "player": "4.1.56",
+    "core": "4.1.56",
+    "replaySchema": 1,
+    "rendererHash": "b1a820a2f39a76491d1ea130b5d9260b18fa24adaee2bc9188ff23b734620d0b",
+    "replayHash": "2efe4cfb16a1072fe60bea184644d7e69429fcd3c8ef73a2fd36f190974d88d0"
+  },
+  "cases": [
+    {
+      "id": "region-setup",
+      "source": "player",
+      "files": {
+        "test/golden/host/region-setup/pose.json": "6e5aaec99ebd0f584a19b9a6bf2c59dea88d9d1b8443ce61b20a36d8ace43634",
+        "test/golden/host/region-setup/body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+        "test/golden/host/region-setup/body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+        "test/golden/host/region-setup/snapshot.json": "183586ec363a03f150fc6206b8e9b9486ef9285fd2172fd39c12b96cb7788c7b",
+        "test/golden/host/region-setup/player.png": "0fe3b222f0b8c6e9634fda4fd998bb2d2b7fa51f59e8876c6b6ddd097a1cd3eb",
+        "test/golden/host/region-setup/capture.json": "c759b55afcc8433c0df85d00798d895ef15f19cb8a5774ce959afc1c0c3e101f"
+      },
+      "skeletonPath": "test/golden/host/region-setup/pose.json",
+      "atlasPath": "test/golden/host/region-setup/body.atlas",
+      "snapshotPath": "test/golden/host/region-setup/snapshot.json",
+      "pngPath": "test/golden/host/region-setup/player.png",
+      "captureManifestPath": "test/golden/host/region-setup/capture.json",
+      "skin": null,
+      "presentation": null,
+      "size": 320,
+      "viewport": {
+        "width": 320,
+        "height": 320
+      },
+      "dpr": 1,
+      "camera": {
+        "minX": -116.00000019377153,
+        "maxX": 124.00000019377153,
+        "minY": -18.000000032295254,
+        "maxY": 222.0000003552478
+      },
+      "pma": false
+    },
+    {
+      "id": "region-presentation",
+      "source": "player",
+      "files": {
+        "test/golden/host/region-presentation/pose.json": "c7904e5511c5d77a3cbc0f11fa4260146ff6d15db79d3daef4f63d8fb472187f",
+        "test/golden/host/region-presentation/body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+        "test/golden/host/region-presentation/body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+        "test/golden/host/region-presentation/snapshot.json": "416990e66e65e4b40317541351e06ba4bbb5b16829700f483f5e4b022a2179d7",
+        "test/golden/host/region-presentation/player.png": "a940ebf0d69ae497e31b8436ffeb2e035197131ddd82bf8f92206e1137c97d7a",
+        "test/golden/host/region-presentation/capture.json": "45d7d447f80102cccd3c7882749a17bfe7eb29c4894f066b925bfa870d8290a2"
+      },
+      "skeletonPath": "test/golden/host/region-presentation/pose.json",
+      "atlasPath": "test/golden/host/region-presentation/body.atlas",
+      "snapshotPath": "test/golden/host/region-presentation/snapshot.json",
+      "pngPath": "test/golden/host/region-presentation/player.png",
+      "captureManifestPath": "test/golden/host/region-presentation/capture.json",
+      "skin": null,
+      "presentation": {
+        "attachments": {
+          "bodySlot": "alternate",
+          "accentSlot": null
+        },
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ]
+      },
+      "size": 320,
+      "viewport": {
+        "width": 320,
+        "height": 320
+      },
+      "dpr": 1,
+      "camera": {
+        "minX": -116.00000019377153,
+        "maxX": 124.00000019377153,
+        "minY": -18.000000032295254,
+        "maxY": 222.0000003552478
+      },
+      "pma": false
+    },
+    {
+      "id": "region-rotated-overlap",
+      "source": "player",
+      "files": {
+        "test/golden/host/region-rotated-overlap/pose.json": "1560225e8a74a139fae8ae1e5bf4b498d834a376b9ac8c258547d85fead6ba03",
+        "test/golden/host/region-rotated-overlap/body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+        "test/golden/host/region-rotated-overlap/body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+        "test/golden/host/region-rotated-overlap/snapshot.json": "3a14824c80a2211391eac93de6d3ce350bbb3210b3ecef9725ffbe3b29519b40",
+        "test/golden/host/region-rotated-overlap/player.png": "01583d0a6fb84315f16e672df2e16ef6b4b51145b7a48f86251b820e1b7b1768",
+        "test/golden/host/region-rotated-overlap/capture.json": "6dc3df12bc4bc044c01247491544664a8224838ea8f367655a71b21cfcd1c7d0"
+      },
+      "skeletonPath": "test/golden/host/region-rotated-overlap/pose.json",
+      "atlasPath": "test/golden/host/region-rotated-overlap/body.atlas",
+      "snapshotPath": "test/golden/host/region-rotated-overlap/snapshot.json",
+      "pngPath": "test/golden/host/region-rotated-overlap/player.png",
+      "captureManifestPath": "test/golden/host/region-rotated-overlap/capture.json",
+      "skin": null,
+      "presentation": {
+        "attachments": {
+          "accentSlot": "body"
+        },
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ]
+      },
+      "size": 320,
+      "viewport": {
+        "width": 320,
+        "height": 320
+      },
+      "dpr": 1,
+      "camera": {
+        "minX": -116.00000019377153,
+        "maxX": 124.00000019377153,
+        "minY": -18.000000032295254,
+        "maxY": 222.0000003552478
+      },
+      "pma": false
+    }
+  ]
+}

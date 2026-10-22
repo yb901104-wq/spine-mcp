@@ -1,10 +1,13 @@
 // 确定性的有界阻尼最小二乘；不改变离散身份、支撑和关节分支。
-export function boundedLeastSquares(initial:number[], evaluate:(x:number[])=>number[], options:{bounds:Array<[number,number]>;steps:number[];iterations?:number}) {
+export interface LeastSquaresOptions {bounds:Array<[number,number]>;steps:number[];iterations?:number;signal?:AbortSignal;onIteration?:(iteration:number,total:number)=>void}
+export function* boundedLeastSquaresSteps(initial:number[], evaluate:(x:number[])=>number[], options:LeastSquaresOptions):Generator<{iteration:number;total:number},any,void> {
  const score=(r:number[])=>r.every(Number.isFinite)?r.reduce((s,v)=>s+v*v,0):Infinity;
  const clamp=(x:number[])=>x.map((v,i)=>Math.max(options.bounds[i][0],Math.min(options.bounds[i][1],v)));
  let x=clamp([...initial]),r=evaluate(x),cost=score(r),lambda=.01;
  const history:any[]=[{iteration:0,cost}],limit=Math.min(60,options.iterations??60);let reason='iterationLimit',attempted=0;
  for(let iter=0;iter<limit;iter++){
+  yield {iteration:iter,total:limit};
+  options.signal?.throwIfAborted();options.onIteration?.(iter,limit);
   attempted=iter+1;
   const jac=x.map((_,j)=>{const h=options.steps[j],v=[...x];v[j]=Math.min(options.bounds[j][1],x[j]+h);if(v[j]===x[j])v[j]=Math.max(options.bounds[j][0],x[j]-h);const d=v[j]-x[j],q=evaluate(v);return r.map((a,i)=>d?(q[i]-a)/d:0);});
   const n=x.length,A=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>jac[i].reduce((s,v,k)=>s+v*jac[j][k],0)+(i===j?lambda:0))),b=jac.map(col=>-col.reduce((s,v,k)=>s+v*r[k],0));
@@ -18,3 +21,5 @@ export function boundedLeastSquares(initial:number[], evaluate:(x:number[])=>num
  }
  return {x,residuals:r,cost,history,reason,iterations:attempted,acceptedSteps:history.length-1,attemptLimit:limit};
 }
+
+export function boundedLeastSquares(initial:number[],evaluate:(x:number[])=>number[],options:LeastSquaresOptions){const iterator=boundedLeastSquaresSteps(initial,evaluate,options);let step=iterator.next();while(!step.done)step=iterator.next();return step.value;}

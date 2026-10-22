@@ -1,3 +1,6 @@
+import {withStrict} from './runtimeCache.js';
+import {visualRigFingerprint} from './domainFingerprints.js';
+export {visualRigFingerprint} from './domainFingerprints.js';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createCanvas } from '@napi-rs/canvas';
 import { MeshAttachment, RegionAttachment } from '@esotericsoftware/spine-core';
@@ -10,7 +13,6 @@ import {torsoAxis} from './poseGraph.js';
 import { loadAtlasImages, rasterFrame } from './rasterRenderer.js';
 import { validateActionRig } from './actionSemantics.js';
 
-export const visualRigFingerprint=(v:any)=>hashObject({version:v.version,filePath:v.filePath,mappingPath:v.mappingPath,skin:v.skin,sourceFingerprint:v.sourceFingerprint,nodes:v.nodes,segments:v.segments,anatomicalSides:v.anatomicalSides,viewProfiles:v.viewProfiles,torsoAxis:v.torsoAxis});
 export function visualSummary(data:any){return {...data,attachments:(data.attachments??[]).map((a:any)=>({slot:a.slot,attachment:a.attachment,type:a.type,bone:a.bone,weighted:a.weighted,vertexCount:a.vertices.length/2,influenceBones:[...new Set(a.influences.map((i:any)=>i.bone))]}))};}
 const read=async(p:string,c:ToolContext)=>JSON.parse(await readFile(resolveWorkspacePath(p,c),'utf8'));
 const evidence=async(p:string,c:ToolContext)=>({filePath:p,hash:hashObject((await readFile(resolveWorkspacePath(p,c))).toString('base64'))});
@@ -42,6 +44,12 @@ export function readVisualNodes(skeleton:any,rig:any){
 export function drawVisualGraph(ctx:any,data:any,project:(x:number,y:number)=>number[],comparison?:any){
  ctx.font='10px sans-serif';ctx.lineWidth=2;
  const axis=torsoAxis(data.points);if(axis){const a=project(axis.hip.x,axis.hip.y),b=project(axis.shoulder.x,axis.shoulder.y);ctx.strokeStyle=comparison?.metrics?.find((m:any)=>m.id==='body.torsoDirection')?.status==='fail'?'#ff4264':'#78d4ff';ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.fillStyle=ctx.strokeStyle;ctx.fillText('Torso',(a[0]+b[0])/2,(a[1]+b[1])/2);ctx.setLineDash([]);}
+ // v3 结构辅助线：肩线、髋线、面部朝向；失败项与节点同色变红。
+ const failedBy=(id:string)=>comparison?.metrics?.find((m:any)=>m.id===id)?.status==='fail';
+ const line=(a:any,b:any,id:string)=>{if(!a||!b)return;ctx.strokeStyle=failedBy(id)?'#ff4264':'#8ea2c9';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(...project(a.x,a.y));ctx.lineTo(...project(b.x,b.y));ctx.stroke();ctx.setLineDash([]);};
+ line(data.points.leftShoulder,data.points.rightShoulder,'body.shoulderLine');
+ line(data.points.leftHip,data.points.rightHip,'body.hipLine');
+ if(data.points.head&&data.points.face){const a=project(data.points.head.x,data.points.head.y),b=project(data.points.face.x,data.points.face.y);ctx.strokeStyle=failedBy('head.orientation')?'#ff4264':'#fff17a';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=ctx.strokeStyle;ctx.fillText('Face',b[0]+4,b[1]-4);}
  const failed=new Set(comparison?.metrics.filter((m:any)=>m.status!=='pass').flatMap((m:any)=>m.nodes)??[]);
  for(const a of data.attachments??[]){ctx.strokeStyle='#acb6c566';ctx.lineWidth=.7;const boundary=new Map<string,{count:number;ids:number[]}>();for(let i=0;i<a.triangles.length;i+=3){const tri=a.triangles.slice(i,i+3);for(let j=0;j<3;j++){const ids=[tri[j],tri[(j+1)%3]].sort((u:number,v:number)=>u-v),key=ids.join(':');const old=boundary.get(key);boundary.set(key,{ids,count:(old?.count??0)+1});}}ctx.beginPath();for(const e of boundary.values())if(e.count===1){ctx.moveTo(...project(a.vertices[e.ids[0]*2],a.vertices[e.ids[0]*2+1]));ctx.lineTo(...project(a.vertices[e.ids[1]*2],a.vertices[e.ids[1]*2+1]));}ctx.stroke();}
  ctx.lineWidth=2;for(const [id,[a,b]]of graphEdges.entries()){const p=data.points[a],q=data.points[b];if(!p||!q)continue;ctx.strokeStyle=failed.has(a)||failed.has(b)?'#ff4264':a.startsWith('left')?'#65dfab':a.startsWith('right')?'#ffba6b':'#78d4ff';ctx.beginPath();ctx.moveTo(...project(p.x,p.y));ctx.lineTo(...project(q.x,q.y));ctx.stroke();const m=project((p.x+q.x)/2,(p.y+q.y)/2);ctx.fillStyle=ctx.strokeStyle;ctx.fillText('E'+id,m[0],m[1]);}
@@ -49,7 +57,7 @@ export function drawVisualGraph(ctx:any,data:any,project:(x:number,y:number)=>nu
 }
 export async function requireVisualRig(p:string,c:ToolContext,confirmed=true){
  const rig=await read(p,c),s=await (await import('./poseWorkflow.js')).characterFingerprint(rig.filePath,rig.mappingPath,c);
- if(rig.version!==1||rig.sourceFingerprint!==s.fingerprint||rig.skin!==s.mapping.skin)throw new Error('visualRig 角色、mapping、skin 或贴图已失效。');
+ if(rig.version!==2||rig.sourceFingerprint!==s.fingerprint||rig.skin!==s.mapping.skin)throw new Error(`visualRig 需要 v2（含面部朝向锚点 face）：当前版本 v${rig.version??'?'} 或角色、mapping、skin 已失效，请重新校准并审查。`);
  const skeleton=s.rt.sample(undefined,0,rig.skin);for(const [slot,a]of Object.entries(s.mapping.bones.slotAttachments??{}))if(a===null)skeleton.findSlot(slot)!.setAttachment(null);else skeleton.setAttachment(slot,a);
  const actual=readVisualNodes(skeleton,rig);
  validateActionRig(rig,skeleton);
@@ -70,9 +78,9 @@ export async function calibrateVisualRig(a:any,c:ToolContext={}){
  for(const [slot,attachment]of Object.entries(s.mapping.bones.slotAttachments??{}))if(attachment===null)sk.findSlot(slot)!.setAttachment(null);else sk.setAttachment(slot,attachment);
  const attachments=attachmentSnapshot(sk),nodes:any={};
  for(const [role,chain]of Object.entries(limbNodes))chain.forEach((node,i)=>nodes[node]={type:'boneLocal',bone:(s.mapping.bones as any)[role][i],point:[0,0],calibrated:false,basis:'仅骨骼原点候选，必须依据切片轮廓校准，不能自动确认。'});
- nodes.body={type:'boneLocal',bone:s.mapping.bones.body,point:[0,0],calibrated:false};nodes.head={type:'boneLocal',bone:s.mapping.bones.head,point:[0,0],calibrated:false};Object.assign(nodes,a.nodes??{});
+ nodes.body={type:'boneLocal',bone:s.mapping.bones.body,point:[0,0],calibrated:false};nodes.head={type:'boneLocal',bone:s.mapping.bones.head,point:[0,0],calibrated:false};nodes.face={type:'boneLocal',bone:s.mapping.bones.head,point:[0,0],calibrated:false,basis:'面部朝向锚点候选：必须按鼻尖或面部切片校准，头骨原点不能代替。'};Object.assign(nodes,a.nodes??{});
  const segments:any={};for(const [role,n]of Object.entries(limbNodes))for(let i=0;i<2;i++){const bone=(s.mapping.bones as any)[role][i];segments[role+'.'+i]={nodes:n.slice(i,i+2),bones:[bone],attachments:attachments.filter((v:any)=>v.influences.some((w:any)=>w.bone===bone)).map((v:any)=>({slot:v.slot,attachment:v.attachment}))};}Object.assign(segments,a.segments??{});
- const rig={version:1,status:'draft',filePath:a.filePath,mappingPath:a.mappingPath,skin:s.mapping.skin,sourceFingerprint:s.fingerprint,nodes,segments,anatomicalSides:a.anatomicalSides,viewProfiles:a.viewProfiles,torsoAxis:{version:1,method:'shoulderHipCenters',basis:'由已校准左右肩和左右髋计算；不使用头部中心作为躯干方向。'}};
+ const rig={version:2,status:'draft',filePath:a.filePath,mappingPath:a.mappingPath,skin:s.mapping.skin,sourceFingerprint:s.fingerprint,nodes,segments,anatomicalSides:a.anatomicalSides,viewProfiles:a.viewProfiles,torsoAxis:{version:1,method:'shoulderHipCenters',basis:'由已校准左右肩和左右髋计算；不使用头部中心作为躯干方向。'}};
  validateActionRig(rig,sk);
  const actual=readVisualNodes(sk,rig),issues:string[]=[];try{validateRig(rig,actual,s.mapping);}catch(e){issues.push(String(e));}
  for(const [k,v]of Object.entries(nodes) as any)if(v.calibrated!==true||!v.basis?.trim())issues.push(`${k} 尚未视觉校准。`);
@@ -87,9 +95,13 @@ export async function calibrateVisualRig(a:any,c:ToolContext={}){
  return {...report,actual:a.detailed?actual:visualSummary(actual),dryRun:true,rig};
 }
 export async function reviewVisualRig(a:any,c:ToolContext={}){
+ return withStrict(async()=>{
+
  const {rig}=await requireVisualRig(a.visualRigPath,c,false),m=await read(rig.manifestPath,c);
  if(!a.reason?.trim()||!a.reviewedBy?.trim()||!['approved','rejected'].includes(a.decision))throw new Error('绑定审查需明确决定、确认者和依据。');
  if(a.decision==='approved'&&(!m.ok||m.fingerprint!==visualRigFingerprint(rig)||Object.values(rig.nodes).some((n:any)=>n.calibrated!==true||!n.basis?.trim())))throw new Error('未校准的骨骼原点候选或过期绑定不能批准。');
  if(!m.evidence?.length)throw new Error('缺少绑定证据。');for(const e of m.evidence)if((await evidence(e.filePath,c)).hash!==e.hash)throw new Error('校准证据已改变。');
  rig.review={decision:a.decision,reviewedBy:a.reviewedBy,reason:a.reason,fingerprint:visualRigFingerprint(rig),evidence:[...m.evidence,await evidence(rig.manifestPath,c)],at:new Date().toISOString()};rig.status=a.decision==='approved'?'confirmed':'rejected';if(a.dryRun===false)await saveJson(a.visualRigPath,rig,c);return {ok:true,dryRun:a.dryRun??true,review:rig.review};
+
+ });
 }

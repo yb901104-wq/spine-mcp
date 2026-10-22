@@ -1,3 +1,4 @@
+import {taskCheckpoint,reportProgress} from './taskControl.js';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, open, unlink, access } from 'node:fs/promises';
 import path from 'node:path';
@@ -7,7 +8,7 @@ const { GIFEncoder, quantize, applyPalette } = gifenc;
 import { loadMotionRuntime, worldVertices } from './motionRuntime.js';
 import { readSpineDocument, resolveWorkspacePath, type ToolContext } from './spineJson.js';
 import { getWorkspaceRoot } from './workspaceTools.js';
-import { loadAtlasImages, rasterFrame } from './rasterRenderer.js';
+import { loadAtlasImages, rasterFrame, RASTER_RENDERER_VERSION } from './rasterRenderer.js';
 import { readCharacterMapping } from './motionEngine.js';
 import { withFileLock } from './jobTools.js';
 
@@ -42,7 +43,7 @@ export async function createPreviewManifest(args: RenderOptions, context: ToolCo
   for (const page of runtime.atlas.pages) { const p = path.join(path.dirname(args.atlasPath), page.name); images.push({ path: p, hash: sha(await readFile(resolveWorkspacePath(p, context))) }); }
   const mappingHash = args.mappingPath ? sha(await readFile(resolveWorkspacePath(args.mappingPath, context))) : null;
   const motionHash = args.motionPath ? sha(await readFile(resolveWorkspacePath(args.motionPath, context))) : null;
-  const manifest = { version: 2, filePath: args.filePath, atlasPath: args.atlasPath, animation: args.animation, skin: effectiveSkin ?? null, jsonHash: args.jsonOverride ? sha(JSON.stringify(json)) : doc.hash, atlasHash: sha(raw), images, mappingHash, motionHash, runtime: '@esotericsoftware/spine-core@4.1.56', renderer: 'canvas-triangle-v2', fps, frameCount, sampleTimes: args.times ?? null, duration: animation.duration, canvas: { width, height, background: args.background ?? '#20242b', scale: args.scale ?? 1 }, premultipliedAlpha: args.premultipliedAlpha ?? runtime.atlas.pages.some(p => p.pma), mipmaps: false, requestedBounds: args.bounds ?? null };
+  const manifest = { version: 2, filePath: args.filePath, atlasPath: args.atlasPath, animation: args.animation, skin: effectiveSkin ?? null, jsonHash: args.jsonOverride ? sha(JSON.stringify(json)) : doc.hash, atlasHash: sha(raw), images, mappingHash, motionHash, runtime: '@esotericsoftware/spine-core@4.1.56', renderer: RASTER_RENDERER_VERSION, fps, frameCount, sampleTimes: args.times ?? null, duration: animation.duration, canvas: { width, height, background: args.background ?? '#20242b', scale: args.scale ?? 1 }, premultipliedAlpha: args.premultipliedAlpha ?? runtime.atlas.pages.some(p => p.pma), mipmaps: false, requestedBounds: args.bounds ?? null };
   return { ...manifest, cacheKey: sha(JSON.stringify(manifest)), createdAt: new Date().toISOString() };
 }
 
@@ -71,6 +72,7 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
       const mapping = args.mappingPath ? await readCharacterMapping(args.mappingPath, context) : null;
       const tracks: any[] = []; let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
       for (let i = 0; i < manifest.frameCount; i++) {
+        await taskCheckpoint('动画预览');reportProgress(i,manifest.frameCount,'逐帧生成预览');
         const time = manifest.sampleTimes?.[i] ?? manifest.duration * i / manifest.frameCount, s = rt.sample(args.animation, time, manifest.skin ?? undefined);
         const vertices = Object.values(worldVertices(s)).flat();
         for (let j = 0; j < vertices.length; j += 2) { minX = Math.min(minX, vertices[j]); minY = Math.min(minY, vertices[j + 1]); maxX = Math.max(maxX, vertices[j]); maxY = Math.max(maxY, vertices[j + 1]); }
@@ -89,6 +91,7 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
       if (![bounds.minX, bounds.minY, bounds.maxX, bounds.maxY].every(Number.isFinite) || bounds.maxX <= bounds.minX || bounds.maxY <= bounds.minY) throw new Error('固定相机 bounds 无效。');
       const frames = [];
       for (let i = 0; i < manifest.frameCount; i++) {
+        await taskCheckpoint('动画预览');reportProgress(i,manifest.frameCount,'逐帧生成预览');
         const canvas = rasterFrame(rt.sample(args.animation, tracks[i].time, manifest.skin ?? undefined), images, bounds, manifest.canvas.width, manifest.canvas.height, manifest.canvas.background);
         const p = path.join(cacheDir, `frame-${String(i).padStart(4, '0')}.png`); await writeFile(p, canvas.toBuffer('image/png')); frames.push(relative(context, p));
       }
@@ -97,7 +100,7 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
     }
     await jsonWrite(path.join(jobDir, 'preview-manifest.json'), result);
     await jsonWrite(path.join(jobDir, 'status.json'), { jobId, status: 'done', cacheKey: manifest.cacheKey });
-    const { trajectories, ...summary } = result;
+    reportProgress(manifest.frameCount,manifest.frameCount,'动画预览已完成');const { trajectories, ...summary } = result;
     return { ...summary, trajectorySamples: trajectories?.length ?? 0, manifestPath: relative(context, path.join(jobDir, 'preview-manifest.json')), message: '已生成固定相机 PNG 帧与轨迹报告；轨迹保存在 manifest 中。' };
   } catch (e) { await jsonWrite(path.join(jobDir, 'status.json'), { jobId, status: 'failed', input: manifest, error: String(e) }); throw e; }
   finally { await lock.close(); await unlink(lockPath); }
@@ -117,8 +120,8 @@ export async function renderContactSheet(args: RenderOptions & { columns?: numbe
 export async function renderAnimationGif(args: RenderOptions, context: ToolContext = {}): Promise<any> {
   if(args.times)throw new Error('原速 GIF 采用均匀采样，请勿传 times。');
   const r = await renderAnimationFrames(args, context), gif = GIFEncoder(); let gifIndex = 0, encodedDurationMs = 0;
-  for (const frame of r.frames) { const image = await loadImage(await readFile(resolveWorkspacePath(frame, context))), c = createCanvas(image.width, image.height), ctx = c.getContext('2d'); ctx.drawImage(image, 0, 0); const pixels = ctx.getImageData(0, 0, c.width, c.height).data, palette = quantize(pixels, 256); gif.writeFrame(applyPalette(pixels, palette), c.width, c.height, { palette, delay: (() => { const delay = Math.max(10, (Math.round((gifIndex + 1) * r.duration * 100 / r.frameCount) - Math.round(gifIndex * r.duration * 100 / r.frameCount)) * 10); gifIndex++; encodedDurationMs += delay; return delay; })(), repeat: 0 }); }
-  gif.finish(); const p = resolveWorkspacePath(`${r.outputDir}/animation.gif`, context); await writeFile(p, gif.bytes());
+  for (const frame of r.frames) { await taskCheckpoint('GIF 编码');reportProgress(gifIndex,r.frames.length,'编码动画 GIF'); const image = await loadImage(await readFile(resolveWorkspacePath(frame, context))), c = createCanvas(image.width, image.height), ctx = c.getContext('2d'); ctx.drawImage(image, 0, 0); const pixels = ctx.getImageData(0, 0, c.width, c.height).data, palette = quantize(pixels, 256); gif.writeFrame(applyPalette(pixels, palette), c.width, c.height, { palette, delay: (() => { const delay = Math.max(10, (Math.round((gifIndex + 1) * r.duration * 100 / r.frameCount) - Math.round(gifIndex * r.duration * 100 / r.frameCount)) * 10); gifIndex++; encodedDurationMs += delay; return delay; })(), repeat: 0 }); }
+  gif.finish();reportProgress(r.frames.length,r.frames.length,'动画 GIF 已编码'); const p = resolveWorkspacePath(`${r.outputDir}/animation.gif`, context); await writeFile(p, gif.bytes());
   const stored=await readFile(resolveWorkspacePath(r.manifestPath,context),'utf8').then(JSON.parse);await jsonWrite(resolveWorkspacePath(r.manifestPath,context),{...stored,gifPath:relative(context,p),encodedDurationMs});
   return { ...r, gifPath: relative(context, p), encodedDurationMs, message: '已离线生成动画 GIF（按10ms量化并分配帧延迟）。' };
 }

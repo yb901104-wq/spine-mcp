@@ -6,6 +6,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         ApplicationConfiguration.Initialize();
+        if (args.Contains("--host-self-test")) { HostObserverSelfTest.Run(args); return; }
         var selfTest = args.Contains("--self-test");
         try
         {

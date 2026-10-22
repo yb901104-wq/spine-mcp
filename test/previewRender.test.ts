@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import os from 'node:os';
 import path from 'node:path';
-import { mkdtemp, rm, cp, readFile, writeFile, mkdir, symlink } from 'node:fs/promises';
+import { mkdtemp, rm, cp, readFile, writeFile, mkdir, symlink, readdir } from 'node:fs/promises';
 import { createPreviewManifest, renderContactSheet, renderAnimationGif, renderAnimationFrames, comparePreviewReports } from '../src/previewRenderTools.js';
 import { analyzeReferenceGif, extractReferenceKeyframes } from '../src/referenceTools.js';
 import { getWorkspaceInfo, registerWorkspace, selectWorkspace, runInWorkspace } from '../src/workspaceTools.js';
@@ -52,6 +52,11 @@ test('file locks and junction boundaries reject concurrent writes and escapes', 
     let release!: () => void, entered!: () => void; const wait = new Promise<void>(r=>release=r), ready = new Promise<void>(r=>entered=r);
     const first = withFileLock('character.json', context, async()=>{ entered(); await wait; }); await ready;
     await assert.rejects(()=>withFileLock('character.json',context,async()=>null),/其他任务/); release(); await first;
+    // 业务异常必须释放锁，锁记录里应带 pid，后续写入可再次获得锁
+    await assert.rejects(()=>withFileLock('character.json',context,async()=>{ throw new Error('业务失败'); }),/业务失败/);
+    assert.equal(await withFileLock('character.json',context,async()=>'再次进入'),'再次进入');
+    const lockDir = path.join(workspace,'.spine-mcp','locks'), leftovers = await readdir(lockDir).catch(()=>[] as string[]);
+    assert.deepEqual(leftovers, []);
     await symlink(outside, path.join(workspace,'escape'), process.platform==='win32' ? 'junction' : 'dir');
     assert.throws(()=>resolveWorkspacePath('escape/character.json',context),/越过/);
   } finally { await rm(workspace,{recursive:true,force:true}); await rm(outside,{recursive:true,force:true}); }

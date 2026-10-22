@@ -6,6 +6,7 @@ import { loadMotionRuntime, worldVertices } from "./motionRuntime.js";
 import { fitCubicBezierTimeline, lockFootContact, sampleTimeline, solveTwoBoneIK, wrapAngle, type Point } from "./motionMath.js";
 
 import {applyPosePresentation,presentationTimelines} from './posePresentation.js';
+import { taskCheckpoint,reportProgress } from './taskControl.js';
 type SemanticFrame = NonNullable<MotionDefinition["frames"]>[number];
 const roles = ["leftFoot", "rightFoot", "leftHand", "rightHand"] as const;
 const angle = (bone: any) => Math.atan2(bone.c, bone.a) * 180 / Math.PI;
@@ -164,8 +165,17 @@ function ensureAnimationDuration(animation:any,body:string,duration:number) {
 }
 
 export async function buildSemanticAnimation(json: any, mapping: CharacterMapping, motion: MotionDefinition, options: MotionBuildOptions, context: ToolContext = {}) {
-  validateMapping(mapping, json); validateMotion(motion);
-  const runtime = await loadMotionRuntime(json, options.atlasPath ?? mapping.atlasPath!, context);
+  const runtime=await loadMotionRuntime(json,options.atlasPath??mapping.atlasPath!,context);
+  const iterator=buildSemanticAnimationSteps(json,mapping,motion,options,runtime);let step=iterator.next();
+  while(!step.done){await taskCheckpoint('完整动画计算');reportProgress(step.value.current,step.value.total,step.value.message);step=iterator.next();}
+  reportProgress(1,1,'完整动画计算结束，仍须 runtime 和视觉审查');return step.value;
+}
+/** 只消费已准备运行态；Host 和文件适配器共用完整动画计算，不读写文件。 */
+export function buildSemanticAnimationData(json:any,mapping:CharacterMapping,motion:MotionDefinition,options:MotionBuildOptions,runtime:Awaited<ReturnType<typeof loadMotionRuntime>>){
+  const iterator=buildSemanticAnimationSteps(json,mapping,motion,options,runtime);let step=iterator.next();while(!step.done)step=iterator.next();return step.value;
+}
+export function* buildSemanticAnimationSteps(json:any,mapping:CharacterMapping,motion:MotionDefinition,options:MotionBuildOptions,runtime:Awaited<ReturnType<typeof loadMotionRuntime>>){
+  validateMapping(mapping,json);validateMotion(motion);
   const scale = mapping.calibration!.scale, origin = mapping.calibration!.origin!, duration = options.duration ?? motion.duration;
   if (!Number.isFinite(duration) || duration <= 0) throw new Error("duration 必须是正数。");
   const count = Math.max(motion.frames!.length, Math.ceil(duration * 120) + 1);
@@ -195,7 +205,8 @@ export async function buildSemanticAnimation(json: any, mapping: CharacterMappin
   }
   const orderedTimes=[...sampleTimes].sort((a,b)=>a-b).filter((t,i,all)=>i===0||t-all[i-1]>1e-9);
   if(orderedTimes.length>10001)throw new Error('约束关键姿态超过 10001，请减少采样或脚底顶点。');
-  for (const inputTime of orderedTimes) {
+  for (const [index,inputTime] of orderedTimes.entries()) {
+    if(index%16===0)yield{current:index,total:orderedTimes.length,message:'计算完整动画的约束采样'};
     const time = duration * inputTime / motion.duration, f = semanticAt(motion, inputTime);
     const solved = solveSemanticPose(runtime, mapping, f, motion.groundY ?? 0, applyFollowThrough(mapping, motion, inputTime, scale));
     const bones = solved.bones;
@@ -211,6 +222,7 @@ export async function buildSemanticAnimation(json: any, mapping: CharacterMappin
   }
   if(motion.frames!.some(f=>f.presentation)){const visual=presentationTimelines(json,mapping,motion,duration);Object.assign(dense,visual);Object.assign(fitted,structuredClone(visual));}
   for (const [bone, tls] of Object.entries(fitted.bones) as any) for (const [kind, frames] of Object.entries(tls) as any) {
+    yield{current:0,total:1,message:`拟合 ${bone}/${kind} 曲线`};
     const fit = fitCubicBezierTimeline(frames, kind === "rotate" ? ["value"] : ["x", "y"], kind === "rotate" ? options.rotationTolerance ?? .3 : options.translationTolerance ?? .07,8,0,kind==='rotate'?179:Infinity);
     tls[kind] = fit.frames; stats.push({ bone, timeline: kind, originalCount: fit.originalCount, compressedCount: fit.compressedCount, maxError: fit.maxError });
   }
@@ -233,6 +245,7 @@ async function evaluateResult(json: any, mapping: CharacterMapping, motion: Moti
   let denseRuntime: Awaited<ReturnType<typeof loadMotionRuntime>> | undefined;
   if (dense) { const copy = structuredClone(json); copy.animations[denseName] = dense; denseRuntime = await loadMotionRuntime(copy, mapping.atlasPath!, context); }
   for (let i = 0; i < count; i++) {
+    if(i%16===0){await taskCheckpoint('完整动画 runtime 验证');reportProgress(i,count,'回读完整动画的实际骨骼与网格');}
     const t = duration * i / (count - 1), f = semanticAt(motion, motion.duration * i / (count - 1)), skeleton = runtime.sample(animationName, t, mapping.skin);
     for (const bone of skeleton.bones) {
       if (![bone.worldX, bone.worldY, bone.a, bone.b, bone.c, bone.d].every(Number.isFinite)) issues.push(`骨骼 ${bone.data.name} 出现非有限变换。`);

@@ -1,0 +1,82 @@
+{
+  "measuredAt": "2026-10-22T07:33:50.554Z",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "scope": "标准高维 Rosenbrock、共享 60 次数值迭代器；当前进程任务控制回调，不含 MCP 通知传输，不是实际美术角色/参考修正。",
+  "dimension": 160,
+  "iterations": 60,
+  "pairCount": 1,
+  "alternatingOrder": true,
+  "pairs": [
+    {
+      "syncMs": 1597.6482,
+      "taskMs": 1756.5818,
+      "overheadPercent": 9.947972275748796,
+      "notifications": [
+        {
+          "current": 0,
+          "total": 60,
+          "elapsedMs": 0.554800000000796
+        },
+        {
+          "current": 7,
+          "total": 60,
+          "elapsedMs": 210.57729999999992
+        },
+        {
+          "current": 14,
+          "total": 60,
+          "elapsedMs": 435.21060000000034
+        },
+        {
+          "current": 19,
+          "total": 60,
+          "elapsedMs": 650.1615000000002
+        },
+        {
+          "current": 27,
+          "total": 60,
+          "elapsedMs": 885.9923000000008
+        },
+        {
+          "current": 35,
+          "total": 60,
+          "elapsedMs": 1104.9652000000006
+        },
+        {
+          "current": 43,
+          "total": 60,
+          "elapsedMs": 1317.9352000000008
+        },
+        {
+          "current": 51,
+          "total": 60,
+          "elapsedMs": 1522.3730000000005
+        },
+        {
+          "current": 59,
+          "total": 60,
+          "elapsedMs": 1732.4158000000007
+        },
+        {
+          "current": 60,
+          "total": 60,
+          "elapsedMs": 1756.5737
+        }
+      ]
+    }
+  ],
+  "syncMedianMs": 1597.6482,
+  "taskMedianMs": 1756.5818,
+  "overheadPercent": 9.947972275748796,
+  "cancellation": {
+    "requestedAfterMs": 63.19500000000062,
+    "stoppedAfterRequestMs": 0.32699999999931606,
+    "evaluations": 323,
+    "noBackgroundWork": true,
+    "code": "CANCELLED"
+  },
+  "notificationDensityPassed": true,
+  "overheadPassed": false,
+  "cancellationPassed": true
+}

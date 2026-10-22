@@ -1,0 +1,319 @@
+{
+  "date": "2026-10-22T02:06:36.333Z",
+  "renderer": "canvas-region-msaa4-v4",
+  "fixture": "合成关节与两个 region，非真实美术验收",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "release": "10.0.19045",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "logicalCores": 12,
+  "sampleCount": 30,
+  "warmups": 2,
+  "size": 480,
+  "coldLoadEvaluateFrameMs": 120.0489,
+  "dependencyFiles": 5,
+  "dependencyBytes": 4907,
+  "phases": {
+    "patchMs": {
+      "p50": 9.348299999999881,
+      "p95": 13.027500000000146
+    },
+    "snapshotMs": {
+      "p50": 5.471000000000004,
+      "p95": 7.188299999999799
+    },
+    "evaluateCompareExportMs": {
+      "p50": 25.109500000000025,
+      "p95": 35.48600000000033
+    },
+    "publishMs": {
+      "p50": 7.200900000000047,
+      "p95": 12.997699999999895
+    },
+    "frameMs": {
+      "p50": 27.624499999999898,
+      "p95": 38.557300000000396
+    },
+    "endToEndMs": {
+      "p50": 75.51800000000003,
+      "p95": 109.54469999999992
+    },
+    "stateMs": {
+      "p50": 6.457400000000234,
+      "p95": 8.441599999999653
+    }
+  },
+  "samples": [
+    {
+      "patchMs": 9.813799999999901,
+      "snapshotMs": 5.65280000000007,
+      "evaluateCompareExportMs": 26.050899999999956,
+      "publishMs": 8.242200000000139,
+      "frameMs": 28.10739999999987,
+      "endToEndMs": 77.86709999999994,
+      "stateMs": 6.638999999999896
+    },
+    {
+      "patchMs": 8.829899999999952,
+      "snapshotMs": 6.367099999999937,
+      "evaluateCompareExportMs": 26.034000000000106,
+      "publishMs": 7.263899999999921,
+      "frameMs": 29.84400000000005,
+      "endToEndMs": 78.33889999999997,
+      "stateMs": 7.024899999999889
+    },
+    {
+      "patchMs": 9.651900000000069,
+      "snapshotMs": 5.707000000000107,
+      "evaluateCompareExportMs": 26.07309999999984,
+      "publishMs": 7.192500000000109,
+      "frameMs": 28.011399999999867,
+      "endToEndMs": 76.63589999999999,
+      "stateMs": 6.394900000000007
+    },
+    {
+      "patchMs": 8.864900000000034,
+      "snapshotMs": 5.267900000000054,
+      "evaluateCompareExportMs": 25.625699999999824,
+      "publishMs": 8.376500000000078,
+      "frameMs": 27.960199999999986,
+      "endToEndMs": 76.09519999999998,
+      "stateMs": 6.311300000000074
+    },
+    {
+      "patchMs": 9.348299999999881,
+      "snapshotMs": 5.3431000000000495,
+      "evaluateCompareExportMs": 24.798999999999978,
+      "publishMs": 7.200900000000047,
+      "frameMs": 30.73739999999998,
+      "endToEndMs": 77.42869999999994,
+      "stateMs": 6.910900000000083
+    },
+    {
+      "patchMs": 9.526099999999815,
+      "snapshotMs": 6.247000000000071,
+      "evaluateCompareExportMs": 25.059999999999945,
+      "publishMs": 7.122600000000148,
+      "frameMs": 30.10050000000001,
+      "endToEndMs": 78.05619999999999,
+      "stateMs": 6.635500000000093
+    },
+    {
+      "patchMs": 13.027500000000146,
+      "snapshotMs": 6.444700000000012,
+      "evaluateCompareExportMs": 24.344499999999925,
+      "publishMs": 7.130100000000084,
+      "frameMs": 27.29399999999987,
+      "endToEndMs": 78.24080000000004,
+      "stateMs": 6.555700000000115
+    },
+    {
+      "patchMs": 9.034900000000107,
+      "snapshotMs": 5.465299999999843,
+      "evaluateCompareExportMs": 25.15890000000013,
+      "publishMs": 7.660699999999906,
+      "frameMs": 27.854000000000042,
+      "endToEndMs": 75.17380000000003,
+      "stateMs": 6.195799999999963
+    },
+    {
+      "patchMs": 8.89819999999986,
+      "snapshotMs": 5.192000000000007,
+      "evaluateCompareExportMs": 25.84609999999998,
+      "publishMs": 7.1073999999998705,
+      "frameMs": 26.581700000000183,
+      "endToEndMs": 73.6253999999999,
+      "stateMs": 6.216499999999996
+    },
+    {
+      "patchMs": 9.015400000000227,
+      "snapshotMs": 5.353799999999865,
+      "evaluateCompareExportMs": 23.940099999999802,
+      "publishMs": 6.712600000000293,
+      "frameMs": 26.883600000000115,
+      "endToEndMs": 71.9055000000003,
+      "stateMs": 6.217399999999998
+    },
+    {
+      "patchMs": 9.222099999999955,
+      "snapshotMs": 5.1051000000002205,
+      "evaluateCompareExportMs": 24.810699999999997,
+      "publishMs": 6.967399999999998,
+      "frameMs": 28.28989999999976,
+      "endToEndMs": 74.39519999999993,
+      "stateMs": 6.408399999999801
+    },
+    {
+      "patchMs": 8.766900000000078,
+      "snapshotMs": 5.507399999999961,
+      "evaluateCompareExportMs": 24.82300000000032,
+      "publishMs": 7.747199999999793,
+      "frameMs": 27.232100000000173,
+      "endToEndMs": 74.07660000000033,
+      "stateMs": 6.399400000000242
+    },
+    {
+      "patchMs": 8.819300000000112,
+      "snapshotMs": 5.471000000000004,
+      "evaluateCompareExportMs": 24.83269999999993,
+      "publishMs": 7.489399999999932,
+      "frameMs": 26.806600000000344,
+      "endToEndMs": 73.41900000000032,
+      "stateMs": 6.186700000000201
+    },
+    {
+      "patchMs": 9.386699999999564,
+      "snapshotMs": 5.176900000000387,
+      "evaluateCompareExportMs": 24.039800000000014,
+      "publishMs": 6.900200000000041,
+      "frameMs": 27.096999999999753,
+      "endToEndMs": 72.60059999999976,
+      "stateMs": 6.565300000000207
+    },
+    {
+      "patchMs": 10.642299999999977,
+      "snapshotMs": 5.819500000000062,
+      "evaluateCompareExportMs": 25.16269999999986,
+      "publishMs": 6.807800000000043,
+      "frameMs": 27.0320999999999,
+      "endToEndMs": 75.46439999999984,
+      "stateMs": 6.318400000000111
+    },
+    {
+      "patchMs": 9.640200000000277,
+      "snapshotMs": 5.379199999999855,
+      "evaluateCompareExportMs": 25.477400000000216,
+      "publishMs": 6.922599999999875,
+      "frameMs": 30.08719999999994,
+      "endToEndMs": 77.50660000000016,
+      "stateMs": 6.1215000000001965
+    },
+    {
+      "patchMs": 8.509000000000015,
+      "snapshotMs": 5.222999999999956,
+      "evaluateCompareExportMs": 23.71889999999985,
+      "publishMs": 6.57569999999987,
+      "frameMs": 26.357400000000325,
+      "endToEndMs": 70.38400000000001,
+      "stateMs": 6.457400000000234
+    },
+    {
+      "patchMs": 8.689499999999953,
+      "snapshotMs": 5.460900000000038,
+      "evaluateCompareExportMs": 23.590099999999893,
+      "publishMs": 6.623900000000049,
+      "frameMs": 26.508800000000065,
+      "endToEndMs": 70.8732,
+      "stateMs": 6.497299999999996
+    },
+    {
+      "patchMs": 9.043099999999868,
+      "snapshotMs": 5.397199999999884,
+      "evaluateCompareExportMs": 25.652199999999993,
+      "publishMs": 7.166900000000169,
+      "frameMs": 27.39489999999978,
+      "endToEndMs": 74.6542999999997,
+      "stateMs": 5.95029999999997
+    },
+    {
+      "patchMs": 8.610700000000179,
+      "snapshotMs": 5.204199999999673,
+      "evaluateCompareExportMs": 24.12609999999995,
+      "publishMs": 7.3124000000002525,
+      "frameMs": 27.09479999999985,
+      "endToEndMs": 72.3481999999999,
+      "stateMs": 6.461099999999988
+    },
+    {
+      "patchMs": 11.828600000000279,
+      "snapshotMs": 7.188299999999799,
+      "evaluateCompareExportMs": 25.109500000000025,
+      "publishMs": 7.534500000000207,
+      "frameMs": 27.353099999999813,
+      "endToEndMs": 79.01400000000012,
+      "stateMs": 6.146900000000187
+    },
+    {
+      "patchMs": 8.728000000000065,
+      "snapshotMs": 5.091599999999744,
+      "evaluateCompareExportMs": 23.778099999999995,
+      "publishMs": 6.664000000000215,
+      "frameMs": 26.02019999999993,
+      "endToEndMs": 70.28189999999995,
+      "stateMs": 6.065099999999802
+    },
+    {
+      "patchMs": 8.986999999999625,
+      "snapshotMs": 5.06880000000001,
+      "evaluateCompareExportMs": 23.813000000000102,
+      "publishMs": 6.623500000000149,
+      "frameMs": 27.624499999999898,
+      "endToEndMs": 72.11679999999978,
+      "stateMs": 6.8202000000001135
+    },
+    {
+      "patchMs": 10.513800000000174,
+      "snapshotMs": 5.9789999999998145,
+      "evaluateCompareExportMs": 27.01890000000003,
+      "publishMs": 8.134000000000015,
+      "frameMs": 34.1556999999998,
+      "endToEndMs": 85.80139999999983,
+      "stateMs": 6.603799999999865
+    },
+    {
+      "patchMs": 9.429099999999835,
+      "snapshotMs": 5.800299999999879,
+      "evaluateCompareExportMs": 35.48600000000033,
+      "publishMs": 15.736899999999878,
+      "frameMs": 43.0924,
+      "endToEndMs": 109.54469999999992,
+      "stateMs": 12.27619999999979
+    },
+    {
+      "patchMs": 17.01509999999962,
+      "snapshotMs": 9.585100000000239,
+      "evaluateCompareExportMs": 57.279599999999846,
+      "publishMs": 12.997699999999895,
+      "frameMs": 38.557300000000396,
+      "endToEndMs": 135.4348,
+      "stateMs": 7.427599999999984
+    },
+    {
+      "patchMs": 10.928699999999935,
+      "snapshotMs": 6.7503999999999,
+      "evaluateCompareExportMs": 26.259300000000167,
+      "publishMs": 8.083099999999831,
+      "frameMs": 29.926300000000083,
+      "endToEndMs": 81.94779999999992,
+      "stateMs": 8.441599999999653
+    },
+    {
+      "patchMs": 10.127500000000055,
+      "snapshotMs": 5.536600000000362,
+      "evaluateCompareExportMs": 25.14359999999988,
+      "publishMs": 7.615600000000086,
+      "frameMs": 27.094699999999648,
+      "endToEndMs": 75.51800000000003,
+      "stateMs": 7.298500000000331
+    },
+    {
+      "patchMs": 9.349099999999908,
+      "snapshotMs": 5.514299999999821,
+      "evaluateCompareExportMs": 24.531600000000253,
+      "publishMs": 8.634799999999814,
+      "frameMs": 29.36239999999998,
+      "endToEndMs": 77.39219999999978,
+      "stateMs": 6.38779999999997
+    },
+    {
+      "patchMs": 9.950200000000223,
+      "snapshotMs": 5.523699999999735,
+      "evaluateCompareExportMs": 25.64150000000018,
+      "publishMs": 7.500599999999849,
+      "frameMs": 29.35420000000022,
+      "endToEndMs": 77.9702000000002,
+      "stateMs": 7.054399999999987
+    }
+  ],
+  "decision": "保持 MCP 求解。尚无 C 稳定四周、真实每日调用量与真实角色工作负载证据；本次隔离数据不满足 D 搬迁前置。"
+}

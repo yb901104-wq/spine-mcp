@@ -1,0 +1,113 @@
+{
+  "bones": {
+    "body": {
+      "rotate": 0,
+      "translate": {
+        "x": 0,
+        "y": 4.000000006459047
+      }
+    },
+    "head": {
+      "rotate": 0,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftLeg1": {
+      "rotate": 8.375492504875638,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftLeg2": {
+      "rotate": -28.239604157983138,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftLeg3": {
+      "rotate": 12.864110468788112,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightLeg1": {
+      "rotate": -5.662554674538114,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightLeg2": {
+      "rotate": -0.0001810939254482946,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightLeg3": {
+      "rotate": -1.3372655667817526,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftArm1": {
+      "rotate": 58.38786611986143,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftArm2": {
+      "rotate": -120.46035699050441,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "leftArm3": {
+      "rotate": 55.07249136240978,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightArm1": {
+      "rotate": 56.6855711889724,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightArm2": {
+      "rotate": -117.21115996699109,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "rightArm3": {
+      "rotate": 53.52558912038444,
+      "translate": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "skin": null,
+  "presentation": {
+    "attachments": {
+      "bodySlot": "alternate",
+      "accentSlot": null
+    },
+    "drawOrder": [
+      "accentSlot",
+      "bodySlot"
+    ]
+  }
+}
