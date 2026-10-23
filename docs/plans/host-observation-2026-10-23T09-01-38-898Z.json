@@ -1,0 +1,5342 @@
+{
+  "startedAt": "2026-10-23T09:01:38.905Z",
+  "workspace": "D:\\AI_cc\\spine test\\host-observation\\2026-10-23T09-01-38-898Z",
+  "sourceWorkspace": "D:\\AI_cc\\spine test\\host-acceptance\\2026-10-22T02-18-08-219Z",
+  "sourceReportPath": "docs/plans/host-real-c1-20261022.json",
+  "posePath": "poses/standing-hand-angle.json",
+  "scope": "真实 npc1 无参考站姿的短时只读 MCP/HTTP 观察；不执行编辑、求解、截图批准或写入权交接。",
+  "window": "single-session",
+  "twoWeekWindowSatisfied": false,
+  "rolloutEligible": false,
+  "inputHashes": {
+    "previews/pose-workflow-20261009/standing.pose.json": "6868836cf798e32cbfe173c6047cb203a3b6c1a506b37011539de8515c9cdf03",
+    "目标/npc1.atlas": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "目标/npc1.json": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83",
+    "目标/npc1.png": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251",
+    "previews/pose-workflow-20261009/npc1.mapping.json": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-clean.png": "79b2233b178d14cdba4b3e5861937191e41dd0c5f17fdba2dbcef38b29343521",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-diagnostic.png": "7b535f771792bb33c1cbb5495c0edde648fb1a51fc12c6a95d61908efbd001c9",
+    "previews/pose-workflow-20261009/standing-comparison/pose-comparison.json": "ac461d7a4f2955b384735511a7bf8db10637417bbba4565e811d33f90c6a5ac2",
+    "previews/pose-workflow-20261009/npc1.mapping.calibration.json": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc",
+    "poses/standing-hand-angle.json": "5ea161b768155b03c11a19aeb2159ddb019d01276315f115f15771d6bc71199f",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png.manifest.json": "3f4de9b85e33fc6586bb52a2880ad77154fbe9ab77a41718470dabf699815370"
+  },
+  "samples": [
+    {
+      "index": 0,
+      "observedAt": "2026-10-23T09:01:40.044Z",
+      "elapsedMs": 30.772900000000163,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 1,
+      "observedAt": "2026-10-23T09:01:40.390Z",
+      "elapsedMs": 377.3859000000002,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "observedAt": "2026-10-23T09:01:40.688Z",
+      "elapsedMs": 675.3242,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "observedAt": "2026-10-23T09:01:40.963Z",
+      "elapsedMs": 949.7643000000003,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "observedAt": "2026-10-23T09:01:41.241Z",
+      "elapsedMs": 1228.6568000000002,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "observedAt": "2026-10-23T09:01:41.519Z",
+      "elapsedMs": 1505.9841999999999,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 6,
+      "observedAt": "2026-10-23T09:01:41.801Z",
+      "elapsedMs": 1788.1273,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "observedAt": "2026-10-23T09:01:42.077Z",
+      "elapsedMs": 2063.9452,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "observedAt": "2026-10-23T09:01:42.358Z",
+      "elapsedMs": 2345.6109,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "observedAt": "2026-10-23T09:01:42.639Z",
+      "elapsedMs": 2626.0627,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "observedAt": "2026-10-23T09:01:42.919Z",
+      "elapsedMs": 2906.6409,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 11,
+      "observedAt": "2026-10-23T09:01:43.198Z",
+      "elapsedMs": 3185.0593999999996,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "observedAt": "2026-10-23T09:01:43.476Z",
+      "elapsedMs": 3463.1470999999997,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "observedAt": "2026-10-23T09:01:43.757Z",
+      "elapsedMs": 3744.2941000000005,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "observedAt": "2026-10-23T09:01:44.041Z",
+      "elapsedMs": 4027.7554999999998,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "observedAt": "2026-10-23T09:01:44.320Z",
+      "elapsedMs": 4306.8346,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 16,
+      "observedAt": "2026-10-23T09:01:44.599Z",
+      "elapsedMs": 4586.5203,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "observedAt": "2026-10-23T09:01:44.881Z",
+      "elapsedMs": 4867.748600000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "observedAt": "2026-10-23T09:01:45.159Z",
+      "elapsedMs": 5146.5327,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "observedAt": "2026-10-23T09:01:45.451Z",
+      "elapsedMs": 5438.3135999999995,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "observedAt": "2026-10-23T09:01:45.720Z",
+      "elapsedMs": 5707.4113,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 21,
+      "observedAt": "2026-10-23T09:01:46.003Z",
+      "elapsedMs": 5990.6098,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "observedAt": "2026-10-23T09:01:46.280Z",
+      "elapsedMs": 6266.948,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "observedAt": "2026-10-23T09:01:46.557Z",
+      "elapsedMs": 6544.383100000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "observedAt": "2026-10-23T09:01:46.838Z",
+      "elapsedMs": 6824.892400000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "observedAt": "2026-10-23T09:01:47.119Z",
+      "elapsedMs": 7105.982600000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ],
+      "frameHash": "f3a483b9c344ed62f55dd080d4dcde8f48fa98780cca016d175857d39d82a372"
+    },
+    {
+      "index": 26,
+      "observedAt": "2026-10-23T09:01:47.400Z",
+      "elapsedMs": 7387.598100000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "observedAt": "2026-10-23T09:01:47.683Z",
+      "elapsedMs": 7669.7765,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "observedAt": "2026-10-23T09:01:47.956Z",
+      "elapsedMs": 7943.378400000001,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "observedAt": "2026-10-23T09:01:48.231Z",
+      "elapsedMs": 8218.6465,
+      "inputsUnchanged": true,
+      "targetStale": false,
+      "falsePositive": false,
+      "version": {
+        "sessionId": "2e136ad0-b9ec-4ba1-aad6-6c56ce89fea9",
+        "documentId": "4571b97c97395747445fe5666f9bbdd3653fea01fa2f5b2eed9126232efe401a",
+        "openEpoch": "8f74286c-4f3e-470f-9ba9-f97c5e9853c1",
+        "revision": 0
+      },
+      "capabilitiesMatch": true,
+      "readiness": [
+        {
+          "operation": "open",
+          "supported": true,
+          "schemaId": "spine_host_open",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "inspect",
+          "supported": true,
+          "schemaId": "host.inspect",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "evaluate",
+          "supported": true,
+          "schemaId": "spine_recheck_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "frame",
+          "supported": true,
+          "schemaId": "spine_preview_frame",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "ready",
+          "canRun": true,
+          "reasons": [],
+          "nextAction": null
+        },
+        {
+          "operation": "capture",
+          "supported": true,
+          "schemaId": "spine_preview_capture",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "blocked",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "NO_SOLUTION",
+              "message": "需要显式发布当前不可变 player 候选。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "需要显式发布当前不可变 player 候选。"
+          }
+        },
+        {
+          "operation": "review",
+          "supported": false,
+          "schemaId": "spine_review_pose",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "patch",
+          "supported": false,
+          "schemaId": "spine_host_patch",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "undo",
+          "supported": false,
+          "schemaId": "spine_host_undo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "redo",
+          "supported": false,
+          "schemaId": "spine_host_redo",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        },
+        {
+          "operation": "commit",
+          "supported": false,
+          "schemaId": "spine_host_commit",
+          "schemaVersion": 1,
+          "checked": "strict",
+          "state": "unsupported",
+          "canRun": false,
+          "reasons": [
+            {
+              "code": "WRITE_FORBIDDEN",
+              "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          ],
+          "nextAction": {
+            "tool": null,
+            "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+          }
+        }
+      ]
+    }
+  ],
+  "toolsInvoked": [
+    "spine_preview_state",
+    "spine_host_open",
+    "spine_preview_state",
+    "spine_host_open",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state",
+    "spine_preview_state"
+  ],
+  "supersedes": {
+    "filePath": "docs/plans/host-observation-2026-10-23T06-45-59-361Z.json",
+    "reason": "首轮错误读取不存在的缓存求解计数器，差值序列化为 null；不采用该计数或该报告作最终观察证据，原始记录保留。"
+  },
+  "observedDurationMs": 8218.652100000001,
+  "falsePositiveCount": 0,
+  "solveAudit": {
+    "method": "入口调用记录与只读 HTTP 路由核对",
+    "solverCounterAvailable": false,
+    "calledSolveOrEvaluateTool": false,
+    "httpRoutes": [
+      "/api/capabilities",
+      "/api/frame"
+    ],
+    "note": "没有调用求解入口；未添加底层求解计数器，不把缺失计数写为零。"
+  },
+  "sourceUnchanged": true,
+  "manifestUnchanged": true,
+  "writeEnabled": false,
+  "passed": true,
+  "hostStopped": true,
+  "finishedAt": "2026-10-23T09:01:48.272Z"
+}

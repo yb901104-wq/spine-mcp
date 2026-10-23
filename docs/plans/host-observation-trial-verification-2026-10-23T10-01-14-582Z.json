@@ -1,0 +1,45 @@
+{
+  "recordedAt": "2026-10-23T10:01:14.582Z",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "projectId": "npc1-host-c1-acceptance",
+  "hostPid": 45596,
+  "endpoint": "http://127.0.0.1:56655",
+  "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+  "version": {
+    "sessionId": "5af1216d-c9d2-4d48-a19b-25ed4307282f",
+    "documentId": "b3d80123ae35981a8a2905da2e51f892f8d3e24da1435d7c27d6e6d99be0ec21",
+    "openEpoch": "ee6b6def-9104-4e6d-b0fc-a7e284d9b399",
+    "revision": 0
+  },
+  "observation": {
+    "running": true,
+    "runId": "edc9184e-4d41-4534-9ed3-b1026702c501",
+    "file": ".spine-mcp/observation/runs/edc9184e-4d41-4534-9ed3-b1026702c501.jsonl",
+    "samples": 3,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "writeMode": "observer",
+  "rollout": {
+    "writeRequested": false,
+    "writeEnabled": false,
+    "scope": null,
+    "approvalHash": null,
+    "code": "ROLLOUT_NOT_REQUESTED",
+    "message": "公开写入默认关闭；需真实观察与人工审批。"
+  },
+  "signedReport": ".spine-mcp/observation/reports/d85c4ec4-cb3a-4b20-816e-2201a81842fa.json",
+  "signedReportHash": "79b6232f37421c994e55008ae9d803d460797aaeea61a3c69ca5bbcaa2f44a56",
+  "sampleCount": 3,
+  "windowSpanMs": 120116,
+  "monitoredMs": 120116.35190000001,
+  "errors": [],
+  "targetStale": false,
+  "allInputsUnchanged": true,
+  "inputFilesVerified": 32,
+  "writerAbsent": true,
+  "twoWeekWindowSatisfied": false,
+  "publicWriteEnabled": false,
+  "note": "真实定时器已自动采样，当前会话仍运行；此报告是初始检查，不是两周或充分使用覆盖验收。未设置自动重启或 Agent 定时通知。"
+}

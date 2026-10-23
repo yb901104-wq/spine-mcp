@@ -20,14 +20,24 @@ internal static class HostObserverSelfTest
         }
         Environment.SetEnvironmentVariable("WEBVIEW2_USER_DATA_FOLDER", Path.Combine(workspace, ".spine-mcp", "native-self-test-profile"));
         var checks = new List<string>();
+        object? performance = null;
         using var form = new MainForm(args);
-        async Task Wait(Func<Task<bool>> condition, string label)
+        async Task Wait(Func<Task<bool>> condition, string label, int seconds = 20)
         {
-            var until = DateTime.UtcNow.AddSeconds(20);
+            var until = DateTime.UtcNow.AddSeconds(seconds);
             while (DateTime.UtcNow < until) { if (await condition()) return; await Task.Delay(50); }
             throw new InvalidOperationException($"等待失败：{label}；{form.HostPanel.StatusText}；{form.HostPanel.PageDiagnostic}");
         }
         void Check(bool value, string label) { if (!value) throw new InvalidOperationException(label); checks.Add(label); }
+        async Task CaptureCheckpoint(string stage)
+        {
+            if (!args.Contains("--capture-checkpoints")) return;
+            var marker = reportPath + "." + stage;
+            await using (var file = new FileStream(marker + ".ready", FileMode.CreateNew))
+                await file.WriteAsync(System.Text.Encoding.UTF8.GetBytes(stage));
+            await Wait(async () => File.Exists(marker + ".release") && await File.ReadAllTextAsync(marker + ".release") == stage, $"MCP 截图检查点 {stage}", args.Contains("--benchmark-host") ? 120 : 20);
+            checks.Add($"实际页面完成 MCP 截图检查点：{stage}");
+        }
         form.Shown += async (_, _) =>
         {
             object report;
@@ -42,6 +52,39 @@ internal static class HostObserverSelfTest
                 Check(await Js("document.getElementById('status').textContent.includes('仅观察')"), "当前 Host 为观察模式");
                 Check(await Js("!location.search && !location.hash"), "页面 URL 不含凭据");
                 Check(!core.Settings.AreHostObjectsAllowed && !core.Settings.IsWebMessageEnabled, "未开放原生对象或 WebMessage 桥");
+                if (args.Contains("--benchmark-host"))
+                {
+                    var samples = new List<double>();
+                    for (var index = -2; index < 30; index++)
+                    {
+                        await core.ExecuteScriptAsync("window.__reloadBenchmarkOldDocument=true");
+                        var timer = System.Diagnostics.Stopwatch.StartNew();
+                        core.Reload();
+                        var until = DateTime.UtcNow.AddSeconds(20);
+                        while (!await Js("window.__reloadBenchmarkOldDocument===undefined && document.readyState==='complete' && document.getElementById('frame')?.complete && document.getElementById('frame').naturalWidth===480"))
+                        {
+                            if (DateTime.UtcNow >= until) throw new InvalidOperationException("性能采样等待新文档帧超时：" + await core.ExecuteScriptAsync("JSON.stringify({ready:document.readyState,width:document.getElementById('frame')?.naturalWidth,message:document.getElementById('message')?.textContent,oldDocument:window.__reloadBenchmarkOldDocument})"));
+                            await Task.Delay(5);
+                        }
+                        // 等待新图跨过两个浏览器动画帧；不把仅收到 NavigationCompleted 当作可见帧。
+                        await core.ExecuteScriptAsync("requestAnimationFrame(()=>requestAnimationFrame(()=>window.__reloadBenchmarkPaintReady=true))");
+                        while (!await Js("window.__reloadBenchmarkPaintReady===true"))
+                        {
+                            if (DateTime.UtcNow >= until) throw new InvalidOperationException("性能采样等待浏览器呈现超时。");
+                            await Task.Delay(5);
+                        }
+                        timer.Stop();
+                        if (index >= 0) samples.Add(timer.Elapsed.TotalMilliseconds);
+                        await Task.Delay(120);
+                    }
+                    var sorted = samples.Order().ToArray();
+                    performance = new { scope = "实际 WebView2 热缓存 reload 到新文档 480 PNG 完整加载并跨两次 rAF；含原生轮询开销，不代表物理屏幕呈现时间。", warmups = 2, sampleCount = samples.Count,
+                        interSampleDelayMs = 120, samples, p50 = sorted[(int)Math.Ceiling(sorted.Length * .5) - 1], p95 = sorted[(int)Math.Ceiling(sorted.Length * .95) - 1], maximum = sorted[^1], budgetMs = 800,
+                        budgetPassed = sorted[(int)Math.Ceiling(sorted.Length * .95) - 1] < 800 };
+                    checks.Add("完成 30 次实际页面重载性能采样（门限结果独立报告）");
+                }
+                await CaptureCheckpoint("initial");
+                Check(await Js("!document.getElementById('message').textContent.includes('RATE_LIMITED')"), "初始页面与截图后没有 frame 限流错误");
                 await core.ExecuteScriptAsync("window.__nativeSelfTestMarker='same-document'");
                 form.SelectPreviewTab(0);
                 await Wait(() => Js("location.href==='about:blank'"), "后台卸载页面");
@@ -93,6 +136,8 @@ internal static class HostObserverSelfTest
                 await panel.RefreshFromPreviewAsync(true);
                 await Wait(() => Js("!!document.getElementById('frame')?.complete && document.getElementById('frame').naturalWidth===480"), "失败后重新连接");
                 Check(panel.Connection is not null, "负例之后可以显式重连正确 Host");
+                await CaptureCheckpoint("restored");
+                Check(await Js("!document.getElementById('message').textContent.includes('RATE_LIMITED')"), "重连历史事件后没有 frame 限流错误");
                 var environment = core.Environment;
                 var browserPid = core.BrowserProcessId;
                 var exited = new TaskCompletionSource<bool>();
@@ -100,7 +145,7 @@ internal static class HostObserverSelfTest
                 form.ClosePreviewBrowsersForSelfTest();
                 await exited.Task.WaitAsync(TimeSpan.FromSeconds(15));
                 checks.Add("本次 WebView2 浏览器进程已退出");
-                report = new { ok = true, checks, time = DateTimeOffset.UtcNow, screenshot = screenshotPath, browserPid, evidenceEligible = false };
+                report = new { ok = true, checks, time = DateTimeOffset.UtcNow, screenshot = screenshotPath, browserPid, evidenceEligible = false, performance };
             }
             catch (Exception error) { Environment.ExitCode = 1; report = new { ok = false, checks, error = error.ToString(), time = DateTimeOffset.UtcNow }; }
             try { await using var file = new FileStream(reportPath, FileMode.CreateNew); await JsonSerializer.SerializeAsync(file, report, new JsonSerializerOptions { WriteIndented = true }); }

@@ -85,9 +85,9 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
 
   if (url.pathname === "/api/check-assets") {
     const result = await checkPreviewAssets({
-      filePath: url.searchParams.get("file") ?? PREVIEW_DEFAULTS.defaultJson,
+      filePath: url.searchParams.get("file") ?? undefined,
       atlasPath: url.searchParams.get("atlas") ?? PREVIEW_DEFAULTS.defaultAtlas,
-      animation: url.searchParams.get("animation") ?? PREVIEW_DEFAULTS.defaultAnimation,
+      animation: url.searchParams.get("animation") ?? undefined,
     });
     sendJson(response, result.ok ? 200 : 400, result);
     return;
@@ -95,9 +95,9 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
 
   if (url.pathname === "/api/runtime-validate") {
     const result = await validatePreviewRuntime({
-      filePath: url.searchParams.get("file") ?? PREVIEW_DEFAULTS.defaultJson,
+      filePath: url.searchParams.get("file") ?? undefined,
       atlasPath: url.searchParams.get("atlas") ?? PREVIEW_DEFAULTS.defaultAtlas,
-      animation: url.searchParams.get("animation") ?? PREVIEW_DEFAULTS.defaultAnimation,
+      animation: url.searchParams.get("animation") ?? undefined,
       skin: url.searchParams.get("skin") ?? undefined,
       scale: parseOptionalNumber(url.searchParams.get("scale")),
     });
@@ -107,9 +107,9 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
 
   if (url.pathname === "/api/validation-pipeline") {
     const result = await runValidationPipeline({
-      filePath: url.searchParams.get("file") ?? PREVIEW_DEFAULTS.defaultJson,
+      filePath: url.searchParams.get("file") ?? undefined,
       atlasPath: url.searchParams.get("atlas") ?? PREVIEW_DEFAULTS.defaultAtlas,
-      animation: url.searchParams.get("animation") ?? PREVIEW_DEFAULTS.defaultAnimation,
+      animation: url.searchParams.get("animation") ?? undefined,
       skin: url.searchParams.get("skin") ?? undefined,
       scale: parseOptionalNumber(url.searchParams.get("scale")),
       speed: parseOptionalNumber(url.searchParams.get("speed")),

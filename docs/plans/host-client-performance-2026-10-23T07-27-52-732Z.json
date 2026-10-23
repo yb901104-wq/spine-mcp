@@ -1,0 +1,1423 @@
+{
+  "startedAt": "2026-10-23T07:27:52.732Z",
+  "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "release": "10.0.19045",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "logicalCores": 12,
+  "renderer": "canvas-region-msaa4-v4",
+  "sampleCount": 30,
+  "warmups": 2,
+  "size": 480,
+  "samples": [
+    {
+      "endToEndMs": 81.62509999999997,
+      "stateHttpMs": 4.341499999999996,
+      "stateClientMs": 9.64729999999986,
+      "frameHttpMs": 6.5914000000000215,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.2624000000000706
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.391900000000078
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.16380000000003747
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.164299999999912
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.492199999999912
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.179300000000012
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2216000000000804
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.515899999999874
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4000999999998385
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.898600000000215
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.32120000000009
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.1049000000000433
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9909999999999854
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.731800000000021
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.817099999999982,
+        "/api/patch": 6.391900000000078,
+        "/api/evaluation-task": 0.3431000000000495,
+        "/api/snapshot": 3.164299999999912,
+        "/api/derived": 4.492199999999912,
+        "/api/frame": 22.630400000000236
+      }
+    },
+    {
+      "endToEndMs": 77.92360000000008,
+      "stateHttpMs": 4.108400000000074,
+      "stateClientMs": 9.77430000000004,
+      "frameHttpMs": 6.86889999999994,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.0860000000000127
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.6013000000000375
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1529000000000451
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.167899999999918
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.266900000000078
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15030000000001564
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5610999999998967
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.075599999999895
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.113800000000083
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 19.083599999999933
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.009699999999839
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.961999999999989
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5073999999999614
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.633399999999938
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.315599999999677,
+        "/api/patch": 5.6013000000000375,
+        "/api/evaluation-task": 0.30320000000006075,
+        "/api/snapshot": 3.167899999999918,
+        "/api/derived": 4.266900000000078,
+        "/api/frame": 22.71699999999987
+      }
+    },
+    {
+      "endToEndMs": 79.67540000000008,
+      "stateHttpMs": 4.215199999999868,
+      "stateClientMs": 10.179399999999987,
+      "frameHttpMs": 6.089400000000069,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.0187000000000808
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.5797999999999774
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15570000000002437
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.911399999999958
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.016200000000026
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15260000000012042
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.282399999999825
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4023999999999432
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5974999999998545
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 19.167899999999918
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.163099999999986
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3416000000001986
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.371699999999919
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.0454000000001997
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 23.177399999999807,
+        "/api/patch": 6.5797999999999774,
+        "/api/evaluation-task": 0.3083000000001448,
+        "/api/snapshot": 2.911399999999958,
+        "/api/derived": 4.016200000000026,
+        "/api/frame": 22.213300000000118
+      }
+    },
+    {
+      "endToEndMs": 82.1522,
+      "stateHttpMs": 4.113699999999881,
+      "stateClientMs": 9.833000000000084,
+      "frameHttpMs": 6.020399999999881,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.042500000000018
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.974799999999959
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15020000000004075
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.036399999999958
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.269400000000132
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.17009999999982028
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.30619999999999
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4300000000000637
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.230199999999968
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 23.230999999999995
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.0529999999998836
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3499000000001615
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.065699999999879
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.953800000000001
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.477499999999964,
+        "/api/patch": 5.974799999999959,
+        "/api/evaluation-task": 0.32029999999986103,
+        "/api/snapshot": 3.036399999999958,
+        "/api/derived": 4.269400000000132,
+        "/api/frame": 26.184799999999996
+      }
+    },
+    {
+      "endToEndMs": 131.34050000000002,
+      "stateHttpMs": 10.3433,
+      "stateClientMs": 14.740800000000036,
+      "frameHttpMs": 6.649900000000116,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.5387000000000626
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.610599999999977
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.16180000000008476
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.7485999999998967
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.299800000000005
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.18409999999994398
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 4.519199999999955
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.563299999999799
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 6.380999999999858
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 49.36149999999998
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.78390000000013
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 5.824699999999893
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.817099999999982
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.205699999999979
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 40.42789999999968,
+        "/api/patch": 6.610599999999977,
+        "/api/evaluation-task": 0.34590000000002874,
+        "/api/snapshot": 2.7485999999998967,
+        "/api/derived": 5.299800000000005,
+        "/api/frame": 52.56719999999996
+      }
+    },
+    {
+      "endToEndMs": 86.73910000000001,
+      "stateHttpMs": 5.063200000000052,
+      "stateClientMs": 9.93360000000007,
+      "frameHttpMs": 6.080000000000155,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.2539999999999054
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.136199999999917
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15470000000004802
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.7886000000000877
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.582600000000184
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1490000000001146
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5173999999999523
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.969699999999875
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 4.955900000000156
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 20.994199999999864
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.8525999999999385
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3310999999998785
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.1535999999998694
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.191000000000031
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 26.034299999999575,
+        "/api/patch": 6.136199999999917,
+        "/api/evaluation-task": 0.3037000000001626,
+        "/api/snapshot": 2.7886000000000877,
+        "/api/derived": 4.582600000000184,
+        "/api/frame": 24.185199999999895
+      }
+    },
+    {
+      "endToEndMs": 125.62369999999987,
+      "stateHttpMs": 12.84849999999983,
+      "stateClientMs": 19.030899999999747,
+      "frameHttpMs": 8.254899999999907,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 4.487699999999904
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.500600000000077
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.231899999999996
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.7068000000001575
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 8.960199999999986
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.16219999999998436
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 6.386400000000094
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.46069999999986
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 6.236799999999903
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 31.30060000000003
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 9.17690000000016
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.12259999999992
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 4.921400000000176
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 4.0482999999999265
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 47.79250000000002,
+        "/api/patch": 6.500600000000077,
+        "/api/evaluation-task": 0.39409999999998035,
+        "/api/snapshot": 4.7068000000001575,
+        "/api/derived": 8.960199999999986,
+        "/api/frame": 35.34889999999996
+      }
+    },
+    {
+      "endToEndMs": 124.5048999999999,
+      "stateHttpMs": 4.470800000000054,
+      "stateClientMs": 10.642099999999573,
+      "frameHttpMs": 6.295799999999872,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 6.034900000000107
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 13.327999999999975
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.20080000000007203
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 6.751999999999953
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.731499999999869
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1772000000000844
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 5.56269999999995
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 5.294699999999921
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 4.855199999999968
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 23.08640000000014
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.302299999999832
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.147899999999936
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.800999999999931
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.027599999999893
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 31.998699999999644,
+        "/api/patch": 13.327999999999975,
+        "/api/evaluation-task": 0.37800000000015643,
+        "/api/snapshot": 6.751999999999953,
+        "/api/derived": 5.731499999999869,
+        "/api/frame": 26.114000000000033
+      }
+    },
+    {
+      "endToEndMs": 75.54739999999993,
+      "stateHttpMs": 3.926100000000133,
+      "stateClientMs": 9.365999999999985,
+      "frameHttpMs": 5.833399999999983,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.0900000000001455
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.473199999999906
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14550000000008367
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.7507000000000517
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.8052999999999884
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.17140000000017608
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.45049999999992
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.064100000000053
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.1049000000002707
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.851900000000114
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9013999999997395
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9924000000000888
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3565999999996166
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.9299000000000888
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 21.959899999999834,
+        "/api/patch": 5.473199999999906,
+        "/api/evaluation-task": 0.31690000000025975,
+        "/api/snapshot": 2.7507000000000517,
+        "/api/derived": 3.8052999999999884,
+        "/api/frame": 21.781800000000203
+      }
+    },
+    {
+      "endToEndMs": 102.54889999999978,
+      "stateHttpMs": 5.024199999999837,
+      "stateClientMs": 10.484199999999873,
+      "frameHttpMs": 8.141099999999824,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.123199999999997
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.934699999999793
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13239999999996144
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.344000000000051
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 7.110400000000027
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.16800000000012005
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 6.71979999999985
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 5.989900000000034
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 5.47860000000037
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 21.035699999999906
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.820900000000165
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 4.071899999999914
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.994299999999839
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 4.875800000000254
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 32.19860000000017,
+        "/api/patch": 5.934699999999793,
+        "/api/evaluation-task": 0.3004000000000815,
+        "/api/snapshot": 4.344000000000051,
+        "/api/derived": 7.110400000000027,
+        "/api/frame": 25.91150000000016
+      }
+    },
+    {
+      "endToEndMs": 84.70659999999998,
+      "stateHttpMs": 5.004199999999855,
+      "stateClientMs": 10.416699999999764,
+      "frameHttpMs": 7.449300000000221,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 4.8452000000002045
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 7.1952000000001135
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15630000000010114
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.576000000000022
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.388400000000274
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1509000000000924
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.400600000000395
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.37519999999995
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2531999999996515
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 20.321300000000065
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.84270000000015
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.574000000000069
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.392899999999827
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.6019999999998618
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 25.683800000000247,
+        "/api/patch": 7.1952000000001135,
+        "/api/evaluation-task": 0.30720000000019354,
+        "/api/snapshot": 3.576000000000022,
+        "/api/derived": 4.388400000000274,
+        "/api/frame": 23.923299999999927
+      }
+    },
+    {
+      "endToEndMs": 80.14609999999993,
+      "stateHttpMs": 4.023599999999988,
+      "stateClientMs": 9.671899999999823,
+      "frameHttpMs": 5.469699999999648,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.391099999999824
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.572000000000116
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15200000000004366
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.124699999999848
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.9713000000001557
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13239999999996144
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5156999999999243
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.0837000000001353
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.179200000000037
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.977900000000318
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.0653000000002066
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4582000000000335
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.154700000000048
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.6286999999997533
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.84790000000021,
+        "/api/patch": 6.572000000000116,
+        "/api/evaluation-task": 0.2844000000000051,
+        "/api/snapshot": 3.124699999999848,
+        "/api/derived": 3.9713000000001557,
+        "/api/frame": 20.60660000000007
+      }
+    },
+    {
+      "endToEndMs": 82.2829999999999,
+      "stateHttpMs": 4.785699999999906,
+      "stateClientMs": 11.478200000000015,
+      "frameHttpMs": 6.173800000000028,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.683899999999994
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.1315999999997075
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13059999999995853
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2532000000001062
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.35550000000012
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13200000000006185
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.963799999999992
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.697400000000016
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.555200000000241
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 20.2533999999996
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.6763999999998305
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.873199999999997
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.659899999999652
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.0833999999999833
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 26.109799999999723,
+        "/api/patch": 6.1315999999997075,
+        "/api/evaluation-task": 0.2626000000000204,
+        "/api/snapshot": 3.2532000000001062,
+        "/api/derived": 4.35550000000012,
+        "/api/frame": 23.336799999999585
+      }
+    },
+    {
+      "endToEndMs": 79.68790000000035,
+      "stateHttpMs": 3.8925999999996748,
+      "stateClientMs": 9.531199999999899,
+      "frameHttpMs": 5.569800000000214,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.4769999999998618
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 7.5120999999999185
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14130000000022847
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.109599999999773
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.867700000000241
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13430000000016662
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4412999999999556
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.049199999999928
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.927400000000034
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.827999999999975
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9441000000001623
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.6140999999997803
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9242999999996755
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.8769999999999527
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 23.377399999999398,
+        "/api/patch": 7.5120999999999185,
+        "/api/evaluation-task": 0.2756000000003951,
+        "/api/snapshot": 3.109599999999773,
+        "/api/derived": 4.867700000000241,
+        "/api/frame": 21.704999999999927
+      }
+    },
+    {
+      "endToEndMs": 73.82049999999981,
+      "stateHttpMs": 4.201600000000326,
+      "stateClientMs": 9.107700000000023,
+      "frameHttpMs": 5.789000000000215,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.2327000000000226
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.643900000000031
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14110000000027867
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.670100000000275
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.8851999999997133
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13979999999992287
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.6480000000001382
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9998999999997977
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.334900000000289
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.977700000000368
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2559000000001106
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4947000000001935
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.8463000000001557
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.8420999999998457
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.812400000000707,
+        "/api/patch": 5.643900000000031,
+        "/api/evaluation-task": 0.28090000000020154,
+        "/api/snapshot": 2.670100000000275,
+        "/api/derived": 3.8851999999997133,
+        "/api/frame": 21.819800000000214
+      }
+    },
+    {
+      "endToEndMs": 74.47409999999991,
+      "stateHttpMs": 4.211199999999735,
+      "stateClientMs": 10.00440000000026,
+      "frameHttpMs": 5.531300000000101,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.405999999999949
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.523899999999685
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15539999999964493
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.015900000000329
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.134199999999964
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11650000000008731
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.332300000000032
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3704999999999927
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3686000000002423
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.51409999999987
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.317700000000059
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.6955000000002656
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.951599999999871
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.7494000000001506
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 23.442200000000412,
+        "/api/patch": 5.523899999999685,
+        "/api/evaluation-task": 0.27189999999973224,
+        "/api/snapshot": 3.015900000000329,
+        "/api/derived": 4.134199999999964,
+        "/api/frame": 20.263500000000022
+      }
+    },
+    {
+      "endToEndMs": 75.86629999999968,
+      "stateHttpMs": 4.187999999999647,
+      "stateClientMs": 9.635200000000168,
+      "frameHttpMs": 5.8159999999998035,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.54300000000012
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.6843000000003485
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11560000000008586
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.96349999999984
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.944999999999709
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11850000000004002
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2456999999999425
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.0592000000001462
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.5516999999999825
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.574499999999716
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2651999999998225
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.1284999999998035
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2022000000001754
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.746399999999994
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.995499999999993,
+        "/api/patch": 6.6843000000003485,
+        "/api/evaluation-task": 0.23410000000012587,
+        "/api/snapshot": 2.96349999999984,
+        "/api/derived": 4.944999999999709,
+        "/api/frame": 21.32089999999971
+      }
+    },
+    {
+      "endToEndMs": 75.00669999999991,
+      "stateHttpMs": 4.356900000000223,
+      "stateClientMs": 9.392299999999977,
+      "frameHttpMs": 6.093399999999747,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.205500000000029
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.003799999999956
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12199999999984357
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.8603000000002794
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.8669999999997344
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.10969999999997526
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.61200000000008
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.158400000000256
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2683999999999287
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 19.957800000000134
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.3499000000001615
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.4396999999999025
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.9106000000001586
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 3.0470000000000255
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 22.944500000000517,
+        "/api/patch": 6.003799999999956,
+        "/api/evaluation-task": 0.23169999999981883,
+        "/api/snapshot": 2.8603000000002794,
+        "/api/derived": 3.8669999999997344,
+        "/api/frame": 23.00480000000016
+      }
+    },
+    {
+      "endToEndMs": 75.79379999999992,
+      "stateHttpMs": 4.921799999999621,
+      "stateClientMs": 9.238299999999981,
+      "frameHttpMs": 5.5733000000000175,
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.069500000000062
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 6.092799999999897
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14199999999982538
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.3060999999997875
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.8200000000001637
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13799999999991996
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2798000000002503
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.689300000000003
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.2078999999998814
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 18.303499999999985
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.404099999999744
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 3.413800000000265
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.941899999999805
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 2.772399999999834
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 23.00630000000001,
+        "/api/patch": 6.092799999999897,
+        "/api/evaluation-task": 0.27999999999974534,
+        "/api/snapshot": 3.3060999999997875,
+        "/api/derived": 3.8200000000001637,
+        "/api/frame": 21.07589999999982
+      }
+    }
+  ],
+  "publicWriteEnabled": false,
+  "codeHashes": {
+    "src/hostClient.ts": "91eebad945dbb2593a1ccc134b8cf9761979ce90939027880f3f20d6392e964d",
+    "src/hostServer.ts": "112ae90fe7a3768983ca8a985e5910846a4b4c36bfb6551cd00bb440d1504815",
+    "src/hostDocumentStore.ts": "51b82814ec6d7c4dd732cce74289fcf90744c34183a82c4cbcb748e2265b513e",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostReadiness.ts": "5e837f372f1a45026e0dd4625ffe339553916cc4a472c0ab0f65b074ba413751",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "coldOpenEvaluateFrameMs": 153.89229999999998,
+  "workloadFingerprint": "f90bd696cc5e85f02a6633ba75a6464023e60bb24987f65a35bcdc1501e519ef",
+  "camera": {
+    "minX": -116.00000019377153,
+    "maxX": 124.00000019377153,
+    "minY": -18.000000032295254,
+    "maxY": 222.0000003552478
+  },
+  "hostStopped": true,
+  "error": "frame 每秒最多 20 次。",
+  "mechanicsPassed": false,
+  "finishedAt": "2026-10-23T07:27:55.577Z"
+}

@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-23",
+  "scope": "Host/MCP 外部求解观察租约、页面状态及既有安全能力回归；不是真实美术批准、编辑器导入或长期运行验收",
+  "sourceVersion": "0.2.0",
+  "build": { "command": "npm run build", "passed": true },
+  "regression": {
+    "command": "npm test",
+    "tests": 147,
+    "pass": 147,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 29937.5299
+  },
+  "newCases": [
+    "租约续期、15 秒失联保持 unresponsive、终态幂等、错误租约与旧版本隔离",
+    "正常/异常/取消/已取消请求及 begin 回执丢失的清理",
+    "已发布结果的终态回执失败返回 TASK_STATUS_UNCERTAIN，不声明回滚",
+    "实际 Host 控制通道隔离、版本/字段拒绝、任务不修改资产或历史",
+    "实际 HostClient 求解桥的成功/取消/进度异常终态",
+    "真实 5 秒心跳间隔后的续期及定时器收束",
+    "真实 MCP SDK stdio 重算时 Host 观察 busy，返回前登记 succeeded/publish",
+    "真实独立客户端在计算回调暂停后被终止，15 秒后 unresponsive；新 epoch 不继承旧 busy"
+  ],
+  "processTerminationCaseMs": 16807.0696,
+  "desktop": {
+    "reportPath": "docs/plans/host-winforms-2026-10-23T07-11-56-001Z.json",
+    "checks": 23,
+    "passed": true,
+    "visualInspection": "已查看实际 WebView2 界面诊断图，新增求解任务状态行可见。未用其批准动作。"
+  },
+  "earlierFailure": "docs/plans/host-evaluation-test-timeout-20261023.json",
+  "cleanup": "最终只读进程检查未发现 evaluationCrashWorker 或本轮 WinForms/WebView2 自检遗留进程。",
+  "twoWeekWindowSatisfied": false,
+  "publicWriteEnabled": false,
+  "newPathPerformanceMeasured": false,
+  "passed": true
+}

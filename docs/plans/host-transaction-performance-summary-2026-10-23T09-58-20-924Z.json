@@ -1,0 +1,83 @@
+{
+  "summarizedAt": "2026-10-23T09:58:20.925Z",
+  "files": [
+    "docs/plans/host-transaction-performance-2026-10-23T09-55-57-629Z.json",
+    "docs/plans/host-transaction-performance-2026-10-23T09-57-14-725Z.json",
+    "docs/plans/host-transaction-performance-2026-10-23T09-57-46-594Z.json"
+  ],
+  "scope": "合成关节和两个 region；真实 HostClient undo 包含重新求解、任务状态与 PNG；commit 包含候选、快照、授权、备份、journal 和新文件发布。独立统计 undo HTTP，不用它替代客户端完整耗时。不含 stdio 或浏览器呈现。",
+  "codeHashes": {
+    "src/hostClient.ts": "259b6c5683abc01a2a148fca14bc18d808404411ab9506b3c551dd373144a816",
+    "src/hostEditorStore.ts": "b9ac9126c43dc4dfa5f95ce15c18ed6b319d6c131182ff8f980fa7cd8a6a8c2b",
+    "src/hostServer.ts": "044cfd5baecff02b046fa67e31f50ce6fdb565e5cd85ec9de5c5148cdd5330bc",
+    "src/hostDocumentStore.ts": "a8ecc2868094d6b31d5051dbc67ad5bff4f26faaf396af64003916d46a241f18",
+    "src/hostObservation.ts": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8",
+    "src/hostObservationCatalog.ts": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b",
+    "src/hostReleaseEvidence.ts": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13",
+    "src/hostFileProtection.ts": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc",
+    "src/hostRollout.ts": "fb2d52908df5d55d1a45412f2a3244606f545532ed772a55670c5a3c6dd37dea",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostJournal.ts": "a79131f90c8bdeedceba0e112b5fe799a8dc279a2575f0081ed985f3c729f9c9",
+    "src/spineJson.ts": "f21c9ca5c193cad7c3bf70d1cc363e5930cb58c835026630cc1cd2a14f879af6",
+    "src/strictFileChecks.ts": "f9674a5d52d1139871bd4a8d4956cf1fa3043985d3ebc3b63b3634290e7f5aea",
+    "src/hostEvaluator.ts": "de90023f339bc12f14797a54037b9256ff405118d2c860467d8aff3413c9f063",
+    "src/rasterRenderer.ts": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d",
+    "test/helpers/hostFixture.ts": "edd62d01540be30c93d1c33ef9d962267313c39c2d81b1246e7cd50543c9410f",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "workloadFingerprint": "25f2dde1bfdf4f4870b51bbabe4b0048495b7d939f2be1f5d1ebbb8fb0da297e",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor              "
+  },
+  "sampleCount": 90,
+  "warmupsPerRound": 2,
+  "interSampleDelayMs": 120,
+  "phases": {
+    "undoClientMs": {
+      "p50": 47.49399999999969,
+      "p95": 74.14140000000043,
+      "maximum": 107.75300000000061
+    },
+    "undoHttpMs": {
+      "p50": 4.455899999999019,
+      "p95": 7.51299999999992,
+      "maximum": 12.234800000000178
+    },
+    "commitClientMs": {
+      "p50": 70.57710000000043,
+      "p95": 105.2475000000004,
+      "maximum": 148.76920000000064
+    }
+  },
+  "budgets": {
+    "undoHttpMs": 50,
+    "undoClientMs": 120,
+    "commitClientMs": 200
+  },
+  "budgetBasis": "2026-10-23 用户确认拆分撤销事务 <50ms 与撤销至新图 <120ms；commit 保持 <200ms。",
+  "roundP95": [
+    {
+      "undoClientMs": 70.96219999999994,
+      "undoHttpMs": 7.51299999999992,
+      "commitClientMs": 134.70659999999998
+    },
+    {
+      "undoClientMs": 78.82380000000012,
+      "undoHttpMs": 6.296199999998862,
+      "commitClientMs": 100.95460000000094
+    },
+    {
+      "undoClientMs": 90.2453000000005,
+      "undoHttpMs": 11.404199999999946,
+      "commitClientMs": 87.2512999999999
+    }
+  ],
+  "allRoundsPassed": true,
+  "aggregatePassed": true,
+  "sourceUnchanged": true,
+  "hostsStopped": true,
+  "publicWriteEnabled": false
+}

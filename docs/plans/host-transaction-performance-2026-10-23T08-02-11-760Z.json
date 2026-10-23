@@ -1,0 +1,1612 @@
+{
+  "startedAt": "2026-10-23T08:02:11.760Z",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "release": "10.0.19045",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "sampleCount": 30,
+  "warmups": 2,
+  "interSampleDelayMs": 120,
+  "samples": [
+    {
+      "undoClientMs": 68.88630000000012,
+      "undoHttpMs": 7.021200000000135,
+      "commitClientMs": 71.5309000000002,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 7.021200000000135
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.3362999999999374
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.2354999999997744
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.558600000000297
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 26.825700000000325
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 9.139200000000073
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.241299999999683
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.787699999999859
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 7.123700000000099
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 37.58860000000004
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 69.82639999999992,
+      "undoHttpMs": 6.95470000000023,
+      "commitClientMs": 68.16980000000012,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.95470000000023
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.592999999999847
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.286699999999655
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 24.47230000000036
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 27.73580000000038
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 10.076599999999871
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.189499999999953
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.11160000000018
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.192700000000059
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 34.84529999999995
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 62.06800000000021,
+      "undoHttpMs": 5.777499999999691,
+      "commitClientMs": 70.77160000000003,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.777499999999691
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2372999999997774
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.15769999999975
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.3125999999997475
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 24.70179999999982
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 10.014599999999973
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.48010000000022
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.863799999999628
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.798899999999776
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 37.9357
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 133.32580000000007,
+      "undoHttpMs": 18.688700000000154,
+      "commitClientMs": 82.24540000000025,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 18.688700000000154
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 7.231299999999919
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 11.834899999999834
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 38.48919999999998
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 43.17560000000003
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 11.863199999999779
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 11.391700000000128
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.781800000000203
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 8.401699999999892
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 42.71260000000029
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 76.97599999999966,
+      "undoHttpMs": 7.5634000000000015,
+      "commitClientMs": 80.48559999999998,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 7.5634000000000015
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.155700000000252
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.8926000000001295
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 26.06750000000011
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 29.860999999999876
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 12.710599999999431
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.965699999999742
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.407199999999648
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 7.089300000000549
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 42.36670000000049
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 65.67610000000059,
+      "undoHttpMs": 6.165200000000368,
+      "commitClientMs": 94.39609999999993,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.165200000000368
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2354000000004817
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.002799999999297
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.709600000000137
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 26.323899999999412
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 13.881200000000717
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 11.230400000000373
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.725300000000061
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 8.212799999999334
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 54.19770000000062
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 64.6221999999998,
+      "undoHttpMs": 6.6054000000003725,
+      "commitClientMs": 74.00290000000041,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.6054000000003725
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2853000000004613
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.544399999999769
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.968200000000252
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 27.107899999999972
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 12.06840000000011
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.494700000000194
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.922999999999774
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.835899999999128
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 40.42450000000008
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 62.61999999999989,
+      "undoHttpMs": 5.682499999999891,
+      "commitClientMs": 78.87249999999949,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.682499999999891
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.1733000000003813
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.275500000000648
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 23.24449999999979
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 26.600000000000364
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 15.98530000000028
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.208999999999833
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.625500000000102
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.454999999999927
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 42.180199999999786
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 63.82830000000013,
+      "undoHttpMs": 5.839000000000851,
+      "commitClientMs": 99.15059999999994,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.839000000000851
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2082000000000335
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.685699999999997
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 23.283799999999246
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 26.207900000000336
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 13.131999999999607
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 8.6854000000003
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.09439999999995
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.898099999999431
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.8676000000005
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 63.20710000000054,
+      "undoHttpMs": 6.635399999999208,
+      "commitClientMs": 88.12019999999939,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.635399999999208
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2478999999993903
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.856899999999769
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 21.78349999999955
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.13929999999982
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 15.478900000000067
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.234600000000682
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.902799999999843
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.275899999999638
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 50.33089999999993
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 64.34040000000005,
+      "undoHttpMs": 5.862299999999777,
+      "commitClientMs": 89.11729999999989,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.862299999999777
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.5955000000003565
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.832600000000639
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 22.28949999999986
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.58719999999994
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 15.911699999999655
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 8.457900000000336
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 8.951600000000326
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.751999999999498
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 47.77270000000044
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 65.9434999999994,
+      "undoHttpMs": 7.282799999999952,
+      "commitClientMs": 90.50690000000031,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 7.282799999999952
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.272200000000339
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.402600000000348
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 24.749700000000303
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 28.055700000000797
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 16.02089999999953
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.569400000000314
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.101599999999962
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.285700000000361
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 50.23959999999988
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 62.00410000000011,
+      "undoHttpMs": 6.0591999999996915,
+      "commitClientMs": 96.14530000000013,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.0591999999996915
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.177299999999377
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.518299999999726
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.29030000000057
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.02849999999944
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 19.165600000000268
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.170900000000984
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.59979999999996
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.911000000000058
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 52.8112000000001
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 73.87880000000041,
+      "undoHttpMs": 7.042499999999563,
+      "commitClientMs": 103.51410000000033,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 7.042499999999563
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.166500000001179
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.54989999999998
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.467500000000655
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.644500000000335
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 17.377300000000105
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.368800000000192
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.831900000001042
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.840400000000955
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.37930000000051
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 70.89270000000033,
+      "undoHttpMs": 8.004100000000108,
+      "commitClientMs": 95.0606000000007,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 8.004100000000108
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.279399999999441
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.739999999999782
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.342800000000352
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.380800000000818
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 17.371799999998984
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 8.793699999998353
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.26929999999993
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.540000000000873
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 56.64930000000095
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 62.49909999999909,
+      "undoHttpMs": 5.677999999999884,
+      "commitClientMs": 105.4953000000005,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.677999999999884
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2937000000001717
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.770599999999831
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.692200000001321
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.643099999999322
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 19.893300000001545
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.289499999998952
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.563899999999194
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.634799999999814
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.79809999999998
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 73.85279999999875,
+      "undoHttpMs": 6.983100000001286,
+      "commitClientMs": 100.94579999999951,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.983100000001286
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.5498999999999796
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.723700000000463
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 26.151299999999537
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 31.65639999999985
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 20.19880000000012
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.914899999999761
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.322900000001027
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.986199999999371
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 56.860500000000684
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 78.76150000000052,
+      "undoHttpMs": 10.254699999999502,
+      "commitClientMs": 110.28429999999935,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 10.254699999999502
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.494699999999284
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.986300000000483
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 24.698699999999008
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 28.248900000000503
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 22.787500000000364
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.433399999999892
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.071900000000824
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.556399999999485
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 60.60809999999947
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 65.0619000000006,
+      "undoHttpMs": 6.379299999998693,
+      "commitClientMs": 102.42519999999968,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.379299999998693
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.9724999999998545
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.719600000000355
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.8598000000001775
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 25.04449999999997
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 20.26130000000012
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.450000000000728
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.821900000000824
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.982700000000477
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 60.24510000000009
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 79.40380000000005,
+      "undoHttpMs": 8.489199999999983,
+      "commitClientMs": 113.73199999999997,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 8.489199999999983
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.165999999999258
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.929500000000189
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 25.862999999999374
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 29.840399999999136
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 24.118999999998778
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.606199999998353
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.196700000000419
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.441000000000713
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.14010000000053
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 72.88180000000102,
+      "undoHttpMs": 6.450399999999718,
+      "commitClientMs": 113.53439999999864,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.450399999999718
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.612699999999677
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.366799999999785
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 24.719999999999345
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 28.91739999999845
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 30.758600000001024
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.413299999998344
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.810600000000704
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.864900000000489
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 61.151200000000244
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 65.29930000000058,
+      "undoHttpMs": 6.518200000000434,
+      "commitClientMs": 104.6818000000003,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.518200000000434
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2448999999996886
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.563699999998789
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 24.15110000000095
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 27.79860000000008
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 21.32889999999861
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.221199999999953
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.575300000000425
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.492599999999584
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 62.16979999999967
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 62.270400000001246,
+      "undoHttpMs": 5.6179000000011,
+      "commitClientMs": 106.37930000000051,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.6179000000011
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2296000000005733
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.574499999998807
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.397399999999834
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 24.950199999999313
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 22.450200000001132
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.554200000000492
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.951900000000023
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.707700000000841
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 62.33990000000085
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 93.03279999999904,
+      "undoHttpMs": 5.70889999999963,
+      "commitClientMs": 128.51749999999993,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.70889999999963
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.671299999999974
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 6.7194000000017695
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 40.73660000000018
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 45.866900000000896
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 30.388300000000527
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.703299999999217
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 11.07510000000002
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 7.86830000000009
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 66.8081000000002
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 73.44369999999981,
+      "undoHttpMs": 6.61620000000039,
+      "commitClientMs": 111.58220000000074,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.61620000000039
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.988999999999578
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 7.15979999999945
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 27.08259999999973
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 30.209600000000137
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 24.026599999999235
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.040399999999863
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.458499999998821
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.9518000000007305
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.1181000000015
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 67.54249999999956,
+      "undoHttpMs": 5.999100000000908,
+      "commitClientMs": 118.42590000000018,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.999100000000908
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.2067000000006374
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.965299999999843
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 8.465399999999136
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 27.830299999999625
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 30.99880000000121
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 10.14680000000044
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 10.544299999999566
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.16820000000007
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 64.34429999999884
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 59.8854999999985,
+      "undoHttpMs": 5.905399999999645,
+      "commitClientMs": 116.60709999999926,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.905399999999645
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.183999999999287
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.097999999999956
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 7.287099999999555
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 24.55580000000009
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 23.757900000000518
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 13.25800000000163
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 13.737099999998463
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 6.27139999999963
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 67.14629999999852
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 61.818599999998696,
+      "undoHttpMs": 5.806900000003225,
+      "commitClientMs": 121.06329999999798,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 5.806900000003225
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.325300000000425
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 4.6921000000002095
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 21.54160000000047
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 24.782900000001973
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 25.109400000001187
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 9.102499999997235
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.603399999999965
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 9.378600000000006
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 70.74140000000261
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 73.16150000000198,
+      "undoHttpMs": 6.456500000000233,
+      "commitClientMs": 190.22379999999976,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.456500000000233
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 4.008200000000215
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 5.903900000001158
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 10.383200000000215
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 29.73609999999826
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 50.73859999999695
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 18.973599999997532
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 19.81630000000223
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 9.883499999999913
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 95.3708000000006
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    },
+    {
+      "undoClientMs": 71.86390000000029,
+      "undoHttpMs": 6.904900000001362,
+      "commitClientMs": 122.34899999999834,
+      "undoTrace": [
+        {
+          "route": "/api/undo",
+          "durationMs": 6.904900000001362
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.4720999999990454
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 6.78859999999986
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 23.64600000000064
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 26.792900000000373
+        }
+      ],
+      "commitTrace": [
+        {
+          "route": "/api/commit",
+          "durationMs": 27.090000000000146
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 8.770599999999831
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 9.131600000000617
+        },
+        {
+          "route": "/api/authorize",
+          "durationMs": 5.809499999999389
+        },
+        {
+          "route": "/api/commit",
+          "durationMs": 69.55699999999706
+        }
+      ],
+      "backupVerified": true,
+      "replayVerified": true,
+      "reopenVerified": true
+    }
+  ],
+  "publicWriteEnabled": false,
+  "scope": "合成关节和两个 region；真实 HostClient undo 包含重新求解、任务状态与 PNG；commit 包含候选、快照、授权、备份、journal 和新文件发布。独立统计 undo HTTP，不用它替代客户端完整耗时。不含 stdio 或浏览器呈现。",
+  "codeHashes": {
+    "src/hostClient.ts": "5207641a2e840285b4936ae6ca443544e63c85c1357110efcf5919c4beea5d3a",
+    "src/hostEditorStore.ts": "9e5db7d703edd0d367d7d71440baddbc5a847158ac2d1b8abc135ecd678aa76d",
+    "src/hostServer.ts": "112ae90fe7a3768983ca8a985e5910846a4b4c36bfb6551cd00bb440d1504815",
+    "src/hostDocumentStore.ts": "383ad7ad6f0a53064d1e431a64d1078f924df6962b51252816fa525c72f41272",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostJournal.ts": "b54575db1c51301f90407785bb2a02ca7ede520d7c8f372692a6d8186ab95dc1",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "workloadFingerprint": "25f2dde1bfdf4f4870b51bbabe4b0048495b7d939f2be1f5d1ebbb8fb0da297e",
+  "sourceUnchanged": true,
+  "hostStopped": true,
+  "phases": {
+    "undoClientMs": {
+      "p50": 65.9434999999994,
+      "p95": 93.03279999999904,
+      "maximum": 133.32580000000007
+    },
+    "undoHttpMs": {
+      "p50": 6.456500000000233,
+      "p95": 10.254699999999502,
+      "maximum": 18.688700000000154
+    },
+    "commitClientMs": {
+      "p50": 100.94579999999951,
+      "p95": 128.51749999999993,
+      "maximum": 190.22379999999976
+    }
+  },
+  "budgets": {
+    "undoHttpMs": 50,
+    "undoClientMs": 120,
+    "commitClientMs": 200
+  },
+  "budgetBasis": "2026-10-23 用户确认拆分撤销事务 <50ms 与撤销至新图 <120ms；commit 保持 <200ms。",
+  "budgetsPassed": true,
+  "mechanicsPassed": true,
+  "finishedAt": "2026-10-23T08:02:29.439Z"
+}

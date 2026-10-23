@@ -1,0 +1,90 @@
+{
+  "recordedAt": "2026-10-23T09:04:16.327Z",
+  "stage": "C1",
+  "sourceVersion": "0.2.0",
+  "technicalAcceptancePassed": true,
+  "publicEnablementReady": false,
+  "twoWeekWindowSatisfied": false,
+  "scope": "单工程、单个已验收真实 npc1 无参考站姿、单手目标 C1；生产仅观察，不包含 C2、完整攻击或编辑器导入。",
+  "implementation": "依赖检查、快照依赖及 journal 读取使用原生异步路径解析，每文件逐次核对真实根/祖先及字节哈希；不缓存路径或门禁结果。",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 154,
+    "pass": 154,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 30210.775
+  },
+  "focusedRegression": {
+    "tests": 7,
+    "pass": 7,
+    "initialAttempt": {
+      "pass": 6,
+      "fail": 1,
+      "reason": "测试夹具创建 Windows 文件 symlink 遇到 EPERM；改用同样覆盖断链场景的目录 junction 后 7/7 通过，生产校验未降级。"
+    }
+  },
+  "clientPerformance": {
+    "report": "host-client-performance-summary-2026-10-23T08-57-02-812Z.json",
+    "sampleCount": 90,
+    "allRoundsPassed": true,
+    "p95Ms": {
+      "patchToPng": 113.4725,
+      "firstFrame": 36.8931,
+      "state": 10.4864
+    },
+    "maxPatchMs": 120.7609
+  },
+  "transactions": {
+    "report": "host-transaction-performance-summary-2026-10-23T08-59-26-222Z.json",
+    "sampleCount": 90,
+    "allRoundsPassed": true,
+    "p95Ms": {
+      "undoTransaction": 7.7875,
+      "undoToPng": 63.0583,
+      "commit": 108.9867
+    },
+    "maxCommitMs": 214.8795
+  },
+  "desktop": {
+    "report": "host-winforms-2026-10-23T09-00-42-744Z.json",
+    "checks": 28,
+    "passed": true,
+    "captureSamples": 30,
+    "reloadSamples": 30,
+    "captureP95Ms": 344.6029,
+    "reloadP95Ms": 95.4163,
+    "redundantFrameRequests": 0,
+    "inputBytesAndVersionUnchanged": true,
+    "reconnectPixelsIdentical": true,
+    "newVisualApproval": false
+  },
+  "observation": {
+    "report": "host-observation-2026-10-23T09-01-38-898Z.json",
+    "samples": 30,
+    "durationMs": 8218.6521,
+    "falsePositiveCount": 0,
+    "longTermObservation": false
+  },
+  "supersedesForCurrentCode": [
+    "host-client-performance-summary-2026-10-23T08-16-08-112Z.json",
+    "host-transaction-performance-summary-2026-10-23T08-19-26-028Z.json"
+  ],
+  "remaining": [
+    "B 真实稳定观察至少两周及 TARGET_STALE 零误报记录",
+    "公开启用评审；通过前保持生产 Host 观察模式"
+  ],
+  "publicWriteEnabled": false,
+  "scopeWarnings": [
+    "合成性能不外推真实美术角色负载",
+    "P95 预算不是每次延迟保证",
+    "官方 player 截图准入不替代动作视觉批准",
+    "旧便携包未升级",
+    "排除 exp/xiaoren 拆分皮肤案例"
+  ]
+}

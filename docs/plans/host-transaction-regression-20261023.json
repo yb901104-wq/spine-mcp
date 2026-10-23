@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-23T08:21:05.010Z",
+  "scope": "Host 事务编排、journal 严格读取、state 单次探测和页面事件合并收尾；不新增角色视觉批准、编辑器导入或公开写入。",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "tests": {
+    "command": "npm test",
+    "total": 151,
+    "pass": 151,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 31335.8406
+  },
+  "nativeBuild": {
+    "command": "dotnet build apps/winforms-observer/SpineMcp.WinFormsObserver.csproj --no-restore -v quiet",
+    "errors": 0,
+    "existingWarnings": [
+      "MSB3277 WindowsBase 引用版本冲突"
+    ]
+  },
+  "desktop": {
+    "report": "host-winforms-2026-10-23T07-51-03-249Z.json",
+    "checks": 28,
+    "passed": true,
+    "scope": "最终 HTML/C#；后续 TypeScript 编排修改另由最终 151 项回归和同代码性能报告验证。",
+    "reloadP95Ms": 108.2012,
+    "captureP95Ms": 364.90389999999934,
+    "redundantFrameRequests": 0
+  },
+  "finalClientPerformance": "host-client-performance-summary-2026-10-23T08-16-08-112Z.json",
+  "finalTransactionPerformance": "host-transaction-performance-summary-2026-10-23T08-19-26-028Z.json",
+  "unresolved": [
+    "patch 至 PNG 总体 P95 122.8064ms，未通过 <120ms",
+    "undo 至 PNG 总体达标但一轮 P95 122.7157ms，未能各轮稳定 <120ms",
+    "B 两周稳定观察及公开启用评审",
+    "C2、第二适用真实角色、编辑器导入及便携发布"
+  ],
+  "publicWriteEnabled": false
+}

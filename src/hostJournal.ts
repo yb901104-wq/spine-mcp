@@ -2,7 +2,7 @@ import { mkdir, open, readFile, readdir, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { objectHash, HostError } from './hostContracts.js';
-import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { resolveWorkspacePath, resolveWorkspacePathAsync, type ToolContext } from './spineJson.js';
 export type JournalRecord = { type: string; [key: string]: any };
 interface Envelope { previous: string; record: JournalRecord; checksum: string }
 export class HostJournal {
@@ -15,7 +15,8 @@ export class HostJournal {
   }
   async read() {
     let raw: string;
-    try { raw = await readFile(resolveWorkspacePath(this.filePath, this.context), 'utf8'); }
+    const absolute = await resolveWorkspacePathAsync(this.filePath, this.context);
+    try { raw = await readFile(absolute, 'utf8'); }
     catch (error: any) { if (error.code === 'ENOENT') return []; throw error; }
     if (!raw.endsWith('\n')) throw new HostError('JOURNAL_CORRUPT', 'journal 有未完成的末行，禁止静默重放。', 409);
     const records: JournalRecord[] = []; let previous = '';
@@ -50,25 +51,32 @@ export class HostJournal {
   }
 }
 
+/** 每批最多四个严格读取，全部 settle 后按枚举顺序消费；不缓存磁盘校验结果。 */
+async function* journalRecords(context: ToolContext) {
+  let files: string[];
+  try { files = await readdir(resolveWorkspacePath('.spine-mcp/journals', context)); }
+  catch (error: any) { if (error.code === 'ENOENT') return; throw error; }
+  files = files.filter(file => /^[a-f0-9]{64}\.jsonl$/.test(file));
+  for (let offset = 0; offset < files.length; offset += 4) {
+    const batch = await Promise.allSettled(files.slice(offset, offset + 4).map(file => new HostJournal(file.slice(0, -6), context).read()));
+    for (const result of batch) {
+      if (result.status === 'rejected') throw result.reason;
+      yield result.value;
+    }
+  }
+}
+
 /** 仅枚举内部 journal；legacy 工作区不会借此扫描美术资源。 */
 export async function readCommittedIndex(context: ToolContext) {
   const result: Array<{ path: string; kind: string; characterId: string; sourceDocument: string; hash: string; documentId: string }> = [];
-  let files: string[];
-  try { files = await readdir(resolveWorkspacePath('.spine-mcp/journals', context)); }
-  catch (error: any) { if (error.code === 'ENOENT') return result; throw error; }
-  for (const file of files.filter(f => /^[a-f0-9]{64}\.jsonl$/.test(f))) {
-    const journal = new HostJournal(file.slice(0, -6), context), records = await journal.read();
+  for await (const records of journalRecords(context)) {
     for (const record of records) if (record.type === 'committed' && record.indexEntry) result.push(record.indexEntry);
   }
   return result;
 }
 
 export async function findJournalRequest(context: ToolContext, requestId: string) {
-  let files:string[];
-  try { files=await readdir(resolveWorkspacePath('.spine-mcp/journals',context)); }
-  catch(error:any){if(error.code==='ENOENT')return null;throw error;}
-  for(const file of files.filter(f=>/^[a-f0-9]{64}\.jsonl$/.test(f))){
-    const journal=new HostJournal(file.slice(0,-6),context),records=await journal.read();
+  for await(const records of journalRecords(context)){
     const matching=records.filter(r=>r.requestId===requestId);
     if(matching.length)return{first:matching[0],committed:matching.find(r=>r.type==='committed')};
   }

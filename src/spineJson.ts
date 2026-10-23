@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, lstat, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fitCubicBezierTimeline } from "./motionMath.js";
 import { getWorkspaceRoot } from "./workspaceTools.js";
@@ -240,7 +240,7 @@ export async function readSpineDocument(filePath: string, context: ToolContext =
   };
 }
 
-export function resolveWorkspacePath(filePath: string, context: ToolContext = {}): string {
+function workspacePathCandidate(filePath: string, context: ToolContext) {
   if (!filePath || typeof filePath !== "string") {
     throw new Error("filePath must be a non-empty string.");
   }
@@ -250,6 +250,11 @@ export function resolveWorkspacePath(filePath: string, context: ToolContext = {}
   if (relative === "" || relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error(`filePath must stay inside workspace root: ${workspaceRoot}`);
   }
+  return { workspaceRoot, absolutePath };
+}
+
+export function resolveWorkspacePath(filePath: string, context: ToolContext = {}): string {
+  const { workspaceRoot, absolutePath } = workspacePathCandidate(filePath, context);
   let ancestor = absolutePath;
   let ancestorStat: ReturnType<typeof lstatSync>;
   while (true) {
@@ -261,6 +266,23 @@ export function resolveWorkspacePath(filePath: string, context: ToolContext = {}
   // 原生 realpath 仍逐次核验实际目标；避免 JS 实现为每个路径分量重复执行 lstat。
   const realRelative = path.relative(realpathSync.native(workspaceRoot), realpathSync.native(ancestor));
   if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) throw new Error('路径符号链接越过工作区边界。');
+  return absolutePath;
+}
+
+/** 与同步入口使用相同边界；每次核验根及最近现存祖先，不缓存 realpath，不阻塞主线程。 */
+export async function resolveWorkspacePathAsync(filePath: string, context: ToolContext = {}): Promise<string> {
+  const { workspaceRoot, absolutePath } = workspacePathCandidate(filePath, context);
+  let ancestor = absolutePath;
+  while (true) {
+    try { await lstat(ancestor); break; }
+    catch (error: any) { if (error.code !== 'ENOENT') throw error; ancestor = path.dirname(ancestor); }
+  }
+  // 对断开的链接，原生 realpath 会失败；不能把链接当作尚不存在的输出目录。
+  const checks = await Promise.allSettled([realpath(workspaceRoot), realpath(ancestor)]);
+  for (const check of checks) if (check.status === 'rejected') throw check.reason;
+  const [realRoot, realAncestor] = checks.map(check => (check as PromiseFulfilledResult<string>).value);
+  const relative = path.relative(realRoot, realAncestor);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('路径符号链接越过工作区边界。');
   return absolutePath;
 }
 

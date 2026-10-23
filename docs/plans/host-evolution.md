@@ -9,6 +9,10 @@
 > 2026-10-21 已确认：Canvas 回归与官方 player 截图可信度独立判断，见 §4.5/§4.8。截图准入不代表动作批准；旧截图不得自动升级。
 > 2026-10-22 桌面续验：WinForms 源码已以双页签嵌入现有 Host 观察页，23 项真实 WebView2 检查通过；页面离开/最小化时卸载，恢复后重新核对当前 Host，后端文档版本不变。旧便携包未重打包，不据基本嵌入开放 C1 生产写入或 C2。详细实现和失败记录仍见实施与验收。
 
+> 同日真实桌面补验：已保存 npc1 无参考站姿在新隔离工程完成 25 项自检，MCP 经实际 WebView2 的官方 player 首次连接/负例后重连各采一张图，独立核验通过且解码像素完全一致；原工程、隔离输入与文档完整版本未变。未新增动作批准、Canvas mesh 等价、编辑器导入或发布结论；证据见 [桌面真实角色报告](host-winforms-2026-10-22T14-01-53-402Z.json)。
+
+> 2026-10-23 最新续验：长期观察与限定启停已实现，构建及 160/160 回归通过；用户选择的 npc1 站姿隔离工程已启动只读试运行。新代码三轮编辑总体 P95 114.20ms，但首轮 120.50ms 超预算，逐轮条件仍待收敛；事务三轮及真实桌面 28 项通过。B 两周与人工启用评审未满足，生产保持观察。[前一轮技术基线](host-c1-technical-closeout-20261023.json) 与下文失败历史保留，当前性能见 §12.1 末段，操作见 [长期观察与启用流程](../Host长期观察与启用流程.md)。
+
 ### 修订记录
 
 **v1.8（2026-10-21，用户确认）**：拆分 `rendererParity`、`captureValidity` 与 `evidenceEligible`。保留 Canvas 像素门限；最终视觉审查使用本次 Host 独立核验通过的官方 player 截图。旧证据重新采集，数值、视觉与编辑器导入分别验收。
@@ -209,13 +213,16 @@ MCP    ：既有审查流程 + 证据验证 + 提交编排  → attached 不直�
 | 方法 | 路径 | 作用 | 阶段 |
 |---|---|---|---|
 | POST | `/api/open` | `{manifestPath?, path?, reload?, expectedRevision?}` → `{project, activeDoc, deps, readiness, warnings, reopened}`；至少提供一个路径，规则见 §3.7 | B |
-| GET | `/api/state?projectId=` | 工程/文档版本、新鲜度、pin/呈现/审查状态、readiness、运行时版本与安全信息 | B |
+| GET | `/api/state?projectId=` | 工程/文档版本、新鲜度、pin/呈现/审查状态、readiness、运行时版本与安全信息；另附 observation/rollout 摘要，不返回控制凭据 | B |
 | GET | `/api/capabilities` | `{context, operations, character, readiness}`；§3.8 的同一数据源，不求解 | B |
 | POST | `/api/state` | 页面上报状态（token + 本机 Origin + JSON + 体限） | B |
 | GET | `/api/frame?sessionId=&documentId=&openEpoch=&revision=&time=&size=` | 完整版本必填；canvas 回放完整渲染状态；`no-store` | B |
-| GET | `/api/events` | SSE：`doc-opened / doc-changed / frame-updated / capture-done / preview-closed`；C1 增加 `review-updated` | B |
+| GET | `/api/events` | SSE：`doc-opened / doc-changed / frame-updated / capture-done / preview-closed`；B2 增加 `evaluation-task-updated`，C1 增加 `review-updated / write-mode-changed`；观察采样使用 `observation-updated` | B |
 | GET | `/api/doc?view=bones\|slots\|attachments\|timelines` | 结构查询（作用于 activeDoc） | B |
-| POST | `/api/snapshot` | `{expectedRevision}` → 不可变文档/依赖快照及哈希；供 MCP 内部使用 | B |
+| POST | `/api/snapshot` | `{expectedRevision}` → 不可变文档/依赖快照、派生与当前审查哈希；供 MCP 内部使用 | B |
+| POST | `/api/evaluation-task` | MCP 控制通道登记/续期/结束外部求解任务；绑定完整版本及独立任务租约，不授予写入权，见 §3.8.1 | B2 |
+| POST | `/api/observation` | 私有控制通道；仅 `{action:"start"}` 或 `{action:"stop"}`；正常 observer/已打开 pose 才能开始，不接收时间、间隔或通过标志 | B |
+| POST | `/api/rollout-disable` | 私有控制通道；只接受空对象，阻止新写、等待在途事务、落盘撤销后释放 Writer，失败冻结；无 HTTP enable | C1 |
 | POST | `/api/derived` | `{expectedRevision, snapshotHash, dependencyFingerprint, result}` → `derivedHash`；MCP 控制通道 | B2 |
 | POST | `/api/review` | `{expectedRevision, snapshotHash, derivedHash, reviewRecord, dryRun?}` → `reviewHash`；默认只验证，false 才登记 MCP 审查记录 | C1 |
 | POST | `/api/capture` | `{expectedRevision, time?, viewport?, size?}` → `{pngBase64, manifest}` | B2 |
@@ -360,7 +367,7 @@ interface HostSession {
 
 **权威输入与派生结果分离**：编辑输入是当前文档的 frame/weapon/groundY、动画时间线等；solution/comparison/review 不得被当作新的编辑输入。旧批准不随 patch、undo/redo 或打开周期自动继承。
 
-1. `/api/snapshot{expectedRevision}` 在文档互斥区取得不可变副本，返回 `{version, project, document, contentHash, dependencies, dependencyFingerprint, snapshotHash, derived}`。`snapshotHash` 绑定完整 version、contentHash 与 dependencyFingerprint；依赖包括 manifestHash、角色 JSON、mapping、visualRig、atlas/页面纹理、skin 和适用的 reference/sequence/policy，按固定顺序规范化。依赖角色若就是当前 activeDoc，使用当前内存模型，磁盘 hash 仅作提交基线，不能把自身旧磁盘副本当作求解输入。
+1. `/api/snapshot{expectedRevision}` 在文档互斥区取得不可变副本，返回 `{version, project, document, contentHash, dependencies, dependencyFingerprint, snapshotHash, derived, derivedHash, reviewHash}`。`reviewHash` 可为 null，独立绑定授权，不参与求解输入哈希；旧 Host 缺字段须重启匹配源码，不能用缺项替代 null。`snapshotHash` 绑定完整 version、contentHash 与 dependencyFingerprint；依赖包括 manifestHash、角色 JSON、mapping、visualRig、atlas/页面纹理、skin 和适用的 reference/sequence/policy，按固定顺序规范化。依赖角色若就是当前 activeDoc，使用当前内存模型，磁盘 hash 仅作提交基线，不能把自身旧磁盘副本当作求解输入。
 2. MCP 的 attached 读适配器将这份快照传入内存求解入口；需把当前 `solvePoseData` 的读盘准备与纯计算拆开，复用原算法。不能再用 activeDoc.path 重新读旧姿态 JSON，也不能生成可被误提交的临时资产来冒充内存输入。依赖若从磁盘读取，必须匹配快照的严格内容哈希；完成前再次核对，变更即停止。
 3. MCP 求解、runtime 节点回读及比较后，经控制通道发布 `/api/derived{expectedRevision,snapshotHash,dependencyFingerprint,result}`。Host 核对当前输入未变、结果形状与引用产物哈希后原子替换派生缓存，返回 `derivedHash` 并发 `frame-updated`。该入口不接收批准字段，Host 不把 `ok:true` 当作批准；失败候选可显示，但保留 `diagnosticOnly`，没有提交授权。
 4. 发布派生结果不增加编辑 revision、不写资产文件；结果存储绑定 snapshotHash 的完整指纹，不能沿用仅 hash(frame) 的新鲜度判断。重复发布同一结果幂等；同版本的新派生结果更换 derivedHash，并使旧截图/提交授权失效。
@@ -473,6 +480,25 @@ interface OperationReadiness {
 状态查询不求解、不生成报告、不自动校准，也不产生批准或提交授权。缓存的 fast 检查须声明新鲜度；批准、写入及新证据仍走 strict。canRun 是观察建议，执行前重新检查，不能作为授权令牌。`nextAction.tool` 必须是当前实际注册工具；需人工校准或能力尚不存在时置 null 并给出具体说明，不编造工具。
 
 绑定缺失返回 unknown/blocked；明确没有侧背切片返回 unsupported；已有结果过期返回 stale；任务执行中返回 busy；写入权不明返回 frozen。一个操作受阻不把所有观察操作统一关掉；同样，preview 可用不能让 commit 显示已通过。
+
+2026-10-23 实施补充：未打开、缺 pin、缺结果、持杖 gripPoint、依赖漂移、Host 串行队列、写入冻结及 undo/redo readiness 已补回归；显式 open 与独立观察分别判断，player 就绪不覆盖其它阻塞。busy 目前只观测 Host 串行事务，不宣称 MCP 外部求解任务全生命周期已接通。真实 npc1 隔离站姿 [30 次短时现场报告](host-observation-2026-10-23T06-47-10-591Z.json) 约 8.35 秒零 stale 误报，不替代 §5 的两周观察或公开启用评审。
+
+### 3.8.1 MCP 外部求解观察租约（2026-10-23 续验）
+
+上述“仅 Host 队列”的实现限制现由更新后的 `HostClient.evaluate` 补齐：在 snapshot 前登记任务，执行原求解/比较并发布 derived 后回报终态；取消或异常在 finally 中使用独立清理请求。任务记录不控制 Writer、授权、文档锁或算法位置，不改变 C1/C2 白名单。
+
+- `/api/evaluation-task` 仅接受受保护的 MCP control、精确 Origin 和 JSON；页面 token 不能登记、续期或结束。`begin` 使用 `{action,taskId,leaseKey,expectedRevision}`，完整版本必须匹配当前 pose；`heartbeat` 使用 `{action,taskId,leaseKey,stage}`；`finish` 使用 `{action,taskId,leaseKey,outcome,stage?}`。阶段为 snapshot/solve/publish，终态为 succeeded/failed/cancelled。
+- MCP 每 5 秒续期，15 秒无有效心跳标为 unresponsive，readiness 仍为 busy/EVALUATION_UNRESPONSIVE，不推断进程已退出或批准有效。没有直接清空任务的页面入口；租约持有者可回报明确终态，显式重载仍须经过原完整版本/未提交内容检查。
+- 任务绑定 session/document/openEpoch/revision，旧版本任务不占用新版本的就绪状态，旧结果仍受 derived 完整版本与指纹检查。当前版本最多 16 个活动任务，内部保留最多 32 条终态，公开仅显示最近 4 条；state 和 SSE 不返回 leaseKey。
+- `evaluation-task-updated` SSE 驱动页面刷新。页面显示计算中、完成、失败、取消或心跳失联；活动期间每秒只更新状态，不重复请求 frame，卸载页面不取消独立 MCP 计算。
+- begin 回执丢失仍可用预先生成的 ID/租约清理；成功发布后终态回执丢失返回 TASK_STATUS_UNCERTAIN，并明确 published:true，不声称发布被回滚。已取消请求不登记新任务。
+- 仅更新后客户端的 evaluate 链路提供此遥测。旧 Host 缺少端点时明确 HOST_VERSION_MISMATCH，需重启加载匹配源码；旧 MCP 或控制方直接调用 snapshot/derived 不会因此自动获得任务记录，空列表不能证明不存在未登记计算。
+
+真实 stdio、心跳续期、实际独立进程终止、取消/异常及回执丢失已回归；[147 项记录](host-evaluation-regression-20261023.json)。带任务登记的新 HostClient 路径另完成三轮 90 个合成样本：端到端 P95 87.95ms、首次新版本 PNG 读取 25.39ms、state 11.93ms，三轮分别通过原预算；[独立汇总](host-client-performance-summary-2026-10-23T07-33-25-240Z.json)。该测量不含 stdio 或浏览器呈现，也不满足长期观察、第二角色、编辑器导入或公开启用条件。
+
+本日事务编排后续又有修改，上段为历史。最终源码 [151 项回归](host-transaction-regression-20261023.json) 通过；最终性能以 §12.1 为准，patch P95 122.81ms 未达预算，撤销有一轮超过出图预算，不宣称当前全部性能已通过。
+
+本日最后续验已解决上述性能遗留，最新 154 项回归及三轮通过结果见 §12.1 末段和 [C1 技术收口记录](host-c1-technical-closeout-20261023.json)；两周观察与公开启用条件不变。
 
 ### 3.9 命令 schema 与交互回执（v1.7）
 
@@ -612,6 +638,8 @@ B2 还须通过快照求解闭环：显式重算后的快照得到新结果及�
 
 **公开启用前置**：B 稳定 ≥2 周；`TARGET_STALE` 零误报；按 §4.8 完成当前官方 player 截图准入及独立视觉验收；Canvas 回归缺口仍单列，不用其通过状态替代截图与动作验收；§3.5 的内存读取/求解/发布/出图已通过。观察窗口用于启用评审，研发可提前在隔离夹具和关闭写入开关下验证，不以日历代替通过证据。C1 不等待三 kind 全量迁移或 D 搬迁求解器。
 
+2026-10-23 实施补充：长期观察 CLI 在正常 observer 上每 60 秒真实采样，以本机签名链、会话索引和末端哈希保护完整性，逐次验证依赖、版本、构建、工程与双时钟。超过 150 秒的采样间断不补在线时长；同候选需跨度至少 14×24 小时、覆盖至少 14 个 UTC 日期且无待处理错误，才进入人工覆盖评审，不能据此自动启用。测试时钟和合成两周夹具明确排除。人工审批另绑定四份验收文件、六项具体理由与限定 C1 范围；24 小时内可发起启动校验，非自动到期 Writer。`SPINE_HOST_WRITE=1` 必须同时提供 `SPINE_HOST_ROLLOUT_APPROVAL`，旧意图标志不独立授予权限。关闭等待在途事务、落盘撤销后释放 Writer，失败冻结。操作与信任边界见 [长期观察与启用流程](../Host长期观察与启用流程.md)。当前只获授权在已验收 npc1 站姿隔离工程试运行，无真实两周通过记录或生产启用审批。
+
 §5.0–§5.6 是 C1/C2 共用的安全与事务约束，不能因分批而删除备份、授权、完整版本、失效或冻结规则；具体交付白名单以 §5.7 为准。
 
 ### 5.0 打开与绑定
@@ -735,6 +763,8 @@ header: { documentId, docPath, sessionId, lastCommittedHash, lastCommittedRevisi
 
 C1 通过只说明持续 pose 编辑、回读、撤销和重开可用。C2 的动画提交须另外完成多阶段数值/runtime、关系、Agent 视觉与独立 Spine 编辑器导入；真实导入失败时先恢复最近确认可用的备份再重新制作，不在错误文件上追加修补。最终推广还须第二个真实美术角色验证，合成夹具不替代真实验收。
 
+2026-10-22 样本范围确认：用户明确排除 `exp/xiaoren`，其皮肤按身体部件拆分，不适合作为当前检测案例。该角色试跑不计入第二角色验收，不以默认皮肤、单个部件或自选换装组合补足；另选符合当前完整角色加载方式的真实美术样本。通用可选参数回归使用独立最小合成夹具，仍不能替代第二真实角色。
+
 ---
 
 ## 6. 阶段 D：求解宿主（先 spike）
@@ -757,7 +787,7 @@ C1 通过只说明持续 pose 编辑、回读、撤销和重开可用。C2 的�
 | 变更 | 策略 |
 |---|---|
 | 新增端点/工具 | 新 Host 入口和工程初始化工具为增量；L1/L2 已有查询的结构变化按其版本迁移说明发布 |
-| C 写入迁移 | 目标开关为 `SPINE_HOST_WRITE=1`，默认关；当前生产启动仅记录开启意图，仍保持观察，未接通公开写入启用 |
+| C 写入迁移 | `SPINE_HOST_WRITE=1` 默认关；还须 `SPINE_HOST_ROLLOUT_APPROVAL` 指向当前工程/构建/证据的有效人工审批。实际未审批，保持观察；启停流程见 §5 实施补充 |
 | C1 / C2 能力 | 按已交付 op/kind 白名单开放；开启 C1 不会同时开放 C2 |
 | 工程 schema | schemaVersion:1；旧项目 legacy 诊断，未知版本只读；初始化不覆盖、迁移不静默执行 |
 | `0.1.x` 直写 | detached 保留一个大版本并标 deprecated；不允许旧直写进程与 C 同时操作同一工程 |
@@ -863,12 +893,27 @@ C1 通过只说明持续 pose 编辑、回读、撤销和重开可用。C2 的�
 | patch → frame | <120ms |
 | capture | <1.5s |
 | commit | <200ms |
-| undo | <50ms |
+| undo 事务（HTTP 回执，不含求解/出图） | <50ms |
+| undo → 新图完整读取 | <120ms |
 | 页面重载 | <800ms |
 
 ### 12.1 预算与验收的关系
 
+2026-10-23 用户确认：undo 分成事务 <50ms 与完整工具重新求解、发布、读取新图 <120ms，后者与 patch → frame 对齐；不能只用事务耗时宣称完整工具 <50ms。commit 保留 <200ms，正确性及视觉门禁均不改变。此前按完整 undo <50ms 的失败数据保留，不追改历史报告。
+
 正文引用上述延迟的地方均按本节记录实测，不把“未达到预算”伪装成达标。完整版本、路径限制、default dryRun、备份、结构与审查门禁、回放坐标 ≤1e-4 等正确性要求照常硬性验收。是否搬迁求解计算仍按 §6 的端到端分项数据决定。
+
+2026-10-23 任务通道续验：新增 `scripts/benchmark-host-client.ts`，测量实际 HostClient.patch → begin → snapshot → MCP 求解 → derived → finish → state → frame，480 PNG 完整读取后停止计时。三轮同代码、同负载与环境共 90 个样本通过当前 state/frame/patch 预算；首次出图与缓存读取分别统计。初轮因压测过密触发生产 20/s 限流而失败，原记录保留；修正为样本间 120ms 计时外间隔，没有修改限流或预算。汇总入口 `scripts/summarize-host-client-performance.ts` 校验三轮代码指纹、环境、完整样本及源文件不变，拒绝混用或覆盖。结果不覆盖 stdio 编解码、浏览器呈现、其它资源规模或其它操作的性能验收。
+
+本日后续源码又调整事务编排，上段通过结论仅对应早期代码。最终 [同代码三轮 90 样本](host-client-performance-summary-2026-10-23T08-16-08-112Z.json) 中，state P95 10.09ms、首次新版本 PNG 41.22ms 达预算，patch 至 PNG **122.81ms 未通过 <120ms**，不沿用早期 87.95ms 作为当前结论。所有失败轮次和慢样本保留，不调整 patch 预算。实际 [WebView2 28 项报告](host-winforms-2026-10-23T07-51-03-249Z.json) 另测 30 次热重载 P95 108.20ms、30 次真实 MCP stdio/player 960 截图回传 364.90ms，达各自预算；输入字节与文档版本不变，截图状态事件零重复 frame，未新增视觉批准。事务最终三轮及单轮波动见实施记录，不把总体 P95 当作每次或每轮保证。
+
+**2026-10-23 异步路径续验（观察功能之前的基线）**：原生异步 lstat/realpath 用于逐次依赖与 journal 读取，每个文件仍重新核验真实根/现存祖先并读取真实字节哈希；没有路径或安全结果缓存。与前版相同负载、相机、480 尺寸、两次预热、120ms 计时外间隔；诊断跟踪不混入正式采样，代码指纹覆盖核验/求解桥/renderer/夹具。[编辑三轮 90 样本](host-client-performance-summary-2026-10-23T08-57-02-812Z.json)：patch 至 PNG P95 113.47ms、首次出图 36.89ms、state 10.49ms，各轮全部达预算。[事务三轮 90 样本](host-transaction-performance-summary-2026-10-23T08-59-26-222Z.json)：undo 事务 7.79ms、undo 至图 63.06ms、commit 108.99ms，各轮也全部达预算。最大 patch 120.76ms、commit 214.88ms，不声称每次低于预算。
+
+该轮 [真实桌面再验](host-winforms-2026-10-23T09-00-42-744Z.json) 28 项，30 次页面热重载 P95 95.42ms、30 次真实 stdio/player 960 截图完整回传 344.60ms，均达预算；状态事件零重复 frame，原输入和完整版本不变，重连像素一致，不新增视觉批准。该轮完整 154/154 回归通过，作为后续观察功能的技术基线保留。
+
+**2026-10-23 观察/启停新增后的当前结论**：[最新证据索引](host-c1-observation-implementation-20261023.json)。构建和 160/160 完整回归通过；[编辑三轮 90 样本](host-client-performance-summary-2026-10-23T09-55-52-179Z.json) 总体 P95 114.20ms，首轮/次轮/三轮分别 120.50/114.20/92.56ms，首轮超出 120ms，因此 aggregatePassed 为 true 而 allRoundsPassed 为 false，不把总体通过当成逐轮通过。慢样本涉及 patch 和候选制作，根因未确认，原记录和预算保留。[事务三轮 90 样本](host-transaction-performance-summary-2026-10-23T09-58-20-924Z.json) 各轮通过，undo HTTP P95 7.51ms、undo 至图 74.14ms、commit 105.25ms。
+
+[真实桌面新验](host-winforms-2026-10-23T09-53-17-726Z.json) 28 项通过，重载 P95 105.65ms、实际 stdio/player 截图 383.35ms，零重复 frame、重连像素一致、输入/版本不变，新增观察状态已查看。用户选定的 npc1 隔离站姿已于北京时间 17:58 开始真实定时采样，初验 3 次约 120 秒无错误、32 份输入未变、Writer 不存在；[初验记录](host-observation-trial-verification-2026-10-23T10-01-14-582Z.json)。当前仍需收敛逐轮编辑性能、实际两周稳定/使用覆盖和人工启用评审。Canvas mesh、完整攻击、C2、第二角色及编辑器导入继续分别保留，生产写入关闭。
 
 ---
 

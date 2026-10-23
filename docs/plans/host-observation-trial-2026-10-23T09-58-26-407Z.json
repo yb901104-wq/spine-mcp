@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-23T09:58:26.407Z",
+  "scope": "用户选择的已验收 npc1 站姿隔离工程观察试运行；不开放写入，不等于真实使用覆盖或两周验收。",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "projectId": "npc1-host-c1-acceptance",
+  "posePath": "poses/standing-hand-angle.json",
+  "version": {
+    "sessionId": "5af1216d-c9d2-4d48-a19b-25ed4307282f",
+    "documentId": "b3d80123ae35981a8a2905da2e51f892f8d3e24da1435d7c27d6e6d99be0ec21",
+    "openEpoch": "ee6b6def-9104-4e6d-b0fc-a7e284d9b399",
+    "revision": 0
+  },
+  "observation": {
+    "running": true,
+    "runId": "edc9184e-4d41-4534-9ed3-b1026702c501",
+    "file": ".spine-mcp/observation/runs/edc9184e-4d41-4534-9ed3-b1026702c501.jsonl",
+    "samples": 1,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "rollout": {
+    "writeRequested": false,
+    "writeEnabled": false,
+    "scope": null,
+    "approvalHash": null,
+    "code": "ROLLOUT_NOT_REQUESTED",
+    "message": "公开写入默认关闭；需真实观察与人工审批。"
+  },
+  "writeMode": "observer",
+  "targetStale": false,
+  "inputFilesVerified": 32,
+  "allInputsUnchanged": true,
+  "writerAbsent": true,
+  "publicWriteEnabled": false,
+  "lifecycle": "独立隐藏 Host 进程每 60 秒采样，退出/关机不自动重启或补时。未创建计划任务。"
+}

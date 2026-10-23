@@ -1,0 +1,17 @@
+{
+  "scope": "外部求解故障测试的失败记录，非真实角色验收或长期观察",
+  "date": "2026-10-23",
+  "passed": false,
+  "command": "npm test",
+  "tests": 147,
+  "pass": 146,
+  "fail": 0,
+  "cancelled": 1,
+  "skipped": 0,
+  "testName": "真实进程终止：失去求解心跳后保持 unresponsive，显式新 epoch 不继承旧 busy",
+  "timeoutMs": 30000,
+  "cause": "故障夹具仅检查 exitCode。被信号终止后 exitCode 为 null 而 signalCode 非 null，finally 再次等待已发生的 exit，导致超时和进程未收束。",
+  "correction": "同时检查 exitCode 和 signalCode，并在 kill 前登记 exit 等待；未修改生产 15 秒心跳过期门限。",
+  "cleanup": "只读核对 PID 43024 的完整命令行为本轮 hostEvaluationTasks.test.ts 后终止该超时测试进程；未停止用户服务。",
+  "acceptance": "该次运行不计为完整回归通过，后续结果单独记录。"
+}

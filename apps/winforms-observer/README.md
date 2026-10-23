@@ -1,10 +1,24 @@
 # Spine MCP WinForms 观察平台
 
+2026-10-23 新增长期观察状态：Host 页显示采集中次数、未启动或记录错误，通过 `observation-updated` 仅刷新状态。采样由独立 Host 持续执行，切走或卸载 WebView 不停止；退出 Host/休眠不补时。平台不读取 control 或生成审批。CLI、限定启用变量 `SPINE_HOST_WRITE`/`SPINE_HOST_ROLLOUT_APPROVAL` 与安全关闭见 [操作流程](../../docs/Host长期观察与启用流程.md)，原启动脚本、默认端口不变，生产写入仍关闭，旧便携包未更新。
+
+新增后的 [真实桌面 28 项](../../docs/plans/host-winforms-2026-10-23T09-53-17-726Z.json) 通过，重载 P95 105.65ms、实际 MCP/player 截图完整回传 383.35ms，观察状态已查看，输入/版本及重连像素一致。完整回归 160/160；编辑首轮轻微超预算仍待收敛，长期试运行已启动，无生产启用，见 [最新索引](../../docs/plans/host-c1-observation-implementation-20261023.json)。
+
+2026-10-23 前一轮技术基线：底层异步严格路径调度后，[真实站姿 28 项报告](../../docs/plans/host-winforms-2026-10-23T09-00-42-744Z.json) 再次通过，30 次热重载 P95 95.42ms、30 次实际 stdio/player 960 截图完整回传 344.60ms，状态事件零重复 frame。该轮完整 TypeScript 回归 154/154 通过。
+
+2026-10-23 性能续验：构建后运行 `npx tsx scripts/acceptance-winforms-host.ts --real-c1 --benchmark-host`，使用已验收 npc1 站姿的新隔离副本。30 次实际重载 P95 108.20ms、30 次 MCP stdio 到当前 WebView2 player 的 960 截图完整回传 P95 364.90ms；28 项检查通过，截图状态事件零重复取帧，重连界面无截图限流错误。页面已合并同版本重复刷新；手动刷新仍重新读取，服务端 20/s 限流及视觉门禁不变。[正式报告](../../docs/plans/host-winforms-2026-10-23T07-51-03-249Z.json)。这是源码自检能力，旧便携包未升级。
+
+2026-10-23：底层 Host 逐操作 readiness 已细分未打开、缺 pin、stale、串行事务 busy 与写入冻结；截图就绪不覆盖其它阻塞。平台观察权限及启动参数不变，旧便携包未升级。短时现场审计可运行 `npx tsx scripts/audit-host-observation.ts`，使用已验收 npc1 站姿的新隔离副本，生成独立报告并结束临时服务；该命令不是长期自动化，也不满足两周观察条件。
+
+同日进一步接通更新后 MCP evaluate 的外部任务状态：页面显示计算中、完成、失败、取消或心跳失联，每 5 秒由 MCP 续期，15 秒失联保持状态待核对。活动期间页面每秒仅更新状态，切走/最小化不取消 MCP；页面不能登记任务或操作租约。旧 Host 缺少内部端点会明确提示版本不匹配，需要重启匹配源码。实际桌面 23 项自检与全量 147 项回归通过，便携包尚未重打包。
+
+底层预览资源校验支持显式文件省略动画，此时只检查资源/runtime/适用皮肤，不继承示例动画、不生成动画联系图，也不表示动作通过。该规则同步覆盖 MCP 与预览 HTTP，不改变桌面启动参数或连接流程。当前不采用 `exp/xiaoren` 的身体部件拆分皮肤案例作为第二角色验收。
+
 这是 Spine MCP 的 WinForms 观察壳。它不是动画编辑器，也不是操作主体；它只读取 Agent/MCP 写入的预览会话状态，并展示当前预览画面、操作说明、日志、验证流水线结果和 Agent 连接状态。
 
 ## Host v1.8 源码进展与 WinForms 边界
 
-2026-10-22 已在源码加入“动画预览 / Host 工作台”双页签，真实 WinForms/WebView2 自检通过 23 项检查。便携发布包仍未重新打包，旧 exe 不自动升级。完整状态见 [实施与验收](../../docs/Host实施与验收-20261021.md)。
+2026-10-22 已在源码加入“动画预览 / Host 工作台”双页签，合成夹具自检通过 23 项，真实 npc1 无参考站姿隔离联调通过 25 项。便携发布包仍未重新打包，旧 exe 不自动升级。完整状态见 [实施与验收](../../docs/Host实施与验收-20261021.md)。
 
 [动画工作区主工单](../../docs/plans/host-evolution.md) 定义独立工程/会话内核，WinForms 继续负责观察。Host 页复用既有页面和版本/审查状态，左侧明确区分旧预览会话日志与当前 Host 状态；C2 的完整能力面板仍待后续扩展。截图分层已确认并实现，连接成功不代表可写、动作通过或编辑器导入通过。
 
@@ -17,9 +31,12 @@
 ```powershell
 dotnet build apps/winforms-observer/SpineMcp.WinFormsObserver.csproj --no-restore
 npx tsx scripts/acceptance-winforms-host.ts
+npx tsx scripts/acceptance-winforms-host.ts --real-c1
 ```
 
 自检会启动真实旧预览服务、观察 Host 和 WebView2，在合成夹具中验证身份负例、后台卸载、最小化恢复、来源限制、重连及浏览器退出，生成独立时间戳报告和诊断图；不自动批准姿态。需要正常桌面进程权限；受限进程的 WebView2 导航失败不能当成功。自检内部使用显式 `--host-self-test --workspace ... --preview-url ... --report ... --screenshot ...`，输出必须在该隔离工作区内且不得覆盖已有文件。原 `--self-test` 便携启动检测保持独立。
+
+`--real-c1` 另复制已验收站姿工程 `D:/AI_cc/spine test/host-acceptance/2026-10-22T02-18-08-219Z` 中的资源与证据到新目录；缺少该工程时明确失败。先复验已保存姿态，观察模式显式发布快照求解，再用真实 MCP stdio 请求桌面页面两次采集。内部 `--capture-checkpoints` 只在自检模式等候固定检查点文件，不向页面开放原生桥。两张 960² 官方 player 图分别核验资源/runtime/完整版本/相机，解码像素必须完全一致；原工程与隔离输入逐文件核对 SHA-256，既有审查再次独立复验。新图只取得证据准入，不自动新增批准。`CapturePreview` 的界面诊断图仍为 `evidenceEligible:false`。
 
 ## 启动前提
 

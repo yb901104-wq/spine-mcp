@@ -656,19 +656,19 @@ const tools = [
   },
   {
     name: "spine_preview_check_assets",
-    description: "检查预览所需的 JSON、atlas 和 atlas 引用贴图是否存在，并确认目标动画是否存在。只读，不写入 JSON。",
+    description: "检查预览所需的 JSON、atlas 和贴图；显式文件省略 animation 时仅检查资源，提供动画名才检查其存在。只读，不写入 JSON。",
     inputSchema: {
       type: "object",
       properties: {
         filePath: filePathProperty,
         atlasPath: { type: "string", description: "工作区根目录内的 Spine atlas 文件路径。" },
-        animation: { type: "string", description: "可选目标动画名。" },
+        animation: { type: "string", description: "可选目标动画名；显式文件省略时不检查动画，不使用示例动画。" },
       },
     },
   },
   {
     name: "spine_preview_get_url",
-    description: "生成可直接打开的浏览器预览 URL，支持指定 JSON、atlas、动画、皮肤、PMA、Mipmaps 和自动载入。只读，不写入 JSON。",
+    description: "生成浏览器预览 URL；显式文件省略动画时不注入示例动画，支持皮肤、PMA、Mipmaps 和自动载入。只读，不写入 JSON。",
     inputSchema: {
       type: "object",
       properties: {
@@ -692,7 +692,7 @@ const tools = [
       properties: {
         filePath: filePathProperty,
         atlasPath: { type: "string", description: "工作区根目录内的 Spine atlas 文件路径。" },
-        animation: { type: "string", description: "可选目标动画名；会检查 runtime 是否能找到该动画。" },
+        animation: { type: "string", description: "可选目标动画名；显式文件省略时只验证资源/皮肤加载，提供后检查 runtime 是否找到该动画。" },
         skin: { type: "string", description: "可选目标皮肤名；会检查 runtime 是否能找到该皮肤。" },
         scale: { type: "number", exclusiveMinimum: 0, description: "可选读取缩放，默认使用 runtime 的 1。" },
       },
@@ -700,7 +700,7 @@ const tools = [
   },
   {
     name: "spine_run_validation_pipeline",
-    description: "执行写入后的推荐只读验证流程：结构校验、官方 runtime 加载验证和预览 URL 生成。不写入 JSON。",
+    description: "执行只读结构校验、官方 runtime 加载和预览 URL 生成；显式文件省略动画时不采样动画或生成联系图。不写入 JSON。",
     inputSchema: {
       type: "object",
       properties: {

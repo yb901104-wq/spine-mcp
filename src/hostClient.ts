@@ -4,13 +4,14 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HostEditorStore } from './hostEditorStore.js';
-import { HostError, hostFailure, strictHash } from './hostContracts.js';
+import { assertVersion, HostError, hostFailure, strictHash } from './hostContracts.js';
 import { evaluateHostSnapshot } from './hostEvaluator.js';
 import { readWriter } from './writerOwnership.js';
 import { getRegisteredWorkspace, getWorkspaceRoot } from './workspaceTools.js';
 import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
 import { prepareHostPoseReview } from './hostPoseReview.js';
 import { hostLifecycle } from './hostLifecycle.js';
+import { withHostEvaluationTask } from './hostEvaluationTasks.js';
 const installRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 interface Endpoint{endpoint:string;token:string;control?:string;sessionId?:string;instanceId?:string}
 export class HostClient {
@@ -96,16 +97,31 @@ export class HostClient {
     const result:any=await response.json();if(route==='/api/state'||route==='/api/open'){this.lastState=result;this.attachedSeen ||=result.writeMode==='attached';}return result;
   }
   async state(args:any={}){
-    try{if(await this.ensurePreview(args.autostart!==false))return this.rpc('/api/state?'+new URLSearchParams({includeCapabilities:String(args.includeCapabilities!==false),...(this.context.projectId?{projectId:this.context.projectId}:{})}));}
+    const previous=this.lastState;
+    try{if(await this.ensurePreview(args.autostart!==false)){
+      // 本次发现已进行严格 state 请求并核验实例；只复用这一请求的响应，不使用上次调用缓存。
+      if(this.lastState&&this.lastState!==previous){const state=structuredClone(this.lastState);if(args.includeCapabilities===false)delete state.capabilities;return state;}
+      return this.rpc('/api/state?'+new URLSearchParams({includeCapabilities:String(args.includeCapabilities!==false),...(this.context.projectId?{projectId:this.context.projectId}:{})}));
+    }}
     catch(error:any){if(error.code==='WRITE_OWNERSHIP_UNCERTAIN')return{...this.lastState,...hostFailure(error),available:false,degraded:true,writeMode:'frozen'};throw error;}
     return this.mirror.state(args.includeCapabilities!==false);
   }
   async open(args:any){return await this.ensurePreview()?this.rpc('/api/open',args):this.mirror.open(args);}
   async evaluate(expectedRevision:any,signal?:AbortSignal,progress?:(stage:string)=>void){
     if(!this.endpoint)throw new HostError('HOST_UNAVAILABLE','镜像模式不发布内存派生结果；请显式使用原单姿态求解工具保存结果。',409);
-    const snapshot=await this.rpc('/api/snapshot',{expectedRevision},true,signal);
-    const result=await evaluateHostSnapshot(snapshot,this.context,signal,progress);
-    return this.rpc('/api/derived',{expectedRevision,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,result},true,signal);
+    const endpoint={...this.endpoint};
+    if(!endpoint.control)throw new HostError('CONTROL_REQUIRED','缺少受保护的 MCP 控制凭据，不能登记外部求解。',403);
+    const taskRpc=async(args:any,taskSignal?:AbortSignal)=>{
+      const response=await fetch(endpoint.endpoint+'/api/evaluation-task',{method:'POST',headers:{'Content-Type':'application/json',Origin:endpoint.endpoint,
+        'X-Spine-Host-Token':endpoint.token,'X-Spine-Host-Control':endpoint.control!},body:JSON.stringify(args),
+        signal:taskSignal?AbortSignal.any([taskSignal,AbortSignal.timeout(1500)]):AbortSignal.timeout(1500)});
+      const result:any=await response.json();if(!response.ok)throw new HostError(response.status===404?'HOST_VERSION_MISMATCH':result.code??'HOST_ERROR',response.status===404?'当前 Host 尚未实现外部求解状态通道；请重启以加载匹配源码，不静默跳过状态登记。':result.message,response.status,result.detail);return result;
+    };
+    return withHostEvaluationTask(taskRpc,expectedRevision,signal,async task=>{
+      const snapshot=await this.rpc('/api/snapshot',{expectedRevision},true,signal);task.check();task.stage('solve');
+      const result=await evaluateHostSnapshot(snapshot,this.context,signal,progress);task.check();task.stage('publish');
+      return this.rpc('/api/derived',{expectedRevision,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,result},true,signal);
+    });
   }
   async frame(args:any){
     if(await this.ensurePreview())return{ok:true,available:true,...await this.rpc('/api/frame?'+new URLSearchParams({...args.expectedRevision,...args.size?{size:String(args.size)}:{},...args.time!==undefined?{time:String(args.time)}:{}}).toString())};
@@ -126,27 +142,41 @@ export class HostClient {
     // 登记开始后等待明确回执，不把中止网络等待描述成登记未发生。
     return this.rpc('/api/review',prepared,true);
   }
+  /** 当前操作入口已核实实例；顺序读取避免严格文件读取与栅格计算竞争，不复用上一轮门禁结果。 */
+  private async currentFrameState(expectedRevision:any){
+    const state=await this.rpc('/api/state');assertVersion(state.version,expectedRevision);
+    const frame=await this.rpc('/api/frame?'+new URLSearchParams({...expectedRevision}).toString());assertVersion(frame.version,expectedRevision);
+    return{state,available:true,...frame};
+  }
   async patch(args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
     if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 编辑。',409);
     const result=await this.rpc('/api/patch',args);
-    if(args.dryRun===false){await this.evaluate(result.version,signal,progress);return{...result,state:await this.state(),...await this.frame({expectedRevision:result.version})};}
+    if(args.dryRun===false){await this.evaluate(result.version,signal,progress);return{...result,...await this.currentFrameState(result.version)};}
     return result;
   }
   async history(direction:'undo'|'redo',args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
     if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 历史操作。',409);
     const result=await this.rpc('/api/'+direction,args);
-    if(args.dryRun===false&&!result.noOp){await this.evaluate(result.version,signal,progress);return{...result,state:await this.state(),...await this.frame({expectedRevision:result.version})};}return result;
+    if(args.dryRun===false&&!result.noOp){await this.evaluate(result.version,signal,progress);return{...result,...await this.currentFrameState(result.version)};}return result;
   }
   async commit(args:any){
     if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 提交。',409);
     if(args.dryRun!==false)return this.rpc('/api/commit',args);
     // 先让已完成 requestId 返回原回执；无终态才会遇到缺少授权。
     try{return await this.rpc('/api/commit',args);}catch(error:any){if(error.code!=='COMMIT_NOT_AUTHORIZED')throw error;}
-    const candidate=await this.rpc('/api/commit',{...args,dryRun:true},true),snapshot=await this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true);
+    // 仅并发互相独立的只读准备；授权与发布仍顺序执行，失败时先收束全部读取。
+    const prepared=await Promise.allSettled([
+      this.rpc('/api/commit',{...args,dryRun:true},true),
+      this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true),
+    ]);
+    for(const result of prepared)if(result.status==='rejected')throw result.reason;
+    const [candidate,snapshot]=prepared.map(result=>(result as PromiseFulfilledResult<any>).value);
+    assertVersion(candidate.version,args.expectedRevision);assertVersion(snapshot.version,args.expectedRevision);
+    if(!Object.hasOwn(snapshot,'reviewHash'))throw new HostError('HOST_VERSION_MISMATCH','当前 Host 快照缺少审查摘要，请重启加载匹配源码。',409);
     if(strictHash(candidate.candidateBytes)!==candidate.candidateHash||candidate.intent!=='draft'||snapshot.kind!=='pose')throw new HostError('COMMIT_NOT_AUTHORIZED','精确草稿候选校验失败。',409);
     const value=JSON.parse(candidate.candidateBytes),input=snapshot.document;
     for(const key of ['filePath','mappingPath','visualRigPath','referencePosePath','sequencePath','stageId','standardPosePath','sourceFingerprint'])if(value[key]!==input[key])throw new HostError('TARGET_DRIFT',`草稿候选修改了固定绑定 ${key}。`,409);
-    const authorization=await this.rpc('/api/authorize',{expectedRevision:args.expectedRevision,candidateHash:candidate.candidateHash,outputPath:candidate.outputPath,intent:'draft',snapshotHash:snapshot.snapshotHash,derivedHash:snapshot.derivedHash,reviewHash:(await this.state()).reviewHash,gateRecord:{gate:'pose-draft',passed:true,candidateHash:candidate.candidateHash}},true);
+    const authorization=await this.rpc('/api/authorize',{expectedRevision:args.expectedRevision,candidateHash:candidate.candidateHash,outputPath:candidate.outputPath,intent:'draft',snapshotHash:snapshot.snapshotHash,derivedHash:snapshot.derivedHash,reviewHash:snapshot.reviewHash,gateRecord:{gate:'pose-draft',passed:true,candidateHash:candidate.candidateHash}},true);
     return this.rpc('/api/commit',{...args,authorizationId:authorization.authorizationId});
   }
 }

@@ -1,0 +1,99 @@
+{
+  "summarizedAt": "2026-10-23T08:16:08.110Z",
+  "files": [
+    "docs/plans/host-client-performance-2026-10-23T08-08-01-425Z.json",
+    "docs/plans/host-client-performance-2026-10-23T08-08-56-913Z.json",
+    "docs/plans/host-client-performance-2026-10-23T08-15-33-254Z.json"
+  ],
+  "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+  "frameMeasurement": "firstFrameClientMs 为 patch 内首次新版本 PNG 的 RPC 完整读取；frameHttpMs 为随后相同版本的缓存读取。样本间隔在所有计时之外，保留每秒 20 次截图限流。",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+    "logicalCores": 12
+  },
+  "renderer": "canvas-region-msaa4-v4",
+  "codeHashes": {
+    "src/hostClient.ts": "259b6c5683abc01a2a148fca14bc18d808404411ab9506b3c551dd373144a816",
+    "src/hostServer.ts": "112ae90fe7a3768983ca8a985e5910846a4b4c36bfb6551cd00bb440d1504815",
+    "src/hostDocumentStore.ts": "383ad7ad6f0a53064d1e431a64d1078f924df6962b51252816fa525c72f41272",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostReadiness.ts": "5e837f372f1a45026e0dd4625ffe339553916cc4a472c0ab0f65b074ba413751",
+    "src/hostJournal.ts": "b54575db1c51301f90407785bb2a02ca7ede520d7c8f372692a6d8186ab95dc1",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "workloadFingerprint": "f90bd696cc5e85f02a6633ba75a6464023e60bb24987f65a35bcdc1501e519ef",
+  "sampleCount": 90,
+  "warmupsPerRound": 2,
+  "interSampleDelayMs": 120,
+  "coldOpenEvaluateFrameMs": [
+    164.47849999999994,
+    173.89700000000005,
+    190.81539999999995
+  ],
+  "phases": {
+    "endToEndMs": {
+      "p50": 69.71320000000014,
+      "p95": 122.80639999999948,
+      "maximum": 149.1578000000004
+    },
+    "stateHttpMs": {
+      "p50": 4.377799999999979,
+      "p95": 7.241799999999785,
+      "maximum": 11.559500000000298
+    },
+    "stateClientMs": {
+      "p50": 5.988000000000284,
+      "p95": 10.086199999999735,
+      "maximum": 12.407200000000103
+    },
+    "firstFrameClientMs": {
+      "p50": 22.922300000000178,
+      "p95": 41.22369999999955,
+      "maximum": 44.8732
+    },
+    "frameHttpMs": {
+      "p50": 6.35360000000037,
+      "p95": 10.990400000000136,
+      "maximum": 15.346000000000004
+    }
+  },
+  "budgets": {
+    "endToEndMs": 120,
+    "stateHttpMs": 20,
+    "stateClientMs": 20,
+    "firstFrameClientMs": 50,
+    "frameHttpMs": 50
+  },
+  "roundP95": [
+    {
+      "endToEndMs": 120.21660000000065,
+      "stateHttpMs": 7.133200000000215,
+      "stateClientMs": 11.816599999999653,
+      "firstFrameClientMs": 41.22369999999955,
+      "frameHttpMs": 11.700700000000325
+    },
+    {
+      "endToEndMs": 130.95709999999963,
+      "stateHttpMs": 7.443200000000161,
+      "stateClientMs": 10.086199999999735,
+      "firstFrameClientMs": 42.583900000000085,
+      "frameHttpMs": 10.990400000000136
+    },
+    {
+      "endToEndMs": 125.04070000000002,
+      "stateHttpMs": 7.241799999999785,
+      "stateClientMs": 9.75799999999981,
+      "firstFrameClientMs": 35.05400000000009,
+      "frameHttpMs": 9.817600000000311
+    }
+  ],
+  "allRoundsPassed": false,
+  "aggregatePassed": false,
+  "sourceUnchanged": true,
+  "hostsStopped": true,
+  "publicWriteEnabled": false,
+  "limitations": "合成 region 的 HostClient 路径，不含 MCP stdio 编解码、浏览器呈现或真实美术角色负载，不替代两周观察和公开启用评审。"
+}

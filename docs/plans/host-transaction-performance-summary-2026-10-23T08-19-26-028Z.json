@@ -1,0 +1,73 @@
+{
+  "summarizedAt": "2026-10-23T08:19:26.029Z",
+  "files": [
+    "docs/plans/host-transaction-performance-2026-10-23T08-16-14-424Z.json",
+    "docs/plans/host-transaction-performance-2026-10-23T08-17-10-863Z.json",
+    "docs/plans/host-transaction-performance-2026-10-23T08-18-05-271Z.json"
+  ],
+  "scope": "合成关节和两个 region；真实 HostClient undo 包含重新求解、任务状态与 PNG；commit 包含候选、快照、授权、备份、journal 和新文件发布。独立统计 undo HTTP，不用它替代客户端完整耗时。不含 stdio 或浏览器呈现。",
+  "codeHashes": {
+    "src/hostClient.ts": "259b6c5683abc01a2a148fca14bc18d808404411ab9506b3c551dd373144a816",
+    "src/hostEditorStore.ts": "9e5db7d703edd0d367d7d71440baddbc5a847158ac2d1b8abc135ecd678aa76d",
+    "src/hostServer.ts": "112ae90fe7a3768983ca8a985e5910846a4b4c36bfb6551cd00bb440d1504815",
+    "src/hostDocumentStore.ts": "383ad7ad6f0a53064d1e431a64d1078f924df6962b51252816fa525c72f41272",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostJournal.ts": "b54575db1c51301f90407785bb2a02ca7ede520d7c8f372692a6d8186ab95dc1",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "workloadFingerprint": "25f2dde1bfdf4f4870b51bbabe4b0048495b7d939f2be1f5d1ebbb8fb0da297e",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor              "
+  },
+  "sampleCount": 90,
+  "warmupsPerRound": 2,
+  "interSampleDelayMs": 120,
+  "phases": {
+    "undoClientMs": {
+      "p50": 67.60800000000017,
+      "p95": 114.15560000000005,
+      "maximum": 134.7515000000003
+    },
+    "undoHttpMs": {
+      "p50": 6.320299999999406,
+      "p95": 13.789099999999962,
+      "maximum": 15.801499999999578
+    },
+    "commitClientMs": {
+      "p50": 105.24910000000091,
+      "p95": 172.78759999999966,
+      "maximum": 219.1195000000007
+    }
+  },
+  "budgets": {
+    "undoHttpMs": 50,
+    "undoClientMs": 120,
+    "commitClientMs": 200
+  },
+  "budgetBasis": "2026-10-23 用户确认拆分撤销事务 <50ms 与撤销至新图 <120ms；commit 保持 <200ms。",
+  "roundP95": [
+    {
+      "undoClientMs": 122.71569999999883,
+      "undoHttpMs": 14.522100000000137,
+      "commitClientMs": 126.10169999999925
+    },
+    {
+      "undoClientMs": 113.98110000000088,
+      "undoHttpMs": 13.789099999999962,
+      "commitClientMs": 175.89040000000023
+    },
+    {
+      "undoClientMs": 117.4872000000014,
+      "undoHttpMs": 12.636399999999412,
+      "commitClientMs": 172.78759999999966
+    }
+  ],
+  "allRoundsPassed": false,
+  "aggregatePassed": true,
+  "sourceUnchanged": true,
+  "hostsStopped": true,
+  "publicWriteEnabled": false
+}

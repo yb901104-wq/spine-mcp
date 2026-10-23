@@ -48,6 +48,10 @@ export interface ValidationPipelineOptions extends RuntimeValidationOptions {
   autoload?: boolean;
 }
 
+// 只有未选择文件的旧演示入口才使用演示动画；显式文件的省略参数表示不检查动画。
+const requestedAnimationFor = (args: { filePath?: string; animation?: string }) =>
+  args.animation ?? (args.filePath === undefined ? PREVIEW_DEFAULTS.defaultAnimation : undefined);
+
 export function getPreviewConfig(baseUrl?: string) {
   return {
     ok: true,
@@ -74,7 +78,8 @@ export function getPreviewUrl(options: PreviewUrlOptions = {}) {
   if (projectId) url.searchParams.set('projectId', projectId);
   url.searchParams.set("json", options.filePath ?? PREVIEW_DEFAULTS.defaultJson);
   url.searchParams.set("atlas", options.atlasPath ?? PREVIEW_DEFAULTS.defaultAtlas);
-  url.searchParams.set("animation", options.animation ?? PREVIEW_DEFAULTS.defaultAnimation);
+  const animation = requestedAnimationFor(options);
+  if (animation !== undefined) url.searchParams.set("animation", animation);
   if (options.skin) url.searchParams.set("skin", options.skin);
   url.searchParams.set("speed", String(options.speed ?? 1));
   url.searchParams.set("pma", String(options.premultipliedAlpha ?? PREVIEW_DEFAULTS.premultipliedAlpha));
@@ -117,9 +122,9 @@ export async function checkPreviewAssets(
     });
   }
 
-  const requestedAnimation = args.animation ?? PREVIEW_DEFAULTS.defaultAnimation;
+  const requestedAnimation = requestedAnimationFor(args);
   const issues: string[] = [];
-  if (!animations.includes(requestedAnimation)) issues.push(`动画 '${requestedAnimation}' 不存在。`);
+  if (requestedAnimation !== undefined && !animations.includes(requestedAnimation)) issues.push(`动画 '${requestedAnimation}' 不存在。`);
   if (atlasPages.length === 0) issues.push("Atlas 中没有识别到贴图页。");
   for (const image of imageChecks) {
     if (!image.exists) issues.push(`Atlas 引用的贴图不存在：${image.path}`);
@@ -130,11 +135,11 @@ export async function checkPreviewAssets(
     ok: issues.length === 0,
     filePath,
     atlasPath,
-    animation: requestedAnimation,
+    animation: requestedAnimation ?? null,
     version: document.json.skeleton?.spine ?? null,
     hash: document.hash,
     animationCount: animations.length,
-    animationExists: animations.includes(requestedAnimation),
+    animationExists: requestedAnimation === undefined ? null : animations.includes(requestedAnimation),
     atlas: {
       byteLength: atlasInfo.size,
       pageCount: atlasPages.length,
@@ -156,7 +161,7 @@ export async function validatePreviewRuntime(
 ) {
   const filePath = args.filePath ?? PREVIEW_DEFAULTS.defaultJson;
   const atlasPath = args.atlasPath ?? PREVIEW_DEFAULTS.defaultAtlas;
-  const requestedAnimation = args.animation ?? PREVIEW_DEFAULTS.defaultAnimation;
+  const requestedAnimation = requestedAnimationFor(args);
   const requestedSkin = args.skin;
   const issues: string[] = [];
 
@@ -195,7 +200,7 @@ export async function validatePreviewRuntime(
       ok: issues.length === 0,
       filePath,
       atlasPath,
-      animation: requestedAnimation,
+      animation: requestedAnimation ?? null,
       skin: requestedSkin ?? null,
       version,
       hash: document.hash,
@@ -238,7 +243,7 @@ export async function validatePreviewRuntime(
       ok: false,
       filePath,
       atlasPath,
-      animation: requestedAnimation,
+      animation: requestedAnimation ?? null,
       skin: requestedSkin ?? null,
       version,
       hash: document.hash,
@@ -262,7 +267,7 @@ export async function runValidationPipeline(
 ) {
   const filePath = args.filePath ?? PREVIEW_DEFAULTS.defaultJson;
   const atlasPath = args.atlasPath ?? PREVIEW_DEFAULTS.defaultAtlas;
-  const animation = args.animation ?? PREVIEW_DEFAULTS.defaultAnimation;
+  const animation = requestedAnimationFor(args);
   const document = await readSpineDocument(filePath, context);
   const structureValidation = validateSpineJson(document.json);
   const runtimeValidation = await validatePreviewRuntime({
@@ -302,7 +307,7 @@ export async function runValidationPipeline(
     },
   ];
   let visualPreview: any = null;
-  if (checks.every(check => check.ok) && args.preview !== false) {
+  if (checks.every(check => check.ok) && args.preview !== false && animation !== undefined) {
     try { visualPreview = await (await import('./previewRenderTools.js')).renderContactSheet({ filePath, atlasPath, animation, skin: args.skin, frames: 8 }, context); }
     catch (e) { visualPreview = { ok: false, error: String(e) }; }
     checks.push({ name: 'spine_render_contact_sheet', ok: visualPreview.ok, note: '固定相机 PNG 联系图供 Agent 视觉检查；不修改角色 JSON。' });
@@ -313,7 +318,7 @@ export async function runValidationPipeline(
     ok,
     filePath,
     atlasPath,
-    animation,
+    animation: animation ?? null,
     skin: args.skin ?? null,
     version: document.json.skeleton?.spine ?? null,
     hash: document.hash,

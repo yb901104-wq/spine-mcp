@@ -4,7 +4,7 @@ import path from 'node:path';
 import { TextureAtlas } from '@esotericsoftware/spine-core';
 import { loadProject, PROJECT_MANIFEST_PATH } from './projectModel.js';
 import { type ProjectManifest } from './projectSchema.js';
-import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { resolveWorkspacePath, resolveWorkspacePathAsync, type ToolContext } from './spineJson.js';
 import { readCommittedIndex } from './hostJournal.js';
 import { applyRenderSnapshot, REPLAY_SCHEMA_VERSION } from './renderSnapshot.js';
 import { createMotionRuntime, worldVertices } from './motionRuntime.js';
@@ -16,6 +16,8 @@ import type { WriterLease } from './writerOwnership.js';
 import { verifyWriter } from './writerOwnership.js';
 import { policyFingerprint } from './poseGraph.js';
 import { strictFileChecks } from './strictFileChecks.js';
+import { handTargetCapabilities, hostOperationReadiness } from './hostReadiness.js';
+import { HostEvaluationTasks } from './hostEvaluationTasks.js';
 
 export interface HostDocument {
   path: string; kind: DocumentKind; version: VersionRef; characterId: string | null;
@@ -35,6 +37,7 @@ export function editableValue(value: any) {
 }
 export class HostDocumentStore {
   readonly sessionId = randomUUID();
+  readonly evaluationTasks = new HostEvaluationTasks();
   project: Awaited<ReturnType<typeof loadProject>> | null = null;
   active: HostDocument | null = null;
   pinned: { version: VersionRef; fileHashAtPin: string; pinnedAt: string } | null = null;
@@ -42,6 +45,7 @@ export class HostDocumentStore {
   writeMode: 'observer' | 'attached' | 'frozen' = 'observer';
   frozen = false;
   protected queue: Promise<unknown> = Promise.resolve();
+  protected pendingOperations = 0;
   protected pngCache = new Map<string, Buffer>();
   protected events: Array<{ id: number; type: string; version: VersionRef | null; data: unknown }> = [];
   protected eventNumber = 0;
@@ -49,12 +53,17 @@ export class HostDocumentStore {
   onEvent?: (event: { id: number; type: string; version: VersionRef | null; data: unknown }) => void;
   constructor(public readonly context: ToolContext, public readonly mode: 'host' | 'mirror' = 'host') {}
   protected serial<T>(fn: () => Promise<T>): Promise<T> {
-    const result = this.queue.then(fn, fn); this.queue = result.catch(() => undefined); return result;
+    this.pendingOperations++;
+    const result = this.queue.then(fn, fn).finally(() => { this.pendingOperations--; });
+    this.queue = result.catch(() => undefined); return result;
   }
   protected emit(type: string, data: unknown = {}) {
     const event = { id: ++this.eventNumber, type, version: this.active?.version ?? null, data };
     this.events.push(event); if (this.events.length > 200) this.events.shift(); this.onEvent?.(event);
   }
+  /** 事件不携带控制凭据或任务租约。 */
+  onEvaluationTaskChanged() { this.emit('evaluation-task-updated'); }
+  onObservationChanged() { this.emit('observation-updated'); }
   eventHistory(after: number) {
     if (after && after < (this.events[0]?.id ?? 0) - 1) return [{ id: this.eventNumber, type: 'resync', version: this.active?.version ?? null, data: {} }];
     return this.events.filter(e => e.id > after);
@@ -63,14 +72,22 @@ export class HostDocumentStore {
     if (!this.active) throw new HostError('DOC_NOT_LOADED', '请先显式打开文档。', 409);
     return this.active;
   }
-  resolve(file: string) {
+  private validatePath(file: string) {
     if (typeof file !== 'string' || !file.trim() || file.includes('\0') || /[:\x00-\x1f]/.test(file) || path.win32.isAbsolute(file) || path.posix.isAbsolute(file) || file.replace(/\\/g, '/').split('/').includes('..')) throw new HostError('PATH_FORBIDDEN', '必须使用工作区内相对路径。', 403);
+  }
+  resolve(file: string) {
+    this.validatePath(file);
     try { return resolveWorkspacePath(file, this.context); }
+    catch (error) { throw new HostError('PATH_FORBIDDEN', `路径越过工作区或边界无法核实：${String(error)}`, 403); }
+  }
+  private async resolveForRead(file: string) {
+    this.validatePath(file);
+    try { return await resolveWorkspacePathAsync(file, this.context); }
     catch (error) { throw new HostError('PATH_FORBIDDEN', `路径越过工作区或边界无法核实：${String(error)}`, 403); }
   }
   protected async readJson(file: string) { return JSON.parse((await readFile(this.resolve(file), 'utf8')).replace(/^\uFEFF/, '')); }
   async assertFresh(document = this.requireDoc()) {
-    const checks=await strictFileChecks([{ filePath: document.path, hash: document.fileHash }, ...document.dependencies],file=>this.resolve(file));
+    const checks=await strictFileChecks([{ filePath: document.path, hash: document.fileHash }, ...document.dependencies],file=>this.resolveForRead(file));
     for (const dependency of checks) {
       if(dependency.error){this.invalidateDerived(document);throw new HostError('TARGET_STALE',`依赖缺失或不可读：${dependency.filePath}`,409);}
       if (dependency.actual !== dependency.hash) {
@@ -229,30 +246,25 @@ export class HostDocumentStore {
       numeric: doc?.derived?.numeric ?? { status: 'notRun' }, reference: doc?.derived?.comparison ?? { status: 'notRun' },
       agentVisual: doc?.review ? { status: doc.review.decision } : { status: 'notRun' }, editorImport: { status: 'notRun' },
       runtime: { player: '4.1.56', core: '4.1.56', replaySchema: REPLAY_SCHEMA_VERSION, versionDrift: false },
-      ...(includeCapabilities ? { capabilities: this.capabilities(stale) } : {}),
+      evaluationTasks: this.evaluationTasks.state(doc?.version ?? null),
+      ...(includeCapabilities ? { capabilities: this.capabilities(stale, 'strict') } : {}),
     };
   }
-  capabilities(stale = false) {
+  capabilities(stale = false, checked: 'fast' | 'strict' = 'fast') {
     const doc = this.active, mapping = doc?.mapping;
-    const operations = [
-      { operation: 'open', supported: true, canRun: true },
-      { operation: 'inspect', supported: true, canRun: true },
-      { operation: 'evaluate', supported: doc?.kind === 'pose', canRun: !!doc && doc.kind === 'pose' && !stale },
-      { operation: 'frame', supported: doc?.kind === 'pose', canRun: !!doc?.derived && !stale },
-      { operation: 'capture', supported: doc?.kind === 'pose', canRun: false, reason: '需要真实 player 摆帧与当前版本独立截图核验。' },
-      { operation: 'review', supported: doc?.kind === 'pose' && this.writeMode === 'attached', canRun: false, reason: '附着审查需要当前 player 证据；可记录退回，批准另需内容门禁。' },
-      { operation: 'patch', supported: this.writeMode === 'attached' && doc?.kind === 'pose', canRun: this.writeMode === 'attached' && !!this.pinned && !stale && !this.frozen },
-      { operation: 'commit', supported: this.writeMode === 'attached' && doc?.kind === 'pose', canRun: false, reason: '真实提交仍须精确候选与 MCP 一次性授权。' },
-    ];
+    const operations = hostOperationReadiness({ doc, mode: this.mode, writeMode: this.writeMode, managed: this.project?.mode === 'managed',
+      pinned: !!this.pinned && this.pinned.version.documentId === doc?.version.documentId && this.pinned.version.openEpoch === doc?.version.openEpoch,
+      stale, frozen: this.frozen, pendingOperations: this.pendingOperations, checked,
+      evaluationTasks: this.evaluationTasks.state(doc?.version ?? null).active });
     return {
       context: { projectId: this.context.projectId ?? null, characterId: doc?.characterId ?? null, version: doc?.version ?? null },
       characters:structuredClone(this.characterCatalog),
-      operations: operations.map(op => ({ ...op, schemaVersion: 1, checked: 'fast',observedAt:new Date().toISOString(), state: stale ? 'stale' : op.canRun ? 'ready' : op.supported ? 'blocked' : 'unsupported', reasons: op.canRun ? [] : [{ code: stale ? 'TARGET_STALE' : 'CAPABILITY_MISSING', message: (op as any).reason ?? '缺少活动文档、当前结果、pin 或开放的写入能力。' }], nextAction: { tool: null, instruction: '按原因补齐依赖；执行前仍需 strict 检查。' } })),
+      operations,
       character: {
         channels: mapping?.bones?.channels ?? {}, chains: Object.fromEntries(['leftArm','rightArm','leftLeg','rightLeg'].map(k => [k, mapping?.bones?.[k] ?? null])),
         anchors: mapping?.bones?.anchors ?? {}, mappingStatus: mapping?.status ?? 'unknown',
         viewProfiles: { status: 'unknown', message: '视角需 visualRig 当前指纹与切片证据独立确认。' },
-        handTargets: ['leftHand','rightHand'].map(role => ({ role, supported: !!mapping?.bones?.anchors?.[role], controlledFields: doc?.value.weapon ? ['x','y'] : [], coordinateSystem: 'normalizedSkeleton', angleUnit: 'degree' })),
+        handTargets: handTargetCapabilities(doc),
       },
     };
   }
@@ -260,7 +272,7 @@ export class HostDocumentStore {
     return this.serial(async () => {
       const doc = this.requireDoc(); assertVersion(expectedRevision, doc.version); await this.assertFresh(doc);
       return structuredClone({ version: doc.version, project: this.project, document: doc.value, kind: doc.kind,
-        path: doc.path, contentHash: doc.contentHash, dependencies: doc.dependencies, policyFingerprint, dependencyFingerprint: doc.dependencyFingerprint, snapshotHash: doc.snapshotHash, derived: doc.derived, derivedHash: doc.derivedHash });
+        path: doc.path, contentHash: doc.contentHash, dependencies: doc.dependencies, policyFingerprint, dependencyFingerprint: doc.dependencyFingerprint, snapshotHash: doc.snapshotHash, derived: doc.derived, derivedHash: doc.derivedHash, reviewHash: doc.reviewHash });
     });
   }
   async publishDerived(args: any) {

@@ -1,35 +1,28 @@
 #!/usr/bin/env node
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
-import { chmod, mkdir, open, readFile, unlink } from 'node:fs/promises';
-import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
+import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HostEditorStore } from './hostEditorStore.js';
 import { HostCapture } from './hostCapture.js';
-import { HostError, hostFailure, rejectFields } from './hostContracts.js';
+import { assertVersion, HostError, hostFailure, rejectFields } from './hostContracts.js';
 import { getRegisteredWorkspace, getWorkspaceRoot } from './workspaceTools.js';
 import type { ToolContext } from './spineJson.js';
+import { HostObservation } from './hostObservation.js';
+import { HostRollout } from './hostRollout.js';
+import { protectHostFile as protect } from './hostFileProtection.js';
 const installRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const secret=()=>randomBytes(32).toString('hex');
 const matches=(actual:unknown,expected:string)=>typeof actual==='string'&&actual.length===expected.length&&timingSafeEqual(Buffer.from(actual),Buffer.from(expected));
-async function protect(file:string){
-  try{
-    if(process.platform==='win32'){
-      const run=promisify(execFile),who=await run('whoami',['/user','/fo','csv','/nh'],{windowsHide:true});
-      const sid=who.stdout.match(/S-1-[0-9-]+/)?.[0];if(!sid)return false;
-      await run('icacls',[file,'/inheritance:r','/grant:r',`*${sid}:(F)`],{windowsHide:true});
-    }else await chmod(file,0o600);
-    return true;
-  }catch{return false;}
-}
 async function persist(file:string,value:unknown){
   await mkdir(path.dirname(file),{recursive:true});const handle=await open(file,'wx',0o600);
   try{await handle.writeFile(JSON.stringify(value,null,2)+'\n');await handle.sync();}finally{await handle.close();}
 }
 export async function startHostServer(context:ToolContext,options:{port?:number;persist?:boolean;writeEnabled?:boolean;captureTimeoutMs?:number}={}){
   const store=new HostEditorStore(context),capture=new HostCapture(store,options.captureTimeoutMs);
+  const observation=new HostObservation(store,context,protect),rollout=new HostRollout(store,context,protect);
+  observation.onChanged=()=>store.onObservationChanged();
   const token=secret(),control=secret(),instanceId=randomUUID(),startedAt=new Date().toISOString();
   let controlProtected=options.persist===false,securityMode:'acl'|'token-only'='token-only',closing=false,stopPromise:Promise<void>|null=null;
   const streams=new Set<ServerResponse>();let frames:number[]=[];
@@ -37,6 +30,7 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
   const json=(response:ServerResponse,status:number,value:unknown)=>{response.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});response.end(JSON.stringify(value));};
   const server=createServer(async(request,response)=>{
     const base=`http://127.0.0.1:${(server.address() as any)?.port}`;
+    response.once('finish',()=>{try{observation.noteRequest(request.method??'GET',new URL(request.url??'/',base).pathname,response.statusCode);}catch{}});
     try{
       if(request.headers.host!==new URL(base).host)throw new HostError('PATH_FORBIDDEN','Host 头必须精确匹配本机服务。',403);
       const url=new URL(request.url??'/',base);
@@ -54,16 +48,16 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
       }
       if(!matches(request.headers['x-spine-host-token'],token))throw new HostError('AUTH_REQUIRED','缺少有效会话 token。',403);
       if(url.searchParams.has('projectId')&&url.searchParams.get('projectId')!==context.projectId)throw new HostError('PROJECT_BINDING_CONFLICT','当前 Host 不属于请求工程。',409);
-      const controlRoute=['/api/snapshot','/api/derived','/api/review','/api/authorize'].includes(url.pathname);
+      const controlRoute=['/api/snapshot','/api/derived','/api/review','/api/authorize','/api/evaluation-task','/api/observation','/api/rollout-disable'].includes(url.pathname);
       const isControl=controlProtected&&matches(request.headers['x-spine-host-control'],control);
       if(controlRoute&&!isControl)throw new HostError('CONTROL_REQUIRED','该端点仅允许受保护的 MCP 控制通道。',403);
       if(request.method==='GET'){
         if(url.pathname==='/api/state'||url.pathname==='/api/capabilities'){
           const state={...await store.state(url.pathname==='/api/capabilities'||url.searchParams.get('includeCapabilities')!=='false'),instanceId,startedAt,security:{mode:securityMode,controlProtected},preview:pageState,
-            rollout:{writeRequested:process.env.SPINE_HOST_WRITE==='1',writeEnabled:store.writeMode==='attached',message:'公开写入仍受 B 稳定观察与截图分层验收约束；默认观察模式。'}};
+            rollout:rollout.status(),observation:observation.status()};
           for(const operation of state.capabilities?.operations??[]){
-            if(operation.operation==='capture'&&store.active?.derived?.live){operation.canRun=pageState.visibilityState==='visible'&&Date.now()-Date.parse(pageState.lastSeenAt??'')<3000;operation.state=operation.canRun?'ready':'blocked';operation.reasons=operation.canRun?[]:[{code:'CAPTURE_TIMEOUT',message:'需要可见且正在上报心跳的 player 页面。'}];operation.nextAction={tool:operation.canRun?'spine_preview_capture':null,instruction:'截图准入由 captureValidity 与当前版本核验；rendererParity 单独记录，动作仍须视觉审查。'};}
-            if(['evaluate','review'].includes(operation.operation)&&!controlProtected){operation.canRun=false;operation.state='blocked';operation.reasons=[{code:'CONTROL_REQUIRED',message:'控制凭据文件保护未通过，不能发布求解或审查结果。'}];}
+            if(operation.operation==='capture'&&operation.supported&&operation.state==='blocked'&&operation.reasons.some((reason:any)=>reason.code==='CAPTURE_TIMEOUT')&&store.active?.derived?.live){operation.canRun=pageState.visibilityState==='visible'&&Date.now()-Date.parse(pageState.lastSeenAt??'')<3000;operation.state=operation.canRun?'ready':'blocked';operation.reasons=operation.canRun?[]:[{code:'CAPTURE_TIMEOUT',message:'需要可见且正在上报心跳的 player 页面。'}];operation.nextAction={tool:operation.canRun?'spine_preview_capture':null,instruction:'截图准入由 captureValidity 与当前版本核验；rendererParity 单独记录，动作仍须视觉审查。'};}
+            if(['evaluate','review'].includes(operation.operation)&&operation.supported&&!['stale','busy','frozen'].includes(operation.state)&&!controlProtected){operation.canRun=false;operation.state='blocked';operation.reasons=[{code:'CONTROL_REQUIRED',message:'控制凭据文件保护未通过，不能发布求解或审查结果。'}];}
           }
           json(response,200,url.pathname==='/api/state'?state:state.capabilities);return;
         }
@@ -93,6 +87,27 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
       for(const key of ['dryRun','reload'])if(args[key]!==undefined&&typeof args[key]!=='boolean')throw new HostError('INVALID_ARGUMENT',`${key} 必须是布尔值。`);
       let result:any;
       switch(url.pathname){
+        case '/api/observation':
+          rejectFields(args,['action']);
+          if(args.action==='start')result=await observation.start();
+          else if(args.action==='stop')result=await observation.stop();
+          else throw new HostError('INVALID_ARGUMENT','观察操作只能为 start 或 stop。');
+          break;
+        case '/api/rollout-disable':rejectFields(args,[]);result=await rollout.disable();break;
+        case '/api/evaluation-task': {
+          if(args.action==='begin') {
+            rejectFields(args,['action','taskId','leaseKey','expectedRevision']);
+            if(!store.active)throw new HostError('DOC_NOT_LOADED','登记求解任务前先打开文档。',409);
+            assertVersion(args.expectedRevision,store.active.version);
+            if(store.active.kind!=='pose')throw new HostError('UNSUPPORTED_DOC_KIND','外部求解任务当前仅支持 pose。',409);
+            result=store.evaluationTasks.begin(args.taskId,args.leaseKey,args.expectedRevision);
+          }else if(args.action==='heartbeat') {
+            rejectFields(args,['action','taskId','leaseKey','stage']);result=store.evaluationTasks.heartbeat(args.taskId,args.leaseKey,args.stage);
+          }else if(args.action==='finish') {
+            rejectFields(args,['action','taskId','leaseKey','outcome','stage']);result=store.evaluationTasks.finish(args.taskId,args.leaseKey,args.outcome,args.stage);
+          }else throw new HostError('INVALID_ARGUMENT','任务操作只能是 begin、heartbeat 或 finish。');
+          store.onEvaluationTaskChanged();break;
+        }
         case '/api/open':rejectFields(args,['manifestPath','path','reload','expectedRevision']);result=await store.open(args);break;
         case '/api/snapshot':rejectFields(args,['expectedRevision']);result=await store.snapshot(args.expectedRevision);break;
         case '/api/derived':rejectFields(args,['expectedRevision','snapshotHash','dependencyFingerprint','result']);result=await store.publishDerived(args);break;
@@ -112,7 +127,7 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
       json(response,200,result);
     }catch(error:any){if(!response.headersSent)json(response,error instanceof HostError?error.status:400,hostFailure(error));else response.end();}
   });
-  store.onEvent=event=>{for(const response of streams)response.write(`id: ${event.id}\nevent: ${event.type}\ndata: ${JSON.stringify(event)}\n\n`);};
+  store.onEvent=event=>{observation.noteEvent(event.type);for(const response of streams)response.write(`id: ${event.id}\nevent: ${event.type}\ndata: ${JSON.stringify(event)}\n\n`);};
   capture.onRequest=task=>{for(const response of streams)response.write(`event: capture-request\ndata: ${JSON.stringify(task)}\n\n`);};
   // Windows 的自动端口分配可能返回 Fetch 禁用的低端口；选浏览器可访问的高端口并处理竞争。
   for(let attempt=0;;attempt++){
@@ -131,18 +146,22 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
   }
   // 仅程序内隔离测试可提前验证 C 机械约束；公开进程不绕过两周/分层证据启用验收。
   if(options.writeEnabled)await store.enableWriting();
+  else if(process.env.SPINE_HOST_WRITE==='1'&&process.env.SPINE_HOST_ROLLOUT_APPROVAL)await rollout.enableFromApproval(process.env.SPINE_HOST_ROLLOUT_APPROVAL);
   function stop():Promise<void>{
     if(stopPromise)return stopPromise;closing=true;
     stopPromise=(async()=>{
+      let observationError:unknown;
+      try{await observation.stop('host-shutdown');}catch(error){observationError=error;}
       capture.close();await store.shutdown();
       for(const response of streams)response.end();streams.clear();
       await new Promise<void>(resolve=>server.close(()=>resolve()));
       if(options.persist!==false){
         for(const file of [portFile,controlFile])try{const record=JSON.parse(await readFile(file,'utf8'));if(record.instanceId===instanceId)await unlink(file);}catch(error:any){if(error.code!=='ENOENT')throw error;}
       }
+      if(observationError)throw observationError;
     })();return stopPromise;
   }
-  return{server,store,capture,endpoint,token,control,instanceId,stop};
+  return{server,store,capture,observation,rollout,endpoint,token,control,instanceId,stop};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const root=getWorkspaceRoot(process.env.SPINE_HOST_PROJECT_ID),record=getRegisteredWorkspace(root,process.env.SPINE_HOST_PROJECT_ID);

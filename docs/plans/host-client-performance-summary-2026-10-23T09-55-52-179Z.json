@@ -1,0 +1,110 @@
+{
+  "summarizedAt": "2026-10-23T09:55:52.178Z",
+  "files": [
+    "docs/plans/host-client-performance-2026-10-23T09-54-02-621Z.json",
+    "docs/plans/host-client-performance-2026-10-23T09-54-54-552Z.json",
+    "docs/plans/host-client-performance-2026-10-23T09-55-29-071Z.json"
+  ],
+  "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+  "frameMeasurement": "firstFrameClientMs 为 patch 内首次新版本 PNG 的 RPC 完整读取；frameHttpMs 为随后相同版本的缓存读取。样本间隔在所有计时之外，保留每秒 20 次截图限流。",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+    "logicalCores": 12
+  },
+  "renderer": "canvas-region-msaa4-v4",
+  "codeHashes": {
+    "src/hostClient.ts": "259b6c5683abc01a2a148fca14bc18d808404411ab9506b3c551dd373144a816",
+    "src/hostServer.ts": "044cfd5baecff02b046fa67e31f50ce6fdb565e5cd85ec9de5c5148cdd5330bc",
+    "src/hostDocumentStore.ts": "a8ecc2868094d6b31d5051dbc67ad5bff4f26faaf396af64003916d46a241f18",
+    "src/hostEditorStore.ts": "b9ac9126c43dc4dfa5f95ce15c18ed6b319d6c131182ff8f980fa7cd8a6a8c2b",
+    "src/hostObservation.ts": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8",
+    "src/hostObservationCatalog.ts": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b",
+    "src/hostReleaseEvidence.ts": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13",
+    "src/hostFileProtection.ts": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc",
+    "src/hostRollout.ts": "fb2d52908df5d55d1a45412f2a3244606f545532ed772a55670c5a3c6dd37dea",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostReadiness.ts": "5e837f372f1a45026e0dd4625ffe339553916cc4a472c0ab0f65b074ba413751",
+    "src/hostJournal.ts": "a79131f90c8bdeedceba0e112b5fe799a8dc279a2575f0081ed985f3c729f9c9",
+    "src/spineJson.ts": "f21c9ca5c193cad7c3bf70d1cc363e5930cb58c835026630cc1cd2a14f879af6",
+    "src/strictFileChecks.ts": "f9674a5d52d1139871bd4a8d4956cf1fa3043985d3ebc3b63b3634290e7f5aea",
+    "src/hostEvaluator.ts": "de90023f339bc12f14797a54037b9256ff405118d2c860467d8aff3413c9f063",
+    "src/rasterRenderer.ts": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d",
+    "test/helpers/hostFixture.ts": "edd62d01540be30c93d1c33ef9d962267313c39c2d81b1246e7cd50543c9410f",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "workloadFingerprint": "f90bd696cc5e85f02a6633ba75a6464023e60bb24987f65a35bcdc1501e519ef",
+  "sampleCount": 90,
+  "warmupsPerRound": 2,
+  "interSampleDelayMs": 120,
+  "coldOpenEvaluateFrameMs": [
+    141.80899999999997,
+    181.64779999999996,
+    136.2532
+  ],
+  "phases": {
+    "endToEndMs": {
+      "p50": 53.03189999999995,
+      "p95": 114.20420000000013,
+      "maximum": 183.2766999999999
+    },
+    "stateHttpMs": {
+      "p50": 2.738900000000285,
+      "p95": 4.83809999999994,
+      "maximum": 8.25909999999999
+    },
+    "stateClientMs": {
+      "p50": 4.210799999999836,
+      "p95": 7.688600000000406,
+      "maximum": 11.136400000000094
+    },
+    "firstFrameClientMs": {
+      "p50": 17.6882999999998,
+      "p95": 36.53539999999998,
+      "maximum": 43.409599999999955
+    },
+    "frameHttpMs": {
+      "p50": 2.7979999999997744,
+      "p95": 5.313900000000103,
+      "maximum": 8.184400000000096
+    }
+  },
+  "budgets": {
+    "endToEndMs": 120,
+    "stateHttpMs": 20,
+    "stateClientMs": 20,
+    "firstFrameClientMs": 50,
+    "frameHttpMs": 50
+  },
+  "roundP95": [
+    {
+      "endToEndMs": 120.49839999999995,
+      "stateHttpMs": 4.292300000000068,
+      "stateClientMs": 7.688600000000406,
+      "firstFrameClientMs": 28.53939999999966,
+      "frameHttpMs": 7.47899999999936
+    },
+    {
+      "endToEndMs": 114.20420000000013,
+      "stateHttpMs": 4.83809999999994,
+      "stateClientMs": 7.200200000000223,
+      "firstFrameClientMs": 37.25879999999961,
+      "frameHttpMs": 5.313900000000103
+    },
+    {
+      "endToEndMs": 92.55909999999994,
+      "stateHttpMs": 7.209500000000389,
+      "stateClientMs": 9.183599999999842,
+      "firstFrameClientMs": 31.19399999999996,
+      "frameHttpMs": 5.294200000000274
+    }
+  ],
+  "allRoundsPassed": false,
+  "aggregatePassed": true,
+  "sourceUnchanged": true,
+  "hostsStopped": true,
+  "publicWriteEnabled": false,
+  "limitations": "合成 region 的 HostClient 路径，不含 MCP stdio 编解码、浏览器呈现或真实美术角色负载，不替代两周观察和公开启用评审。"
+}

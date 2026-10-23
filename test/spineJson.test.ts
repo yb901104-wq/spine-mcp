@@ -59,6 +59,7 @@ import {
 } from "../src/motionEngine.js";
 import { fitCubicBezierTimeline, solveTwoBoneIK } from "../src/motionMath.js";
 import { calibrateMapping, confirmMapping, createMappingDraft } from "../src/mappingTools.js";
+import { withPreviewValidationFixture } from './helpers/previewValidationFixture.js';
 
 const workspaceRoot = process.cwd();
 const outputDir = path.join(workspaceRoot, "test-output");
@@ -768,6 +769,41 @@ test("runtime validation reports missing requested animation", async () => {
   });
   assert.equal(result.ok, false);
   assert.ok(result.issues.some((issue) => issue.includes("missing-animation")));
+});
+
+test("显式选择其他角色时省略动画只校验资源和皮肤，不注入示例动画", async () => {
+  await withPreviewValidationFixture(async (context, args) => {
+  const before = (await readSpineDocument(args.filePath, context)).hash;
+  const assets = await checkPreviewAssets(args, context);
+  assert.equal(assets.ok, true);
+  assert.equal(assets.animation, null);
+  assert.equal(assets.animationExists, null);
+  const runtime = await validatePreviewRuntime(args, context);
+  assert.equal(runtime.ok, true);
+  assert.equal(runtime.animation, null);
+  const pipeline = await runValidationPipeline(args, context);
+  assert.equal(pipeline.ok, true);
+  assert.equal(pipeline.animation, null);
+  assert.equal(pipeline.visualPreview, null);
+  assert.equal(pipeline.checks.some(check => check.name === 'spine_render_contact_sheet'), false);
+  assert.equal(new URL(pipeline.previewUrl.url).searchParams.has('animation'), false);
+  const missing = await validatePreviewRuntime({ ...args, animation: "missing-animation" }, context);
+  assert.equal(missing.ok, false);
+  assert.ok(missing.issues.some(issue => issue.includes('missing-animation')));
+  const unknownSkin = await validatePreviewRuntime({ ...args, skin: "missing-skin" }, context);
+  assert.equal(unknownSkin.ok, false);
+  assert.ok(unknownSkin.issues.some(issue => issue.includes('missing-skin')));
+  assert.equal((await readSpineDocument(args.filePath, context)).hash, before);
+  assert.equal(new URL(getPreviewUrl().url).searchParams.get('animation'), 'walktest2');
+  });
+});
+
+test("无动画资源可以单独通过 runtime 与资源校验，显式空动画仍拒绝", async () => {
+  await withPreviewValidationFixture(async (context, args) => {
+    assert.equal((await validatePreviewRuntime(args, context)).ok, true);
+    assert.equal((await runValidationPipeline(args, context)).ok, true);
+    assert.equal((await checkPreviewAssets({ ...args, animation: "" }, context)).ok, false);
+  }, {});
 });
 
 test("validation pipeline combines structure, runtime, and preview URL checks", async () => {

@@ -1,5 +1,25 @@
 # MCP 操作清单
 
+2026-10-23 长期观察与启停：工具仍为 101 个，不新增 MCP 批准/启用工具。`spine_preview_state` 附带 `observation`（运行、次数、间隔、错误）和 `rollout`（意图、实际状态、范围、原因），不暴露私钥或控制凭据。私有 `POST /api/observation` 仅接受 start/stop，`POST /api/rollout-disable` 收束事务并撤销审批；均需原 control/Origin/JSON 门禁，无 HTTP enable。生产启动需开关加有效人工审批，目前继续观察。见 [操作说明](Host长期观察与启用流程.md)。
+
+本轮构建和 160/160 回归、真实桌面 28 项通过。新增采样在用户指定的 npc1 已验收站姿隔离工程运行，输入不变、无 Writer；编辑性能有一轮 120.50ms 超预算，未满足全部退出条件。[最新证据索引](plans/host-c1-observation-implementation-20261023.json)。
+
+2026-10-23 前一轮 C1 技术基线：内部严格依赖和 journal 路径核验改为原生异步调度，仍逐文件核对真实边界及字节哈希；工具数量 101、参数 schema、C1 单手白名单和默认 dryRun 不变。该轮完整 154 项回归、编辑/事务各三轮性能及真实桌面 28 项均通过。见 [历史证据索引](plans/host-c1-technical-closeout-20261023.json)。
+
+2026-10-23 事务收尾：工具数量仍为 101。Host 内部快照补充当前 `reviewHash`，与候选完整版本共同绑定提交授权；旧 Host 缺此字段明确拒绝，需重启匹配源码。编辑/撤销返回状态与 PNG 时交叉核对完整版本；只读准备失败会先收束其它读取，授权与发布不并发。详见 [安全提交流程](安全提交流程.md)；不新增公开工具或扩大 C1 可写白名单。
+
+## Host readiness 续验（2026-10-23）
+
+`spine_preview_state{includeCapabilities:true}` 与 `/api/capabilities` 仍使用同一数据源；新增 undo/redo 的 readiness 条目，没有新增 MCP 工具。未打开文档的 inspect 明确 blocked/DOC_NOT_LOADED；依赖漂移不再把显式 open 统一标 stale；写入冻结、Host 串行事务 busy、缺 pin、缺当前结果、缺 player 证据和缺一次性授权分别给出原因。查询完成严格依赖字节检查时标 `checked:strict`，直接读取缓存能力仍标 fast。
+
+手目标返回 availableFields、controlledFields、gripPoint 是否存在及是否为当前持杖姿态必需；缺项附具体 mapping 字段路径。这里只描述声明与前置条件，`source.verification:unknown` 不伪装成语义校准通过。busy 已进一步覆盖更新后 MCP evaluate 链路，未登记计算不自动推断；不提供无依据的 retryAfterMs。ready 不签发批准或提交授权，公开写入仍关闭。
+
+`spine_preview_state` 另返回 `evaluationTasks.active/recent`，完整版本绑定任务状态、阶段及心跳时间，不返回任务租约或 control。当前显式重算与 patch/undo/redo 后的 MCP 求解会自动登记：每 5 秒续期、15 秒失联为 unresponsive，失败/取消通过独立 finally 清理。`/api/evaluation-task` 为受保护内部观察端点，新增 SSE evaluation-task-updated，没有新增公开 MCP 工具。终态回执不明与已发布结果分别报告；旧 Host 端点不匹配明确拒绝，需重启更新进程。
+
+## 显式文件的可选动画语义（2026-10-22）
+
+`spine_preview_check_assets`、`spine_runtime_validate`、`spine_run_validation_pipeline` 在显式指定 `filePath`、省略 `animation` 时只校验资源、适用皮肤和结构，不继承旧示例动画 `walktest2`。结果为 `animation:null`；资源检查的 `animationExists:null` 表示未请求动画检查，不表示动画不存在。流水线不生成动画联系图，`visualPreview:null`；`spine_preview_get_url` 不注入动画查询参数。明确提供不存在的动画、空字符串或不存在的皮肤仍拒绝，未选择文件的旧演示入口保持原演示默认。对应预览 HTTP 三条校验路由遵循相同规则，没有新增工具或资产写入。
+
 ## Host 入口与当前开放范围（2026-10-21）
 
 新增以下 10 个入口，当前共 101 个 MCP 工具。工程初始化、观察、镜像与截图已接入；C1 已在真实 npc1 无参考站姿的隔离工程完成单手编辑、独立视觉审查、保存和重开复验，生产 Host 保持观察模式。**接口已注册不代表阶段通过或写入已开放**。完整状态见 [实施与验收](Host实施与验收-20261021.md)，契约仍以 [主工单](plans/host-evolution.md) 为准。

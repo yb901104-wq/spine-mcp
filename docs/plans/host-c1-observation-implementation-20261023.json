@@ -1,0 +1,166 @@
+{
+  "recordedAt": "2026-10-23T10:02:16.083Z",
+  "stage": "C1",
+  "sourceVersion": "0.2.0",
+  "scope": "长期观察采集/汇总、限定 C1 人工审批与启动校验、排空事务安全关闭；npc1 已验收站姿隔离工程试运行。",
+  "implementationTestsPassed": true,
+  "technicalAcceptancePassed": false,
+  "publicEnablementReady": false,
+  "twoWeekWindowSatisfied": false,
+  "publicWriteEnabled": false,
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 160,
+    "pass": 160,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 29468.2395
+  },
+  "coverage": [
+    "真实 HTTP/control 隔离和 CLI",
+    "真实编译版 Host 不接受手填通过标志",
+    "源码/编译版构建身份隔离",
+    "签名链、索引、会话删除/截断、时钟与假两周拒绝",
+    "审批范围、工程、构建、有效期与验收字节绑定",
+    "私钥保护失败不写密钥、错误不泄露密钥",
+    "关闭排空已开始事务，阻止新写，撤销后拒绝重用",
+    "撤销落盘失败冻结且保留 Writer"
+  ],
+  "clientPerformance": {
+    "report": "host-client-performance-summary-2026-10-23T09-55-52-179Z.json",
+    "sampleCount": 90,
+    "allRoundsPassed": false,
+    "aggregatePassed": true,
+    "phases": {
+      "endToEndMs": {
+        "p50": 53.03189999999995,
+        "p95": 114.20420000000013,
+        "maximum": 183.2766999999999
+      },
+      "stateHttpMs": {
+        "p50": 2.738900000000285,
+        "p95": 4.83809999999994,
+        "maximum": 8.25909999999999
+      },
+      "stateClientMs": {
+        "p50": 4.210799999999836,
+        "p95": 7.688600000000406,
+        "maximum": 11.136400000000094
+      },
+      "firstFrameClientMs": {
+        "p50": 17.6882999999998,
+        "p95": 36.53539999999998,
+        "maximum": 43.409599999999955
+      },
+      "frameHttpMs": {
+        "p50": 2.7979999999997744,
+        "p95": 5.313900000000103,
+        "maximum": 8.184400000000096
+      }
+    },
+    "roundP95": [
+      {
+        "endToEndMs": 120.49839999999995,
+        "stateHttpMs": 4.292300000000068,
+        "stateClientMs": 7.688600000000406,
+        "firstFrameClientMs": 28.53939999999966,
+        "frameHttpMs": 7.47899999999936
+      },
+      {
+        "endToEndMs": 114.20420000000013,
+        "stateHttpMs": 4.83809999999994,
+        "stateClientMs": 7.200200000000223,
+        "firstFrameClientMs": 37.25879999999961,
+        "frameHttpMs": 5.313900000000103
+      },
+      {
+        "endToEndMs": 92.55909999999994,
+        "stateHttpMs": 7.209500000000389,
+        "stateClientMs": 9.183599999999842,
+        "firstFrameClientMs": 31.19399999999996,
+        "frameHttpMs": 5.294200000000274
+      }
+    ],
+    "budgets": {
+      "endToEndMs": 120,
+      "stateHttpMs": 20,
+      "stateClientMs": 20,
+      "firstFrameClientMs": 50,
+      "frameHttpMs": 50
+    },
+    "observationCollection": "未启动采集的合成隔离 attached 机械负载；不外推实际美术或采集运行中的负载"
+  },
+  "transactions": {
+    "report": "host-transaction-performance-summary-2026-10-23T09-58-20-924Z.json",
+    "sampleCount": 90,
+    "allRoundsPassed": true,
+    "aggregatePassed": true,
+    "phases": {
+      "undoClientMs": {
+        "p50": 47.49399999999969,
+        "p95": 74.14140000000043,
+        "maximum": 107.75300000000061
+      },
+      "undoHttpMs": {
+        "p50": 4.455899999999019,
+        "p95": 7.51299999999992,
+        "maximum": 12.234800000000178
+      },
+      "commitClientMs": {
+        "p50": 70.57710000000043,
+        "p95": 105.2475000000004,
+        "maximum": 148.76920000000064
+      }
+    },
+    "budgets": {
+      "undoHttpMs": 50,
+      "undoClientMs": 120,
+      "commitClientMs": 200
+    }
+  },
+  "desktop": {
+    "report": "host-winforms-2026-10-23T09-53-17-726Z.json",
+    "passed": true,
+    "checks": 28,
+    "captureP95Ms": 383.35070000000087,
+    "reloadP95Ms": 105.6549,
+    "redundantFrames": 0,
+    "allInputsUnchanged": true,
+    "savedPoseReverified": true,
+    "reconnectPixelsIdentical": true,
+    "screenshotViewed": true,
+    "observationLabelVisible": true,
+    "newVisualApproval": false
+  },
+  "trial": {
+    "report": "host-observation-trial-verification-2026-10-23T10-01-14-582Z.json",
+    "startedReport": "host-observation-trial-2026-10-23T09-58-26-407Z.json",
+    "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+    "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+    "samplesAtVerification": 3,
+    "monitoredMs": 120116.35190000001,
+    "errors": [],
+    "running": true,
+    "writeMode": "observer",
+    "writerAbsent": true,
+    "allInputsUnchanged": true,
+    "signedReport": ".spine-mcp/observation/reports/d85c4ec4-cb3a-4b20-816e-2201a81842fa.json",
+    "lifecycle": "真实定时器已自动采样，当前会话仍运行；此报告是初始检查，不是两周或充分使用覆盖验收。未设置自动重启或 Agent 定时通知。"
+  },
+  "remaining": [
+    "编辑性能首轮 P95 120.4984ms 超过 120ms；总体通过不能替代逐轮通过，需进一步收敛",
+    "真实稳定观察至少两周、充分使用覆盖和误报/间断评审",
+    "人工启用评审及有效审批后的实际限定启用；当前尚未批准或执行"
+  ],
+  "limitations": [
+    "签名为本机完整性与构建/工程绑定，不提供外部可信时间",
+    "正向两周与审批仅有临时协议测试夹具，不是实际验收",
+    "未发布便携包，未扩展 C2，不涉及攻击动作批准或编辑器导入",
+    "旧性能报告与失败轮次保留，不覆盖历史"
+  ]
+}

@@ -22,6 +22,7 @@ export class HostEditorStore extends HostDocumentStore {
   private authorizations = new Map<string, Authorization>();
   private captureRecords = new Map<string, { manifestPath: string; manifestHash: string }>();
   private lastCapture: any = null;
+  private writeDraining = false;
   override async state(includeCapabilities = true): Promise<any> {
     const state = await super.state(includeCapabilities), capture = this.lastCapture;
     if(this.active?.review){
@@ -30,7 +31,7 @@ export class HostEditorStore extends HostDocumentStore {
     }
     const currentCapture=capture && !state.targetStale && objectHash(capture.version) === objectHash(state.version) && capture.derivedHash === state.derivedHash ? structuredClone(capture) : null;
     const operation=state.capabilities?.operations.find((op:any)=>op.operation==='review');
-    if(operation?.supported&&currentCapture?.evidenceEligible&&!this.frozen){
+    if(operation?.supported&&operation.reasons.some((reason:any)=>reason.code==='CAPTURE_UNVERIFIED')&&currentCapture?.evidenceEligible&&!this.frozen){
       operation.canRun=true;operation.state='ready';operation.reasons=[];operation.nextAction={tool:'spine_review_pose',instruction:'携带当前完整版本与 player manifest；默认只预演，可记录退回，批准仍须全部内容门禁。'};
     }
     return { ...state, capture:currentCapture };
@@ -59,7 +60,23 @@ export class HostEditorStore extends HostDocumentStore {
   fault?: (point: 'journal' | 'backup' | 'publish' | 'afterPublish' | 'committed') => void;
   async enableWriting() {
     if (this.mode !== 'host') throw new HostError('WRITE_FORBIDDEN', '镜像模式不能取得 Host 写入权。', 409);
+    if (this.writer || this.frozen) throw new HostError('WRITE_OWNERSHIP_UNCERTAIN', '已有写入权或冻结状态，不能重复启用。', 409);
     this.writer = await acquireWriter(this.context, 'attached'); this.writeMode = 'attached'; this.frozen = false;
+    this.writeDraining = false;
+  }
+  /** 立即拒绝新写操作，等待已开始事务及 journal 落盘，再记录撤销并释放排他权。 */
+  async disableWriting(beforeRelease?: () => Promise<void>) {
+    this.writeDraining = true;
+    return this.serial(async () => {
+      if (this.frozen) throw new HostError('WRITE_OWNERSHIP_UNCERTAIN', '冻结状态不能当作已安全释放，须先恢复裁决。', 409);
+      try {
+        await beforeRelease?.();
+        if (this.writer) { await releaseWriter(this.writer, this.context); this.writer = null; }
+        this.authorizations.clear(); this.pinned = null; this.writeMode = 'observer';
+        this.emit('write-mode-changed', { writeMode: 'observer' });
+        return { ok: true, writeMode: 'observer' };
+      } catch (error) { this.frozen = true; this.writeMode = 'frozen'; throw error; }
+    });
   }
   async shutdown() {
     await this.serial(async () => {
@@ -72,6 +89,7 @@ export class HostEditorStore extends HostDocumentStore {
   }
   private async writable(expectedRevision: VersionRef) {
     const doc = this.requireDoc(); assertVersion(expectedRevision, doc.version);
+    if (this.writeDraining) throw new HostError('WRITE_FORBIDDEN', '正在收束写入并退回观察模式，拒绝新写操作。', 409);
     if (this.project?.mode !== 'managed') throw new HostError('PROJECT_MANIFEST_REQUIRED', '编辑前必须初始化并打开受管工程。', 409);
     if (this.frozen || !this.writer) throw new HostError(this.frozen ? 'WRITE_OWNERSHIP_UNCERTAIN' : 'WRITE_FORBIDDEN', '当前没有已确认的 Host 排他写入权。', 409);
     try { await verifyWriter(this.writer, this.context); }

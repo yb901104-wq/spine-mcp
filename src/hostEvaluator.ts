@@ -7,7 +7,7 @@ import { policyFingerprint } from './poseGraph.js';
 import { comparePoseData } from './referenceRetarget.js';
 import { presentationTimelines } from './posePresentation.js';
 import { createMotionRuntime, worldVertices } from './motionRuntime.js';
-import { resolveWorkspacePath, validateOfficialAnimationSpec, validateSpineJson, type ToolContext } from './spineJson.js';
+import { resolveWorkspacePath, resolveWorkspacePathAsync, validateOfficialAnimationSpec, validateSpineJson, type ToolContext } from './spineJson.js';
 import { derivedFingerprint, HostError, strictHash } from './hostContracts.js';
 import { materializeHostPose } from './hostPose.js';
 import { strictFileChecks } from './strictFileChecks.js';
@@ -15,7 +15,7 @@ import { strictFileChecks } from './strictFileChecks.js';
 const cancelled = (signal?: AbortSignal) => { if (signal?.aborted) throw new HostError('TASK_CANCELLED', '重算已取消，已确认的编辑版本仍保留。', 409); };
 export async function verifySnapshotDependencies(snapshot: any, context: ToolContext) {
   if(snapshot.policyFingerprint!==policyFingerprint)throw new HostError('TARGET_DRIFT','Host 与 MCP 的比较策略不一致。',409);
-  const checks=await strictFileChecks(snapshot.dependencies,file=>resolveWorkspacePath(file,context));
+  const checks=await strictFileChecks(snapshot.dependencies,file=>resolveWorkspacePathAsync(file,context));
   for(const dependency of checks){if(dependency.error)throw dependency.error;if(dependency.actual!==dependency.hash)throw new HostError('TARGET_DRIFT',`计算依赖发生变化：${dependency.filePath}`,409);}
 }
 /** MCP 使用不可变内存姿态；只读取严格匹配的角色依赖，不重读活动姿态路径。 */
