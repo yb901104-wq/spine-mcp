@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "request": "可靠刚性轮廓和误差圆优先；遮挡退回普通两点连线并给可用结果",
+  "observationPolicyVersion": 2,
+  "build": {
+    "command": "npm run build",
+    "status": "passed",
+    "compiled": {
+      "referenceParts": "6f786c445fb3dcf0c4a1762ec8ed18cd01818dc127056ebd3c318a76918c7ea3",
+      "referencePose": "6bb9a80113ec71b331349ccd93c306a67211dde1fcb6deaec557c6e6e5bf634a",
+      "poseGraph": "b9c5874b5b1665d48bf4871b018d318f77ad6b1bf5bd89d40d8cfeb5cd312cb2",
+      "referencePoseRefinement": "98f1462578e539265539522a494a1952b04a974cba45ef0ee1bfa10808791204",
+      "server": "442c5e5e0f306874b707b31e8c5ff7298a03116b50c690dbd1d2bb3ea5fa5741"
+    }
+  },
+  "source": {
+    "referenceParts": "66987b41e1517578fe5d7be042e3bbef21d804c1bd013a37ae810f0bbc19a9cd",
+    "referencePose": "56ed5e468ba1066e598a9012680a5334c0148b83844cb02ac9fe68bdff94b362",
+    "poseGraph": "b2f0f15dcc3f94f43afd8f5e200d22580a0e4a3b38ab4229cdc9710ab001e10b",
+    "referencePoseRefinement": "2ea73f8fe4c5ba6c04d20e8955ec485f3c63ba3d20fbcfd2f52252ec2ee437bf",
+    "server": "707c7539356615b502da5d94441c946a351cc1c3f0c57071616720931ad5fa8a"
+  },
+  "sourceFingerprint": "8738a22845c6d226b093158e8e314dee1374a21687b6a6a73e2060f9ae03bd0d",
+  "regression": {
+    "command": "npm test",
+    "total": 213,
+    "passed": 213,
+    "failed": 0,
+    "durationMs": 36981.0996,
+    "logPath": ".codex-temp/reference-fallback-regression.log",
+    "logHash": "8d5f27f05bfacae7ef5da9a4df253a4e84c92ba3c157ba5a1cb9889eeb3098df"
+  },
+  "verification": {
+    "path": "docs/plans/reference-fallback-20261025.json",
+    "hash": "7c41047703fdc227da701221495dbd66fc631fba50e87c96c7fa806cf056f6e6",
+    "mcpCalls": 1,
+    "parts": [
+      {
+        "id": "leftArm.0",
+        "method": "twoPoint",
+        "directionDegrees": 45,
+        "reliability": "estimated",
+        "uncertaintyKnown": false
+      },
+      {
+        "id": "leftArm.1",
+        "method": "twoPoint",
+        "directionDegrees": -18.43494882292201,
+        "reliability": "estimated",
+        "uncertaintyKnown": false
+      }
+    ],
+    "sourceInputsUnchanged": true,
+    "referenceUnchanged": true
+  },
+  "review": "parts 图和批准绑定策略 v2，不继承旧批准；原动作、身份、支撑与提交门禁保持",
+  "assessment": "docs/MCP差距逐项复查与收尾方向-20261025.md",
+  "assessmentStatus": "逐项方向已记录，G01–G14 未据此宣布施工完成",
+  "toolCount": 102,
+  "productionEnabled": false,
+  "animationProduced": false,
+  "priorPilotRecord": "docs/plans/host-perspective-implementation-20261025.json"
+}

@@ -1,0 +1,399 @@
+{
+  "at": "2026-10-23T19:58:38.883Z",
+  "localDate": "2026-10-24",
+  "stage": "C2-4c 完整动画审查及源事务工程接入",
+  "previousStages": [
+    "host-c2-assets-20261024.json",
+    "host-c2-animation-candidate-20261024.json",
+    "host-c2-animation-transaction-20261024.json"
+  ],
+  "measurementScopeCorrection": {
+    "file": "docs/plans/host-real-animation-performance-2026-10-23T19-53-48-556Z.json",
+    "field": "scope",
+    "explanation": "该轮候选经过实际 stdio，包含其编解码；state/frame 仍测 HostClient，不含 state/frame 的 stdio。原 scope 前半沿用同进程模板的“不含 stdio”不适用于候选，原报告及数值保留，脚本文案已修正，不为挑选结果重跑。"
+  },
+  "developmentCandidateHash": "8d96c0d71f2ae35f0ea4c3b4b0a63568a6abe2426de6ba46924236a81887c844",
+  "codeHashes": {
+    "src/server.ts": "91e209762b0b0e7ed5a36f81c776abc9860fed255328ddc2403932fcf297fa97",
+    "src/hostClient.ts": "8d50f110511d05708dfb4baa1cb386546b538ce6f4c299eb81d30f3c9a378031",
+    "src/hostEditorStore.ts": "7d13d934affcb359654527a9f17eb249ec44535dd1eb7693ad611af6c2f9ebba",
+    "src/hostDocumentStore.ts": "77e2438867c3d602c480b90e5eb01b2e0cad267c4537cc63e251da95927dfd0e",
+    "src/hostServer.ts": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd",
+    "src/hostTools.ts": "eb44d7bede2d04925d550b48665b07d87757f3dd82a4c0bba9fbe2ed5d16d43c",
+    "src/hostJournal.ts": "6cdf2be0156b70250b14214508e2d9274af81b3fe5435a280e0b365961500d0e",
+    "src/hostAnimationCandidate.ts": "b3a931889875bb52fb9fa2ed1d83342e24331e91c5f8c99021cca0b221640a6d",
+    "src/hostAnimationEvaluator.ts": "225c2792c77d97e7f359ef3d20e3665af819f3e5c325f2f183d3f8452e944f5e",
+    "src/hostAnimationBundle.ts": "12c87d75923208b1dde822ad56d2788a29cfa6f5eb548f697d78eae8cdcb96d2",
+    "src/hostAnimationSession.ts": "01ab6c97698f0f26f52a7f803a011cbf0f391490c34aac794f20a880c16b19f3",
+    "src/hostAnimationReview.ts": "441ceefb1110e4a0f8b874d84b2ac40a6b130799b71c6049c0eae0c63129730b",
+    "src/hostAnimationCommit.ts": "086aa854455f66b136d295a4b8bf84ef36cc9ce0807536e2eb87766f036a85c3",
+    "src/hostAnimationMapping.ts": "b88c6be65722608ebeedf930d4a04277d753f17a9d3fb078e2bce85ba0d045e9",
+    "src/retargetEngine.ts": "2c0f6db666b3e86d1a39d79713550abb89e8303ee2b1e405d3b118f1bc834c9f",
+    "src/spineJson.ts": "c21cc43527076a6302224234108fcff326a8a416b0bce739a32d56cc89e65a1e",
+    "src/animationCommands.ts": "785cd3bfb2cb4a3438395c1cd1ef1dba1146a757b85a7986eb71f6bdb34b37be",
+    "test/hostAnimationCandidate.test.ts": "faa205c5fb2b3daadfd0bd1f352e5def2b0ad24b48d9fe0c7db77de178b06811",
+    "test/hostCapture.test.ts": "05331dadaecb90126a18b0de834976fce53eb4420095647e31efb9f14255fe7f",
+    "scripts/acceptance-winforms-host.ts": "4981ed812e0ff8920ca191b3d546703ced275839aa60902a2e3374a082e47627",
+    "scripts/benchmark-host-animation.ts": "74c5ebe12c0b942cf81211ef00c0193c8edc8a4f9323956d5406eeca682d00a2",
+    "scripts/benchmark-host-real-animation.ts": "ef17ad1b953b99a30819320bf81f595f4796c01be7fdbd11186a78faa208c3af"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 198,
+    "pass": 198,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 30718.6586,
+    "outputHash": "d1188fbd7a789eb566309dd34b494ca859004fc9b71eaf29abf5fd13d1ee6d46"
+  },
+  "publicToolCount": 101,
+  "implementation": [
+    "精确拟合与完整数值/runtime 复核共用算法，只支持当前同名受管 v2 motion 和 4.1.24；所有显式关键时刻均采样。",
+    "准备令牌绑定完整报告、原速 GIF、全部姿态图及精确候选，不是视觉批准或提交授权。",
+    "附着完整动画审查须当前 player 和五项独立理由；有参考时保留上下同步比较、原参考节点及关键时间关系门禁。",
+    "显式 animation pin 与精确候选/源哈希/批准令牌，MCP 复验后一次性授权；Host fsync 来源备份及原子替换单动画。",
+    "覆盖不删除只读 events/deform/约束/未知 timeline；其它动画和源结构不改。motion/mapping/校准报告保留原字节，后续只认可已提交且备份/哈希可核验的动画来源链。",
+    "全局 requestId 幂等，备份失败/最终漂移不替换，发布后未知冻结并按日志与实际字节恢复。提交后新 motion revision、旧派生/截图/批准清空。",
+    "状态独立只读核验并发收束；同次证据路径去重，不跨调用缓存；首次真实请求缺授权先拒绝，终态查询始终在前。"
+  ],
+  "focused": {
+    "tests": 9,
+    "file": "test/hostAnimationCandidate.test.ts",
+    "scope": "实际公开 stdio 的准备→当前截图→审查→pin→源提交与重试；模拟页面仅协议，另覆盖各门禁与故障恢复。"
+  },
+  "native": {
+    "synthetic": {
+      "file": "docs/plans/host-winforms-2026-10-23T19-45-46-267Z.json",
+      "checks": 29,
+      "sourceTransaction": true,
+      "visualArtAcceptance": false
+    },
+    "npc1": {
+      "file": "docs/plans/host-winforms-2026-10-23T19-46-36-278Z.json",
+      "checks": 29,
+      "allInputsUnchanged": true,
+      "numericSamples": 337,
+      "maxFootError": 0.000003282680399906429,
+      "maxHandError": 7.876992504685152e-7,
+      "completeNewMotionAccepted": false,
+      "sourceTransaction": false
+    },
+    "visualArtifacts": {
+      "synthetic": [
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\host-workspace.png",
+          "hash": "9f7c4555e306d357710319ccec321ba923f5860ea92bf8c7c90b8a913921096c"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\initial-player.png",
+          "hash": "f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\restored-player.png",
+          "hash": "f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\committed-source.json",
+          "hash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\source-backup.json",
+          "hash": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6"
+        }
+      ],
+      "npc1": [
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\host-workspace.png",
+          "hash": "c29775d2338877451bc553b955b815fe79fc6ff5bb831125fae1ed7ab872a3f5"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\initial-player.png",
+          "hash": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83"
+        },
+        {
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\restored-player.png",
+          "hash": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83"
+        }
+      ]
+    },
+    "inspection": "已查看两个 region 合成干净图和真实 npc1 站姿干净 player；不作新完整动作或第二角色验收。",
+    "dotnetBuild": {
+      "exitCode": 0,
+      "warnings": [
+        "既有 WindowsBase 版本冲突 MSB3277"
+      ]
+    }
+  },
+  "performance": {
+    "animation": {
+      "file": "docs/plans/host-animation-performance-2026-10-23T19-43-37-884Z.json",
+      "hash": "55e30ada0d0bf89f3be0b8eb029699ef7f8793817f1f81a7966249fca7a91bfa",
+      "phases": {
+        "candidateClientMs": {
+          "p50": 347.7272000000012,
+          "p95": 475.7339000000011,
+          "maximum": 481.6715999999942
+        },
+        "stateClientMs": {
+          "p50": 9.306100000001607,
+          "p95": 13.164400000001478,
+          "maximum": 24.509600000001228
+        },
+        "frameClientMs": {
+          "p50": 13.924999999999272,
+          "p95": 21.652600000001257,
+          "maximum": 30.357899999999063
+        },
+        "commitClientMs": {
+          "p50": 133.80799999999726,
+          "p95": 198.2089000000051,
+          "maximum": 215.21579999999813
+        }
+      },
+      "budgets": {
+        "stateClientMs": 20,
+        "frameClientMs": 50,
+        "commitClientMs": 200
+      },
+      "budgetsPassed": true,
+      "samples": 30,
+      "scope": "合成关节与两个 region，0.3 秒两个已批准同姿态关键帧。每次独立工作区；实际 HostClient、MCP 数值门禁、完整产物/证据哈希、一次性授权、fsync 备份/journal/原子替换，不含 stdio 或真实浏览器。模拟 player 不作为视觉验收。",
+      "diagnostic": false
+    },
+    "edit": {
+      "file": "docs/plans/host-client-performance-summary-2026-10-23T19-50-09-329Z.json",
+      "hash": "34c55cfaa2df228b9beaf1abbc85d16f22da900afcc9a6a7f49705eabdbdc4a3",
+      "phases": {
+        "endToEndMs": {
+          "p50": 49.78729999999996,
+          "p95": 82.49039999999991,
+          "maximum": 119.92370000000005
+        },
+        "stateHttpMs": {
+          "p50": 2.63340000000062,
+          "p95": 5.14180000000033,
+          "maximum": 8.542099999999891
+        },
+        "stateClientMs": {
+          "p50": 4.162199999999757,
+          "p95": 10.52430000000004,
+          "maximum": 17.807600000000093
+        },
+        "firstFrameClientMs": {
+          "p50": 17.025699999999688,
+          "p95": 32.71569999999974,
+          "maximum": 39.04220000000009
+        },
+        "frameHttpMs": {
+          "p50": 2.679300000000694,
+          "p95": 6.039200000000164,
+          "maximum": 12.203600000000279
+        }
+      },
+      "budgets": {
+        "endToEndMs": 120,
+        "stateHttpMs": 20,
+        "stateClientMs": 20,
+        "firstFrameClientMs": 50,
+        "frameHttpMs": 50
+      },
+      "budgetsPassed": true,
+      "samples": 90,
+      "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+      "diagnostic": false
+    },
+    "transaction": {
+      "file": "docs/plans/host-transaction-performance-2026-10-23T19-52-23-249Z.json",
+      "hash": "eb7723cafe2ae21db3f9f4b634d4d74c987242852014266f62201b45b355e337",
+      "phases": {
+        "undoClientMs": {
+          "p50": 47.04500000000007,
+          "p95": 57.26510000000053,
+          "maximum": 92.48620000000028
+        },
+        "undoHttpMs": {
+          "p50": 4.311899999998786,
+          "p95": 6.505900000000111,
+          "maximum": 6.588399999999638
+        },
+        "commitClientMs": {
+          "p50": 68.39910000000054,
+          "p95": 119.21009999999978,
+          "maximum": 131.47600000000057
+        }
+      },
+      "budgets": {
+        "undoHttpMs": 50,
+        "undoClientMs": 120,
+        "commitClientMs": 200
+      },
+      "budgetsPassed": true,
+      "samples": 30,
+      "scope": "合成关节和两个 region；真实 HostClient undo 包含重新求解、任务状态与 PNG；commit 包含候选、快照、授权、备份、journal 和新文件发布。独立统计 undo HTTP，不用它替代客户端完整耗时。不含 stdio 或浏览器呈现。",
+      "diagnostic": false
+    },
+    "realInProcess": {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-47-18-538Z.json",
+      "hash": "ce0f19ffd89a9870e26ab20dd752a2244156dd33899b4f80d942c64ab530a4d9",
+      "phases": {
+        "candidateClientMs": {
+          "p50": 747.3411000000015,
+          "p95": 916.8487999999998,
+          "maximum": 954.1174000000001
+        },
+        "stateClientMs": {
+          "p50": 10.019400000001042,
+          "p95": 20.147299999999632,
+          "maximum": 23.022000000000844
+        },
+        "frameClientMs": {
+          "p50": 23.919800000000123,
+          "p95": 32.84389999999985,
+          "maximum": 47.675100000000384
+        }
+      },
+      "budgets": {
+        "stateClientMs": 20,
+        "frameClientMs": 50
+      },
+      "budgetsPassed": false,
+      "samples": 30,
+      "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 HostClient 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；不含 stdio/真实浏览器耗时，不新增动作批准或源写入，不等于完整新动作交付。",
+      "diagnostic": false
+    },
+    "realStdio": {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-53-48-556Z.json",
+      "hash": "470dd04f5e2d1bd13865f9d9bc47d187f1b29237d0dd39d74207f87557890c71",
+      "phases": {
+        "candidateClientMs": {
+          "p50": 777.1924000000035,
+          "p95": 908.8955000000005,
+          "maximum": 951.1211000000003
+        },
+        "stateClientMs": {
+          "p50": 15.812399999998888,
+          "p95": 28.51629999999932,
+          "maximum": 30.193599999998696
+        },
+        "frameClientMs": {
+          "p50": 24.91609999999855,
+          "p95": 45.68000000000029,
+          "maximum": 57.62029999999868
+        }
+      },
+      "budgets": {
+        "stateClientMs": 20,
+        "frameClientMs": 50
+      },
+      "budgetsPassed": false,
+      "samples": 30,
+      "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 HostClient 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；不含 stdio/真实浏览器耗时，不新增动作批准或源写入，不等于完整新动作交付。 本轮候选通过独立编译版 MCP stdio 子进程计算，Host 与求解分进程；测试 Writer 仅用于附着路由，不提交源文件。state/frame 仍按 HostClient 实测，不含其 stdio 编解码。",
+      "diagnostic": false
+    },
+    "diagnostic": {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-50-52-323Z.json",
+      "hash": "3ebc5fc67fbe4088142463a17ad83754ab062fd325ec7826ed76cfcd60908da3",
+      "phases": {
+        "candidateClientMs": {
+          "p50": 773.7151000000003,
+          "p95": 909.1731999999993,
+          "maximum": 925.8417999999983
+        },
+        "stateClientMs": {
+          "p50": 12.063799999999901,
+          "p95": 31.90190000000075,
+          "maximum": 44.630199999999604
+        },
+        "frameClientMs": {
+          "p50": 23.613600000000588,
+          "p95": 37.85139999999956,
+          "maximum": 38.35919999999987
+        }
+      },
+      "budgets": {
+        "stateClientMs": 20,
+        "frameClientMs": 50
+      },
+      "budgetsPassed": false,
+      "samples": 30,
+      "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 HostClient 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；不含 stdio/真实浏览器耗时，不新增动作批准或源写入，不等于完整新动作交付。",
+      "diagnostic": true
+    }
+  },
+  "diagnostic": {
+    "formalAcceptance": false,
+    "stateSlowSamples": 3,
+    "slowSamplesOverlappingGc": 3,
+    "maximumObservedGcMs": 21.34189999103546,
+    "conclusion": "诊断慢样本均有 GC 重叠，只能证明贡献，不能认定唯一根因；独立 MCP stdio 正式轮仍超预算，不以进程分离掩盖失败。"
+  },
+  "retainedFailures": [
+    {
+      "file": "docs/plans/host-animation-performance-2026-10-23T19-36-37-024Z.json",
+      "reason": "state 24.56ms、commit 216.31ms 超预算。"
+    },
+    {
+      "file": "docs/plans/host-animation-performance-2026-10-23T19-39-07-448Z.json",
+      "reason": "提交降至181.20ms，state25.38ms仍超预算。"
+    },
+    {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-47-18-538Z.json",
+      "reason": "实际 npc1 同进程 state P95 20.1473ms >20ms。"
+    },
+    {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-53-48-556Z.json",
+      "reason": "实际分进程/stdio 候选后 HostClient state P95 28.5163ms >20ms；frame45.68ms <50ms。"
+    },
+    {
+      "logHash": "2602b491adc1ffb53cd83dc8280cc60bedbc749b912132b15efd4d6862eadc93",
+      "tests": 197,
+      "pass": 196,
+      "fail": 1,
+      "reason": "切换打开周期主动注销旧截图，旧测试仍只期待较后的版本错误；改断言为旧截图未登记，拒绝门禁未放宽。"
+    },
+    {
+      "file": "docs/plans/host-winforms-2026-10-23T19-27-44-206Z.json",
+      "reason": "合成准备时旧 detached review 与测试 Writer 冲突；调整先准备再获取 Writer。"
+    },
+    {
+      "file": "docs/plans/host-winforms-2026-10-23T19-28-13-144Z.json",
+      "reason": "测试准备修改姿态后未显式 reload；补显式重载。"
+    },
+    {
+      "file": "docs/plans/host-winforms-2026-10-23T19-35-22-189Z.json",
+      "reason": "真实角色已有 idle，正确拒绝隐式覆盖；改用新固定站姿观察名称，不覆盖已有动画。"
+    }
+  ],
+  "c1Observation": {
+    "file": "docs/plans/host-observation-frozen-verification-2026-10-23T19-26-40-979Z.json",
+    "frozenCandidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+    "samples": 445,
+    "inputFilesUnchanged": 32,
+    "writerAbsent": true,
+    "twoWeekSatisfied": false,
+    "knownInterruptionRetained": true
+  },
+  "engineeringC24cImplemented": true,
+  "wholeC24cAccepted": false,
+  "wholeC2Accepted": false,
+  "wholeEvolutionAccepted": false,
+  "productionProfile": "c1",
+  "publicC2Switch": false,
+  "publicWriteEnabled": false,
+  "portableUpdated": false,
+  "editorImportPassed": false,
+  "excludedCharacter": "exp/xiaoren",
+  "remaining": [
+    "实际 npc1 资源 state <20ms 性能仍须定位和收敛，保留全部失败轮次，不能挑较低 P95 宣称全通过。",
+    "完整真实动作的逐姿态/完整动画视觉及参考门禁；npc1 攻击准备仍未通过，固定站姿观察不替代。",
+    "提供第二完整真实角色目录及 Spine 编辑器可执行路径，完成独立角色及编辑器导入。",
+    "C1 实际两周观察/充分使用覆盖、已知未知退出处理和人工启用评审；新构建不能继承冻结候选证据。",
+    "D 只在 C 稳定四周、真实调用量和分项瓶颈满足原条件时启动 spike，当前不搬迁。"
+  ],
+  "note": "工程链路完成不等于整工单验收；不得用合成夹具、固定站姿或性能总体值替代缺失的真实交付与逐项门禁。"
+}

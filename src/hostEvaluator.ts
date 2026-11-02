@@ -1,3 +1,4 @@
+import { isDiagnosticPerspective } from './perspective.js';
 import { mkdir, open, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { solvePoseData } from './poseWorkflow.js';
@@ -11,6 +12,7 @@ import { resolveWorkspacePath, resolveWorkspacePathAsync, validateOfficialAnimat
 import { derivedFingerprint, HostError, strictHash } from './hostContracts.js';
 import { materializeHostPose } from './hostPose.js';
 import { strictFileChecks } from './strictFileChecks.js';
+import { evaluateAnimationSnapshot } from './hostAnimationEvaluator.js';
 
 const cancelled = (signal?: AbortSignal) => { if (signal?.aborted) throw new HostError('TASK_CANCELLED', '重算已取消，已确认的编辑版本仍保留。', 409); };
 export async function verifySnapshotDependencies(snapshot: any, context: ToolContext) {
@@ -21,7 +23,7 @@ export async function verifySnapshotDependencies(snapshot: any, context: ToolCon
 /** MCP 使用不可变内存姿态；只读取严格匹配的角色依赖，不重读活动姿态路径。 */
 export async function evaluateHostSnapshot(snapshot: any, context: ToolContext, signal?: AbortSignal, progress?: (stage: string) => void) {
   cancelled(signal); await verifySnapshotDependencies(snapshot, context); progress?.('准备角色依赖');
-  if (snapshot.kind !== 'pose') throw new HostError('UNSUPPORTED_DOC_KIND', '当前内存求解桥仅支持 pose。');
+  if (snapshot.kind !== 'pose') return evaluateAnimationSnapshot(snapshot, context, () => verifySnapshotDependencies(snapshot, context), signal, progress);
   const p = structuredClone(snapshot.document), solved = await solvePoseData(p, context);
   cancelled(signal); progress?.('回读 runtime 实际节点');
   const proof = await poseDependencies(p, context);
@@ -36,11 +38,12 @@ export async function evaluateHostSnapshot(snapshot: any, context: ToolContext, 
     bones: solved.bones, numeric: solved.report, frame: solved.frame,
     actualNodes: solved.report.visualNodes ?? solved.report.joints,
     comparison, inputFingerprint: poseInputHash(p), poseDependencyFingerprint: proof.dependencyFingerprint,
-    diagnosticOnly: !solved.report.ok || comparison?.ok === false,
+    diagnosticOnly: isDiagnosticPerspective(p.frame) || !solved.report.ok || comparison?.ok === false,
   };
   // player 只读不可变导出动画；不生成或覆盖角色源资产。
   const live = structuredClone(solved.doc.json), animation = '__host_pose', bones: any = {};
   for (const [name, value] of Object.entries(solved.bones) as any) bones[name] = {
+    ...(value.scale?{scale:[{...value.scale},{time:1,...value.scale}]}:{}),
     rotate: [{ value: value.rotate ?? 0 }, { time: 1, value: value.rotate ?? 0 }],
     translate: [{ x: value.translate?.x ?? 0, y: value.translate?.y ?? 0 }, { time: 1, x: value.translate?.x ?? 0, y: value.translate?.y ?? 0 }],
   };

@@ -9,7 +9,10 @@ export type PoseIssue={category:'inputMissing'|'identityConflict'|'calibrationMi
 class PoseSequenceError extends Error{constructor(message:string,public issues:PoseIssue[]){super(message);}}
 export const poseIssuesFromError=(e:any,stageId?:string):PoseIssue[]=>e.issues??[{category:'inputMissing',stageId,message:String(e)}];
 export async function validatePoseSequence(a:any,c:ToolContext={}){
- const sequence=await readJson(a.sequencePath,c),issues:PoseIssue[]=[],add=(category:PoseIssue['category'],message:string,stageId?:string)=>issues.push({category,message,stageId});
+ return validatePoseSequenceData(await readJson(a.sequencePath,c),a,c);
+}
+export async function validatePoseSequenceData(sequence:any,a:any,c:ToolContext={}){
+ const issues:PoseIssue[]=[],add=(category:PoseIssue['category'],message:string,stageId?:string)=>issues.push({category,message,stageId});
  if(sequence.version!==1||!sequence.id?.trim()||!sequence.basis?.trim()||!sequence.confirmedBy?.trim()||!sequence.confirmedAt||!Array.isArray(sequence.stages)||!sequence.stages.length||sequence.stages.length>60)throw new Error('动作对应记录需 version:1、id、basis、confirmedBy/At、1–60 个 stages。');
  validateCorrespondence(sequence.correspondence);
  const rig=await requireVisualRig(sequence.visualRigPath,c);

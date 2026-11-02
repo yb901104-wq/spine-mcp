@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T06:41:55.100Z",
+  "scope": "CU-1 参考准备及持续修订续建；非全单关闭或完整作品批准。",
+  "toolCount": 111,
+  "build": {
+    "name": "spine-json-mcp",
+    "version": "0.2.0",
+    "kind": "compiled",
+    "buildFingerprint": "6695c9126aa5f1ae19e484c3a819a7505e5315f19db39909d19b99a428ffb363",
+    "moduleCount": 95
+  },
+  "sourceHashes": [
+    {
+      "path": "src/creationReference.ts",
+      "hash": "710d53b1892fc12cb79736be8fdbdce4ce1667422492233bb8685fad176faec0"
+    },
+    {
+      "path": "src/creationTasks.ts",
+      "hash": "19a1701274ca77b3ba2ffb82517766689f4f65b8005401c41e1fffc767ca36c5"
+    },
+    {
+      "path": "src/creationQuality.ts",
+      "hash": "ea8f58e7bb16d1fbbb43068e53eeb32c22964f79723c43c39c4cdaed18a924d2"
+    },
+    {
+      "path": "src/poseSequence.ts",
+      "hash": "3d4ce2d92688e8de2949fb52f2e57e1c566c9d522608a054ebdda163754aee9b"
+    },
+    {
+      "path": "src/toolCatalog.ts",
+      "hash": "a4210c5a28cb38a744d4fae2eca66ef058c595dee2b023d2e1a437c7580d42d3"
+    },
+    {
+      "path": "src/server.ts",
+      "hash": "541332037148a56e78b344925566d88112d5934460808c1a8f9f231d84d25ff9"
+    },
+    {
+      "path": "test/creationWorkflow.test.ts",
+      "hash": "79d06d809769f99116f3a00b601f316ccf9b68e00c5ca531aa4400531907904d"
+    },
+    {
+      "path": "test/creationControls.test.ts",
+      "hash": "1ac079f1e6bf51fc569685cff823f8eaddb556829ccb260f010ab3480a9fbd37"
+    },
+    {
+      "path": "test/visualRig.test.ts",
+      "hash": "046b9b3c714b1ecd7848f8c9dad7e4acd5005ff16a5681de31fa43e9775dcc2d"
+    },
+    {
+      "path": "scripts/acceptance-creation-reference.mjs",
+      "hash": "e84e7bb8b1f97d2f6afd03bd6e710b498c17edde14d37f8c47e3a980cd34957f"
+    },
+    {
+      "path": "scripts/acceptance-creation-workflow.mjs",
+      "hash": "150105c3eb4faffc7c6439442a8cd189a3a34db789c9d3cb35bbebe7d6394589"
+    },
+    {
+      "path": "scripts/acceptance-creation-recovery.mjs",
+      "hash": "e679befb35dfec48a0ad49d8f6640000f466043cc30cf1c9efd91283a0253c48"
+    }
+  ],
+  "evidence": [
+    {
+      "kind": "preparation",
+      "path": "docs/plans/creation-reference-2026-10-26T06-37-31-681Z.json",
+      "hash": "66b00b734c6335d26ed60e92fcd56dda8426935bf965cb6c2f978b3e6cd4ab1f"
+    },
+    {
+      "kind": "workflow",
+      "path": "docs/plans/creation-usability-trial-2026-10-26T06-37-37-079Z.json",
+      "hash": "8184c747ec81d7859624c794cff3e48a7e5fd4cf8296c91122b86d41e90d4594"
+    },
+    {
+      "kind": "recovery",
+      "path": "docs/plans/creation-recovery-2026-10-26T06-40-08-741Z.json",
+      "hash": "5f401527bbd74437e72d52248f9ef293e0c256c8b6adb8d2a65fe8c2fc13127c"
+    }
+  ],
+  "validation": {
+    "build": "passed",
+    "tests": {
+      "total": 223,
+      "passed": 223,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 43368.4358,
+      "logHash": "2d9cc39488e137f8897c401ea34648177865bc4f4fde9e9aa0b2f2953d526f04"
+    },
+    "scriptSyntax": "passed",
+    "diffWhitespace": "passed"
+  },
+  "preparation": {
+    "passed": true,
+    "gif": {
+      "manifestPath": "output/reports/reference-frames/reference-manifest.json",
+      "frameCount": 171,
+      "duration": 5.88,
+      "sourceHash": "97b71b934e13a022b47bf6f97d5a0961e660cfb1803cc0a3ca79a34eb2090960",
+      "loop": false
+    },
+    "sequence": {
+      "path": "reference/body-created.sequence.json",
+      "fingerprint": "543b4a5f16a5b382edb7c0070c75b05354451803c0e2d8162a122ed926f1ce4f",
+      "approvedAnimation": false
+    },
+    "onboarding": {
+      "taskId": "85c2112b-f873-4d35-985b-eae09598b31d",
+      "projectId": "creation-b4ca16f5-45df-410a-98db-40758089ad2c",
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-reference-trials\\2026-10-26T06-37-31-681Z\\prepared-reference"
+    },
+    "originalManifestUnchanged": true,
+    "inputsUnchanged": true,
+    "noHostWriterJournal": true,
+    "newAnnotationReviewPerformed": false
+  },
+  "workflow": {
+    "closedLoop": true,
+    "savedRevisionSelection": {
+      "passed": true,
+      "path": "trial/creation-2026-10-26T06-37-37-079Z.pose.json",
+      "version": {
+        "sessionId": "73f9931b-8f4e-4dbd-bc15-6e3c128edcfe",
+        "documentId": "61fb92297deecbe1bd5406a98582db3702134131cb7c4a751daac628dda0b495",
+        "openEpoch": "d349e99d-1d88-4034-92ac-74f85ae5075a",
+        "revision": 0
+      }
+    },
+    "savedRevisionCopy": {
+      "taskId": "1e681273-f23a-478d-857b-63946160af69",
+      "projectId": "creation-f7d57285-5696-4947-8989-27d68cb3e2d5",
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T06-37-37-079Z\\isolated\\saved-revision"
+    },
+    "otherPoseFamilyDenied": true,
+    "inputsUnchanged": true,
+    "hostStopped": true,
+    "writerReleased": true,
+    "failedReferenceCommitDenied": true
+  },
+  "recovery": {
+    "passed": true,
+    "hostStopped": true,
+    "writerReleased": true
+  },
+  "measurement": {
+    "referencePreparation": {
+      "calls": 12,
+      "toolDurationMs": 36324.208099999996,
+      "textBytes": 44161,
+      "returnedImages": 0,
+      "tokens": null
+    },
+    "creationWorkflow": {
+      "calls": 26,
+      "toolDurationMs": 6470.4625,
+      "textBytes": 861070,
+      "returnedImages": 8,
+      "tokens": null
+    },
+    "summary": {
+      "sameVersion": true,
+      "fullTextBytes": 230376,
+      "summaryTextBytes": 22448
+    },
+    "scope": "分开的冻结试用；不将准备与执行混为同一次任务，不当作 attached/detached 或三轮 P95。调用时长不含模型推理，实际 token 未取得。"
+  },
+  "reference": {
+    "status": "failed",
+    "failureCount": 9,
+    "visualStatus": "rejected",
+    "note": "已独立查看该渲染的干净 player 图，目标单臂前举/另臂垂低及躯干关系仍不符；不能因工作流通过而批准。",
+    "formalAnimationDelivered": false
+  },
+  "editor": {
+    "reportPath": "docs/plans/creation-editor-import-continuation-20261026.json",
+    "passed": true,
+    "candidateHash": "d14ecf45adcbdce7879a0ce2a6c128db9807421d1ec8a5dccd6d4c95e2577ae7",
+    "sourceUnchanged": true,
+    "scope": "官方 4.1.24 JSON 解析、工程保存；未验证编辑器画面/贴图，不代表完整参考动画批准。",
+    "visualReview": "notRun"
+  },
+  "remaining": [
+    "CU-1 不同绑定失败新阶段的受控内存入口未接通，新标注全链未验。",
+    "CU-2 实际目标 Agent 客户端发现/动态分组仍未验；本批只用真实 SDK stdio。",
+    "CU-3 第二适合真实角色待选；用户排除的立绘和拆分皮肤均不使用。",
+    "CU-4 正式单臂缩短/宽度/末端补偿与范围校准待实现，现有缩放仍诊断。",
+    "CU-5 motion 区间编辑及原 GIF 完整身体动画待实现/验收。",
+    "CU-6 单轮 GIF 拆帧约 35 秒是已知准备成本；新负载三轮 P95、同任务 AB 及实际 token 未验。",
+    "CU-7 第二角色、完整作品、编辑器视觉/贴图、分发包和原长期观察/人工启用均未齐。"
+  ],
+  "publicWriteEnabled": false
+}

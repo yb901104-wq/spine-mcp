@@ -25,7 +25,8 @@ export function metricAdvice(id: string): { knob: string; note: string } {
   if (id.startsWith('depth.')) return { knob: 'frame.presentation.drawOrder', note: '层序由绘制顺序决定，不是关节；交错时判 unverifiable。' };
   if (id.startsWith('action.')) return { knob: 'sequence / visualRig', note: '动作语义与已校准视角能力，属于绑定层。' };
   if (/^grip\./.test(id)) return { knob: 'pose.weapon 或手部 angle', note: '握距/握向；用 weapon 可把双手约束到同一根杆上。' };
-  if (/\.(segment\d|flexion|bendSide|wrist|extension)$/.test(id)) return { knob: 'targets + bendDirections', note: '段方向/屈曲/弯曲分支；分支是离散量，自动优化只能试跳。' };
+  if (id.endsWith('.bendSide')) return { knob: 'sequence / visualRig', note: '弯曲分支属于固定阶段定义，需复核证据；局部修正不能切换分支。' };
+  if (/\.(segment\d|flexion|wrist|extension)$/.test(id)) return { knob: 'targets', note: '通过已开放的末端目标调整段方向、屈曲或伸展；保持身份、支撑与弯曲分支。' };
   return { knob: '未知', note: '没有登记的旋钮映射。' };
 }
 

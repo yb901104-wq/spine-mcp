@@ -1,0 +1,1990 @@
+{
+  "startedAt": "2026-10-23T19:28:27.207Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-28-27-203Z",
+  "scope": "实际 WinForms/WebView2、隔离 C2 精确拟合动画、当前 player 核验、完整审查及源事务；合成协议夹具，不代表真实美术或 Spine 编辑器导入。",
+  "animationCandidate": {
+    "ok": true,
+    "dryRun": true,
+    "wroteFile": false,
+    "numericOk": true,
+    "diagnosticOnly": true,
+    "readyForAnimationReview": true,
+    "readyToCommit": false,
+    "version": {
+      "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+      "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+      "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+      "revision": 0
+    },
+    "sourceHash": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6",
+    "candidateHash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+    "candidatePath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/scene.json",
+    "reportPath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reports/ed1724760e491e739f6ebe133a7152e16a8190dcb56c30ec707e66c61ab12f6a.json",
+    "reportHash": "65cc6faf62cde5902520e960618525e337f9be4987559210617efca51cd2bbdb",
+    "poseGate": {
+      "ok": true,
+      "sourceFingerprint": "f7538739fca8b5a02850f05a7f5ad9183809f90f1d8445feef29d9d0fa72feb0",
+      "fingerprint": "49c63e1cf35fa6c7db6955f4e8bdcf56e2e353c634d0a8bcbfd94e65f97ab86d",
+      "issues": []
+    },
+    "keyGraphs": {
+      "ok": true,
+      "fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "motionValidation": {
+      "ok": true,
+      "issues": [],
+      "samples": 337,
+      "loopError": 0,
+      "maxFootError": 2.620297967013986e-7,
+      "maxHandError": 0.000004094308486524687,
+      "worstHandTime": 0,
+      "worstHandRole": "rightHand",
+      "worstFootTime": 0,
+      "maxTargetError": 0.000004094308486524687,
+      "maxRotationError": 0,
+      "maxTranslationError": 0,
+      "maxVertexError": 0,
+      "runtime": "spine-core 4.1.56",
+      "meshComparison": "压缩结果与同角色稠密求解结果"
+    },
+    "stats": [
+      {
+        "bone": "body",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "body",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "head",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "head",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg1",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg1",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg2",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg2",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg3",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftLeg3",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg1",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg1",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg2",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg2",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg3",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightLeg3",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm1",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm1",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm2",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm2",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm3",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "leftArm3",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm1",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm1",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm2",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm2",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm3",
+        "timeline": "rotate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      },
+      {
+        "bone": "rightArm3",
+        "timeline": "translate",
+        "originalCount": 65,
+        "compressedCount": 1,
+        "maxError": 0
+      }
+    ],
+    "reviewToken": "a91331d335703b159aabbe8117567b2073feffd0115f9d03f2efe9c594a00c66",
+    "posePreview": {
+      "ok": true,
+      "version": 1,
+      "layout": "reference-above-target",
+      "poses": [
+        {
+          "posePath": "a.pose.json",
+          "id": "d8353ed2-bee6-42b3-ba56-9dd78c3b7aac",
+          "time": 0,
+          "stageId": "start",
+          "referenceTime": null,
+          "fingerprint": "7d965e4811f6ff1e42d487e9e93ba9d0bb48036dd98b06eb1664e63b6ad08fbc"
+        },
+        {
+          "posePath": "a.pose.json",
+          "id": "d8353ed2-bee6-42b3-ba56-9dd78c3b7aac",
+          "time": 0.3,
+          "stageId": "end",
+          "referenceTime": null,
+          "fingerprint": "7d965e4811f6ff1e42d487e9e93ba9d0bb48036dd98b06eb1664e63b6ad08fbc"
+        }
+      ],
+      "pages": [
+        {
+          "clean": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/poses/page-1-clean.png",
+          "diagnostic": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/poses/page-1-diagnostic.png"
+        }
+      ],
+      "bounds": {
+        "minX": -77.14285825670208,
+        "maxX": 77.14285602901217,
+        "minY": -15.428571428571425,
+        "maxY": 138.85714285714283
+      },
+      "standardHeight": 107.99999999999999,
+      "targetScale": 2.0740740740740744,
+      "reference": null,
+      "evidence": [
+        {
+          "filePath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/poses/page-1-clean.png",
+          "hash": "dd8641d6593fac4c32944e6fd77a8c8051f4e56ff49167d154d558e1a4cb1d44"
+        },
+        {
+          "filePath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/poses/page-1-diagnostic.png",
+          "hash": "7aa65fc3e1910be3aaeb3be601e1fca45d2ce135e76d566b36a028e88d67fec8"
+        }
+      ],
+      "legend": "左=绿色，右=橙色，肩线/髋线=灰虚线，面部朝向=黄虚线，实际关节=圆点，预期目标=紫色方框，握轴/假想杆=黄色；诊断图另列未通过指标。",
+      "warnings": [
+        "遮挡需 Agent 判断，不自动判为失败。"
+      ],
+      "manifestPath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/poses/pose-comparison.json"
+    },
+    "animationPreview": {
+      "version": 2,
+      "filePath": "body.json",
+      "atlasPath": "body.atlas",
+      "animation": "idle",
+      "skin": "default",
+      "jsonHash": "13367fe0953b23e13e7bf63b7e9a678230779c37e6e5a13c500920c8ffad81bf",
+      "atlasHash": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+      "images": [
+        {
+          "path": "body.png",
+          "hash": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        }
+      ],
+      "mappingHash": null,
+      "motionHash": null,
+      "runtime": "@esotericsoftware/spine-core@4.1.56",
+      "renderer": "canvas-region-msaa4-v4",
+      "fps": 30,
+      "frameCount": 9,
+      "sampleTimes": null,
+      "duration": 0.30000001192092896,
+      "canvas": {
+        "width": 320,
+        "height": 320,
+        "background": "#20242b",
+        "scale": 1
+      },
+      "premultipliedAlpha": false,
+      "mipmaps": false,
+      "requestedBounds": {
+        "minX": -77.14285825670208,
+        "maxX": 77.14285602901217,
+        "minY": -15.428571428571425,
+        "maxY": 138.85714285714283
+      },
+      "cacheKey": "be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812",
+      "createdAt": "2026-10-23T19:28:28.300Z",
+      "ok": true,
+      "jobId": "preview-ecb983ae-75d2-4e37-a6bb-b96177c35a73",
+      "bounds": {
+        "minX": -77.14285825670208,
+        "maxX": 77.14285602901217,
+        "minY": -15.428571428571425,
+        "maxY": 138.85714285714283
+      },
+      "frames": [
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0000.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0001.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0002.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0003.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0004.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0005.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0006.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0007.png",
+        "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/frame-0008.png"
+      ],
+      "outputDir": "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812",
+      "cached": false,
+      "trajectorySamples": 9,
+      "manifestPath": ".spine-mcp/live/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b/reviews/46050c3e-b2eb-4ed6-b51d-de8bc5471cca/animation/preview-manifest.json",
+      "message": "已离线生成动画 GIF（按10ms量化并分配帧延迟）。",
+      "gifPath": "previews/cache/be91b7a9a45221dbd8ffbdb52f80f07ab654b0fd0e282b0d42602ac861447812/animation.gif",
+      "encodedDurationMs": 300
+    },
+    "message": "精确拟合与当前 runtime 回读不代表完整动画视觉批准，须独立生成审查产物、核验当前 player 证据并授权。",
+    "derivedHash": "9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b",
+    "state": {
+      "ok": true,
+      "apiVersion": "1",
+      "available": true,
+      "degraded": false,
+      "mode": "host",
+      "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+      "projectId": "host-fixture",
+      "project": {
+        "mode": "managed",
+        "name": "Host 隔离验证工程",
+        "manifestPath": ".spine-workflow.json",
+        "manifestHash": "30d85112705078b80fc0a9f99467667d494cc9e63f8171239a904b3c37ea31fc"
+      },
+      "activeDoc": {
+        "path": "idle.motion.json",
+        "kind": "motion",
+        "characterId": "hero",
+        "version": {
+          "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+          "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+          "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+          "revision": 0
+        },
+        "view": {
+          "animation": "idle",
+          "time": 0.15
+        }
+      },
+      "version": {
+        "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+        "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+        "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+        "revision": 0
+      },
+      "revision": 0,
+      "contentHash": "c71271b706c943a3c0a7d9390025b3b1b8bb6ede03b5a3b56d9f6261508f7a52",
+      "fileHash": "14ba8e5498fb667673f8e63d676fd67812c56696f9838bb5de31cd330d294dc8",
+      "dependencyFingerprint": "f63ffd4825d635ab067c71ee242405aff123e50d1980fa1fb63eb241c37386dd",
+      "snapshotHash": "e17174d19093b817daf0076cfe1fb4f86a5af572f3e83b8b9e009e2856ccaec2",
+      "target": null,
+      "pinned": false,
+      "targetStale": false,
+      "staleReason": null,
+      "derivedHash": "9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b",
+      "reviewHash": null,
+      "capabilitiesFingerprint": "3d49b63215064e5df3262c73d19a90e4237d93d62e023e6d9654896691f38eac",
+      "writeMode": "attached",
+      "writer": {
+        "ownerId": "82781db1-1308-4935-b04b-fb7966a9225b",
+        "generation": 9,
+        "verified": true
+      },
+      "undoDepth": 0,
+      "redoDepth": 0,
+      "uncommitted": false,
+      "numeric": {
+        "status": "previewOnly",
+        "finite": true,
+        "unreachableCount": 0,
+        "note": "当前采样的观察检查，不是完整动画数值/视觉/编辑器验收。"
+      },
+      "reference": {
+        "status": "notRun"
+      },
+      "agentVisual": {
+        "status": "notRun"
+      },
+      "editorImport": {
+        "status": "notRun"
+      },
+      "runtime": {
+        "player": "4.1.56",
+        "core": "4.1.56",
+        "replaySchema": 1,
+        "versionDrift": false
+      },
+      "evaluationTasks": {
+        "active": [],
+        "recent": [
+          {
+            "taskId": "ef2b9e13-5856-4d18-a4c3-61a3ccf971f5",
+            "version": {
+              "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+              "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+              "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+              "revision": 0
+            },
+            "stage": "publish",
+            "status": "succeeded",
+            "startedAt": "2026-10-23T19:28:28.003Z",
+            "lastHeartbeatAt": "2026-10-23T19:28:28.003Z",
+            "leaseExpiresAt": "2026-10-23T19:28:43.003Z"
+          }
+        ]
+      },
+      "capabilities": {
+        "context": {
+          "projectId": "host-fixture",
+          "characterId": "hero",
+          "version": {
+            "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+            "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+            "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+            "revision": 0
+          }
+        },
+        "viewing": {
+          "supportedKinds": [
+            "pose",
+            "motion",
+            "skeleton"
+          ],
+          "selection": {
+            "animation": "idle",
+            "time": 0.15
+          },
+          "animations": [
+            {
+              "name": "idle",
+              "duration": 0.3
+            }
+          ],
+          "setupPose": false,
+          "changeSelection": "spine_host_open",
+          "recheck": "spine_host_open recheck:true"
+        },
+        "characters": [
+          {
+            "characterId": "hero",
+            "spineVersion": "4.1.24",
+            "channels": {
+              "torso": "body"
+            },
+            "anchors": {
+              "leftFoot": {
+                "bone": "leftLeg3",
+                "point": [
+                  0,
+                  0
+                ],
+                "gripPoint": [
+                  3,
+                  0
+                ]
+              },
+              "leftHand": {
+                "bone": "leftArm3",
+                "point": [
+                  0,
+                  0
+                ],
+                "gripPoint": [
+                  3,
+                  0
+                ]
+              },
+              "rightFoot": {
+                "bone": "rightLeg3",
+                "point": [
+                  0,
+                  0
+                ],
+                "gripPoint": [
+                  3,
+                  0
+                ]
+              },
+              "rightHand": {
+                "bone": "rightArm3",
+                "point": [
+                  0,
+                  0
+                ],
+                "gripPoint": [
+                  3,
+                  0
+                ]
+              }
+            },
+            "mappingDeclaredStatus": "confirmed",
+            "verification": "unknown",
+            "views": [
+              {
+                "bodyView": "frontThreeQuarter",
+                "supported": "unknown",
+                "reason": "尚无 visualRig，无法确认视角能力。"
+              },
+              {
+                "bodyView": "side",
+                "supported": "unknown",
+                "reason": "尚无 visualRig，无法确认视角能力。"
+              },
+              {
+                "bodyView": "backThreeQuarter",
+                "supported": "unknown",
+                "reason": "尚无 visualRig，无法确认视角能力。"
+              }
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "operation": "open",
+            "supported": true,
+            "schemaId": "spine_host_open",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "ready",
+            "canRun": true,
+            "reasons": [],
+            "nextAction": null
+          },
+          {
+            "operation": "inspect",
+            "supported": true,
+            "schemaId": "host.inspect",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "ready",
+            "canRun": true,
+            "reasons": [],
+            "nextAction": null
+          },
+          {
+            "operation": "evaluate",
+            "supported": true,
+            "schemaId": "spine_host_open",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "ready",
+            "canRun": true,
+            "reasons": [],
+            "nextAction": null
+          },
+          {
+            "operation": "frame",
+            "supported": true,
+            "schemaId": "spine_preview_frame",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "ready",
+            "canRun": true,
+            "reasons": [],
+            "nextAction": null
+          },
+          {
+            "operation": "capture",
+            "supported": true,
+            "schemaId": "spine_preview_capture",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "blocked",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPTURE_TIMEOUT",
+                "message": "需要可见且正在上报心跳的 player 页面。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "截图准入由 captureValidity 与当前版本核验；rendererParity 单独记录，动作仍须视觉审查。"
+            }
+          },
+          {
+            "operation": "review",
+            "supported": false,
+            "schemaId": "spine_review_pose",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "unsupported",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPABILITY_MISSING",
+                "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          },
+          {
+            "operation": "patch",
+            "supported": false,
+            "schemaId": "spine_host_patch",
+            "schemaVersion": 2,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "unsupported",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPABILITY_MISSING",
+                "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          },
+          {
+            "operation": "undo",
+            "supported": false,
+            "schemaId": "spine_host_undo",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "unsupported",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPABILITY_MISSING",
+                "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          },
+          {
+            "operation": "redo",
+            "supported": false,
+            "schemaId": "spine_host_redo",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "unsupported",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPABILITY_MISSING",
+                "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          },
+          {
+            "operation": "commit",
+            "supported": false,
+            "schemaId": "spine_host_commit",
+            "schemaVersion": 1,
+            "checked": "strict",
+            "observedAt": "2026-10-23T19:28:28.493Z",
+            "state": "unsupported",
+            "canRun": false,
+            "reasons": [
+              {
+                "code": "CAPABILITY_MISSING",
+                "message": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+              }
+            ],
+            "nextAction": {
+              "tool": null,
+              "instruction": "当前 mode/kind 未开放该操作；不自动回退或扩大 C1 白名单。"
+            }
+          }
+        ],
+        "character": {
+          "channels": {
+            "torso": "body"
+          },
+          "chains": {
+            "leftArm": [
+              "leftArm1",
+              "leftArm2",
+              "leftArm3"
+            ],
+            "rightArm": [
+              "rightArm1",
+              "rightArm2",
+              "rightArm3"
+            ],
+            "leftLeg": [
+              "leftLeg1",
+              "leftLeg2",
+              "leftLeg3"
+            ],
+            "rightLeg": [
+              "rightLeg1",
+              "rightLeg2",
+              "rightLeg3"
+            ]
+          },
+          "anchors": {
+            "leftFoot": {
+              "bone": "leftLeg3",
+              "point": [
+                0,
+                0
+              ],
+              "gripPoint": [
+                3,
+                0
+              ]
+            },
+            "leftHand": {
+              "bone": "leftArm3",
+              "point": [
+                0,
+                0
+              ],
+              "gripPoint": [
+                3,
+                0
+              ]
+            },
+            "rightFoot": {
+              "bone": "rightLeg3",
+              "point": [
+                0,
+                0
+              ],
+              "gripPoint": [
+                3,
+                0
+              ]
+            },
+            "rightHand": {
+              "bone": "rightArm3",
+              "point": [
+                0,
+                0
+              ],
+              "gripPoint": [
+                3,
+                0
+              ]
+            }
+          },
+          "mappingStatus": "confirmed",
+          "viewProfiles": {
+            "status": "unknown",
+            "message": "视角需 visualRig 当前指纹与切片证据独立确认。"
+          },
+          "handTargets": [
+            {
+              "role": "leftHand",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": [],
+              "gripPoint": {
+                "status": "present",
+                "required": false
+              },
+              "source": {
+                "path": null,
+                "field": "bones.anchors.leftHand",
+                "verification": "unknown"
+              },
+              "coordinateSystem": "normalizedSkeleton",
+              "angleUnit": "degree"
+            },
+            {
+              "role": "rightHand",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": [],
+              "gripPoint": {
+                "status": "present",
+                "required": false
+              },
+              "source": {
+                "path": null,
+                "field": "bones.anchors.rightHand",
+                "verification": "unknown"
+              },
+              "coordinateSystem": "normalizedSkeleton",
+              "angleUnit": "degree"
+            }
+          ]
+        },
+        "editing": {
+          "profile": "c2-pose",
+          "experimental": true,
+          "schemaVersion": 2,
+          "patchOps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 200,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setPoseTarget"
+                    },
+                    "path": {
+                      "type": "string",
+                      "enum": [
+                        "pose/frame/targets/leftHand",
+                        "pose/frame/targets/rightHand",
+                        "pose/frame/targets/leftFoot",
+                        "pose/frame/targets/rightFoot"
+                      ]
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "leftHand",
+                        "rightHand",
+                        "leftFoot",
+                        "rightFoot"
+                      ],
+                      "description": "既有语义末端，必须与 path 相同；不能创建新绑定。"
+                    },
+                    "x": {
+                      "type": "number",
+                      "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                    },
+                    "y": {
+                      "type": "number",
+                      "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                    },
+                    "angle": {
+                      "type": "number",
+                      "minimum": -180,
+                      "exclusiveMaximum": 180,
+                      "description": "角度，单位度，范围 [-180,180)。"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "role"
+                  ],
+                  "anyOf": [
+                    {
+                      "required": [
+                        "x"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "y"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "angle"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setPoseParameters"
+                    },
+                    "path": {
+                      "const": "pose/frame/body"
+                    },
+                    "patch": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "minProperties": 1,
+                      "description": "合并身体或声明通道的非空参数子集；rotate 为 setup 旋转增量。",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                        },
+                        "y": {
+                          "type": "number",
+                          "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                        },
+                        "rotate": {
+                          "type": "number",
+                          "minimum": -180,
+                          "exclusiveMaximum": 180,
+                          "description": "角度，单位度，范围 [-180,180)。"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "patch"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setPoseParameters"
+                    },
+                    "path": {
+                      "const": "pose/frame/head"
+                    },
+                    "patch": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "rotate": {
+                          "type": "number",
+                          "minimum": -180,
+                          "exclusiveMaximum": 180,
+                          "description": "角度，单位度，范围 [-180,180)。"
+                        }
+                      },
+                      "required": [
+                        "rotate"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "patch"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setPoseParameters"
+                    },
+                    "path": {
+                      "type": "string",
+                      "pattern": "^pose/frame/channels/[^/~\\\\\u0000-\u001f]+$"
+                    },
+                    "patch": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "minProperties": 1,
+                      "description": "合并身体或声明通道的非空参数子集；rotate 为 setup 旋转增量。",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                        },
+                        "y": {
+                          "type": "number",
+                          "description": "normalizedSkeleton 坐标；禁止图片像素。"
+                        },
+                        "rotate": {
+                          "type": "number",
+                          "minimum": -180,
+                          "exclusiveMaximum": 180,
+                          "description": "角度，单位度，范围 [-180,180)。"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "patch"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setSlotAttachment"
+                    },
+                    "path": {
+                      "type": "string",
+                      "description": "pose/frame/presentation/attachments/ 后接规范转义的 slot 名。"
+                    },
+                    "slot": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "原始插槽名，path 中的 / 和 ~ 分别使用 ~1 和 ~0。"
+                    },
+                    "attachment": {
+                      "description": "当前皮肤或 default 回退中的既有附件名；null 表示隐藏。",
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "slot",
+                    "attachment"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "op": {
+                      "const": "setDrawOrder"
+                    },
+                    "path": {
+                      "const": "pose/frame/presentation/drawOrder"
+                    },
+                    "order": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "maxItems": 500,
+                      "description": "现有全部插槽的唯一排列，不能只传局部层序。",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "path",
+                    "order"
+                  ]
+                }
+              ]
+            }
+          },
+          "targets": [
+            {
+              "role": "leftHand",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": []
+            },
+            {
+              "role": "rightHand",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": []
+            },
+            {
+              "role": "leftFoot",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": []
+            },
+            {
+              "role": "rightFoot",
+              "supported": false,
+              "controlledFields": [],
+              "availableFields": []
+            }
+          ],
+          "parameters": {
+            "body": true,
+            "head": true,
+            "channels": [
+              {
+                "name": "torso",
+                "supported": true
+              }
+            ]
+          },
+          "presentation": {
+            "slots": [
+              {
+                "slot": "bodySlot",
+                "path": "pose/frame/presentation/attachments/bodySlot",
+                "supported": true,
+                "attachments": [
+                  "body",
+                  "alternate"
+                ],
+                "canHide": true
+              },
+              {
+                "slot": "accentSlot",
+                "path": "pose/frame/presentation/attachments/accentSlot",
+                "supported": true,
+                "attachments": [
+                  "body"
+                ],
+                "canHide": true
+              }
+            ],
+            "drawOrder": {
+              "requiresAllSlots": true,
+              "source": "skeleton.slots",
+              "verification": "declared"
+            }
+          },
+          "commandAdapters": [
+            {
+              "tool": "spine_set_pose_target",
+              "supported": false,
+              "schemaVersion": 1,
+              "execution": "host-memory",
+              "expectedRevision": "required",
+              "outputPosePath": "forbidden",
+              "readinessOperation": "patch",
+              "saveTool": "spine_host_commit"
+            },
+            {
+              "tool": "spine_set_pose_channel",
+              "supported": false,
+              "schemaVersion": 1,
+              "execution": "host-memory",
+              "expectedRevision": "required",
+              "outputPosePath": "forbidden",
+              "readinessOperation": "patch",
+              "saveTool": "spine_host_commit"
+            },
+            {
+              "tool": "spine_batch_pose_ops",
+              "supported": false,
+              "schemaVersion": 1,
+              "execution": "host-memory",
+              "expectedRevision": "required",
+              "outputPosePath": "forbidden",
+              "readinessOperation": "patch",
+              "saveTool": "spine_host_commit"
+            },
+            {
+              "tool": "spine_adjust_pose",
+              "supported": false,
+              "schemaVersion": 1,
+              "execution": "host-memory",
+              "expectedRevision": "required",
+              "outputPosePath": "forbidden",
+              "readinessOperation": "patch",
+              "saveTool": "spine_host_commit"
+            }
+          ],
+          "assetDrafts": {
+            "supported": false,
+            "tools": [
+              "spine_create_pose_draft",
+              "spine_build_motion_from_poses",
+              "spine_retarget_reference_pose",
+              "spine_refine_reference_pose"
+            ],
+            "requiresPin": true,
+            "pinIntent": "asset",
+            "saveTool": "spine_host_commit",
+            "intent": "asset",
+            "requiresCandidateHash": true,
+            "saveSwitchesDocument": false,
+            "readiness": {
+              "stage": {
+                "supported": false,
+                "canRun": false,
+                "checked": "strict",
+                "reasons": [
+                  {
+                    "code": "CAPABILITY_MISSING",
+                    "message": "按完整版本核对新资产来源的 profile、写入权、pin 与依赖状态。"
+                  }
+                ]
+              },
+              "commit": {
+                "supported": false,
+                "canRun": false,
+                "checked": "strict",
+                "reasons": [
+                  {
+                    "code": "CAPABILITY_MISSING",
+                    "message": "按完整版本核对新资产来源的 profile、写入权、pin 与依赖状态。"
+                  }
+                ]
+              }
+            }
+          },
+          "animationCandidates": {
+            "supported": true,
+            "tool": "spine_retarget_motion",
+            "expectedRevision": "required",
+            "sourceVersion": "4.1.24",
+            "motionVersion": 2,
+            "animationName": "motion.name",
+            "dryRunOnly": true,
+            "exactFittedPlayback": true,
+            "issuesReviewToken": true,
+            "reviewTool": "spine_review_animation",
+            "reviewRequiresPlayer": true,
+            "sourceCommitSupported": true,
+            "pinIntent": "animation",
+            "commitTool": "spine_host_commit",
+            "commitIntent": "animation",
+            "readiness": {
+              "commit": {
+                "supported": true,
+                "canRun": false,
+                "checked": "strict",
+                "reasons": [
+                  {
+                    "code": "TARGET_NOT_PINNED",
+                    "message": "源动画提交须当前完整版本、显式动画 pin、精确候选及完整视觉批准。"
+                  }
+                ]
+              }
+            }
+          },
+          "fixedConditions": [
+            "source",
+            "reference",
+            "mapping",
+            "visualRig",
+            "support",
+            "bendDirections",
+            "weapon",
+            "groundY"
+          ]
+        }
+      },
+      "capture": null,
+      "assetCandidate": null,
+      "animationCandidate": {
+        "candidateHash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+        "baseToken": "a91331d335703b159aabbe8117567b2073feffd0115f9d03f2efe9c594a00c66",
+        "sourcePath": "body.json",
+        "sourceHash": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6",
+        "readyForAnimationReview": true,
+        "reviewHash": null,
+        "reviewDecision": "notRun",
+        "sourceCommitSupported": true
+      },
+      "instanceId": "b91168c0-9c96-47aa-8377-c9d9266e6a59",
+      "startedAt": "2026-10-23T19:28:27.366Z",
+      "security": {
+        "mode": "acl",
+        "controlProtected": true
+      },
+      "preview": {
+        "loaded": false,
+        "playing": false,
+        "lastSeenAt": null
+      },
+      "rollout": {
+        "writeRequested": false,
+        "writeEnabled": true,
+        "scope": null,
+        "approvalHash": null,
+        "code": "ROLLOUT_NOT_REQUESTED",
+        "message": "公开写入默认关闭；需真实观察与人工审批。"
+      },
+      "observation": {
+        "running": false,
+        "runId": null,
+        "file": null,
+        "samples": 0,
+        "intervalMs": 60000,
+        "error": null,
+        "testClock": false
+      }
+    },
+    "available": true,
+    "__imageData": "iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgCAYAAAB91L6VAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7OHOkAAAelSURBVHic7dehDcIAEEBRSliADSqq6C6MQdgEdkN0pCIxOBq+6HvyxOXczw3jNK8HAOCvjvUBALBHAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAic6gOAj+Vx+Tq/nZ+b7H/dr5vsAX7nAwaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAALDOM1rfQQA7I0PGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACJzqA4CP5XH5Or+dn5vsf92vm+wBfucDBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAgIMAAEBBoCAAANAQIABICDAABAQYAAICDAABAQYAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAgIMAAEBBgAAsM4zWt9BADsjQ8YAAICDAABAQaAgAADQECAASAgwAAQEGAACAgwAAQEGAACAgwAAQEGgIAAA0BAgAEgIMAAEBBgAAi8ATojEAyDYSTGAAAAAElFTkSuQmCC",
+    "source": "solution"
+  },
+  "kind": "motion",
+  "view": {
+    "animation": "idle",
+    "time": 0.15
+  },
+  "testWriterReleased": true,
+  "captures": {
+    "initial": {
+      "filePath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/4363a77a-7de4-447b-859a-89506313392b/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png",
+      "manifestPath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/4363a77a-7de4-447b-859a-89506313392b/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "4363a77a-7de4-447b-859a-89506313392b",
+        "capturedAt": "2026-10-23T19:28:31.348Z",
+        "version": {
+          "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+          "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+          "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+          "revision": 0
+        },
+        "snapshotHash": "e17174d19093b817daf0076cfe1fb4f86a5af572f3e83b8b9e009e2856ccaec2",
+        "source": "player",
+        "generated": true,
+        "contentHash": "c71271b706c943a3c0a7d9390025b3b1b8bb6ede03b5a3b56d9f6261508f7a52",
+        "dependencyFingerprint": "f63ffd4825d635ab067c71ee242405aff123e50d1980fa1fb63eb241c37386dd",
+        "derivedHash": "9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b",
+        "fileHash": "14ba8e5498fb667673f8e63d676fd67812c56696f9838bb5de31cd330d294dc8",
+        "exported": true,
+        "kind": "motion",
+        "view": {
+          "animation": "idle",
+          "time": 0.15
+        },
+        "candidateHash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "body"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "bodySlot",
+          "accentSlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.000001949228679983963,
+              83.99999999999999,
+              1,
+              -4.641020666628483e-8,
+              0,
+              0.9999999999999996
+            ],
+            [
+              "head",
+              -0.0000031094838466410833,
+              108.99999999999997,
+              1,
+              -6.961530999942724e-8,
+              0,
+              0.9999999999999993
+            ],
+            [
+              "leftLeg1",
+              -12.000001717177648,
+              78.99999999999999,
+              0.15761903176700218,
+              0.9874999916967806,
+              -0.987500002669476,
+              0.15761900885196262
+            ],
+            [
+              "leftLeg2",
+              -5.695240446497561,
+              39.499999893220945,
+              -0.1576189847983321,
+              0.9875000028512113,
+              -0.9875000024877407,
+              -0.15761898707551394
+            ],
+            [
+              "leftLeg3",
+              -11.999999838430846,
+              -2.0628868213634632e-7,
+              7.713349792215496e-9,
+              0.9999999999999991,
+              -0.9999999999999994,
+              2.861244638441285e-8
+            ],
+            [
+              "leftArm1",
+              -12.000003109483847,
+              108.99999999999997,
+              0.8611604304488641,
+              0.508333249662817,
+              -0.5083333096127662,
+              0.8611604186529367
+            ],
+            [
+              "leftArm2",
+              39.669622717448,
+              78.500001423234,
+              -0.8611603216726726,
+              0.5083334539223499,
+              -0.5083333946440661,
+              -0.8611603566639818
+            ],
+            [
+              "leftArm3",
+              -11.99999658291236,
+              47.99999774459003,
+              1.2420181094707772e-7,
+              0.9999999999999926,
+              -0.9999999999999967,
+              7.857155559509721e-8
+            ],
+            [
+              "rightLeg1",
+              11.999998282822352,
+              78.99999999999999,
+              0.15761903176700218,
+              0.9874999916967806,
+              -0.987500002669476,
+              0.15761900885196262
+            ],
+            [
+              "rightLeg2",
+              18.30475955350244,
+              39.499999893220945,
+              -0.1576189847983321,
+              0.9875000028512113,
+              -0.9875000024877407,
+              -0.15761898707551394
+            ],
+            [
+              "rightLeg3",
+              12.000000161569154,
+              -2.0628868213634632e-7,
+              7.713349792215496e-9,
+              0.9999999999999991,
+              -0.9999999999999994,
+              2.861244638441285e-8
+            ],
+            [
+              "rightArm1",
+              11.999996890516153,
+              108.99999999999997,
+              0.8611604304488641,
+              0.508333249662817,
+              -0.5083333096127662,
+              0.8611604186529367
+            ],
+            [
+              "rightArm2",
+              63.669622717448,
+              78.500001423234,
+              -0.8611603216726726,
+              0.5083334539223499,
+              -0.5083333946440661,
+              -0.8611603566639818
+            ],
+            [
+              "rightArm3",
+              12.00000341708764,
+              47.99999774459003,
+              1.2420181094707772e-7,
+              0.9999999999999926,
+              -0.9999999999999967,
+              7.857155559509721e-8
+            ]
+          ],
+          "vertices": {
+            "bodySlot:body": [
+              -6.0000013923062,
+              71.99999999999999,
+              -6.0000025061511595,
+              95.99999999999999,
+              5.9999974938488405,
+              95.99999999999999,
+              5.9999986076938,
+              71.99999999999999
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "body"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "bodySlot",
+            "accentSlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/4363a77a-7de4-447b-859a-89506313392b/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png",
+            "hash": "f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-28-27-203Z\\initial-player.png"
+    },
+    "restored": {
+      "filePath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/d620cc33-e191-48f2-8717-1ca83b376cca/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png",
+      "manifestPath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/d620cc33-e191-48f2-8717-1ca83b376cca/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "d620cc33-e191-48f2-8717-1ca83b376cca",
+        "capturedAt": "2026-10-23T19:28:32.410Z",
+        "version": {
+          "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+          "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+          "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+          "revision": 0
+        },
+        "snapshotHash": "e17174d19093b817daf0076cfe1fb4f86a5af572f3e83b8b9e009e2856ccaec2",
+        "source": "player",
+        "generated": true,
+        "contentHash": "c71271b706c943a3c0a7d9390025b3b1b8bb6ede03b5a3b56d9f6261508f7a52",
+        "dependencyFingerprint": "f63ffd4825d635ab067c71ee242405aff123e50d1980fa1fb63eb241c37386dd",
+        "derivedHash": "9139cd29f3cb2cc063d4966a4ce3c76ac9ed91fa6c22ebe261fe476ea117a07b",
+        "fileHash": "14ba8e5498fb667673f8e63d676fd67812c56696f9838bb5de31cd330d294dc8",
+        "exported": true,
+        "kind": "motion",
+        "view": {
+          "animation": "idle",
+          "time": 0.15
+        },
+        "candidateHash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "body"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "bodySlot",
+          "accentSlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.000001949228679983963,
+              83.99999999999999,
+              1,
+              -4.641020666628483e-8,
+              0,
+              0.9999999999999996
+            ],
+            [
+              "head",
+              -0.0000031094838466410833,
+              108.99999999999997,
+              1,
+              -6.961530999942724e-8,
+              0,
+              0.9999999999999993
+            ],
+            [
+              "leftLeg1",
+              -12.000001717177648,
+              78.99999999999999,
+              0.15761903176700218,
+              0.9874999916967806,
+              -0.987500002669476,
+              0.15761900885196262
+            ],
+            [
+              "leftLeg2",
+              -5.695240446497561,
+              39.499999893220945,
+              -0.1576189847983321,
+              0.9875000028512113,
+              -0.9875000024877407,
+              -0.15761898707551394
+            ],
+            [
+              "leftLeg3",
+              -11.999999838430846,
+              -2.0628868213634632e-7,
+              7.713349792215496e-9,
+              0.9999999999999991,
+              -0.9999999999999994,
+              2.861244638441285e-8
+            ],
+            [
+              "leftArm1",
+              -12.000003109483847,
+              108.99999999999997,
+              0.8611604304488641,
+              0.508333249662817,
+              -0.5083333096127662,
+              0.8611604186529367
+            ],
+            [
+              "leftArm2",
+              39.669622717448,
+              78.500001423234,
+              -0.8611603216726726,
+              0.5083334539223499,
+              -0.5083333946440661,
+              -0.8611603566639818
+            ],
+            [
+              "leftArm3",
+              -11.99999658291236,
+              47.99999774459003,
+              1.2420181094707772e-7,
+              0.9999999999999926,
+              -0.9999999999999967,
+              7.857155559509721e-8
+            ],
+            [
+              "rightLeg1",
+              11.999998282822352,
+              78.99999999999999,
+              0.15761903176700218,
+              0.9874999916967806,
+              -0.987500002669476,
+              0.15761900885196262
+            ],
+            [
+              "rightLeg2",
+              18.30475955350244,
+              39.499999893220945,
+              -0.1576189847983321,
+              0.9875000028512113,
+              -0.9875000024877407,
+              -0.15761898707551394
+            ],
+            [
+              "rightLeg3",
+              12.000000161569154,
+              -2.0628868213634632e-7,
+              7.713349792215496e-9,
+              0.9999999999999991,
+              -0.9999999999999994,
+              2.861244638441285e-8
+            ],
+            [
+              "rightArm1",
+              11.999996890516153,
+              108.99999999999997,
+              0.8611604304488641,
+              0.508333249662817,
+              -0.5083333096127662,
+              0.8611604186529367
+            ],
+            [
+              "rightArm2",
+              63.669622717448,
+              78.500001423234,
+              -0.8611603216726726,
+              0.5083334539223499,
+              -0.5083333946440661,
+              -0.8611603566639818
+            ],
+            [
+              "rightArm3",
+              12.00000341708764,
+              47.99999774459003,
+              1.2420181094707772e-7,
+              0.9999999999999926,
+              -0.9999999999999967,
+              7.857155559509721e-8
+            ]
+          ],
+          "vertices": {
+            "bodySlot:body": [
+              -6.0000013923062,
+              71.99999999999999,
+              -6.0000025061511595,
+              95.99999999999999,
+              5.9999974938488405,
+              95.99999999999999,
+              5.9999986076938,
+              71.99999999999999
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "body"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "bodySlot",
+            "accentSlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/93281510-2537-4151-b697-9cda5424b6a9/d620cc33-e191-48f2-8717-1ca83b376cca/f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07.png",
+            "hash": "f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-28-27-203Z\\restored-player.png"
+    }
+  },
+  "reconnectPixelsIdentical": true,
+  "native": {
+    "ok": true,
+    "checks": [
+      "当前 Host 为观察模式",
+      "页面显示实际动画与时间选择",
+      "采样观察不冒充完整动画数值验收",
+      "页面 URL 不含凭据",
+      "未开放原生对象或 WebMessage 桥",
+      "实际页面完成 MCP 截图检查点：initial",
+      "初始页面与截图后没有 frame 限流错误",
+      "切到旧预览后卸载 Host 页，服务实际收到 hidden",
+      "切回后从当前 Host 重新加载页面",
+      "最小化卸载，还原后重新读取当前帧",
+      "跨来源导航在请求前阻止",
+      "阻止导航后保留原 Host 页面",
+      "已保存实际 WebView2 诊断截图（非审查证据）",
+      "远程预览来源拒绝并断开旧 Host",
+      "发现负例拒绝：dead-pid",
+      "发现负例拒绝：invalid-port",
+      "发现负例拒绝：invalid-token",
+      "发现负例拒绝：linked",
+      "发现负例拒绝：missing",
+      "发现负例拒绝：unknown-api",
+      "发现负例拒绝：wrong-instance",
+      "发现负例拒绝：wrong-project",
+      "发现负例拒绝：wrong-session",
+      "发现负例拒绝：wrong-started-at",
+      "发现负例拒绝：wrong-workspace",
+      "负例之后可以显式重连正确 Host",
+      "实际页面完成 MCP 截图检查点：restored",
+      "重连历史事件后没有 frame 限流错误",
+      "本次 WebView2 浏览器进程已退出"
+    ],
+    "time": "2026-10-23T19:28:39.0959407+00:00",
+    "screenshot": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\spine-host-heG94j\\native-host.png",
+    "browserPid": 24468,
+    "evidenceEligible": false,
+    "performance": null
+  },
+  "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-28-27-203Z\\host-workspace.png",
+  "sourceUnchanged": false,
+  "documentVersionUnchanged": false,
+  "publicWriteEnabled": false,
+  "passed": true,
+  "animationReceipt": {
+    "ok": true,
+    "dryRun": false,
+    "committed": true,
+    "intent": "animation",
+    "switched": false,
+    "version": {
+      "sessionId": "333c1d4c-98ad-4f2c-81a2-726dcf7b96e5",
+      "documentId": "6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef",
+      "openEpoch": "93281510-2537-4151-b697-9cda5424b6a9",
+      "revision": 1
+    },
+    "requestId": "native-animation-source",
+    "outputPath": "body.json",
+    "backupPath": ".spine-mcp/backups/6a2a43639f80f3167e632649ca22c61587c3bc52729e74780ac65b1c643a19ef/1792783719461-0e0bf6d8-7284-450e-97f9-a8987722b56d.json",
+    "hashBefore": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6",
+    "hashAfter": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d",
+    "candidateHash": "6b2ba0de43869aa2d976c61eeae4c169cd682f57f4316a26bca784c9e466fa4d"
+  },
+  "animationTransactionPassed": true,
+  "finishedAt": "2026-10-23T19:28:41.105Z"
+}

@@ -1,8 +1,59 @@
 # Spine JSON MCP
 
+
+校准工具现默认生成 33 帧、2 秒的批准前诊断扫掠 GIF 与联系图（sweepFrames/sweepDuration 可显式选择），固定分支逐帧回读；它不创建正式 motion。正式校准还须当前连续性诊断数值通过、产物哈希一致及独立视觉审查。手部补偿局部倍率可大于 1，但只能在 Host 从实际校准样本生成的三段臂链回放范围内；世界段长比仍不大于 1，旧诊断范围不扩大。
+## 2026-10-26 区间编辑与投影校准续建
+
+当前 **115 个 MCP 工具**。新增 `spine_edit_motion_interval`、`spine_calibrate_arm_perspective`、`spine_review_arm_perspective`。隔离 C2 可对 v2 motion 的明确区间编辑、撤销和备份另存；边界与区间外保持，已审查关键姿态须用批准修订替换。Host 提供只读本地播放、暂停、时间拖动与关键姿态定位，播放不产生批准。
+
+单臂新增独立 `calibration` 样本诊断及 `calibrated` 正式校准模式。`upper/lower` 是相对基准的实际世界段长比，由 runtime 求解局部 scale；校准绑定角色、切片、基准、分支、样本和精确哈希。宽度未校准保持 1，旧 `diagnostic` 批准不迁移。npc1 新建的固定身体/视向/分支、0.85–1 范围已通过 4 张真实 player 和 33 帧连续性独立审查，受限试用 motion 已播放并经官方 4.1.24 导入保存；此前 0.55–1 范围退回，原 GIF 未批准。最终构建 233/233 回归通过，性能与隔离包见[本轮汇总](docs/plans/creation-completion-implementation-20261027.json)。
+
+自动端口遇占用或 Windows 保留端口（EACCES）会有界重选，显式 `--port` 失败仍报错。隔离试用包可通过 `node scripts/package-creation-trial.mjs <新输出目录>` 生成；包内 `node scripts/run-creation-trial.mjs --verify-only` 验字节，依赖需手动 `npm ci --omit=dev`，启动参数和恢复选择仍走正式隔离入口。源码/包与真实验收分开记录，见[专项工单](docs/plans/creation-usability.md)。
+
+## 2026-10-26 创作工作流专项
+
+新阶段参考适配失败时，可显式使用 `spine_retarget_reference_pose{diagnosticMode:"newStage",expectedRevision,…}`：默认预演，`dryRun:false` 打开独立内存草稿，不改原文档绑定、不创建拟保存的姿态文件。新草稿需重新 pin，再通过原编辑/看图/撤销工具继续；失败不能批准或提交。`spine_get_creation_task.diagnosticContexts` 可找回上下文，重启隔离 Host 后先 `spine_resume_diagnostic_pose{diagnosticId}` 查看来源/差异，再显式 false 恢复。逻辑路径不是磁盘资产；已保存后应打开真实输出，不恢复旧草稿。
+
+[专项工单](docs/plans/creation-usability.md) 已施工：受管任务冻结/隔离副本、阶段选择、调用计量、默认摘要与按需完整返回、任务工具目录、角色准备/一次求解预检、受控身体意图，以及同绑定失败候选的内存修正。此前本批工具总数 **112**；最新为上述 **115**。生产默认 C1 不变，npc1 仅上述窄范围取得独立校准批准，完整原 GIF 动作尚未交付。
+
+新参考入口：`spine_start_creation_task` 可省略 `stages`，先冻结角色和原图/GIF；正式拆帧、标注、参考审查及视觉绑定审查完成后，`spine_create_pose_sequence` 以显式左右对应创建新动作记录（默认 dryRun）。新序列可由 `spine_start_creation_task{isolatedDirectory,sequencePath,stages:[]}` 在**全新隔离副本**登记，拒绝在原清单原地换绑。该记录不批准目标动作，已有阶段也不会自动改用它。
+
+已有任务保存新修订后，`spine_get_creation_task.stageContexts` 列出经 journal 核验的候选；`spine_select_creation_stage{taskId,stageId,documentPath,expectedRevision}` 可继续该修订。跨姿态来源族、改绑定或哈希不符均拒绝；原冻结记录不覆盖。新修订再隔离时显式写入新清单，不复制旧 journal。动态目录隐藏的工具不会直接出现在下一步建议中。
+
+常用入口：`spine_start_creation_task` → `spine_select_creation_stage` → 按 readiness 调用原有 pin/重算/编辑/查看/撤销/commit；`spine_get_creation_task` 读取任务及成本。新参考仍需正式标注与逐项审查，不自动生成批准。Host 面板分别展示参考失败及编辑/审查/组装/提交资格，`responseDetail:"full"` 可取得完整 Host 数据。
+
+任务可用 `isolatedDirectory` 在当前工作区内创建新的受管副本，只复制声明资源和证据，不复制旧 Writer/journal/连接配置。随后启动：
+
+```powershell
+npm run build
+npm run host:creation -- --workspace "任务返回的隔离 workspaceRoot" --isolated
+```
+
+存在旧 journal 时拒绝冒充新会话；先查看来源/差异，再显式加 `--resume`，或创建另一个隔离副本。该入口只授予隔离 C2 试用，不满足生产启用审批；连接向导仍不写全局配置。默认随机本机端口，可用 `--port` 明确指定。
+
+默认静态工具表兼容既有客户端。`spine_get_tool_catalog` 按任务查询目录；只有显式 `SPINE_MCP_TOOL_DISCOVERY=dynamic` 才可用 `spine_set_tool_groups` 改连接可见组，需另验目标客户端的列表更新。比较策略升级为 v4：腕位、站距、握距等统一按躯干长归一；旧比较/批准须重验，v3 历史不改写。
+
+同日后续：按用户要求将部件观测改为“可靠轮廓与误差圆优先，遮挡时回退两点连线并输出近似方向”，不因缺轮廓而无结果；不编造未知坐标或半径。当前构建及 **213/213** 完整回归通过；[真实参考回退复测](docs/plans/reference-fallback-20261025.json)。与成熟类似 MCP 的差距已按当前源码重新分类，见 [逐项复查与收尾方向](docs/MCP差距逐项复查与收尾方向-20261025.md)。下文 212 项是首轮缩放诊断批次。
+
+2026-10-25：新增身体部件观测与单臂透视缩放诊断，工具共 **102** 个，最终构建及 **212/212** 回归通过。`spine_analyze_reference_parts` 分析关节误差圆与轮廓主轴；`spine_adjust_pose` 的 `frame.perspective` 和隔离 C2 `setPosePerspective` 接通实际 runtime、Host 回放及撤销。真实 npc1 温和缩短数值通过，强缩短失败保留；三张官方 player 均完成截图核验，源输入未变。能力仅诊断，不能批准为正式姿态或提交源动画，完整参考动作仍未交付。[实现、用法与边界](docs/身体部件观测与透视缩放-20261025.md)。下文 101 个工具及性能均为对应旧批次。
+
+2026-10-24 state 性能已在实际部署范围内收敛：测试驱动、Host、MCP 独立进程，实际 npc1 固定站姿候选三轮 90 样本全部通过原预算，严格 HostClient state P95 **12.39ms**、frame P95 **25.51ms**。构建及 **203/203** 回归通过，真实 npc1 和合成源事务的 WebView2 各 29 项通过，优化前后 player 像素一致。发现文件并发读取、请求内真实身份去重、固定请求根及已核验 runtime 复用均保留原门禁。[本批证据](docs/plans/host-state-performance-closeout-20261024.json)。
+
+此前 28.52ms 及中间混进程第三轮 24.31ms 的失败记录保留；新结果不覆盖旧构建或其它测量拓扑。第二完整真实角色、Spine 编辑器导入、完整真实动作及实际两周观察/人工启用仍未齐，整工单尚未验收，生产保持观察。
+
+2026-10-24 C2-4c 工程链路已隔离接通：`spine_retarget_motion` 用当前完整版本制作精确 4.1.24 拟合候选、原速 GIF 和姿态联系图；准备令牌不代表批准。`spine_review_animation` 还须当前 player manifest 与五项独立理由。显式 `spine_host_pin{intent:"animation"}` 后，`spine_host_commit{intent:"animation",animationCandidateHash,expectedHash,reviewToken,outputPath,requestId,dryRun:false}` 才经 MCP 复验及 Host 备份/原子替换单个动画。motion、mapping 和校准报告原字节不改，后续只认可已确认 journal/备份的动画来源链。构建及 **198/198 回归通过**，实际 WebView2 **29 项**合成链路通过；[桌面证据](docs/plans/host-winforms-2026-10-23T19-45-46-267Z.json)。真实美术、第二完整角色、Spine 编辑器导入、真实负载性能及两周观察仍待验；生产继续 C1 观察，D 按原条件评估。下文均按各自日期追溯。
+
+2026-10-24 C2-4b 资产流程已隔离接通：创建姿态、参考适配、参考局部修正和 motion 生成在 attached 模式必须完整 `expectedRevision`；默认预演，`dryRun:false` 仅暂存候选，再用 `spine_host_commit{intent:"asset",assetCandidateHash,outputPath,requestId,dryRun:false}` 独立保存。Host 备份后原子创建、记录角色/阶段来源，保存不切换当前文档，须显式打开新资产。初始 skeleton 可用 `spine_host_pin{intent:"asset"}` 绑定为新站姿来源，源骨架仍只读。参考失败仅诊断，不暂存或授权；新姿态不继承批准。构建及 **189/189 回归通过**。[本批证据](docs/plans/host-c2-assets-20261024.json)。C2-4c 动画审查/提交、真实角色视觉及编辑器导入仍待完成，生产继续 C1 观察；下列 184 项等记录均为此前批次。
+
+2026-10-23 C2-4b 计算基础续接：姿态创建、参考适配与 motion 生成新增明确内存输入入口，调用方提供原始姿态值后仍须通过数值、参考及证据审查；计算入口不保存文件。motion 生成和复核共用阶段、标准站姿、角色、地面与参考绑定门禁。构建及 **184/184 回归通过**。这是 C2-4b 的内部基础；跨类型资产登记、Host 原子保存及这些高级工具的 attached 调用尚未接通。工具仍 101 个，生产写入继续关闭。[本批证据](docs/plans/host-c2-asset-data-20261023.json)。下列 180/175 项为此前各批历史记录。
+
+2026-10-23 C2-4a 续接：`spine_set_pose_target`、`spine_set_pose_channel`、`spine_batch_pose_ops`、`spine_adjust_pose` 已支持隔离 C2 attached 内存命令，必须完整 expectedRevision、不得给 outputPosePath；保存另用 Host commit。detached 保留新路径语义，不吞 Host 版本。构建及 **180/180 回归通过**；真实桌面仅验证合成诊断姿态，不批准真实美术。C2-4b/c 的参考/资产创建与动画提交仍未完成，生产不开启 C2。[本批证据](docs/plans/host-c2-pose-commands-20261023.json)。下文 C2-3 的 175 项是上一批历史记录。
+
+2026-10-23 C2-1～3 已实现：pose 参数/呈现原子批次，以及 motion/skeleton 显式动画、时间与 setup 观察、MCP 只读候选、frame/player 截图和跨文档草稿恢复。构建及 **175/175 回归通过**；实际能力由 `capabilities.editing/viewing` 声明，`c2-pose` 仍仅隔离研发，生产 C1、公开写入关闭。真实 WebView2 合成夹具不代表真实美术或完整动画批准，动画提交及 C2-4 尚未交付。C1 固定候选继续独立采样，已保留一次未知退出，中断不补时。[C2-3 证据](docs/plans/host-c2-playback-20261023.json)、[前两批证据](docs/plans/host-c2-pose-20261023.json)、[主工单](docs/plans/host-evolution.md#571-c2-研发增量2026-10-23用户指示开始)。
+
 2026-10-23 观察与启停补充：已增加 `node dist/hostObservationCli.js start|status|stop|report|review|disable --workspace "工作区绝对路径"`，用于真实 60 秒采样、签名报告、人工评审和安全关闭。生产默认 observer，只有 `SPINE_HOST_WRITE=1` 与有效 `SPINE_HOST_ROLLOUT_APPROVAL` 同时满足才能限定启用 C1，不能手填通过标志；当前未审批或启用。用户选择先在已验收 npc1 站姿隔离工程试运行，两周与充分使用仍须实测。完整步骤见 [Host 长期观察与启用流程](docs/Host长期观察与启用流程.md)；工具仍为 101 个，端口及一键启动脚本不变。下列 154 项及性能数据是该新增功能之前的技术基线，最新补验另记。
 
-项目进展（2026-10-23）：[当前主线与阻塞](docs/项目进展.md)。合计 101 个工具，源码 0.2.0。C1 单手闭环已在真实 npc1 无参考站姿完成编辑、撤销、官方 player 截图、逐项视觉审查、授权保存和重开复验，原资源未变。新增长期观察及限定启停后，构建、160 项完整回归及真实桌面 28 项通过；编辑三轮总体 P95 114.20ms，但首轮 120.50ms 超预算，不能标逐轮全通过。事务三轮通过。npc1 只读试运行已开始，两周观察与人工启用评审尚未完成；[最新证据索引](docs/plans/host-c1-observation-implementation-20261023.json)。C2 未实施，攻击准备姿态仍有 7 项必要失败，旧 exe 未更新。
+项目进展（2026-10-23）：[当前主线与阻塞](docs/项目进展.md)。合计 101 个工具，源码 0.2.0。C1 单手闭环已在真实 npc1 无参考站姿完成编辑、撤销、官方 player 截图、逐项视觉审查、授权保存和重开复验，原资源未变。固定 C1 候选的 160 项回归及真实桌面 28 项通过；编辑三轮总体 P95 114.20ms，但首轮 120.50ms 超预算，不能标逐轮全通过。事务三轮通过，两周观察与人工启用评审仍未完成；[C1 候选索引](docs/plans/host-c1-observation-implementation-20261023.json)。该数据不为新增 C2 构建背书。攻击准备姿态仍有 7 项必要失败，旧 exe 未更新。
 
 源码构建后可用 `npm run host` 启动独立观察页。MCP 可调用 `spine_create_project` 显式预演工程初始化，再用 `spine_host_open` 打开已绑定文档；未启动 Host 时可使用镜像。初始化不覆盖现有 manifest，不修改角色资源。默认查询不隐式求解，需重算时显式调用 `spine_solve_pose` 或设置 `recheck:true`。
 

@@ -1,3 +1,4 @@
+import { loadMotionArmCalibrations, assertCalibrationFrame } from './armCalibration.js';
 import { readFile } from "node:fs/promises";
 import { readSpineDocument, resolveWorkspacePath, writeGeneratedAnimation, validateSpineJson, validateOfficialAnimationSpec, type ToolContext } from "./spineJson.js";
 import { readCharacterMapping, readMotionDefinition, validateMapping, validateMotion, type CharacterMapping, type MotionDefinition, type MotionBuildOptions } from "./motionEngine.js";
@@ -7,6 +8,7 @@ import { fitCubicBezierTimeline, lockFootContact, sampleTimeline, solveTwoBoneIK
 
 import {applyPosePresentation,presentationTimelines} from './posePresentation.js';
 import { taskCheckpoint,reportProgress } from './taskControl.js';
+import { solvePerspectiveArm, solveCalibratedArm, validatePerspective, assertFormalPerspectiveAbsent } from './perspective.js';
 type SemanticFrame = NonNullable<MotionDefinition["frames"]>[number];
 const roles = ["leftFoot", "rightFoot", "leftHand", "rightHand"] as const;
 const angle = (bone: any) => Math.atan2(bone.c, bone.a) * 180 / Math.PI;
@@ -26,6 +28,7 @@ function poseAnimation(json: any, poses: any[], channels: string[]) {
     for (const pose of poses) {
       const value = pose.bones[name] ?? { rotate: 0, translate: { x: 0, y: 0 } };
       animation.bones[name].rotate.push({ time: pose.time, value: value.rotate ?? 0 });
+      if(poses.some(p=>p.bones[name]?.scale)){animation.bones[name].scale??=[];animation.bones[name].scale.push({time:pose.time,x:value.scale?.x??1,y:value.scale?.y??1});}
       animation.bones[name].translate.push({ time: pose.time, x: value.translate?.x ?? 0, y: value.translate?.y ?? 0 });
     }
   }
@@ -38,6 +41,10 @@ export function semanticAt(motion: MotionDefinition, t: number): SemanticFrame {
   const result: SemanticFrame = { time: t, body: { x: group(f => f.body, "x"), y: group(f => f.body, "y"), rotate: group(f => f.body, "rotate") }, targets: {}, head: sampleTimeline(frames.map(f => ({ time: f.time, value: f.head ?? 0 })), t, "value"), channels: {}, bendDirections: preceding.bendDirections, action: preceding.action, presentation:preceding.presentation };
   for (const key of roles) if (frames[0].targets[key]) result.targets[key] = { x: group(f => f.targets[key], "x"), y: group(f => f.targets[key], "y"), angle: group(f => f.targets[key], "angle"), contact: preceding.targets[key]?.contact ?? false };
   for (const key of Object.keys(frames[0].channels ?? {})) result.channels![key] = { rotate: group(f => f.channels?.[key], "rotate"), x: group(f => f.channels?.[key], "x"), y: group(f => f.channels?.[key], "y") };
+  if(preceding.perspective){
+    if(motion.frames!.some(f=>!f.perspective||f.perspective.mode!==preceding.perspective!.mode||f.perspective.calibrationHash!==preceding.perspective!.calibrationHash||f.perspective.calibrationPath!==preceding.perspective!.calibrationPath||f.perspective.limb!==preceding.perspective!.limb))throw new Error('透视 motion 所有帧必须使用同一独立已审查校准；不能插值切换模式或绑定。');
+    result.perspective={...preceding.perspective,upper:group(f=>f.perspective,'upper'),lower:group(f=>f.perspective,'lower'),...(preceding.perspective.mode==='calibrated'?{widthUpper:sampleTimeline(frames.map(f=>({time:f.time,v:f.perspective?.widthUpper??1})),t,'v'),widthLower:sampleTimeline(frames.map(f=>({time:f.time,v:f.perspective?.widthLower??1})),t,'v')}:{})};
+  }
   return result;
 }
 
@@ -108,10 +115,12 @@ export function applyFollowThrough(mapping: CharacterMapping, motion: MotionDefi
   });
 }
 
-export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionRuntime>>, mapping: CharacterMapping, f: SemanticFrame, groundY = 0, follows: Array<{bone:string; value:number}> = []) {
+export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionRuntime>>, mapping: CharacterMapping, f: SemanticFrame, groundY = 0, follows: Array<{bone:string; value:number}> = [],perspectiveCalibration?:any) {
+  if(f.perspective!==undefined)validatePerspective(f.perspective);
+  if(f.perspective&&!f.targets?.[f.perspective.limb==='leftArm'?'leftHand':'rightHand'])throw new Error('透视诊断缺少对应手目标。');
   const channels = [...new Set([mapping.bones.body, mapping.bones.head, ...Object.values(mapping.bones.channels ?? {}), ...[mapping.bones.leftLeg, mapping.bones.rightLeg, mapping.bones.leftArm, mapping.bones.rightArm].flatMap(c => c ?? []), ...(mapping.bones.follow ?? []).map(f => f.bone)].filter(Boolean) as string[])];
   const skeleton = runtime.sample(undefined, 0, mapping.skin);
-  const unreachable: any[] = [];
+  const unreachable: any[] = []; let perspective:any;
   const scale = mapping.calibration!.scale, origin = mapping.calibration!.origin!;
   const time = f.time;
     applyAttachments(skeleton, mapping);
@@ -130,6 +139,15 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
       const chain = mapping.bones[limb], anchor = mapping.bones.anchors?.[role];
       if (!chain || chain.length !== 3 || !anchor || anchor.bone !== chain[2]) throw new Error(`${role} 缺少三段链或末端锚点。`);
       const [a, b, c] = chain.map(n => skeleton.findBone(n)!);
+      if(f.perspective?.limb===limb){
+        const bend=f.bendDirections?.[limb]??mapping.bones.bendDirections?.[limb];
+        if(!bend)throw new Error(`${limb} 未确认弯曲方向。`);
+        if((mapping.bones.follow??[]).some(v=>chain.includes(v.bone)))throw new Error('透视诊断臂链被 follow 接管。');
+        if(f.perspective.mode!=='diagnostic'){if(!perspectiveCalibration)throw new Error('正式/校准样本缺少已核验校准数据。');assertCalibrationFrame(perspectiveCalibration,f);}
+        perspective=f.perspective.mode==='diagnostic'?solvePerspectiveArm(skeleton,mapping,f.perspective,target,bend):solveCalibratedArm(skeleton,mapping,f.perspective,target,bend,perspectiveCalibration);
+        if(!perspective.ok)unreachable.push({time,role,error:perspective.error,branchOk:perspective.branchOk});
+        continue;
+      }
       const desiredAngle = target.angle ?? anchor.angle ?? angle(c);
       const world: Point = [origin[0] + target.x * scale, origin[1] + target.y * scale];
       if (target.contact) world[1] = origin[1] + (groundY) * scale;
@@ -154,9 +172,23 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
       const limit = mapping.bones.jointLimits?.[name]; rotation = Math.max(limit?.min ?? -Infinity, Math.min(limit?.max ?? Infinity, rotation));
       b.rotation = b.data.rotation + rotation;
       bones[name] = { rotate: rotation, translate: { x: b.x - b.data.x, y: b.y - b.data.y } };
+      if(f.perspective&&mapping.bones[f.perspective.limb]?.slice(0,f.perspective.mode==='diagnostic'?2:3).includes(name))bones[name].scale={x:b.scaleX/b.data.scaleX,y:b.scaleY/b.data.scaleY};
     }
   skeleton.updateWorldTransform();
-  return { skeleton, bones, unreachable };
+  if(perspective&&f.perspective){
+    const role=f.perspective.limb==='leftArm'?'leftHand':'rightHand',target=f.targets[role]!,chain=mapping.bones[f.perspective.limb]!;
+    const [a,b,c]=chain.map(n=>skeleton.findBone(n)!),anchor=mapping.bones.anchors![role]!;
+    const x=c.worldX+c.a*anchor.point[0]+c.b*anchor.point[1],y=c.worldY+c.c*anchor.point[0]+c.d*anchor.point[1];
+    perspective.error=Math.hypot(x-origin[0]-target.x*scale,y-origin[1]-target.y*scale);
+    const cross=(b.worldX-a.worldX)*(c.worldY-b.worldY)-(b.worldY-a.worldY)*(c.worldX-b.worldX);
+    const bend=f.bendDirections?.[f.perspective.limb]??mapping.bones.bendDirections?.[f.perspective.limb];
+    perspective.branchOk=Math.abs(cross)<1e-8||Math.sign(cross)===bend;
+    if(target.angle!==undefined)perspective.angleError=Math.abs(wrapAngle(angle(c)-target.angle));
+    if(perspectiveCalibration){perspective.actualLengths=[Math.hypot(b.worldX-a.worldX,b.worldY-a.worldY),Math.hypot(c.worldX-b.worldX,c.worldY-b.worldY)];perspective.actualRatios=perspective.actualLengths.map((v:number,i:number)=>v/perspectiveCalibration.baseline.projection[i]);perspective.projectionError=Math.max(Math.abs(perspective.actualRatios[0]-f.perspective.upper),Math.abs(perspective.actualRatios[1]-f.perspective.lower));}
+    perspective.ok=perspective.error<=.01&&perspective.angleError<=1e-4&&perspective.branchOk&&(perspective.projectionError??0)<=1e-4&&perspective.compensationOk!==false;
+    if(!perspective.ok&&!unreachable.some(v=>v.role===role))unreachable.push({time,role,error:perspective.error,branchOk:perspective.branchOk});
+  }
+  return { skeleton, bones, unreachable, ...(perspective?{perspective}:{}) };
 }
 
 function ensureAnimationDuration(animation:any,body:string,duration:number) {
@@ -166,7 +198,8 @@ function ensureAnimationDuration(animation:any,body:string,duration:number) {
 
 export async function buildSemanticAnimation(json: any, mapping: CharacterMapping, motion: MotionDefinition, options: MotionBuildOptions, context: ToolContext = {}) {
   const runtime=await loadMotionRuntime(json,options.atlasPath??mapping.atlasPath!,context);
-  const iterator=buildSemanticAnimationSteps(json,mapping,motion,options,runtime);let step=iterator.next();
+  const calibrations=await loadMotionArmCalibrations(motion,context);
+  const iterator=buildSemanticAnimationSteps(json,mapping,motion,options,runtime,calibrations);let step=iterator.next();
   while(!step.done){await taskCheckpoint('完整动画计算');reportProgress(step.value.current,step.value.total,step.value.message);step=iterator.next();}
   reportProgress(1,1,'完整动画计算结束，仍须 runtime 和视觉审查');return step.value;
 }
@@ -174,8 +207,9 @@ export async function buildSemanticAnimation(json: any, mapping: CharacterMappin
 export function buildSemanticAnimationData(json:any,mapping:CharacterMapping,motion:MotionDefinition,options:MotionBuildOptions,runtime:Awaited<ReturnType<typeof loadMotionRuntime>>){
   const iterator=buildSemanticAnimationSteps(json,mapping,motion,options,runtime);let step=iterator.next();while(!step.done)step=iterator.next();return step.value;
 }
-export function* buildSemanticAnimationSteps(json:any,mapping:CharacterMapping,motion:MotionDefinition,options:MotionBuildOptions,runtime:Awaited<ReturnType<typeof loadMotionRuntime>>){
+export function* buildSemanticAnimationSteps(json:any,mapping:CharacterMapping,motion:MotionDefinition,options:MotionBuildOptions,runtime:Awaited<ReturnType<typeof loadMotionRuntime>>,calibrations=new Map<string,any>()){
   validateMapping(mapping,json);validateMotion(motion);
+  for(const f of motion.frames??[])assertFormalPerspectiveAbsent(f);
   const scale = mapping.calibration!.scale, origin = mapping.calibration!.origin!, duration = options.duration ?? motion.duration;
   if (!Number.isFinite(duration) || duration <= 0) throw new Error("duration 必须是正数。");
   const count = Math.max(motion.frames!.length, Math.ceil(duration * 120) + 1);
@@ -208,7 +242,7 @@ export function* buildSemanticAnimationSteps(json:any,mapping:CharacterMapping,m
   for (const [index,inputTime] of orderedTimes.entries()) {
     if(index%16===0)yield{current:index,total:orderedTimes.length,message:'计算完整动画的约束采样'};
     const time = duration * inputTime / motion.duration, f = semanticAt(motion, inputTime);
-    const solved = solveSemanticPose(runtime, mapping, f, motion.groundY ?? 0, applyFollowThrough(mapping, motion, inputTime, scale));
+    const solved = solveSemanticPose(runtime, mapping, f, motion.groundY ?? 0, applyFollowThrough(mapping, motion, inputTime, scale),f.perspective?calibrations.get(f.perspective.calibrationHash!):undefined);
     const bones = solved.bones;
     unreachable.push(...solved.unreachable);
     poses.push({ time, bones });
@@ -223,7 +257,7 @@ export function* buildSemanticAnimationSteps(json:any,mapping:CharacterMapping,m
   if(motion.frames!.some(f=>f.presentation)){const visual=presentationTimelines(json,mapping,motion,duration);Object.assign(dense,visual);Object.assign(fitted,structuredClone(visual));}
   for (const [bone, tls] of Object.entries(fitted.bones) as any) for (const [kind, frames] of Object.entries(tls) as any) {
     yield{current:0,total:1,message:`拟合 ${bone}/${kind} 曲线`};
-    const fit = fitCubicBezierTimeline(frames, kind === "rotate" ? ["value"] : ["x", "y"], kind === "rotate" ? options.rotationTolerance ?? .3 : options.translationTolerance ?? .07,8,0,kind==='rotate'?179:Infinity);
+    const fit = fitCubicBezierTimeline(frames, kind === "rotate" ? ["value"] : ["x", "y"], kind === "rotate" ? options.rotationTolerance ?? .3 : kind==='scale'?.00005:options.translationTolerance ?? .07,8,0,kind==='rotate'?179:Infinity);
     tls[kind] = fit.frames; stats.push({ bone, timeline: kind, originalCount: fit.originalCount, compressedCount: fit.compressedCount, maxError: fit.maxError });
   }
   ensureAnimationDuration(fitted,mapping.bones.body,duration);
@@ -240,13 +274,14 @@ async function evaluateResult(json: any, mapping: CharacterMapping, motion: Moti
   const issues: string[] = [], scale = mapping.calibration!.scale, origin = mapping.calibration!.origin!;
   let maxFootError = 0, maxHandError = 0, maxVertexError = 0, maxTargetError = 0, loopError = 0, maxRotationError = 0, maxTranslationError = 0;
   let worstHandTime = 0, worstFootTime = 0, worstHandRole = '';
-  const count = Math.max(337, Math.ceil(duration * 240) + 1), first: any = {};
+  const uniformCount = Math.max(337, Math.ceil(duration * 240) + 1), first: any = {};
+  const times=[...new Set([...Array.from({length:uniformCount},(_,i)=>duration*i/(uniformCount-1)),...(motion.frames??[]).map(frame=>duration*frame.time/motion.duration)])].sort((a,b)=>a-b),count=times.length;
   const denseName = "__motion_dense_check";
   let denseRuntime: Awaited<ReturnType<typeof loadMotionRuntime>> | undefined;
   if (dense) { const copy = structuredClone(json); copy.animations[denseName] = dense; denseRuntime = await loadMotionRuntime(copy, mapping.atlasPath!, context); }
   for (let i = 0; i < count; i++) {
     if(i%16===0){await taskCheckpoint('完整动画 runtime 验证');reportProgress(i,count,'回读完整动画的实际骨骼与网格');}
-    const t = duration * i / (count - 1), f = semanticAt(motion, motion.duration * i / (count - 1)), skeleton = runtime.sample(animationName, t, mapping.skin);
+    const t = times[i], f = semanticAt(motion, motion.duration * t / duration), skeleton = runtime.sample(animationName, t, mapping.skin);
     for (const bone of skeleton.bones) {
       if (![bone.worldX, bone.worldY, bone.a, bone.b, bone.c, bone.d].every(Number.isFinite)) issues.push(`骨骼 ${bone.data.name} 出现非有限变换。`);
       if (i === 0) first[bone.data.name] = [bone.worldX, bone.worldY, bone.a, bone.b, bone.c, bone.d];
@@ -281,6 +316,25 @@ async function evaluateResult(json: any, mapping: CharacterMapping, motion: Moti
   return { ok: issues.length === 0, issues: [...new Set(issues)], samples: count, loopError, maxFootError, maxHandError, worstHandTime, worstHandRole, worstFootTime, maxTargetError, maxRotationError: dense ? maxRotationError : null, maxTranslationError: dense ? maxTranslationError : null, maxVertexError: dense ? maxVertexError : null, runtime: "spine-core 4.1.56", meshComparison: dense ? "压缩结果与同角色稠密求解结果" : "未提供稠密基线，未评估压缩顶点偏差" };
 }
 
+/** 明确加载值的完整候选计算；不保存资产/审查记录，不更新 mapping。文件适配和 Host MCP 共用。 */
+export async function prepareSemanticAnimationData(json:any,mapping:CharacterMapping,motion:MotionDefinition,args:MotionBuildOptions,context:ToolContext={}){
+  json=structuredClone(json);mapping=structuredClone(mapping);motion=structuredClone(motion);args=structuredClone(args);
+  const build = await buildSemanticAnimation(json, mapping, motion, args, context);
+  const candidate = structuredClone(json); candidate.animations ??= {}; candidate.animations[args.animation] = build.animation;
+  let structure = validateSpineJson(candidate), spec = validateOfficialAnimationSpec(candidate);
+  let validation = await evaluateResult(candidate, mapping, motion, args.animation, { ...args, duration: build.duration }, context, build.dense);
+  // 收紧拟合以消除接触/末端误差，不调整验收阈值。
+  for (let attempt = 1; attempt <= 6 && !validation.ok && !build.unreachable.length && validation.issues.some(x => /压缩误差|脚底接触误差|手腕误差/.test(x)); attempt++) {
+    const fitted = structuredClone(build.dense),retryStats:any[]=[];
+    for (const [bone, tls] of Object.entries(fitted.bones) as any) for (const [kind, frames] of Object.entries(tls)) { const fit = fitCubicBezierTimeline(frames as any, kind === 'rotate' ? ['value'] : ['x','y'], (kind === 'rotate' ? args.rotationTolerance ?? .3 : args.translationTolerance ?? .07) / (4 ** attempt)); tls[kind] = fit.frames; retryStats.push({ bone, timeline: kind, originalCount: fit.originalCount, compressedCount: fit.compressedCount, maxError: fit.maxError, runtimeRefitAttempt: attempt }); }
+    ensureAnimationDuration(fitted,mapping.bones.body,build.duration);candidate.animations[args.animation]=fitted;build.animation=fitted;build.stats=retryStats;
+    structure=validateSpineJson(candidate);spec=validateOfficialAnimationSpec(candidate);
+    validation=await evaluateResult(candidate,mapping,motion,args.animation,{...args,duration:build.duration},context,build.dense);
+  }
+  if(build.unreachable.length){validation.ok=false;validation.issues.push(`存在 ${build.unreachable.length} 个不可达手脚目标。`);}
+  return {candidate,build,structure,spec,validation,ok:structure.ok&&spec.ok&&validation.ok};
+}
+
 export async function retargetSemanticMotion(args: MotionBuildOptions, context: ToolContext = {}) {
   return (await import('./jobTools.js')).withFileLock(args.filePath, context, () => retargetSemanticMotionLocked(args, context));
 }
@@ -291,24 +345,7 @@ async function retargetSemanticMotionLocked(args: MotionBuildOptions, context: T
   const calibrationReport = await assertConfirmedMapping(mapping, document.json, document.hash, context);
   if (args.expectedHash && args.expectedHash !== document.hash) throw new Error("expectedHash mismatch。");
   if (args.dryRun === false && !args.expectedHash) throw new Error("真实写入必须传入 dryRun 返回的 expectedHash 和 reviewToken。");
-  const build = await buildSemanticAnimation(document.json, mapping, motion, args, context);
-  const candidate = structuredClone(document.json); candidate.animations ??= {}; candidate.animations[args.animation] = build.animation;
-  let structure = validateSpineJson(candidate), spec = validateOfficialAnimationSpec(candidate);
-  let validation = await evaluateResult(candidate, mapping, motion, args.animation, { ...args, duration: build.duration }, context, build.dense);
-  // 曲线压缩也会放大末端接触/手腕误差；收紧拟合后重新验证，不能放宽门槛。
-  for (let attempt = 1; attempt <= 6 && !validation.ok && !build.unreachable.length && validation.issues.some(x => /压缩误差|脚底接触误差|手腕误差/.test(x)); attempt++) {
-    const fitted = structuredClone(build.dense);
-    const retryStats: any[] = [];
-    for (const [bone, tls] of Object.entries(fitted.bones) as any) for (const [kind, frames] of Object.entries(tls)) { const fit = fitCubicBezierTimeline(frames as any, kind === 'rotate' ? ['value'] : ['x','y'], (kind === 'rotate' ? args.rotationTolerance ?? .3 : args.translationTolerance ?? .07) / (4 ** attempt)); tls[kind] = fit.frames; retryStats.push({ bone, timeline: kind, originalCount: fit.originalCount, compressedCount: fit.compressedCount, maxError: fit.maxError, runtimeRefitAttempt: attempt }); }
-    ensureAnimationDuration(fitted,mapping.bones.body,build.duration);
-    candidate.animations[args.animation] = fitted;
-    build.animation = fitted;
-    build.stats = retryStats;
-    structure = validateSpineJson(candidate); spec = validateOfficialAnimationSpec(candidate);
-    validation = await evaluateResult(candidate, mapping, motion, args.animation, { ...args, duration: build.duration }, context, build.dense);
-  }
-  if (build.unreachable.length) { validation.ok = false; validation.issues.push(`存在 ${build.unreachable.length} 个不可达手脚目标。`); }
-  const ok = structure.ok && spec.ok && validation.ok;
+  const {candidate,build,structure,spec,validation,ok}=await prepareSemanticAnimationData(document.json,mapping,motion,args,context);
   const workflow=await (await import('./poseWorkflow.js')).poseGate(motion,context);
   if(workflow.ok&&workflow.sourceFingerprint!==(await (await import('./poseWorkflow.js')).characterFingerprint(args.filePath,args.mappingPath,context)).fingerprint){workflow.ok=false;workflow.issues.push('姿态审查与当前目标角色不匹配。');}
   const tokenData = { poseReview:workflow.fingerprint, fileHash: document.hash, mapping: mappingFingerprint(mapping), motion: hashObject(motion), animation: args.animation, value: hashObject(build.animation), thresholds: [args.footContactTolerance, args.handTolerance, args.vertexTolerance], overwrite: args.overwrite ?? false };

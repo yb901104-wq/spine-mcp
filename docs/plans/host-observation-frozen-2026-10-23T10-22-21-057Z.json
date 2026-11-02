@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-23T10:22:21.057Z",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "frozenInstall": "D:/AI_cc/spine test/host-observation-builds/c1-2026-10-23T10-22-13-507Z",
+  "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+  "before": {
+    "running": true,
+    "runId": "edc9184e-4d41-4534-9ed3-b1026702c501",
+    "file": ".spine-mcp/observation/runs/edc9184e-4d41-4534-9ed3-b1026702c501.jsonl",
+    "samples": 24,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "after": {
+    "running": true,
+    "runId": "a535b951-8975-4dbf-af2a-26f1c8e4603e",
+    "file": ".spine-mcp/observation/runs/a535b951-8975-4dbf-af2a-26f1c8e4603e.jsonl",
+    "samples": 1,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "writeMode": "observer",
+  "endpoint": "http://127.0.0.1:40590",
+  "pid": 47648,
+  "note": "进入 C2 研发前冻结完整编译版及依赖，原采集正常结束、同候选新会话继续；无重置历史或启用写入。"
+}

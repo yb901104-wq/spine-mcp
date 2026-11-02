@@ -1,0 +1,8 @@
+{
+  "startedAt": "2026-10-23T19:28:13.147Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-28-13-144Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "error": "磁盘或依赖发生变化：a.pose.json，请保留未提交修改并显式处理重载。",
+  "passed": false,
+  "finishedAt": "2026-10-23T19:28:15.091Z"
+}

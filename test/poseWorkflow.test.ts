@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,readFile,rm} from 'node:fs/promises';
+import {mkdtemp,writeFile,readFile,readdir,rm} from 'node:fs/promises';
 import os from 'node:os';import path from 'node:path';
 import {createCanvas} from '@napi-rs/canvas';
 import {createMappingDraft,calibrateMapping,confirmMapping} from '../src/mappingTools.js';
@@ -13,6 +13,7 @@ import {readSpineDocument} from '../src/spineJson.js';
 import {createReferencePose,renderReferencePoseSheet,reviewReferencePose,referenceRoles,referenceChecks} from '../src/referencePose.js';
 import { withV2 } from './helpers/referenceV2.js';
 import {fitCubicBezierTimeline} from '../src/motionMath.js';
+import {createPoseDraftData,requireReviewedPoseData,buildMotionFromPosesData,poseGateData,poseFingerprint} from '../src/poseWorkflow.js';
 
 async function fixture(prefix='a',factor=1,root?:string){const workspaceRoot=root??await mkdtemp(path.join(os.tmpdir(),'spine-pose-')),c={workspaceRoot},n=(v:string)=>prefix+'_'+v;
  const bones:any[]=[{name:n('root')},{name:n('body'),parent:n('root'),y:80*factor},{name:n('head'),parent:n('body'),y:25*factor}],m:any={character:prefix,version:2,atlasPath:'empty.atlas',bones:{root:n('root'),body:n('body'),head:n('head'),anchors:{},bendDirections:{},follow:[]}};
@@ -21,6 +22,75 @@ async function fixture(prefix='a',factor=1,root?:string){const workspaceRoot=roo
  const filePath=prefix+'.json',mappingPath=prefix+'.mapping.json';await writeFile(path.join(workspaceRoot,filePath),JSON.stringify({skeleton:{spine:'4.1.24'},bones,slots:[],skins:[],animations:{original:{}}}));await writeFile(path.join(workspaceRoot,'empty.atlas'),'');await createMappingDraft({filePath,mappingPath,mapping:m,dryRun:false},c);await calibrateMapping({filePath,mappingPath,dryRun:false},c);await confirmMapping({filePath,mappingPath,confirmedBy:'test',semanticChecks:['body','head','sides','chains','anchors','bendDirections','setupPose','followBones'],dryRun:false},c);
  const frame={time:0,body:{x:0,y:.05,rotate:0},head:0,channels:{},targets:{leftFoot:{x:-.15,y:0,angle:-90,contact:true},rightFoot:{x:.15,y:0,angle:-90,contact:true},leftHand:{x:-.15,y:.6,angle:-90},rightHand:{x:.15,y:.6,angle:-90}}};return {c,filePath,mappingPath,frame,prefix};}
 async function confirmedStanding(f:any){const posePath=f.prefix+'.standing.json';await createPoseDraft({...f,posePath,id:'standing',kind:'standing',frame:f.frame,dryRun:false},f.c);assert.equal((await solvePose({posePath,dryRun:false},f.c)).ok,true);const rendered=await renderPoseComparison({posePaths:[posePath]},f.c);await reviewPose({posePath,manifestPath:rendered.manifestPath,decision:'approved',reviewedBy:'test-visual-stub',reason:'测试记录，不代表实际美术验收',checks:poseChecks,dryRun:false},f.c);return posePath;}
+
+test('C2 高层内存入口：姿态创建不重读旧标准、不继承批准、不写候选或修改调用参数',async()=>{
+ const f=await fixture();try{
+  const standard=await confirmedStanding(f),memory=await requireReviewedPose(standard,f.c),original=structuredClone(memory);
+  const files=await readdir(f.c.workspaceRoot,{recursive:true});
+  // 同名磁盘记录不可用，内存值仍须走完整审查；不通过暂存 JSON 来喂旧入口。
+  await writeFile(path.join(f.c.workspaceRoot,standard),'{}');
+  const args={filePath:f.filePath,mappingPath:f.mappingPath,standardPosePath:standard,posePath:'memory-action.json',kind:'action',id:'memory-action',frame:{head:3},dryRun:false},before=structuredClone(args);
+  let reads=0;const pose=await createPoseDraftData(args,f.c,async p=>{assert.equal(p,standard);reads++;return memory;});
+  assert.equal(reads,1);assert.equal(pose.status,'draft');assert.equal(pose.review,undefined);assert.equal(pose.solution,undefined);
+  assert.equal(pose.frame.head,3);assert.deepEqual(pose.frame.targets,memory.frame.targets);assert.deepEqual(memory,original);assert.deepEqual(args,before);
+  assert.deepEqual(await readdir(f.c.workspaceRoot,{recursive:true}),files);assert.equal(await readFile(path.join(f.c.workspaceRoot,standard),'utf8'),'{}');
+  await assert.rejects(createPoseDraftData(args,f.c));
+  const unapproved=structuredClone(memory);delete unapproved.review;
+  await assert.rejects(createPoseDraftData(args,f.c,async()=>unapproved),/未确认/);
+  await assert.rejects(createPoseDraftData({...args,standardPosePath:'../outside.json'},f.c,async()=>{throw new Error('不应调用越界读取器');}),/workspace root/);
+ }finally{await rm(f.c.workspaceRoot,{recursive:true,force:true});}
+});
+
+test('C2 内存审查：异步调用固定输入，旧磁盘批准不覆盖内存失效，证据变化仍拒绝',async()=>{
+ const f=await fixture();try{
+  const standard=await confirmedStanding(f),memory=await requireReviewedPose(standard,f.c),before=structuredClone(memory);
+  const pending=requireReviewedPoseData(memory,f.c);memory.frame.head=20;memory.review.decision='rejected';
+  assert.deepEqual(await pending,before);
+  await assert.rejects(requireReviewedPoseData(memory,f.c),/未确认/);
+  assert.equal((await requireReviewedPose(standard,f.c)).status,'confirmed');
+  await writeFile(path.join(f.c.workspaceRoot,before.review.evidence[0].filePath),'tampered');
+  await assert.rejects(requireReviewedPoseData(before,f.c),/证据已改变/);
+ }finally{await rm(f.c.workspaceRoot,{recursive:true,force:true});}
+});
+
+test('C2 motion 内存入口：重复路径只读一次、零输出、输入隔离，生成及复核使用同一门禁',async()=>{
+ const f=await fixture();try{
+  const standard=await confirmedStanding(f),memory=await requireReviewedPose(standard,f.c),before=structuredClone(memory);
+  const args={standardPosePath:standard,keyPoses:[{posePath:standard,time:0,stageId:'start'},{posePath:'./'+standard,time:.3,stageId:'end'}],motionPath:'memory-motion.json',name:'idle',duration:.3,loop:true,dryRun:false};
+  const disk=await buildMotionFromPoses({...args,dryRun:true},f.c);
+  await writeFile(path.join(f.c.workspaceRoot,standard),'{}');const files=await readdir(f.c.workspaceRoot,{recursive:true});
+  let reads=0;const reader=async()=>{reads++;if(reads>1)throw new Error('同一次操作重复读取了标准修订');return memory;};
+  const motion=await buildMotionFromPosesData(args,f.c,reader);assert.equal(reads,1);assert.deepEqual(motion,disk.motion);
+  reads=0;assert.equal((await poseGateData(motion,f.c,reader)).ok,true);assert.equal(reads,1);
+  assert.equal((await poseGate(motion,f.c)).ok,false);await assert.rejects(buildMotionFromPoses({...args,dryRun:true},f.c));
+  assert.deepEqual(await readdir(f.c.workspaceRoot,{recursive:true}),files);assert.deepEqual(memory,before);
+  motion.frames![0].body.rotate=7;assert.deepEqual(memory,before);assert.equal((await poseGateData(motion,f.c,async()=>memory)).ok,false);
+  const unapproved=structuredClone(memory);unapproved.status='draft';delete unapproved.review;
+  await assert.rejects(buildMotionFromPosesData(args,f.c,async()=>unapproved),/未确认/);
+ }finally{await rm(f.c.workspaceRoot,{recursive:true,force:true});}
+});
+
+test('motion 复核拒绝重复/空阶段、错误站姿类型、标准绑定及地面漂移',async()=>{
+ const f=await fixture();try{
+  const standard=await confirmedStanding(f),pose=await requireReviewedPose(standard,f.c);
+  const args={standardPosePath:standard,keyPoses:[{posePath:standard,time:0,stageId:'start'},{posePath:standard,time:.3,stageId:'end'}],name:'idle',duration:.3,loop:true};
+  const motion=await buildMotionFromPosesData(args,f.c,async()=>pose);
+  const cases=[
+   { ...motion,poseWorkflow:{...motion.poseWorkflow!,keyPoses:motion.poseWorkflow!.keyPoses.map(k=>({...k,stageId:'same'}))}},
+   { ...motion,poseWorkflow:{...motion.poseWorkflow!,keyPoses:motion.poseWorkflow!.keyPoses.map(k=>({...k,stageId:' '}))}},
+   {...motion,groundY:1},
+   {...motion,poseWorkflow:{...motion.poseWorkflow!,keyPoses:[motion.poseWorkflow!.keyPoses[1],motion.poseWorkflow!.keyPoses[0]]}},
+  ];
+  for(const invalid of cases){const gate=await poseGateData(invalid,f.c,async()=>pose);assert.equal(gate.ok,false);assert.equal(gate.fingerprint,null);}
+  const action=structuredClone(pose);action.kind='action';action.standardPosePath='wrong-standard.json';action.review.poseFingerprint=poseFingerprint(action);
+  // 仅合成协议桩：独立的有效姿态审查不能替代动作级绑定审查。
+  assert.equal((await requireReviewedPoseData(action,f.c)).kind,'action');
+  assert.match((await poseGateData(motion,f.c,async()=>action)).issues.join(' '),/标准站姿/);
+  const mixed={...motion,poseWorkflow:{...motion.poseWorkflow!,keyPoses:[motion.poseWorkflow!.keyPoses[0],{posePath:'action.json',time:.3,stageId:'end'}]}};
+  assert.match((await poseGateData(mixed,f.c,async p=>p===standard?pose:action)).issues.join(' '),/标准站姿、地面或角色/);
+  await assert.rejects(buildMotionFromPosesData({...args,keyPoses:Array.from({length:2001},(_,i)=>({posePath:standard,time:i/2000*.3,stageId:String(i)}))},f.c,async()=>{throw new Error('数量验证前不应加载资产');}),/2–2000/);
+ }finally{await rm(f.c.workspaceRoot,{recursive:true,force:true});}
+});
 
 test('fast sparse poses solve internally without baking output, and long rotation segments remain below jump threshold',async()=>{
  const turn=fitCubicBezierTimeline([{time:0,value:0},{time:1,value:360}],['value'],.1,8,0,179);

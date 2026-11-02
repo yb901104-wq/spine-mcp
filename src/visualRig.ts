@@ -55,8 +55,8 @@ export function drawVisualGraph(ctx:any,data:any,project:(x:number,y:number)=>nu
  ctx.lineWidth=2;for(const [id,[a,b]]of graphEdges.entries()){const p=data.points[a],q=data.points[b];if(!p||!q)continue;ctx.strokeStyle=failed.has(a)||failed.has(b)?'#ff4264':a.startsWith('left')?'#65dfab':a.startsWith('right')?'#ffba6b':'#78d4ff';ctx.beginPath();ctx.moveTo(...project(p.x,p.y));ctx.lineTo(...project(q.x,q.y));ctx.stroke();const m=project((p.x+q.x)/2,(p.y+q.y)/2);ctx.fillStyle=ctx.strokeStyle;ctx.fillText('E'+id,m[0],m[1]);}
  for(const [id,p]of Object.entries(data.points) as any){const q=project(p.x,p.y);ctx.fillStyle=failed.has(id)?'#ff4264':'#ffffff';ctx.beginPath();ctx.arc(q[0],q[1],3,0,Math.PI*2);ctx.fill();ctx.fillText(id,q[0]+4,q[1]-4);}
 }
-export async function requireVisualRig(p:string,c:ToolContext,confirmed=true){
- const rig=await read(p,c),s=await (await import('./poseWorkflow.js')).characterFingerprint(rig.filePath,rig.mappingPath,c);
+export async function requireVisualRig(p:string,c:ToolContext,confirmed=true,prepared?:any){
+ const rig=await read(p,c),same=prepared&&resolveWorkspacePath(rig.filePath,c)===resolveWorkspacePath(prepared.filePath,c)&&resolveWorkspacePath(rig.mappingPath,c)===resolveWorkspacePath(prepared.mappingPath,c),s=same?prepared:await (await import('./poseWorkflow.js')).characterFingerprint(rig.filePath,rig.mappingPath,c);
  if(rig.version!==2||rig.sourceFingerprint!==s.fingerprint||rig.skin!==s.mapping.skin)throw new Error(`visualRig 需要 v2（含面部朝向锚点 face）：当前版本 v${rig.version??'?'} 或角色、mapping、skin 已失效，请重新校准并审查。`);
  const skeleton=s.rt.sample(undefined,0,rig.skin);for(const [slot,a]of Object.entries(s.mapping.bones.slotAttachments??{}))if(a===null)skeleton.findSlot(slot)!.setAttachment(null);else skeleton.setAttachment(slot,a);
  const actual=readVisualNodes(skeleton,rig);

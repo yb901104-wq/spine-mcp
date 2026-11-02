@@ -22,6 +22,7 @@ export async function poseDependencies(pose: any, context: ToolContext,values=ne
     const key=file.replace(/\\/g,'/'); if(visited.has(key))return; visited.add(key);
     if(visited.size>2048)throw new Error('姿态依赖图超过上限，请检查循环或过大的动作绑定。');
     const value=await json(key);
+    if(value.format==='spine-arm-projection-calibration'){for(const d of value.dependencies??[])await read(d.filePath);for(const d of value.continuity?.artifacts??[])await read(d.filePath);}
     if(value.imagePath)await read(value.imagePath);
     if(value.observation?.imagePath)await read(value.observation.imagePath);
     for(const evidence of value.review?.evidence??[])await read(evidence.filePath);
@@ -29,6 +30,9 @@ export async function poseDependencies(pose: any, context: ToolContext,values=ne
     if(Array.isArray(value.stages))for(const stage of value.stages)if(stage.referencePosePath)await visit(stage.referencePosePath);
     if(value.atlasPath){const atlas=new TextureAtlas((await read(value.atlasPath)).toString('utf8'));for(const page of atlas.pages)await read(path.join(path.dirname(value.atlasPath),page.name));}
   };
+  if(pose.frame?.perspective?.calibrationPath){const input=pose.frame.perspective;await visit(input.calibrationPath);
+    if(input.mode==='calibrated'){const review=await json(input.calibrationPath+'.review.json');for(const s of review.samples??[]){const manifest=await json(s.manifestPath);for(const e of manifest.evidence??[])await read(e.filePath);}}
+  }
   for(const file of [pose.filePath,pose.mappingPath,pose.visualRigPath,pose.referencePosePath,pose.sequencePath,pose.standardPosePath].filter(Boolean))await visit(file);
   const dependencies = [...values].map(([filePath, raw]) => ({ filePath, hash: bytesHash(raw) })).sort((a, b) => a.filePath.localeCompare(b.filePath));
   return { dependencies, dependencyFingerprint: bytesHash(JSON.stringify(dependencies)) };

@@ -71,7 +71,8 @@ test('截图分层反例：viewport/DPR 失配仅诊断；runtime/资源/相机/
     ]) { h.mutate(change); await assert.rejects(h.request(), /回读|字段|后台/); }
     h.mutate(() => {}); const before = await h.request();
     await h.store.open({ path: 'b.pose.json', expectedRevision: h.store.active!.version });
-    await assert.rejects(review(h.store, before), /完整版本/);
+    // 切换打开周期会主动注销旧截图；即使以新版本包装，也不能恢复准入资格。
+    await assert.rejects(review(h.store, before), /当前 Host 登记/);
     assert.throws(() => assertCaptureReadback(NaN, 0), /回读/); assert.throws(() => assertCaptureReadback(Infinity, 0), /回读/);
   } finally { h.capture.close(); }
 }));

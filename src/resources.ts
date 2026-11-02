@@ -5,6 +5,7 @@ import { getSkeletonHierarchy,getSlots,readSpineDocument,resolveWorkspacePath } 
 import { hostClient } from './hostClient.js';
 import { poseDigest } from './poseDigest.js';
 import { ToolError } from './toolError.js';
+import { summarizeState } from './creationQuality.js';
 import { checkProjectSchema,projectManifestSchema } from './projectSchema.js';
 
 export const resourceTemplates=[
@@ -48,11 +49,11 @@ export async function listResources(cursor?:string){
 export async function readResource(uri:string){
   if(typeof uri!=='string'||uri.includes('#'))throw new ToolError('IO','资源 URI 无效。','io');
   const [base,query]=uri.split('?');if(uri.split('?').length>2)throw new ToolError('IO','资源 URI 无效。','io');
-  const params=new URLSearchParams(query);if([...params.keys()].some(k=>k!=='projectId')||params.getAll('projectId').length>1)throw new ToolError('IO','资源仅接受 projectId 查询。','io');
+  const params=new URLSearchParams(query);if([...params.keys()].some(k=>!['projectId','responseDetail'].includes(k))||params.getAll('projectId').length>1||params.getAll('responseDetail').length>1||params.has('responseDetail')&&!['summary','full'].includes(params.get('responseDetail')!))throw new ToolError('IO','资源仅接受单个 projectId 与 responseDetail:summary|full 查询。','io');
   const projectId=params.get('projectId')??undefined;
   return runInWorkspace(projectId,async()=>{
     const context=getWorkspaceContext(projectId);let value:any;
-    if(base==='spine://session')value=await hostClient(context).state({autostart:false});
+    if(base==='spine://session'){const state=await hostClient(context).state({autostart:false});value=params.get('responseDetail')==='full'?state:summarizeState(state);}
     else{
       const matched=/^spine:\/\/(pose|reference|rig|metrics|doc)\/(.+)$/.exec(base);
       if(!matched)throw new ToolError('IO','未知资源种类。','io');
@@ -65,7 +66,7 @@ export async function readResource(uri:string){
         if(state.writeMode==='attached'){
           if(resolveWorkspacePath(file,context)!==resolveWorkspacePath(state.activeDoc?.path??'',context))throw new ToolError('WRITE_FORBIDDEN','附着资源只读取当前活动姿态，不回退旧磁盘文件。');
           const snapshot=await client.rpc('/api/snapshot',{expectedRevision:state.version},true);
-          return{contents:[{uri,mimeType:'application/json',text:JSON.stringify(kind==='metrics'?state:{source:'hostSnapshot',version:snapshot.version,document:snapshot.document,derived:snapshot.derived},null,2)}]};
+          return{contents:[{uri,mimeType:'application/json',text:JSON.stringify(kind==='metrics'?(params.get('responseDetail')==='full'?state:summarizeState(state)):{source:'hostSnapshot',version:snapshot.version,document:snapshot.document,derived:snapshot.derived},null,2)}]};
         }
       }
       const absolute=resolveWorkspacePath(file,context);

@@ -1,3 +1,4 @@
+import { poseGateData } from './poseWorkflow.js';
 import { open as openFile, readFile, unlink } from 'node:fs/promises';
 import { mkdirSync, openSync, closeSync } from 'node:fs';
 import { spawn } from 'node:child_process';
@@ -8,10 +9,15 @@ import { assertVersion, HostError, hostFailure, strictHash } from './hostContrac
 import { evaluateHostSnapshot } from './hostEvaluator.js';
 import { readWriter } from './writerOwnership.js';
 import { getRegisteredWorkspace, getWorkspaceRoot } from './workspaceTools.js';
-import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { resolveWorkspacePath,resolveWorkspacePathAsync, type ToolContext } from './spineJson.js';
 import { prepareHostPoseReview } from './hostPoseReview.js';
 import { hostLifecycle } from './hostLifecycle.js';
 import { withHostEvaluationTask } from './hostEvaluationTasks.js';
+import { prepareHostPoseCommand } from './hostPoseCommands.js';
+import { prepareHostAssetCandidate, verifyHostAssetCandidate } from './hostAssetCommands.js';
+import { prepareHostAnimationCandidate } from './hostAnimationCandidate.js';
+import { prepareHostAnimationReview,prepareHostAnimationComparison } from './hostAnimationReview.js';
+import {verifyHostAnimationCommit} from './hostAnimationCommit.js';
 const installRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 interface Endpoint{endpoint:string;token:string;control?:string;sessionId?:string;instanceId?:string}
 export class HostClient {
@@ -23,8 +29,11 @@ export class HostClient {
   private async discover():Promise<Endpoint|null>{
     const envEndpoint=process.env.SPINE_HOST_ENDPOINT;
     if(envEndpoint&&!process.env.SPINE_HOST_TOKEN)return null;
-    let record:any;
-    try{record=JSON.parse(await readFile(resolveWorkspacePath('.spine-mcp/host-port.json',this.context),'utf8'));}catch(error:any){if(error.code!=='ENOENT')throw new HostError('HOST_UNAVAILABLE','端口文件不可读或已损坏。',409);}
+    // 两份发现文件互相独立，只在本次调用并发读取；实例核对后才使用对应 control。
+    const records=await Promise.allSettled(['.spine-mcp/host-port.json','.spine-mcp/host-control.json'].map(async file=>JSON.parse(await readFile(await resolveWorkspacePathAsync(file,this.context),'utf8'))));
+    if(records[0].status==='rejected'&&records[0].reason?.code!=='ENOENT')throw new HostError('HOST_UNAVAILABLE','端口文件不可读或已损坏。',409);
+    const record:any=records[0].status==='fulfilled'?records[0].value:undefined;
+    const controlRecord:any=records[1].status==='fulfilled'?records[1].value:null;
     const value:Endpoint|undefined=envEndpoint?{endpoint:envEndpoint,token:process.env.SPINE_HOST_TOKEN!}:record?{endpoint:`http://127.0.0.1:${record.port}`,token:record.token,sessionId:record.sessionId,instanceId:record.instanceId}:undefined;
     if(!value)return null;
     const url=new URL(value.endpoint);
@@ -37,7 +46,7 @@ export class HostClient {
       if(state.apiVersion!=='1')throw new HostError('HOST_VERSION_MISMATCH','Host apiVersion 不兼容。',409);
       if(state.projectId!==(this.context.projectId??null)||record&&(state.sessionId!==record.sessionId||state.instanceId!==record.instanceId||state.startedAt!==record.startedAt))throw new HostError('PROJECT_BINDING_CONFLICT','Host 实例或工作区与登记不符。',409);
       if(record){try{process.kill(record.pid,0);}catch{throw new HostError('HOST_UNAVAILABLE','端口记录的进程已退出。',409);}}
-      try{const control=JSON.parse(await readFile(resolveWorkspacePath('.spine-mcp/host-control.json',this.context),'utf8'));if(control.sessionId===state.sessionId&&control.instanceId===state.instanceId)value.control=control.control;}catch{}
+      if(controlRecord?.sessionId===state.sessionId&&controlRecord?.instanceId===state.instanceId)value.control=controlRecord.control;
       value.sessionId=state.sessionId;value.instanceId=state.instanceId;
       this.attachedSeen ||=state.writeMode==='attached';this.lastState=state;return value;
     }catch(error){if(error instanceof HostError)throw error;return null;}
@@ -106,7 +115,16 @@ export class HostClient {
     catch(error:any){if(error.code==='WRITE_OWNERSHIP_UNCERTAIN')return{...this.lastState,...hostFailure(error),available:false,degraded:true,writeMode:'frozen'};throw error;}
     return this.mirror.state(args.includeCapabilities!==false);
   }
-  async open(args:any){return await this.ensurePreview()?this.rpc('/api/open',args):this.mirror.open(args);}
+  async open(args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
+    const {recheck,...request}=args;
+    if(!await this.ensurePreview()){
+      if(recheck===true)throw new HostError('HOST_UNAVAILABLE','镜像不执行新的动画/姿态求解；需当前 Host。',409);
+      return this.mirror.open(request);
+    }
+    const opened=await this.rpc('/api/open',request);
+    if(recheck===true){await this.evaluate(opened.version,signal,progress);return{...opened,...await this.currentFrameState(opened.version)};}
+    return opened;
+  }
   async evaluate(expectedRevision:any,signal?:AbortSignal,progress?:(stage:string)=>void){
     if(!this.endpoint)throw new HostError('HOST_UNAVAILABLE','镜像模式不发布内存派生结果；请显式使用原单姿态求解工具保存结果。',409);
     const endpoint={...this.endpoint};
@@ -118,13 +136,21 @@ export class HostClient {
       const result:any=await response.json();if(!response.ok)throw new HostError(response.status===404?'HOST_VERSION_MISMATCH':result.code??'HOST_ERROR',response.status===404?'当前 Host 尚未实现外部求解状态通道；请重启以加载匹配源码，不静默跳过状态登记。':result.message,response.status,result.detail);return result;
     };
     return withHostEvaluationTask(taskRpc,expectedRevision,signal,async task=>{
-      const snapshot=await this.rpc('/api/snapshot',{expectedRevision},true,signal);task.check();task.stage('solve');
+      const snapshotStarted=performance.now(),snapshot=await this.rpc('/api/snapshot',{expectedRevision,purpose:'evaluate'},true,signal),snapshotAt=performance.now();task.check();task.stage('solve');
       const result=await evaluateHostSnapshot(snapshot,this.context,signal,progress);task.check();task.stage('publish');
-      return this.rpc('/api/derived',{expectedRevision,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,result},true,signal);
+      const solvedAt=performance.now(),published=await this.rpc('/api/derived',{expectedRevision,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,result},true,signal);return {...published,timings:{snapshotMs:snapshotAt-snapshotStarted,solveMs:solvedAt-snapshotAt,publishMs:performance.now()-solvedAt}};
     });
   }
   async frame(args:any){
-    if(await this.ensurePreview())return{ok:true,available:true,...await this.rpc('/api/frame?'+new URLSearchParams({...args.expectedRevision,...args.size?{size:String(args.size)}:{},...args.time!==undefined?{time:String(args.time)}:{}}).toString())};
+    if(await this.ensurePreview()){
+      if(args.variant==='previous'){
+        if(args.size!==undefined&&args.size!==480||args.time!==undefined||Object.hasOwn(args,'animation'))throw new HostError('INVALID_ARGUMENT','前次诊断图只读缓存的 480 图，不接受另选时间、动画或尺寸。');
+        return {ok:true,available:true,advisory:true,evidenceEligible:false,currentVersion:args.expectedRevision,...await this.rpc('/api/previous-frame?'+new URLSearchParams(args.expectedRevision))};
+      }
+      if(Object.hasOwn(args,'animation')&&!this.lastState?.capabilities?.viewing?.supportedKinds?.includes(this.lastState?.activeDoc?.kind))throw new HostError('CAPABILITY_MISSING','当前 Host 未声明所请求的动画呈现能力。',409);
+      return{ok:true,available:true,...await this.rpc('/api/frame?'+new URLSearchParams({...args.expectedRevision,...args.size?{size:String(args.size)}:{},...args.time!==undefined?{time:String(args.time)}:{},...Object.hasOwn(args,'animation')?{animation:args.animation??''}:{}}).toString())};
+    }
+    if(args.variant==='previous')throw new HostError('CAPABILITY_MISSING','镜像模式没有 Host 前次候选缓存，不回退旧磁盘图。',409);
     const result=await this.mirror.frame(args);return{ok:true,available:false,degraded:true,mode:'mirror',version:result.version,source:'disk',__imageData:result.png.toString('base64')};
   }
   async capture(args:any){
@@ -148,16 +174,77 @@ export class HostClient {
     const frame=await this.rpc('/api/frame?'+new URLSearchParams({...expectedRevision}).toString());assertVersion(frame.version,expectedRevision);
     return{state,available:true,...frame};
   }
-  async patch(args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
-    if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 编辑。',409);
-    const result=await this.rpc('/api/patch',args);
-    if(args.dryRun===false){await this.evaluate(result.version,signal,progress);return{...result,...await this.currentFrameState(result.version)};}
+  async patch(args:any,signal?:AbortSignal,progress?:(stage:string)=>void,connected=false){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','编辑已取消，未发送修改。',409);
+    if(!connected&&!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 编辑。',409);
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','编辑已取消，未发送修改。',409);
+    const requestStarted=performance.now(),result=await this.rpc('/api/patch',args),editedAt=performance.now();
+    if(args.dryRun===false){const evaluated=await this.evaluate(result.version,signal,progress);const solvedAt=performance.now(),current=await this.currentFrameState(result.version);return{...result,...current,timings:{...result.timings,patchRpcMs:editedAt-requestStarted,evaluateMs:solvedAt-editedAt,presentMs:performance.now()-solvedAt,evaluation:evaluated.timings}};}
     return result;
+  }
+  async poseCommand(name:string,args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','姿态命令已取消，未发送编辑。',409);
+    const state=await this.state(),request=prepareHostPoseCommand(name,args,state,this.context);
+    const result=await this.patch(request,signal,progress);
+    return{...result,adapter:{tool:name,execution:'host-memory',persisted:false,saveTool:'spine_host_commit'}};
   }
   async history(direction:'undo'|'redo',args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
     if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 历史操作。',409);
     const result=await this.rpc('/api/'+direction,args);
     if(args.dryRun===false&&!result.noOp){await this.evaluate(result.version,signal,progress);return{...result,...await this.currentFrameState(result.version)};}return result;
+  }
+  async animationCandidate(args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
+    if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','精确动画候选需要 attached Host，不回退旧磁盘写入路径。',409);
+    const snapshot=await this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true,signal);
+    const prepared=await prepareHostAnimationCandidate(args,snapshot,this.context,signal,progress);
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','候选已取消，未发布。',409);
+    const published=await this.rpc('/api/derived',{expectedRevision:args.expectedRevision,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,result:prepared.derived},true,signal);
+    if(prepared.session){
+      if(signal?.aborted)throw new HostError('TASK_CANCELLED','候选回放已发布，审查会话未登记。',409);
+      await this.rpc('/api/animation-candidate',{expectedRevision:args.expectedRevision,session:prepared.session},true);
+    }
+    return {...prepared.summary,...published,...await this.currentFrameState(args.expectedRevision),ok:prepared.summary.ok};
+  }
+  async animationReview(args:any,signal?:AbortSignal){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','动画审查已取消。',409);
+    if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','附着动画审查需要当前 Host。',409);
+    const snapshot=await this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true,signal),session=await this.rpc('/api/animation-session',{expectedRevision:args.expectedRevision},true,signal);
+    const review=await prepareHostAnimationReview(snapshot,session,args,this.context);
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','动画审查在登记前已取消。',409);
+    return this.rpc('/api/animation-review',review,true);
+  }
+  async animationComparison(args:any,signal?:AbortSignal){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','动画参考比较已取消。',409);
+    if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','附着动画比较需要当前 Host。',409);
+    const snapshot=await this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true,signal),session=await this.rpc('/api/animation-session',{expectedRevision:args.expectedRevision},true,signal);
+    return prepareHostAnimationComparison(snapshot,session,args,this.context);
+  }
+  async assetCommand(name:string,args:any,signal?:AbortSignal){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','资产计算已取消。',409);
+    if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','资产暂存需要 attached Host。',409);
+    const snapshot=await this.rpc('/api/snapshot',{expectedRevision:args.expectedRevision},true);
+    const candidate=await prepareHostAssetCandidate(name,args,snapshot,this.context);
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','资产计算已取消，未暂存。',409);
+    if('diagnostic'in candidate){
+      if((candidate as any).newStage){
+        const opened=await this.rpc('/api/diagnostic-open',{expectedRevision:args.expectedRevision,snapshotHash:snapshot.snapshotHash,document:candidate.document,dependencies:candidate.dependencies,outputPath:candidate.outputPath,dryRun:args.dryRun??true},true,signal);
+        if(args.dryRun===false){await this.evaluate(opened.version,signal);return {...opened,...await this.currentFrameState(opened.version)};}return opened;
+      }
+      const document=(candidate as any).document;
+      if(!document?.frame||snapshot.kind!=='pose'||['filePath','mappingPath','visualRigPath','referencePosePath','sequencePath','stageId','standardPosePath'].some(key=>document[key]!==snapshot.document[key])){
+        const {document:_document,...diagnostic}=candidate as any;return {...diagnostic,adopted:false,message:!document?.frame?diagnostic.message:'诊断保留；需要先选择绑定相同参考与阶段的 pose，不能改写当前文档的绑定。'};
+      }
+      const adopted=await this.rpc('/api/diagnostic-candidate',{expectedRevision:args.expectedRevision,snapshotHash:snapshot.snapshotHash,document,dryRun:args.dryRun??true},true,signal);
+      if(args.dryRun===false){await this.evaluate(adopted.version,signal);return {...adopted,...await this.currentFrameState(adopted.version)};}return adopted;
+    }
+    return this.rpc('/api/asset-candidate',candidate,true);
+  }
+  async resumeDiagnostic(args:any,signal?:AbortSignal,progress?:(stage:string)=>void){
+    if(signal?.aborted)throw new HostError('TASK_CANCELLED','诊断恢复已取消。',409);
+    if(!await this.ensurePreview())throw new HostError('HOST_UNAVAILABLE','诊断恢复需要显式启动的隔离 C2 Host。',409);
+    const resumed=await this.rpc('/api/diagnostic-resume',args,true,signal);
+    // 实际恢复后返回新的干净派生图；旧批准/截图/求解不随 journal 恢复。
+    if(args.dryRun===false){await this.evaluate(resumed.version,signal,progress);return {...resumed,...await this.currentFrameState(resumed.version)};}return resumed;
   }
   async commit(args:any){
     if(!await this.ensurePreview())throw new HostError('WRITE_FORBIDDEN','detached 镜像拒绝 Host 提交。',409);
@@ -173,10 +260,14 @@ export class HostClient {
     const [candidate,snapshot]=prepared.map(result=>(result as PromiseFulfilledResult<any>).value);
     assertVersion(candidate.version,args.expectedRevision);assertVersion(snapshot.version,args.expectedRevision);
     if(!Object.hasOwn(snapshot,'reviewHash'))throw new HostError('HOST_VERSION_MISMATCH','当前 Host 快照缺少审查摘要，请重启加载匹配源码。',409);
-    if(strictHash(candidate.candidateBytes)!==candidate.candidateHash||candidate.intent!=='draft'||snapshot.kind!=='pose')throw new HostError('COMMIT_NOT_AUTHORIZED','精确草稿候选校验失败。',409);
+    if(strictHash(candidate.candidateBytes)!==candidate.candidateHash||!['draft','asset','animation'].includes(candidate.intent)||candidate.intent==='draft'&&!['pose','motion'].includes(snapshot.kind))throw new HostError('COMMIT_NOT_AUTHORIZED','精确提交候选校验失败。',409);
     const value=JSON.parse(candidate.candidateBytes),input=snapshot.document;
-    for(const key of ['filePath','mappingPath','visualRigPath','referencePosePath','sequencePath','stageId','standardPosePath','sourceFingerprint'])if(value[key]!==input[key])throw new HostError('TARGET_DRIFT',`草稿候选修改了固定绑定 ${key}。`,409);
-    const authorization=await this.rpc('/api/authorize',{expectedRevision:args.expectedRevision,candidateHash:candidate.candidateHash,outputPath:candidate.outputPath,intent:'draft',snapshotHash:snapshot.snapshotHash,derivedHash:snapshot.derivedHash,reviewHash:snapshot.reviewHash,gateRecord:{gate:'pose-draft',passed:true,candidateHash:candidate.candidateHash}},true);
+    let gateRecord:any={gate:candidate.intent==='asset'?'asset-draft':snapshot.kind==='motion'?'motion-draft':'pose-draft',passed:true,candidateHash:candidate.candidateHash};
+    if(candidate.intent==='animation')gateRecord=await verifyHostAnimationCommit(snapshot,candidate.animationSession,args,this.context);
+    else if(candidate.intent==='asset')await verifyHostAssetCandidate(value,candidate.binding,snapshot,this.context);
+    else if(snapshot.kind==='motion'){const gate=await poseGateData(value,this.context);if(!gate.ok)throw new HostError('COMMIT_NOT_AUTHORIZED','motion 修订关键姿态审查失效。',409,gate);}
+    else for(const key of ['filePath','mappingPath','visualRigPath','referencePosePath','sequencePath','stageId','standardPosePath','sourceFingerprint'])if(value[key]!==input[key])throw new HostError('TARGET_DRIFT',`草稿候选修改了固定绑定 ${key}。`,409);
+    const authorization=await this.rpc('/api/authorize',{expectedRevision:args.expectedRevision,candidateHash:candidate.candidateHash,outputPath:candidate.outputPath,intent:candidate.intent,...candidate.intent==='asset'?{assetCandidateHash:args.assetCandidateHash}:{},...candidate.intent==='animation'?{animationCandidateHash:args.animationCandidateHash,expectedHash:args.expectedHash,reviewToken:args.reviewToken}:{},snapshotHash:snapshot.snapshotHash,derivedHash:snapshot.derivedHash,reviewHash:candidate.intent==='animation'?candidate.reviewHash:snapshot.reviewHash,gateRecord},true);
     return this.rpc('/api/commit',{...args,authorizationId:authorization.authorizationId});
   }
 }

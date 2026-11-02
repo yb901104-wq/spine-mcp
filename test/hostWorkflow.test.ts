@@ -46,7 +46,7 @@ test('纯求解不重读文件，默认姿态摘要零求解；完整回放含 s
   applyRenderSnapshot(rt.skeleton,{bones:{},skin:'alternate',presentation:{attachments:{accentSlot:null},drawOrder:['accentSlot','bodySlot']}});
   assert.equal(rt.skeleton.skin?.name,'alternate');assert.equal(rt.skeleton.findSlot('accentSlot')!.getAttachment(),null);assert.equal(rt.skeleton.drawOrder[0].data.name,'accentSlot');
   applyRenderSnapshot(rt.skeleton,{bones:{}});assert.equal(rt.skeleton.findSlot('accentSlot')!.getAttachment()?.name,'body');
-  assert.throws(()=>applyRenderSnapshot(rt.skeleton,{bones:{body:{scale:{x:1,y:1}}as any}}),/增量字段/);
+  assert.throws(()=>applyRenderSnapshot(rt.skeleton,{bones:{body:{shear:{x:1,y:1}}as any}}),/增量字段/);
 }));
 
 test('只读 Host：幂等打开、ABA、外部漂移、显式重载及确定性 PNG',async()=>withHostFixture(async({root,context})=>{
@@ -61,7 +61,7 @@ test('只读 Host：幂等打开、ABA、外部漂移、显式重载及确定性
   await writeFile(path.join(root,'a.pose.json'),(await readFile(path.join(root,'a.pose.json'),'utf8'))+' ');
   assert.equal((await s.state()).targetStale,true);await assert.rejects(s.open({path:'a.pose.json'}),/磁盘或依赖/);
   const before=state(s);await s.open({path:'a.pose.json',reload:true,expectedRevision:before});assert.notEqual(state(s).openEpoch,before.openEpoch);
-  await s.open({path:'body.json',expectedRevision:state(s)});await assert.rejects(s.frame({expectedRevision:state(s)}),/只支持 pose/);
+  await s.open({path:'body.json',expectedRevision:state(s)});await assert.rejects(s.frame({expectedRevision:state(s)}),{code:'UNSUPPORTED_DOC_KIND'});
 }));
 
 test('持久编辑：100 patch + 20 undo，默认 dryRun 零变更、并发版本冲突、旧结果拒绝',async()=>withHostFixture(async({root,context})=>{

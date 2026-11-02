@@ -203,7 +203,7 @@ export async function validateProjectManifest(value: unknown, inputContext: Tool
         for (const pose of value.poseWorkflow.keyPoses ?? []) {
           const normalized = typeof pose.posePath === 'string' ? relativePath(pose.posePath) : incomplete('motion 关键姿态缺少 posePath。');
           const target = docFor(normalized);
-          if (!target || target.kind !== 'pose' || target.characterId !== document.characterId || target.stageId !== pose.stageId) conflict(`${document.path} 的关键姿态或阶段未绑定同一角色。`);
+          if (!target || target.kind !== 'pose' || target.characterId !== document.characterId || target.stageId !== undefined && target.stageId !== pose.stageId) conflict(`${document.path} 的关键姿态或阶段未绑定同一角色。`);
         }
       }
     }

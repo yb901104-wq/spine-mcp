@@ -1,0 +1,836 @@
+{
+  "startedAt": "2026-10-23T14:27:57.159Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-27-57-150Z",
+  "scope": "实际 WinForms/WebView2、隔离 C2 高层姿态命令；编辑当前内存后释放测试 Writer，以观察模式采集实际 player，不保存角色或姿态源文件，不批准真实美术。",
+  "inputHashes": {
+    "body.json": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6",
+    "body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+    "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+    "mapping.json": "06966ff3e84e43df2877f2fe19028cb9aa0775b77efb48f247d8423e5af5ec97",
+    "a.pose.json": "a390db0231bc17b94f019508a26ac96ccd88ec19c03166858fa2ed9bc0f2edea"
+  },
+  "kind": "pose",
+  "view": null,
+  "commandAdapters": [
+    {
+      "tool": "spine_adjust_pose",
+      "version": {
+        "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+        "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+        "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+        "revision": 1
+      },
+      "adapter": {
+        "tool": "spine_adjust_pose",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_set_pose_channel",
+      "version": {
+        "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+        "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+        "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+        "revision": 2
+      },
+      "adapter": {
+        "tool": "spine_set_pose_channel",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_set_pose_target",
+      "version": {
+        "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+        "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+        "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+        "revision": 3
+      },
+      "adapter": {
+        "tool": "spine_set_pose_target",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_batch_pose_ops",
+      "version": {
+        "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+        "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+        "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+        "revision": 4
+      },
+      "adapter": {
+        "tool": "spine_batch_pose_ops",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    }
+  ],
+  "testWriterReleased": true,
+  "numeric": {
+    "ok": false,
+    "issues": [
+      "rightFoot 目标误差 0.06584602889642982",
+      "存在不可达手脚目标。"
+    ],
+    "warnings": [],
+    "headBox": null,
+    "headIntrusions": [],
+    "gripErrors": {},
+    "flexion": {
+      "leftLeg": 25.840080833931836,
+      "rightLeg": 0.00018110469079601899,
+      "leftArm": 120.11354308496516,
+      "rightArm": 117.79256725327934
+    },
+    "errors": {
+      "leftFoot": 1.561084787177856e-7,
+      "rightFoot": 0.06584602889642982,
+      "leftHand": 0.0000015895654934905622,
+      "rightHand": 0.0000016040618109589118
+    },
+    "joints": {
+      "leftHip": {
+        "x": -11.518559349384192,
+        "y": 77.97315759183225
+      },
+      "leftKnee": {
+        "x": -2.815808321845523,
+        "y": 38.931357556307084
+      },
+      "leftAnkle": {
+        "x": -12.000000044598465,
+        "y": -1.4960225058757715e-7
+      },
+      "rightHip": {
+        "x": 12.390113353582096,
+        "y": 80.06489544859845
+      },
+      "rightKnee": {
+        "x": 12.195280280634691,
+        "y": 40.065370040053004
+      },
+      "rightAnkle": {
+        "x": 12.000320773348301,
+        "y": 0.06584524755734833
+      },
+      "leftShoulder": {
+        "x": -14.133233057349992,
+        "y": 107.85899847054009
+      },
+      "leftElbow": {
+        "x": 38.891624219818816,
+        "y": 79.78116635992068
+      },
+      "leftWrist": {
+        "x": -11.999998411959133,
+        "y": 48.00000006960375
+      },
+      "rightShoulder": {
+        "x": 9.775439645616297,
+        "y": 109.95073632730629
+      },
+      "rightElbow": {
+        "x": 62.228645756467515,
+        "y": 80.81894412159352
+      },
+      "rightWrist": {
+        "x": 12.000001603876129,
+        "y": 48.00000002440559
+      }
+    },
+    "solverNodes": {
+      "leftHip": {
+        "x": -11.518559349384192,
+        "y": 77.97315759183225
+      },
+      "leftKnee": {
+        "x": -2.815808321845523,
+        "y": 38.931357556307084
+      },
+      "leftAnkle": {
+        "x": -12.000000044598465,
+        "y": -1.4960225058757715e-7
+      },
+      "rightHip": {
+        "x": 12.390113353582096,
+        "y": 80.06489544859845
+      },
+      "rightKnee": {
+        "x": 12.195280280634691,
+        "y": 40.065370040053004
+      },
+      "rightAnkle": {
+        "x": 12.000320773348301,
+        "y": 0.06584524755734833
+      },
+      "leftShoulder": {
+        "x": -14.133233057349992,
+        "y": 107.85899847054009
+      },
+      "leftElbow": {
+        "x": 38.891624219818816,
+        "y": 79.78116635992068
+      },
+      "leftWrist": {
+        "x": -11.999998411959133,
+        "y": 48.00000006960375
+      },
+      "rightShoulder": {
+        "x": 9.775439645616297,
+        "y": 109.95073632730629
+      },
+      "rightElbow": {
+        "x": 62.228645756467515,
+        "y": 80.81894412159352
+      },
+      "rightWrist": {
+        "x": 12.000001603876129,
+        "y": 48.00000002440559
+      }
+    },
+    "visualNodes": null,
+    "visual": null,
+    "bounds": {
+      "minX": -10.011623696027359,
+      "maxX": 10.011619797569997,
+      "minY": -11.999999999999996,
+      "maxY": 96.73873804777045
+    },
+    "height": 108.73873804777045,
+    "unreachable": [
+      {
+        "time": 0,
+        "role": "rightFoot",
+        "error": 0.06584584977332497
+      }
+    ]
+  },
+  "diagnosticOnly": true,
+  "captures": {
+    "initial": {
+      "filePath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/ab218e16-45ad-4420-8058-7c8f3302185a/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png",
+      "manifestPath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/ab218e16-45ad-4420-8058-7c8f3302185a/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "ab218e16-45ad-4420-8058-7c8f3302185a",
+        "capturedAt": "2026-10-23T14:28:00.602Z",
+        "version": {
+          "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+          "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+          "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+          "revision": 4
+        },
+        "snapshotHash": "67c4c2113a0244df1df98a6e993e5f5eae941e16032babd937af2051ac4fe9d7",
+        "source": "player",
+        "generated": true,
+        "contentHash": "1be3ffe66907ef090cbfb36ee218958534f515eb59facee60b2d7ca3452cdaa2",
+        "dependencyFingerprint": "e53c97a3c1c7d549c96f900184ac9414bd391269f36db1ecd1625dd77118194d",
+        "derivedHash": "d4eab69b1f901a6bbbdb3d1e412dd82a0cbce8c33151898edc06af9fdb220ab5",
+        "fileHash": "a390db0231bc17b94f019508a26ac96ccd88ec19c03166858fa2ed9bc0f2edea",
+        "exported": true,
+        "kind": "pose",
+        "view": null,
+        "candidateHash": "9be49962b3d5bde7fb3f8ecc038f31e892cf62637829e177af1454f3bdbdffde",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "alternate"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "9be49962b3d5bde7fb3f8ecc038f31e892cf62637829e177af1454f3bdbdffde",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.000001949228679983963,
+              83.99999999999999,
+              0.9961946959569287,
+              -0.08715579026552667,
+              0.08715574403192489,
+              0.9961946959569282
+            ],
+            [
+              "head",
+              -2.1788967058668467,
+              108.90486739892319,
+              0.9848077465201972,
+              -0.17364824894006992,
+              0.17364818002983545,
+              0.9848077465201964
+            ],
+            [
+              "leftLeg1",
+              -11.518559349384192,
+              77.97315759183225,
+              0.21756877891235582,
+              0.976044989033079,
+              -0.9760450001694968,
+              0.21756875573052478
+            ],
+            [
+              "leftLeg2",
+              -2.8158081928899588,
+              38.931357585052375,
+              -0.2296047842699622,
+              0.9732839501325703,
+              -0.9732839447234494,
+              -0.22960478740271004
+            ],
+            [
+              "leftLeg3",
+              -11.999999563688446,
+              -2.0388559818229623e-7,
+              1.7028231574789388e-8,
+              1.000000002272657,
+              -0.999999997727341,
+              3.5942321591209136e-8
+            ],
+            [
+              "leftArm1",
+              -14.133233057349992,
+              107.85899847054009,
+              0.8837476298291731,
+              0.46796379305171815,
+              -0.46796385237685634,
+              0.8837476155739157
+            ],
+            [
+              "leftArm2",
+              38.891624732400395,
+              79.7811673279287,
+              -0.8481936858897204,
+              0.5296862060728573,
+              -0.5296861442948448,
+              -0.8481937177644128
+            ],
+            [
+              "leftArm3",
+              -11.999996420982832,
+              47.99999867023801,
+              0.08715586823205995,
+              0.9961946879451993,
+              -0.9961946903406996,
+              0.08715582183354093
+            ],
+            [
+              "rightLeg1",
+              12.390113353582096,
+              80.06489544859845,
+              -0.00487082949215957,
+              0.9999881395674837,
+              -0.9999881352006382,
+              -0.004870852324826633
+            ],
+            [
+              "rightLeg2",
+              12.195280173895714,
+              40.06537004057292,
+              -0.004873990350546811,
+              0.9999881242794044,
+              -0.9999881197993855,
+              -0.004873989978372268
+            ],
+            [
+              "rightLeg3",
+              12.000320559873842,
+              0.06584524859750474,
+              -2.409854227627961e-9,
+              1.0000000022408893,
+              -0.9999999977591097,
+              2.114558377182274e-8
+            ],
+            [
+              "rightArm1",
+              9.775439645616297,
+              109.95073632730629,
+              0.8742200857316007,
+              0.4855298405182577,
+              -0.48552989911270883,
+              0.8742200711133055
+            ],
+            [
+              "rightArm2",
+              62.22864478951234,
+              80.81894238054376,
+              -0.8371440670762275,
+              0.546982464564179,
+              -0.5469824048852698,
+              -0.837144099402426
+            ],
+            [
+              "rightArm3",
+              12.00000076493869,
+              47.99999808742757,
+              0.10452852181146843,
+              0.9945218895956611,
+              -0.9945218935406895,
+              0.10452847703485252
+            ]
+          ],
+          "vertices": {
+            "bodySlot:alternate": [
+              -7.919884729654719,
+              71.26126195222952,
+              -10.011623696027359,
+              95.1699346551958,
+              7.919880831197359,
+              96.73873804777045,
+              10.011619797569997,
+              72.83006534480417
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "alternate"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "accentSlot",
+            "bodySlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/ab218e16-45ad-4420-8058-7c8f3302185a/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png",
+            "hash": "f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-27-57-150Z\\initial-player.png"
+    },
+    "restored": {
+      "filePath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/d5a2cf36-fc26-452c-8b1c-b8c4b4f9e87e/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png",
+      "manifestPath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/d5a2cf36-fc26-452c-8b1c-b8c4b4f9e87e/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "d5a2cf36-fc26-452c-8b1c-b8c4b4f9e87e",
+        "capturedAt": "2026-10-23T14:28:01.689Z",
+        "version": {
+          "sessionId": "3eefc2cb-8f9e-4e6a-8cfd-f925457f7fac",
+          "documentId": "44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82",
+          "openEpoch": "29a79908-a97b-4677-af92-684cbdbfbea5",
+          "revision": 4
+        },
+        "snapshotHash": "67c4c2113a0244df1df98a6e993e5f5eae941e16032babd937af2051ac4fe9d7",
+        "source": "player",
+        "generated": true,
+        "contentHash": "1be3ffe66907ef090cbfb36ee218958534f515eb59facee60b2d7ca3452cdaa2",
+        "dependencyFingerprint": "e53c97a3c1c7d549c96f900184ac9414bd391269f36db1ecd1625dd77118194d",
+        "derivedHash": "d4eab69b1f901a6bbbdb3d1e412dd82a0cbce8c33151898edc06af9fdb220ab5",
+        "fileHash": "a390db0231bc17b94f019508a26ac96ccd88ec19c03166858fa2ed9bc0f2edea",
+        "exported": true,
+        "kind": "pose",
+        "view": null,
+        "candidateHash": "9be49962b3d5bde7fb3f8ecc038f31e892cf62637829e177af1454f3bdbdffde",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "alternate"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "9be49962b3d5bde7fb3f8ecc038f31e892cf62637829e177af1454f3bdbdffde",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.000001949228679983963,
+              83.99999999999999,
+              0.9961946959569287,
+              -0.08715579026552667,
+              0.08715574403192489,
+              0.9961946959569282
+            ],
+            [
+              "head",
+              -2.1788967058668467,
+              108.90486739892319,
+              0.9848077465201972,
+              -0.17364824894006992,
+              0.17364818002983545,
+              0.9848077465201964
+            ],
+            [
+              "leftLeg1",
+              -11.518559349384192,
+              77.97315759183225,
+              0.21756877891235582,
+              0.976044989033079,
+              -0.9760450001694968,
+              0.21756875573052478
+            ],
+            [
+              "leftLeg2",
+              -2.8158081928899588,
+              38.931357585052375,
+              -0.2296047842699622,
+              0.9732839501325703,
+              -0.9732839447234494,
+              -0.22960478740271004
+            ],
+            [
+              "leftLeg3",
+              -11.999999563688446,
+              -2.0388559818229623e-7,
+              1.7028231574789388e-8,
+              1.000000002272657,
+              -0.999999997727341,
+              3.5942321591209136e-8
+            ],
+            [
+              "leftArm1",
+              -14.133233057349992,
+              107.85899847054009,
+              0.8837476298291731,
+              0.46796379305171815,
+              -0.46796385237685634,
+              0.8837476155739157
+            ],
+            [
+              "leftArm2",
+              38.891624732400395,
+              79.7811673279287,
+              -0.8481936858897204,
+              0.5296862060728573,
+              -0.5296861442948448,
+              -0.8481937177644128
+            ],
+            [
+              "leftArm3",
+              -11.999996420982832,
+              47.99999867023801,
+              0.08715586823205995,
+              0.9961946879451993,
+              -0.9961946903406996,
+              0.08715582183354093
+            ],
+            [
+              "rightLeg1",
+              12.390113353582096,
+              80.06489544859845,
+              -0.00487082949215957,
+              0.9999881395674837,
+              -0.9999881352006382,
+              -0.004870852324826633
+            ],
+            [
+              "rightLeg2",
+              12.195280173895714,
+              40.06537004057292,
+              -0.004873990350546811,
+              0.9999881242794044,
+              -0.9999881197993855,
+              -0.004873989978372268
+            ],
+            [
+              "rightLeg3",
+              12.000320559873842,
+              0.06584524859750474,
+              -2.409854227627961e-9,
+              1.0000000022408893,
+              -0.9999999977591097,
+              2.114558377182274e-8
+            ],
+            [
+              "rightArm1",
+              9.775439645616297,
+              109.95073632730629,
+              0.8742200857316007,
+              0.4855298405182577,
+              -0.48552989911270883,
+              0.8742200711133055
+            ],
+            [
+              "rightArm2",
+              62.22864478951234,
+              80.81894238054376,
+              -0.8371440670762275,
+              0.546982464564179,
+              -0.5469824048852698,
+              -0.837144099402426
+            ],
+            [
+              "rightArm3",
+              12.00000076493869,
+              47.99999808742757,
+              0.10452852181146843,
+              0.9945218895956611,
+              -0.9945218935406895,
+              0.10452847703485252
+            ]
+          ],
+          "vertices": {
+            "bodySlot:alternate": [
+              -7.919884729654719,
+              71.26126195222952,
+              -10.011623696027359,
+              95.1699346551958,
+              7.919880831197359,
+              96.73873804777045,
+              10.011619797569997,
+              72.83006534480417
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "alternate"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "accentSlot",
+            "bodySlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/44765545b4c0f117958ea9aeac83e15b06f5bb31759f766f5081ca5debea1a82/29a79908-a97b-4677-af92-684cbdbfbea5/d5a2cf36-fc26-452c-8b1c-b8c4b4f9e87e/f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42.png",
+            "hash": "f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-27-57-150Z\\restored-player.png"
+    }
+  },
+  "reconnectPixelsIdentical": true,
+  "native": {
+    "ok": true,
+    "checks": [
+      "当前 Host 为观察模式",
+      "页面 URL 不含凭据",
+      "未开放原生对象或 WebMessage 桥",
+      "实际页面完成 MCP 截图检查点：initial",
+      "初始页面与截图后没有 frame 限流错误",
+      "切到旧预览后卸载 Host 页，服务实际收到 hidden",
+      "切回后从当前 Host 重新加载页面",
+      "最小化卸载，还原后重新读取当前帧",
+      "跨来源导航在请求前阻止",
+      "阻止导航后保留原 Host 页面",
+      "已保存实际 WebView2 诊断截图（非审查证据）",
+      "远程预览来源拒绝并断开旧 Host",
+      "发现负例拒绝：dead-pid",
+      "发现负例拒绝：invalid-port",
+      "发现负例拒绝：invalid-token",
+      "发现负例拒绝：linked",
+      "发现负例拒绝：missing",
+      "发现负例拒绝：unknown-api",
+      "发现负例拒绝：wrong-instance",
+      "发现负例拒绝：wrong-project",
+      "发现负例拒绝：wrong-session",
+      "发现负例拒绝：wrong-started-at",
+      "发现负例拒绝：wrong-workspace",
+      "负例之后可以显式重连正确 Host",
+      "实际页面完成 MCP 截图检查点：restored",
+      "重连历史事件后没有 frame 限流错误",
+      "本次 WebView2 浏览器进程已退出"
+    ],
+    "time": "2026-10-23T14:28:08.2465821+00:00",
+    "screenshot": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\spine-host-5fhtkw\\native-host.png",
+    "browserPid": 50736,
+    "evidenceEligible": false,
+    "performance": null
+  },
+  "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-27-57-150Z\\host-workspace.png",
+  "sourceUnchanged": true,
+  "documentVersionUnchanged": true,
+  "publicWriteEnabled": false,
+  "passed": true,
+  "allInputsUnchanged": true,
+  "finishedAt": "2026-10-23T14:28:09.937Z"
+}

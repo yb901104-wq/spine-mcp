@@ -1,0 +1,1392 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T03:43:54.801Z",
+  "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "reportPath": "docs/plans/creation-usability-trial-2026-10-26T03-43-54-799Z.json",
+  "bodyOnly": true,
+  "formalAnimationDelivered": false,
+  "editorImport": "notRun",
+  "secondCharacter": "notAvailable",
+  "publicWriteEnabled": false,
+  "calls": [
+    {
+      "tool": "spine_register_workspace",
+      "durationMs": 10.341399999999794,
+      "textBytes": 392,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 444.83619999999996,
+      "textBytes": 940,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_select_creation_stage",
+      "durationMs": 238.49099999999817,
+      "textBytes": 46049,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+        "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 84.09890000000087,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+        "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 359.40689999999813,
+      "textBytes": 289551,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+        "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_adjust_pose_intent",
+      "durationMs": 365.15850000000137,
+      "textBytes": 46736,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+        "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+        "revision": 1
+      }
+    },
+    {
+      "tool": "spine_preview_capture",
+      "durationMs": 424.4890000000014,
+      "textBytes": 36570,
+      "images": 1,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_host_undo",
+      "durationMs": 301.83669999999984,
+      "textBytes": 46416,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+        "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+        "revision": 2
+      }
+    },
+    {
+      "tool": "spine_host_commit",
+      "durationMs": 108.9372000000003,
+      "textBytes": 848,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "6cc6d9ca206ef7bbac1c1d9aecdfcb1b63340455c35867fe1701bb740a1e8819",
+        "openEpoch": "67c1460e-412f-4ead-8a18-0b275602ef4a",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 292.2930999999953,
+      "textBytes": 282410,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "6cc6d9ca206ef7bbac1c1d9aecdfcb1b63340455c35867fe1701bb740a1e8819",
+        "openEpoch": "67c1460e-412f-4ead-8a18-0b275602ef4a",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_preview_state",
+      "durationMs": 32.82770000000164,
+      "textBytes": 229690,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "6cc6d9ca206ef7bbac1c1d9aecdfcb1b63340455c35867fe1701bb740a1e8819",
+        "openEpoch": "67c1460e-412f-4ead-8a18-0b275602ef4a",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_preview_state",
+      "durationMs": 21.21689999999944,
+      "textBytes": 43650,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "6cc6d9ca206ef7bbac1c1d9aecdfcb1b63340455c35867fe1701bb740a1e8819",
+        "openEpoch": "67c1460e-412f-4ead-8a18-0b275602ef4a",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_select_creation_stage",
+      "durationMs": 181.09560000000056,
+      "textBytes": 46154,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 86.59130000000005,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 402.56119999999646,
+      "textBytes": 531061,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_precheck_pose",
+      "durationMs": 90.70330000000104,
+      "textBytes": 1749,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_inspect_character_preparation",
+      "durationMs": 87.76830000000336,
+      "textBytes": 14720,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_refine_reference_pose",
+      "durationMs": 683.7184000000052,
+      "textBytes": 60083,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 1
+      }
+    },
+    {
+      "tool": "spine_preview_state",
+      "durationMs": 26.08589999999822,
+      "textBytes": 54750,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 1
+      }
+    },
+    {
+      "tool": "spine_preview_capture",
+      "durationMs": 445.26460000000225,
+      "textBytes": 36616,
+      "images": 1,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_host_commit",
+      "durationMs": 52.74640000000363,
+      "textBytes": 364,
+      "images": 0,
+      "error": true,
+      "version": null
+    },
+    {
+      "tool": "spine_get_creation_task",
+      "durationMs": 65.06209999999555,
+      "textBytes": 74750,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+        "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+        "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+        "revision": 1
+      }
+    }
+  ],
+  "task": {
+    "taskId": "22c79b70-0858-43e0-b6dc-7f4632b223c8",
+    "projectId": "creation-b8572b5a-ccb9-4f4e-8f93-891e0cdf2c76",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T03-43-54-799Z",
+    "inputsFingerprint": "130f7274a6898cd2f8cd6fabb2427bf98250002f9880525d0cfb1f7589b9bdd8"
+  },
+  "launch": {
+    "type": "creation-host-ready",
+    "endpoint": "http://127.0.0.1:39497",
+    "projectId": "creation-b8572b5a-ccb9-4f4e-8f93-891e0cdf2c76",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T03-43-54-799Z",
+    "profile": "c2-pose",
+    "publicWriteEnabled": false
+  },
+  "browserWait": {
+    "durationMs": 29348.5651,
+    "readOnlyHttpPolls": 30
+  },
+  "baseline": {
+    "numeric": true,
+    "images": [
+      {
+        "path": "output/reports/creation-2026-10-26T03-43-54-799Z/standard-frame-0.png",
+        "hash": "2e9a7290deb15f10e4da62a5ff3f035a5e88fa8160f69d780ed35bf0211cdae0"
+      }
+    ]
+  },
+  "edited": {
+    "version": {
+      "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+      "documentId": "25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6",
+      "openEpoch": "9b9ebc92-6cab-4097-a5f4-4ed82fa48f11",
+      "revision": 1
+    },
+    "images": [
+      {
+        "path": "output/reports/creation-2026-10-26T03-43-54-799Z/edited-frame-0.png",
+        "hash": "ab2bc97785398a05c9a4c4e88280d98f1c5afe9addc46f437da35fce47a4e364"
+      }
+    ],
+    "capture": {
+      "manifestPath": "output/previews/captures/25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6/9b9ebc92-6cab-4097-a5f4-4ed82fa48f11/99650036-85d0-4e7f-9c01-e7bd87526760/f47794652ea96cca636cb6450d075130709dbd095d94fad1b2006aafbaa4055e.png.manifest.json",
+      "evidenceEligible": true,
+      "images": [
+        {
+          "path": "output/reports/creation-2026-10-26T03-43-54-799Z/edited-player-0.png",
+          "hash": "f47794652ea96cca636cb6450d075130709dbd095d94fad1b2006aafbaa4055e"
+        }
+      ]
+    }
+  },
+  "closedLoop": {
+    "passed": true,
+    "savedPath": "trial/creation-2026-10-26T03-43-54-799Z.pose.json",
+    "backupPath": ".spine-mcp/backups/25063b78b4e50dcd1104d311b32db0ff769aac51dd5ac87c8a8367bdfe4287c6/1792986267928-9c39075d-c0ea-4b26-9e6b-6b4b8ba77c6b.json",
+    "reopenedVersion": {
+      "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+      "documentId": "6cc6d9ca206ef7bbac1c1d9aecdfcb1b63340455c35867fe1701bb740a1e8819",
+      "openEpoch": "67c1460e-412f-4ead-8a18-0b275602ef4a",
+      "revision": 0
+    }
+  },
+  "summary": {
+    "sameVersion": true,
+    "fullTextBytes": 229690,
+    "summaryTextBytes": 43650
+  },
+  "application": {
+    "name": "spine-json-mcp",
+    "version": "0.2.0",
+    "buildFingerprint": "6731673c564095a28017ac99582f65d5266bedfcbc2f3954c85e01d243dadd12",
+    "kind": "compiled",
+    "profile": "c2-pose",
+    "trial": {
+      "isolated": true,
+      "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+      "recovery": [],
+      "resume": false
+    }
+  },
+  "referenceBefore": {
+    "numeric": true,
+    "quality": {
+      "stageId": "ready",
+      "methods": [],
+      "numericPassed": true,
+      "referenceStatus": "failed",
+      "failures": [
+        {
+          "id": "arm.left.wristReach",
+          "status": "fail",
+          "error": 0.2983337286431379,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.leftHand {x,y}",
+          "nextAction": {
+            "tool": "spine_host_patch",
+            "expectedRevision": {
+              "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+              "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+              "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+              "revision": 0
+            },
+            "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+          }
+        },
+        {
+          "id": "arm.left.wristTorsoHeight",
+          "status": "fail",
+          "error": 0.14842141697351063,
+          "tolerance": 0.12,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.leftHand {x,y}",
+          "nextAction": {
+            "tool": "spine_host_patch",
+            "expectedRevision": {
+              "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+              "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+              "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+              "revision": 0
+            },
+            "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+          }
+        },
+        {
+          "id": "arm.right.wristReach",
+          "status": "fail",
+          "error": 0.15890880983471511,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": {
+            "tool": "spine_host_patch",
+            "expectedRevision": {
+              "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+              "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+              "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+              "revision": 0
+            },
+            "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+          }
+        },
+        {
+          "id": "arm.right.wristOutsideTorso",
+          "status": "fail",
+          "error": 1,
+          "tolerance": 0,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": {
+            "tool": "spine_host_patch",
+            "expectedRevision": {
+              "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+              "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+              "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+              "revision": 0
+            },
+            "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+          }
+        },
+        {
+          "id": "arm.right.wristHeadGap",
+          "status": "fail",
+          "error": 0.3541270583881069,
+          "tolerance": 0.2,
+          "category": "fit",
+          "instruction": "手离头部太近/太远；同时会触发头部包围盒硬门禁。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": {
+            "tool": "spine_host_patch",
+            "expectedRevision": {
+              "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+              "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+              "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+              "revision": 0
+            },
+            "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+          }
+        }
+      ],
+      "failureCount": 5,
+      "canContinueEditing": true,
+      "canReview": false,
+      "canBuildFormalMotion": false,
+      "canCommit": false,
+      "note": "可编辑、数值、参考、视觉、正式组装与提交分别判定；未知或失败不因摘要而省略。"
+    }
+  },
+  "precheck": {
+    "ok": true,
+    "version": {
+      "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+      "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+      "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+      "revision": 0
+    },
+    "numeric": true,
+    "unreachable": [],
+    "issues": [],
+    "errors": {
+      "leftFoot": 0.000001639678619063486,
+      "rightFoot": 0.0000016943980514167064,
+      "leftHand": 0.000001020294484489184,
+      "rightHand": 2.5877133593899177e-7
+    },
+    "reference": {
+      "ok": false,
+      "status": null,
+      "metricCount": 48,
+      "failures": [
+        {
+          "id": "arm.left.wristReach",
+          "status": "fail",
+          "error": 0.2983337286431379,
+          "tolerance": 0.15
+        },
+        {
+          "id": "arm.left.wristTorsoHeight",
+          "status": "fail",
+          "error": 0.14842141697351063,
+          "tolerance": 0.12
+        },
+        {
+          "id": "arm.right.wristReach",
+          "status": "fail",
+          "error": 0.15890880983471511,
+          "tolerance": 0.15
+        },
+        {
+          "id": "arm.right.wristOutsideTorso",
+          "status": "fail",
+          "error": 1,
+          "tolerance": 0
+        },
+        {
+          "id": "arm.right.wristHeadGap",
+          "status": "fail",
+          "error": 0.3541270583881069,
+          "tolerance": 0.2
+        }
+      ],
+      "message": "必要指标独立判定；未知必要点、退回及超差阻止确认。头身中心连线仅用于旧数据诊断。"
+    },
+    "referenceIterations": 0,
+    "globalUnsolvable": false,
+    "nextAction": {
+      "tool": "spine_explain_pose",
+      "posePath": "trial/ready-v1.pose.json",
+      "instruction": "不可达/冲突需复核目标或阶段定义；不能通过换支撑、换身份、改分支或降低阈值绕过。"
+    }
+  },
+  "preparation": {
+    "characterId": "npc1",
+    "version": {
+      "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+      "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+      "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+      "revision": 0
+    },
+    "sourceFingerprint": "84363ddcf80a3048f78fd3870f80bba279b95549a6828fd308a445b8936a6c76",
+    "mappingStatus": "confirmed",
+    "calibration": {
+      "scale": 47.736149493599534,
+      "lengths": {
+        "leftLeg": [
+          27.140000781696795,
+          24.47138163892644
+        ],
+        "rightLeg": [
+          22.589778495422177,
+          21.271138071153654
+        ],
+        "leftArm": [
+          29.04055792281354,
+          17.512744005196218
+        ],
+        "rightArm": [
+          27.530524861863864,
+          23.000784649311054
+        ]
+      },
+      "origin": [
+        0,
+        0
+      ]
+    },
+    "mappingReportHash": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc",
+    "visualRig": {
+      "reviewed": true,
+      "issue": null,
+      "nodes": {
+        "leftShoulder": {
+          "type": "boneLocal",
+          "bone": "zs1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftElbow": {
+          "type": "boneLocal",
+          "bone": "zs2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftWrist": {
+          "type": "boneLocal",
+          "bone": "zs3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftHip": {
+          "type": "boneLocal",
+          "bone": "zt1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "leftKnee": {
+          "type": "boneLocal",
+          "bone": "zt2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "leftAnkle": {
+          "type": "boneLocal",
+          "bone": "zt3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightShoulder": {
+          "type": "boneLocal",
+          "bone": "ys1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightElbow": {
+          "type": "boneLocal",
+          "bone": "ys2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightWrist": {
+          "type": "boneLocal",
+          "bone": "ys3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightHip": {
+          "type": "boneLocal",
+          "bone": "yt1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "rightKnee": {
+          "type": "boneLocal",
+          "bone": "yt2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "rightAnkle": {
+          "type": "boneLocal",
+          "bone": "yt3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "body": {
+          "type": "boneLocal",
+          "bone": "bone2",
+          "point": [
+            0.2700029161853355,
+            11.67000000000003
+          ],
+          "calibrated": true,
+          "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "head": {
+          "type": "boneLocal",
+          "bone": "tou",
+          "point": [
+            32.16751571248424,
+            -2.767297098290246
+          ],
+          "calibrated": true,
+          "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "face": {
+          "type": "boneLocal",
+          "bone": "zui",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "confidence": 0.7,
+          "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。"
+        }
+      },
+      "segments": {
+        "leftArm.0": {
+          "nodes": [
+            "leftShoulder",
+            "leftElbow"
+          ],
+          "bones": [
+            "zs1"
+          ],
+          "attachments": [
+            {
+              "slot": "zs1",
+              "attachment": "zs1"
+            }
+          ]
+        },
+        "leftArm.1": {
+          "nodes": [
+            "leftElbow",
+            "leftWrist"
+          ],
+          "bones": [
+            "zs2"
+          ],
+          "attachments": [
+            {
+              "slot": "zs2",
+              "attachment": "zs2"
+            }
+          ]
+        },
+        "leftLeg.0": {
+          "nodes": [
+            "leftHip",
+            "leftKnee"
+          ],
+          "bones": [
+            "zt1"
+          ],
+          "attachments": [
+            {
+              "slot": "zt1",
+              "attachment": "zt1"
+            }
+          ]
+        },
+        "leftLeg.1": {
+          "nodes": [
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "bones": [
+            "zt2"
+          ],
+          "attachments": [
+            {
+              "slot": "zt1",
+              "attachment": "zt1"
+            }
+          ]
+        },
+        "rightArm.0": {
+          "nodes": [
+            "rightShoulder",
+            "rightElbow"
+          ],
+          "bones": [
+            "ys1"
+          ],
+          "attachments": [
+            {
+              "slot": "ys1",
+              "attachment": "ys1"
+            }
+          ]
+        },
+        "rightArm.1": {
+          "nodes": [
+            "rightElbow",
+            "rightWrist"
+          ],
+          "bones": [
+            "ys2"
+          ],
+          "attachments": [
+            {
+              "slot": "ys2",
+              "attachment": "ys2"
+            }
+          ]
+        },
+        "rightLeg.0": {
+          "nodes": [
+            "rightHip",
+            "rightKnee"
+          ],
+          "bones": [
+            "yt1"
+          ],
+          "attachments": [
+            {
+              "slot": "yt1",
+              "attachment": "yt1"
+            }
+          ]
+        },
+        "rightLeg.1": {
+          "nodes": [
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "bones": [
+            "yt2"
+          ],
+          "attachments": [
+            {
+              "slot": "yt1",
+              "attachment": "yt1"
+            }
+          ]
+        }
+      },
+      "views": [
+        {
+          "basis": "已检查 npc1.png 与切片分解：st 为正面斜视连衣裙、tou配面部/前发；当前资源没有已校准侧背躯干替换。",
+          "bodySlots": [
+            "st"
+          ],
+          "bodyView": "frontThreeQuarter",
+          "attachments": {
+            "st": "st",
+            "tf1": "tf1",
+            "tou": "tou",
+            "yj2": "yj2",
+            "yj1": "yj1"
+          }
+        }
+      ]
+    },
+    "inheritance": [
+      {
+        "name": "root",
+        "parent": null,
+        "transform": "normal"
+      },
+      {
+        "name": "zong",
+        "parent": "root",
+        "transform": "normal"
+      },
+      {
+        "name": "bone2",
+        "parent": "zong",
+        "transform": "normal"
+      },
+      {
+        "name": "bone3",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone4",
+        "parent": "bone3",
+        "transform": "normal"
+      },
+      {
+        "name": "tou",
+        "parent": "bone4",
+        "transform": "normal"
+      },
+      {
+        "name": "yj2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "yj1",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "mm2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "mm1",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "zui",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "ys1",
+        "parent": "bone4",
+        "transform": "noRotationOrReflection"
+      },
+      {
+        "name": "ys2",
+        "parent": "ys1",
+        "transform": "normal"
+      },
+      {
+        "name": "ys3",
+        "parent": "ys2",
+        "transform": "normal"
+      },
+      {
+        "name": "zs1",
+        "parent": "bone4",
+        "transform": "noRotationOrReflection"
+      },
+      {
+        "name": "zs2",
+        "parent": "zs1",
+        "transform": "normal"
+      },
+      {
+        "name": "zs3",
+        "parent": "zs2",
+        "transform": "normal"
+      },
+      {
+        "name": "yt1",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "yt2",
+        "parent": "yt1",
+        "transform": "normal"
+      },
+      {
+        "name": "yt3",
+        "parent": "yt2",
+        "transform": "normal"
+      },
+      {
+        "name": "zt1",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "zt2",
+        "parent": "zt1",
+        "transform": "normal"
+      },
+      {
+        "name": "zt3",
+        "parent": "zt2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "tou3",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou4",
+        "parent": "tou3",
+        "transform": "normal"
+      },
+      {
+        "name": "tou5",
+        "parent": "tou4",
+        "transform": "normal"
+      },
+      {
+        "name": "tou6",
+        "parent": "tou5",
+        "transform": "normal"
+      },
+      {
+        "name": "tou7",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou8",
+        "parent": "tou7",
+        "transform": "normal"
+      },
+      {
+        "name": "tou9",
+        "parent": "tou8",
+        "transform": "normal"
+      },
+      {
+        "name": "tou10",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou11",
+        "parent": "tou10",
+        "transform": "normal"
+      },
+      {
+        "name": "tou12",
+        "parent": "tou11",
+        "transform": "normal"
+      },
+      {
+        "name": "tou13",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou14",
+        "parent": "tou13",
+        "transform": "normal"
+      },
+      {
+        "name": "tou15",
+        "parent": "tou14",
+        "transform": "normal"
+      },
+      {
+        "name": "tou16",
+        "parent": "tou15",
+        "transform": "normal"
+      },
+      {
+        "name": "tou17",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou18",
+        "parent": "tou17",
+        "transform": "normal"
+      },
+      {
+        "name": "tou19",
+        "parent": "tou18",
+        "transform": "normal"
+      },
+      {
+        "name": "tou20",
+        "parent": "tou19",
+        "transform": "normal"
+      },
+      {
+        "name": "tou21",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou22",
+        "parent": "tou21",
+        "transform": "normal"
+      },
+      {
+        "name": "tou23",
+        "parent": "tou22",
+        "transform": "normal"
+      },
+      {
+        "name": "bone5",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone6",
+        "parent": "bone5",
+        "transform": "normal"
+      },
+      {
+        "name": "bone7",
+        "parent": "bone6",
+        "transform": "normal"
+      },
+      {
+        "name": "bone8",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone9",
+        "parent": "bone8",
+        "transform": "normal"
+      },
+      {
+        "name": "bone10",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone11",
+        "parent": "bone10",
+        "transform": "normal"
+      },
+      {
+        "name": "bd1",
+        "parent": "bone4",
+        "transform": "normal"
+      }
+    ],
+    "constraints": {
+      "ik": [],
+      "transform": [],
+      "path": []
+    },
+    "missing": [],
+    "approved": false,
+    "note": "只汇总已核实绑定；该报告本身不批准角色、视角或动作范围。"
+  },
+  "refinement": {
+    "ok": false,
+    "adopted": true,
+    "error": null,
+    "version": {
+      "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+      "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+      "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+      "revision": 1
+    },
+    "images": [
+      {
+        "path": "output/reports/creation-2026-10-26T03-43-54-799Z/ready-refined-frame-0.png",
+        "hash": "a9b09d2442c3deb5ba3b5648824e78bfc4beb6aa4cfcfae3145ad2b56257a3df"
+      }
+    ]
+  },
+  "referenceAfter": {
+    "stageId": "ready",
+    "methods": [],
+    "numericPassed": true,
+    "referenceStatus": "failed",
+    "failures": [
+      {
+        "id": "arm.left.wristReach",
+        "status": "fail",
+        "error": 0.2983306834092113,
+        "tolerance": 0.15,
+        "category": "fit",
+        "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+        "knob": "targets.leftHand {x,y}",
+        "nextAction": {
+          "tool": "spine_host_patch",
+          "expectedRevision": {
+            "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+            "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+            "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+            "revision": 1
+          },
+          "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+        }
+      },
+      {
+        "id": "arm.left.wristTorsoHeight",
+        "status": "fail",
+        "error": 0.14840338282968968,
+        "tolerance": 0.12,
+        "category": "fit",
+        "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+        "knob": "targets.leftHand {x,y}",
+        "nextAction": {
+          "tool": "spine_host_patch",
+          "expectedRevision": {
+            "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+            "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+            "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+            "revision": 1
+          },
+          "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+        }
+      },
+      {
+        "id": "arm.right.wristReach",
+        "status": "fail",
+        "error": 0.15890864205855593,
+        "tolerance": 0.15,
+        "category": "fit",
+        "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+        "knob": "targets.rightHand {x,y}",
+        "nextAction": {
+          "tool": "spine_host_patch",
+          "expectedRevision": {
+            "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+            "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+            "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+            "revision": 1
+          },
+          "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+        }
+      },
+      {
+        "id": "arm.right.wristOutsideTorso",
+        "status": "fail",
+        "error": 1,
+        "tolerance": 0,
+        "category": "fit",
+        "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+        "knob": "targets.rightHand {x,y}",
+        "nextAction": {
+          "tool": "spine_host_patch",
+          "expectedRevision": {
+            "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+            "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+            "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+            "revision": 1
+          },
+          "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+        }
+      },
+      {
+        "id": "arm.right.wristHeadGap",
+        "status": "fail",
+        "error": 0.3541212269398175,
+        "tolerance": 0.2,
+        "category": "fit",
+        "instruction": "手离头部太近/太远；同时会触发头部包围盒硬门禁。",
+        "knob": "targets.rightHand {x,y}",
+        "nextAction": {
+          "tool": "spine_host_patch",
+          "expectedRevision": {
+            "sessionId": "7482ef99-1322-463a-9b9e-f5e2e1b189d2",
+            "documentId": "73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb",
+            "openEpoch": "370b9e9a-d60e-426c-9459-4e9c4976a4e0",
+            "revision": 1
+          },
+          "instruction": "按当前 capabilities.editing 声明的参数预演修正；不可把图片坐标直接作为 IK 目标。"
+        }
+      }
+    ],
+    "failureCount": 5,
+    "canContinueEditing": true,
+    "canReview": false,
+    "canBuildFormalMotion": false,
+    "canCommit": false,
+    "note": "可编辑、数值、参考、视觉、正式组装与提交分别判定；未知或失败不因摘要而省略。"
+  },
+  "referenceCapture": {
+    "manifestPath": "output/previews/captures/73b3c7d9acaa7445a31bb050a8b88821207f1df61bafe79343bd80a1876d05fb/370b9e9a-d60e-426c-9459-4e9c4976a4e0/5ea3deb3-f8bc-4111-9e6f-27c490c5e203/3d65b9cc1c72f595d26e8c0f91f82c93be4022a42f2e6a5faf3c16c9c5d7afd6.png.manifest.json",
+    "evidenceEligible": true,
+    "images": [
+      {
+        "path": "output/reports/creation-2026-10-26T03-43-54-799Z/ready-player-0.png",
+        "hash": "3d65b9cc1c72f595d26e8c0f91f82c93be4022a42f2e6a5faf3c16c9c5d7afd6"
+      }
+    ]
+  },
+  "failedReferenceCommitDenied": true,
+  "taskMetrics": {
+    "calls": 20,
+    "durationMs": 4516.564000000008,
+    "textBytes": 1769075,
+    "images": 8,
+    "tokens": null
+  },
+  "frozenInputs": [
+    {
+      "path": ".spine-workflow.json",
+      "hash": "f53c71bdd2461c469de59579e9f97435faa8d5ee14eef2ab253961cfa1266587"
+    },
+    {
+      "path": "previews/pose-workflow-20261009/npc1.mapping.calibration.json",
+      "hash": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc"
+    },
+    {
+      "path": "previews/pose-workflow-20261009/npc1.mapping.json",
+      "hash": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e"
+    },
+    {
+      "path": "reference/body.gif",
+      "hash": "97b71b934e13a022b47bf6f97d5a0961e660cfb1803cc0a3ca79a34eb2090960"
+    },
+    {
+      "path": "reference/body.sequence.json",
+      "hash": "48390198ad8c3012d1124a7b47af97427817b5e01ddc0a917497dc2b361fa07e"
+    },
+    {
+      "path": "reference/frames/frame-0000.png",
+      "hash": "ea1f56f795c9c125467cf58c13762733af1aa17ccabaf8111bd7e149fc3bcb26"
+    },
+    {
+      "path": "reference/ready-v1-sheet/reference-page-1.png",
+      "hash": "d3581c91f909549f7bc043d2ef73cb3455b46b0557d2d350eb2edb0bafe124fd"
+    },
+    {
+      "path": "reference/ready-v1-sheet/reference-pose-sheet.json",
+      "hash": "e13d4906e3c7fd1ca76c243b765cf223f973b54b565cc2418593a46f3234a0c7"
+    },
+    {
+      "path": "reference/ready-v1.reference.json",
+      "hash": "7af41d71e7bcc906d2b4287437d81ed31ebf404d99e19f4554fe4cb036eadec1"
+    },
+    {
+      "path": "trial/calibration/character.png",
+      "hash": "4a65d3b1c5e54db71e954205708f8ec68d8f468fabebf8e2300840f225ce76a5"
+    },
+    {
+      "path": "trial/calibration/nodes.png",
+      "hash": "6ae1f9b33b9cd89a51cbcc26ba748b9d7cd174ecaf3355bbf7e4f01fb6b1de06"
+    },
+    {
+      "path": "trial/calibration/slices.png",
+      "hash": "5dbaba11372410254efe4c06b40390697442b88455e22bec4f4eaea80d0ebaad"
+    },
+    {
+      "path": "trial/calibration/visual-rig-calibration.json",
+      "hash": "814ceb2064c01233fb733fd337c650701663ecf71fc79d3877d6d00298183dc8"
+    },
+    {
+      "path": "trial/neutral-stand-v2-sheet/page-1-clean.png",
+      "hash": "56d7079488a989de6496b3f814805024e06969fd2cb24f5f803f41cebf0a1475"
+    },
+    {
+      "path": "trial/neutral-stand-v2-sheet/page-1-diagnostic.png",
+      "hash": "670e38eb000fe340f5ea3e75e0eb1d90a663dbfff95b5d69660e7928aab7fbe5"
+    },
+    {
+      "path": "trial/neutral-stand-v2-sheet/pose-comparison.json",
+      "hash": "f8226b5f34bb1899a1068d2c957bd6a6c7ec7bc32d208185f8bde63b191a66c0"
+    },
+    {
+      "path": "trial/neutral-stand-v2.pose.json",
+      "hash": "ba115c2c20bfdcd001b30a6c21ece6f48391e8e8725038132e2ebf747f59f7dd"
+    },
+    {
+      "path": "trial/npc1.visual-rig.json",
+      "hash": "0c4f3f3686299c04bba66cfcc9a36327f1bd36738a5bba8522eecdffe5368b88"
+    },
+    {
+      "path": "trial/ready-v1.pose.json",
+      "hash": "6ef6497fbb7ee86d28fc8c6e609adef361ac9905aa092a58f0c6c45c4a531311"
+    },
+    {
+      "path": "目标/npc1.atlas",
+      "hash": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad"
+    },
+    {
+      "path": "目标/npc1.json",
+      "hash": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83"
+    },
+    {
+      "path": "目标/npc1.png",
+      "hash": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251"
+    }
+  ],
+  "allInputsUnchanged": true,
+  "visualReview": {
+    "status": "pending",
+    "note": "真实 player 截图核验通过不等于参考匹配或美术批准。"
+  },
+  "finished": true,
+  "hostStopped": true,
+  "writerReleased": true
+}

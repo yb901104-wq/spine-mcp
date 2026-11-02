@@ -270,7 +270,7 @@ export function resolveWorkspacePath(filePath: string, context: ToolContext = {}
 }
 
 /** 与同步入口使用相同边界；每次核验根及最近现存祖先，不缓存 realpath，不阻塞主线程。 */
-export async function resolveWorkspacePathAsync(filePath: string, context: ToolContext = {}): Promise<string> {
+export async function resolveWorkspacePathAsync(filePath: string, context: ToolContext = {},options:{canonicalExisting?:boolean}={}): Promise<string> {
   const { workspaceRoot, absolutePath } = workspacePathCandidate(filePath, context);
   let ancestor = absolutePath;
   while (true) {
@@ -283,7 +283,20 @@ export async function resolveWorkspacePathAsync(filePath: string, context: ToolC
   const [realRoot, realAncestor] = checks.map(check => (check as PromiseFulfilledResult<string>).value);
   const relative = path.relative(realRoot, realAncestor);
   if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('路径符号链接越过工作区边界。');
-  return absolutePath;
+  // 严格读取可直接使用已核验的真实现存身份，单次请求去重不会混淆改指后的链接。
+  return options.canonicalExisting&&ancestor===absolutePath?realAncestor:absolutePath;
+}
+
+export type WorkspaceReadResolver=(filePath:string)=>Promise<string>;
+/** 一次只读请求固定真实根；每个现存目标仍重新 realpath，根链接中途改指会拒绝。 */
+export async function createWorkspaceReadResolver(context:ToolContext={}):Promise<WorkspaceReadResolver>{
+  const workspaceRoot=path.resolve(context.workspaceRoot??getWorkspaceRoot(context.projectId)),realRoot=await realpath(workspaceRoot);
+  const fixedContext={...context,workspaceRoot};
+  return async filePath=>{
+    const {absolutePath}=workspacePathCandidate(filePath,fixedContext),realFile=await realpath(absolutePath),relative=path.relative(realRoot,realFile);
+    if(relative===''||relative.startsWith('..')||path.isAbsolute(relative))throw new Error('路径符号链接越过本次请求的工作区边界。');
+    return realFile;
+  };
 }
 
 export function getDocumentSummary(document: SpineDocument) {
@@ -778,6 +791,33 @@ export async function fitAnimationCurves(
 }
 
 /** 完整动画结果通过已有事务层提交；求解层不直接写 Spine 文件。 */
+/** Host 精确候选共享的只读审查，不能借此写文件或绕过版本/引用/diff 门禁。 */
+export function auditGeneratedAnimationCandidate(source:JsonObject,candidate:JsonObject,animation:string,overwrite=false){
+  if(source.skeleton?.spine!==SUPPORTED_SPINE_VERSION)throw new Error(`Writes support Spine ${SUPPORTED_SPINE_VERSION}.`);
+  if(typeof animation!=='string'||!animation.trim()||['__proto__','constructor','prototype'].includes(animation)||/[\x00-\x1f]/.test(animation))throw new Error('动画名称无效。');
+  if(Object.hasOwn(source.animations??{},animation)&&!overwrite)throw new Error('目标动画已存在，必须显式 overwrite:true。');
+  if(!Object.hasOwn(candidate.animations??{},animation))throw new Error('精确候选缺少目标动画。');
+  // 整动画替换也不能删除既有只读 timeline，或夹带 V1 未开放的 events/deform/constraints。
+  const readonlyPart=(value:JsonObject={})=>{
+    const result=deepClone(value);
+    for(const [container,targetType]of [['bones','bone'],['slots','slot']]as const){
+      if(!result[container])continue;
+      for(const [name,timelines]of Object.entries(result[container])as [string,JsonObject][]){
+        for(const timeline of Object.keys(timelines))if(getWritableTimelineSpec(targetType,timeline))delete timelines[timeline];
+        if(!Object.keys(timelines).length)delete result[container][name];
+      }
+      if(!Object.keys(result[container]).length)delete result[container];
+    }
+    for(const timeline of DRAW_ORDER_TIMELINES)delete result[timeline];
+    return result;
+  };
+  if(JSON.stringify(readonlyPart(source.animations?.[animation]))!==JSON.stringify(readonlyPart(candidate.animations[animation])))throw new Error('精确候选修改了 V1 只读的动画结构或未开放 timeline。');
+  const expected=deepClone(source);expected.animations??={};expected.animations[animation]=deepClone(candidate.animations[animation]);
+  if(JSON.stringify(expected)!==JSON.stringify(candidate))throw new Error('精确候选只能修改声明的单个动画，其它动画和结构必须保持。');
+  const diff=collectJsonDiffs(source,candidate),operationValidation=validateOperationDiff(animationOnlyGuard('spine_retarget_motion'),diff),officialSpecValidation=validateOfficialAnimationSpec(candidate),validation=validateSpineJson(candidate);
+  if(!operationValidation.ok||!officialSpecValidation.ok||!validation.ok)throw new Error('精确候选未通过 diff 白名单、结构引用或官方 JSON 规范审查。');
+  return {diff,operationValidation,officialSpecValidation,validation};
+}
 export async function writeGeneratedAnimation(filePath: string, args: { animation: string; value: JsonObject; overwrite?: boolean } & WriteOptions, context: ToolContext = {}) {
   return writeTransaction(filePath, args, context, animationOnlyGuard("spine_retarget_motion"), (json, diff) => {
     json.animations ??= {};

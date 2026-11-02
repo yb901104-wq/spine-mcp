@@ -1,5 +1,6 @@
 import { AjvJsonSchemaValidator } from '@modelcontextprotocol/sdk/validation/ajv';
 import { ToolError } from './toolError.js';
+import { perspectiveSchema } from './perspective.js';
 
 // 语义输入与工具发现共用。frame 是可合并的部分输入，求解仍检查完整性和角色能力。
 const number = { type: 'number' };
@@ -11,12 +12,12 @@ const dictionary = (value: any) => ({ type: 'object', propertyNames: safeNames, 
 export const weaponInputSchema = { anyOf: [{ type: 'null' }, object({ x: number, y: number, angle: number, grips: object({ left: number, right: number }, { required: ['left', 'right'] }) }, { required: ['x', 'y', 'angle', 'grips'] })] };
 export const frameInputSchema = object({
   time: { type: 'number', minimum: 0 }, body: transform, head: number,
-  channels: dictionary(transform),
+  channels: dictionary(transform), perspective: perspectiveSchema,
   targets: object(Object.fromEntries(['leftHand', 'rightHand', 'leftFoot', 'rightFoot'].map(role => [role, role.endsWith('Hand') ? object({ x: number, y: number, angle: number }) : endpoint]))),
   bendDirections: object(Object.fromEntries(['leftArm', 'rightArm', 'leftLeg', 'rightLeg'].map(role => [role, { type: 'integer', enum: [-1, 1] }]))),
   action: object({ driver: { anyOf: [{ type: 'string', enum: ['leftHand', 'rightHand'] }, { type: 'null' }] } }),
   presentation: object({ attachments: dictionary({ type: ['string', 'null'] }), drawOrder: { type: 'array', uniqueItems: true, maxItems: 500, items: { type: 'string' } } }),
-}, { description: 'normalizedSkeleton 语义参数；body/channels.rotate 为 setup 增量，head 为角度；不接受骨骼、solution 或批准字段。' });
+}, { description: 'normalizedSkeleton 语义参数；body/channels.rotate 为 setup 增量，head 为角度。perspective 仅 diagnostic 单臂纵向缩短，不能批准为正式姿态或 motion；不接受骨骼、solution 或批准字段。' });
 export const policyInputSchema = object({ kneeFlexionMax: { type: 'number', minimum: 0, maximum: 180 }, reason: { type: 'string' } });
 export const posePatchInputSchema = object({
   frame: frameInputSchema, weapon: { anyOf: [{ type: 'null' }, object({ x: number, y: number, angle: number, grips: object({ left: number, right: number }) })] }, groundY: number, policy: policyInputSchema,

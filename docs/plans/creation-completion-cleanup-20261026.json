@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-26T14:43:59.040Z",
+  "items": [
+    {
+      "file": "docs/plans/creation-completion-trial-2026-10-26T14-37-04-261Z.json",
+      "root": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T14-37-04-261Z",
+      "recovered": true,
+      "pid": 68860,
+      "generation": 1,
+      "writerReleased": true
+    },
+    {
+      "file": "docs/plans/creation-completion-trial-2026-10-26T14-41-59-426Z.json",
+      "root": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T14-41-59-426Z",
+      "recovered": true,
+      "pid": 69696,
+      "generation": 1,
+      "writerReleased": true
+    }
+  ]
+}

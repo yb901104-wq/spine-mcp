@@ -3,7 +3,7 @@ import { solvePoseKernel } from './animationKernel.js';
 import { forkMotionRuntime } from './motionRuntime.js';
 import { readVisualNodes } from './visualRig.js';
 import { runtimeGraph } from './referenceRetarget.js';
-import { normalizedGraph,torsoAxis,distance,direction,finitePoint,limbNodes,normalizeImagePoints,angleError,compareGraphs,policyFingerprint } from './poseGraph.js';
+import { normalizedGraph,torsoAxis,distance,direction,finitePoint,limbNodes,normalizeImagePoints,angleError,compareGraphs,policyFingerprint,referenceBendDirections } from './poseGraph.js';
 export function retargetReferencePoseKernel(a:any,prepared:any){
  const {reference:r,visual:v,base,source}=prepared;
  const solve=(pose:any)=>solvePoseKernel(pose,{...source,rt:forkMotionRuntime(source.rt)},pose.visualRigPath?(sk:any)=>readVisualNodes(sk,v.rig):undefined);
@@ -29,13 +29,14 @@ export function retargetReferencePoseKernel(a:any,prepared:any){
   }
  }
  const initial=readVisualNodes(s.skeleton,v.rig).points;
+ const fixedBranches=referenceBendDirections(r.observation,a.correspondence,targetFacing);
  for(const [role,n]of Object.entries(limbNodes)){
   const side=role.startsWith('left')?'left':'right',rs=a.correspondence[side],rn=n.map(k=>rs+k.slice(side.length));
   if(!rn.every(k=>finitePoint(ref[k]))){conflicts.push(`${role} 必要参考节点未知。`);continue;}
   const lengths=v.mapping.calibration!.lengths![role as 'leftArm'];const start=initial[n[0]],factor=targetFacing==='left'?-1:1;
   const u=direction(ref[rn[0]],ref[rn[1]])*Math.PI/180,l=direction(ref[rn[1]],ref[rn[2]])*Math.PI/180;
   expected[n[0]]=start;expected[n[1]]={x:start.x+factor*lengths[0]*Math.cos(u),y:start.y+lengths[0]*Math.sin(u)};expected[n[2]]={x:expected[n[1]].x+factor*lengths[1]*Math.cos(l),y:expected[n[1]].y+lengths[1]*Math.sin(l)};
-  const cross=(ref[rn[1]].x-ref[rn[0]].x)*(ref[rn[2]].y-ref[rn[1]].y)-(ref[rn[1]].y-ref[rn[0]].y)*(ref[rn[2]].x-ref[rn[1]].x);frame.bendDirections[role]=cross*factor>=0?-1:1;
+  frame.bendDirections[role]=fixedBranches[role];
  }
  // 根据参考腿段同时计算两脚和身体高度；不可继承并腿准备姿态。
  const contacts=['left','right'].filter(side=>r.observation.support?.[a.correspondence[side]]===true);

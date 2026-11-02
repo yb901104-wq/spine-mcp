@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T04:17:40.615Z",
+  "scope": "CU-0/CU-1 首批基础能力及 CU-2/CU-3/CU-4 部分工程；不是整个 CU 工单完成证明。",
+  "trialPath": "docs/plans/creation-usability-trial-2026-10-26T04-15-12-844Z.json",
+  "trialHash": "6529b06b26907a603e3eb10beae9219788dacc5f9b9fae2c533742c41e0bab8b",
+  "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T04-15-12-844Z",
+  "application": {
+    "name": "spine-json-mcp",
+    "version": "0.2.0",
+    "kind": "compiled",
+    "buildFingerprint": "b9bbc4ff55382f444056cdbf77ece815e385635481b9c47b7872294c42f44c1e",
+    "moduleCount": 94,
+    "profile": "c2-pose",
+    "trial": {
+      "isolated": true,
+      "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+      "recovery": [],
+      "resume": false
+    }
+  },
+  "validation": {
+    "build": "passed",
+    "tests": {
+      "total": 222,
+      "passed": 222,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 42256.6957,
+      "logHash": "a987392edac9683210a92fad7510b09018897460b739c78626a20e802d5709a5"
+    },
+    "scriptSyntax": "passed",
+    "diffWhitespace": "passed"
+  },
+  "workflow": {
+    "closedLoop": {
+      "passed": true,
+      "savedPath": "trial/creation-2026-10-26T04-15-12-844Z.pose.json",
+      "backupPath": ".spine-mcp/backups/dd0c096e9a1a50ecd566eb1cd560afd4d01075bfcbe58f2f5e494e694c8ceace/1792988130512-8996d174-bb37-4a0b-9108-f7b6e4ad8776.json",
+      "reopenedVersion": {
+        "sessionId": "1444032e-8df9-4f29-94c5-d709e804f8f0",
+        "documentId": "5daf92e2bf43f259c04a85269bfb19982e3a4f213b6cea066421768f81e87298",
+        "openEpoch": "dfb6e5b0-53d6-4fe1-88ab-6a90e43f0f6c",
+        "revision": 0
+      }
+    },
+    "inputsUnchanged": true,
+    "inputCount": 22,
+    "hostStopped": true,
+    "writerReleased": true,
+    "failedReferenceCommitDenied": true
+  },
+  "measurement": {
+    "all": {
+      "calls": 22,
+      "durationMs": 7728.169500000002,
+      "textBytes": 800687,
+      "images": 8,
+      "tokens": null
+    },
+    "preparation": {
+      "calls": 2,
+      "durationMs": 1805.8516,
+      "textBytes": 1332,
+      "images": 0,
+      "tokens": null
+    },
+    "execution": {
+      "calls": 20,
+      "durationMs": 5922.317900000002,
+      "textBytes": 799355,
+      "images": 8,
+      "tokens": null
+    },
+    "summary": {
+      "sameVersion": true,
+      "fullTextBytes": 230376,
+      "summaryTextBytes": 22448
+    },
+    "summaryBytesReduction": 0.9025592943709414,
+    "scope": "单轮任务实测；耗时为 MCP 调用之和，不含模型推理、浏览器等待与独立导入；非三轮 P95 或 attached/detached 对照。返回字节不是 token，客户端真实 token 无法取得。准备为注册与隔离冻结，其余为执行。task JSONL 与外层驱动计数范围不同，不能混用。"
+  },
+  "reference": {
+    "status": "failed",
+    "failureCount": 9,
+    "failures": [
+      {
+        "id": "arm.left.wristReach",
+        "status": "fail",
+        "error": 0.260652297028232,
+        "tolerance": 0.15
+      },
+      {
+        "id": "arm.left.wristTorsoHeight",
+        "status": "fail",
+        "error": 0.13412568605766928,
+        "tolerance": 0.12
+      },
+      {
+        "id": "arm.right.wristReach",
+        "status": "fail",
+        "error": 0.15304939547319818,
+        "tolerance": 0.15
+      },
+      {
+        "id": "arm.right.wristOutsideTorso",
+        "status": "fail",
+        "error": 1,
+        "tolerance": 0
+      },
+      {
+        "id": "arm.right.wristHeadGap",
+        "status": "fail",
+        "error": 0.3482661476295412,
+        "tolerance": 0.2
+      },
+      {
+        "id": "leftArm.segment1",
+        "status": "fail",
+        "error": 17.055407846749404,
+        "tolerance": 15
+      },
+      {
+        "id": "leftArm.flexion",
+        "status": "fail",
+        "error": 17.066837654777032,
+        "tolerance": 15
+      },
+      {
+        "id": "leftArm.wrist",
+        "status": "fail",
+        "error": 0.27623557227401285,
+        "tolerance": 0.15
+      },
+      {
+        "id": "rightArm.wrist",
+        "status": "fail",
+        "error": 0.15344249863800857,
+        "tolerance": 0.15
+      }
+    ],
+    "feasibility": {
+      "checks": [
+        {
+          "limb": "leftArm",
+          "status": "conditionalConflict",
+          "lengths": [
+            29.04055792281354,
+            17.512744005196218
+          ],
+          "torsoLength": 47.32817821965526,
+          "allowedFlexion": [
+            48.434948822922024,
+            78.43494882292202
+          ],
+          "possibleReach": [
+            0.7774721760090494,
+            0.9026104483318839
+          ],
+          "requiredReach": [
+            0.3563933783399812,
+            0.6563933783399812
+          ],
+          "reason": "当前固定段长条件下，肘角与肩腕距离容许区间没有交集。"
+        },
+        {
+          "limb": "rightArm",
+          "status": "intervalsOverlap",
+          "lengths": [
+            27.530524861863864,
+            23.000784649311054
+          ],
+          "torsoLength": 47.32817821965526,
+          "allowedFlexion": [
+            4.72350431336281,
+            34.72350431336281
+          ],
+          "possibleReach": [
+            1.019435558694793,
+            1.066779522075527
+          ],
+          "requiredReach": [
+            0.7329482242364299,
+            1.0329482242364298
+          ],
+          "reason": "必要区间有交集，但不能据此保证求解或视觉匹配成功。"
+        }
+      ],
+      "conditionalConflict": true,
+      "advisory": true,
+      "globalUnsolvable": false,
+      "assumptions": [
+        "当前校准骨段长度及躯干标尺固定；视觉切片锚点偏移另验。",
+        "不改变身份、支撑、弯曲分支或阈值；透视另按校准能力判断。"
+      ],
+      "nextSteps": [
+        "复核参考标注与视觉关节依据。",
+        "检查已声明角色范围；未开放透视只能诊断，不能自动放宽门禁。"
+      ]
+    },
+    "formalAnimationDelivered": false
+  },
+  "visualReview": {
+    "status": "rejectedForReference",
+    "scope": "独立查看本轮干净 edited-player 与 ready-player PNG；未登记批准。",
+    "standard": "角色可见、主体完整，图片能反映当前修改；不作为原 GIF 准备姿态通过。",
+    "ready": "目标仍呈单手前举、另一手垂低和较明显侧向躯干姿态，未形成参考准备姿态的身体与双臂关系；接缝、头向及支撑仍需继续审查。数值失败也未解除。",
+    "continuity": "notRun"
+  },
+  "editor": {
+    "reportPath": "docs/plans/creation-editor-import-20261026.json",
+    "passed": true,
+    "candidateHash": "d14ecf45adcbdce7879a0ce2a6c128db9807421d1ec8a5dccd6d4c95e2577ae7",
+    "project": {
+      "path": "output/reports/editor-import-20261026-final/candidate.spine",
+      "hash": "c5f28a47d8579a484af5f4caef9b2718731d3add94528d7852816e1c12b55174",
+      "bytes": 66732
+    },
+    "sourceUnchanged": true,
+    "scope": "官方 4.1.24 JSON 解析、工程保存；未验证编辑器画面/贴图，不代表完整参考动画批准。",
+    "visualReview": "notRun",
+    "fullAnimationImported": false
+  },
+  "secondCharacter": {
+    "status": "notSelected",
+    "excluded": [
+      {
+        "name": "初音喇叭",
+        "reason": "用户说明为立绘，不用于当前研究。"
+      },
+      {
+        "name": "多拆分皮肤案例",
+        "reason": "此前用户明确排除。"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\edited-frame-0.png",
+      "hash": "ab2bc97785398a05c9a4c4e88280d98f1c5afe9addc46f437da35fce47a4e364",
+      "bytes": 124681
+    },
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\edited-player-0.png",
+      "hash": "f47794652ea96cca636cb6450d075130709dbd095d94fad1b2006aafbaa4055e",
+      "bytes": 468837
+    },
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\host-offline.png",
+      "hash": "e77f1480d4aab4d2ff3fd9ecb2ff0e3801b973e47c0619949f8a207b0279e1f4",
+      "bytes": 80036
+    },
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\ready-player-0.png",
+      "hash": "0b1228e01cf1f2803f49a853bc6ba662deb2b1e96b1d702a10c4e6448ff3189f",
+      "bytes": 483386
+    },
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\ready-refined-frame-0.png",
+      "hash": "3b390aa7b92798d9a54abce5f9a84bd6b0bf3a415b8c2baf6ad74dfc38d0c2dc",
+      "bytes": 129403
+    },
+    {
+      "path": "output\\reports\\creation-2026-10-26T04-15-12-844Z\\standard-frame-0.png",
+      "hash": "2e9a7290deb15f10e4da62a5ff3f035a5e88fa8160f69d780ed35bf0211cdae0",
+      "bytes": 124943
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "src/creationTasks.ts",
+      "hash": "88509a29adce32e7dd6236eec9f4bf3265e5dc28b135bacb1909c333fa737f4e"
+    },
+    {
+      "path": "src/creationQuality.ts",
+      "hash": "d3d4d0c68b10a0cf38ab73a28d30b0ecb8928e9b8e1b32c34a4ae23076e5e8ae"
+    },
+    {
+      "path": "src/creationControls.ts",
+      "hash": "047bec44758be3424804d5601acd6d7fb83b2940dd0ac4294c40768b51256c14"
+    },
+    {
+      "path": "src/creationTrialServer.ts",
+      "hash": "a02d6bf08e7a8f95e213489ee3778ea9c39fd66fde247fb1fd79071908dc63d1"
+    },
+    {
+      "path": "src/toolCatalog.ts",
+      "hash": "4a2a579e5b4b25e5dc8456f52eaa74dec114706497052e7ec048dd5c05616007"
+    },
+    {
+      "path": "src/buildIdentity.ts",
+      "hash": "96d295d531561c3bc3a11c53878c12c30d72b98eea17a9761f438c3d72627a09"
+    },
+    {
+      "path": "src/referenceFeasibility.ts",
+      "hash": "d6f1d23d41ad38978924162bca313b22a625b94281ceaf47eeabcc58b95f5c25"
+    },
+    {
+      "path": "src/server.ts",
+      "hash": "3141161fd4d2f9ed5fd630f12a827ece78fa9c5567e9f9828eebc171e9783f1a"
+    },
+    {
+      "path": "src/poseGraph.ts",
+      "hash": "c1cd79e987d8e769637da7a1a4aa592b736d4c1f03a1cfa4710ecc19d43db890"
+    },
+    {
+      "path": "src/poseOps.ts",
+      "hash": "44c8f77fdfa93990e51d75ab320af10a982e8e25675c29c4bb97f14f46e4e53a"
+    },
+    {
+      "path": "src/hostClient.ts",
+      "hash": "f790d6aff1a281143e58c2495526a4c36e229de1513cd6b08499dcef3c274860"
+    },
+    {
+      "path": "src/hostDocumentStore.ts",
+      "hash": "11766120ce7cb63dc137044e6acf1d5bbff71a95cb204188c7909c4e1dff00a8"
+    },
+    {
+      "path": "src/hostEditorStore.ts",
+      "hash": "d8db61afb9467f6ca582eef5730a1a3b5bdfdfee5510c08423fce04492706e97"
+    },
+    {
+      "path": "src/hostServer.ts",
+      "hash": "2cafb09f195d4dddc310601e4098b2d8c85330dfa711bde4bd47440a9e079320"
+    },
+    {
+      "path": "src/hostAssetCommands.ts",
+      "hash": "8c2996b4d0137f94f42fe34cbb2685732638bf83f3b77d43d82f65b23776225e"
+    },
+    {
+      "path": "src/resources.ts",
+      "hash": "0062d0daafef427a4593114baac5395e70efe900c8676e8c99f3397e96949fe2"
+    },
+    {
+      "path": "preview/host.html",
+      "hash": "66340bfbcf50a2c67a8d75eeb27423e2e11b2231d66c5af2b1aa6afe19d3dcae"
+    },
+    {
+      "path": "policies/pose-comparison.v4.json",
+      "hash": "8bd2e186bf6b347f8cec7a621bdc04b5f231ff9002cb93ca4a07cfbecbd2fdeb"
+    },
+    {
+      "path": "scripts/acceptance-creation-workflow.mjs",
+      "hash": "db985b29eda59a3b22f7dc15952963b3109c932bb4fe45a87986332d5fc5fef2"
+    },
+    {
+      "path": "scripts/verify-spine-editor-import.mjs",
+      "hash": "060706c95a015688910184e3e6f42d352f63fcadba6374ddd7ebfbc5a728aea1"
+    },
+    {
+      "path": "scripts/acceptance-creation-recovery.mjs",
+      "hash": "e679befb35dfec48a0ad49d8f6640000f466043cc30cf1c9efd91283a0253c48"
+    }
+  ],
+  "remaining": [
+    "CU-1 新参考准备和未声明文档的完整会话入口、取消/失联/重试/恢复完整真实矩阵仍未完成。",
+    "CU-2 实际目标 Agent 客户端验证未完成；仅 SDK stdio 静态与动态发现验证。",
+    "CU-3 第二合适真实角色未选，校准范围复用未验。",
+    "CU-4 单臂正式投影/宽度/末端补偿校准未实现；现有缩放保持诊断。",
+    "CU-5 新受控 motion 区间编辑和原 GIF 完整身体动画未交付。",
+    "CU-6 三轮 30 样本 P95、同任务 attached/detached、实际客户端 token 未验。",
+    "CU-7 可分发隔离包、完整作品与编辑器视觉导入未完成；原长期观察和人工评审继续保留。"
+  ],
+  "recovery": {
+    "reportPath": "docs/plans/creation-recovery-2026-10-26T04-19-15-938Z.json",
+    "reportHash": "c5e2caee0751c5068fa6f14663d0291a86e4873553b4189b596f0b4d9d8ba11f",
+    "passed": true,
+    "hostStopped": true,
+    "writerReleased": true
+  }
+}

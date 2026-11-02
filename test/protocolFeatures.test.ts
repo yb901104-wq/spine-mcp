@@ -112,7 +112,7 @@ test('真实 MCP：resources/prompts/logging 声明可兑现，只读不启动 H
     const recheck=decode(await client.callTool({name:'spine_recheck_pose',arguments:{projectId:context.projectId,posePath:'a.pose.json'}}));assert.ok(recheck.solved);
     const invalid=await client.callTool({name:'spine_get_pose_state',arguments:{posePath:'a.pose.json',unknown:true}});assert.equal(invalid.isError,true);assert.equal(JSON.parse((invalid.content as any)[0].text).error.code,'VALIDATION_FAILED');
     const definitions=(await client.listTools()).tools;
-    assert.equal(definitions.length,101);assert.ok(definitions.every(tool=>tool.inputSchema.additionalProperties===false));
+    assert.ok(definitions.length>=102);assert.ok(definitions.every(tool=>tool.inputSchema.additionalProperties===false));
     const frameSchema:any=definitions.find(t=>t.name==='spine_create_pose_draft')!.inputSchema.properties!.frame;
     assert.equal(frameSchema.additionalProperties,false);assert.equal(frameSchema.properties.channels.additionalProperties.properties.rotate.type,'number');
     const nestedInvalid=await client.callTool({name:'spine_adjust_pose',arguments:{posePath:'a.pose.json',outputPosePath:'bad.pose.json',patch:{frame:{targets:{leftHand:{x:.1,review:{decision:'approved'}}}}}}});

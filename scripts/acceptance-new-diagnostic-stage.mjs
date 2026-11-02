@@ -1,0 +1,55 @@
+// 真实 MCP 的独立失败阶段：创建、图像、编辑/撤销、任务追踪、重启恢复及旧证据拒绝。
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {spawn} from 'node:child_process';
+import {Client} from '@modelcontextprotocol/sdk/client/index.js';
+import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
+import {HostClient} from '../dist/hostClient.js';
+import {strictHash} from '../dist/hostContracts.js';
+const sourceRoot=path.resolve(process.argv[2]??'D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z');
+const originalManifest=JSON.parse(await fs.readFile(path.join(sourceRoot,'.spine-workflow.json'),'utf8'));
+const stamp=new Date().toISOString().replace(/[:.]/g,'-'),reportPath=`docs/plans/new-diagnostic-stage-${stamp}.json`,client=new Client({name:'new-diagnostic-stage-real-npc1',version:'1'});
+const report={schemaVersion:1,at:new Date().toISOString(),sourceRoot,scope:'新参考绑定的失败阶段载入与持续编辑；复用已审查起始帧，不批准参考匹配或完整动画。',calls:[],passed:false,formalAnimationDelivered:false,publicWriteEnabled:false};
+let context={workspaceRoot:sourceRoot,projectId:originalManifest.projectId},host,endpoint,taskId;
+async function call(name,args={},allowError=false){const start=performance.now(),r=await client.callTool({name,arguments:{projectId:context.projectId,...args}}),text=r.content.filter(c=>c.type==='text').map(c=>c.text).join(''),v=JSON.parse(text);report.calls.push({tool:name,durationMs:performance.now()-start,textBytes:Buffer.byteLength(text),images:r.content.filter(c=>c.type==='image').length,error:r.isError===true,code:v.code??null});if(r.isError&&!allowError)throw Error(`${name}: ${text}`);return {...v,isError:r.isError===true,_images:r.content.filter(c=>c.type==='image')};}
+async function images(value,label){const result=[];for(let i=0;i<value._images.length;i++){const file=`output/reports/new-diagnostic-${stamp}/${label}-${i}.png`,raw=Buffer.from(value._images[i].data,'base64');await fs.mkdir(path.dirname(path.join(context.workspaceRoot,file)),{recursive:true});await fs.writeFile(path.join(context.workspaceRoot,file),raw);result.push({path:file,hash:strictHash(raw)});}return result;}
+async function launch(resume=false){
+  let output='';host=spawn(process.execPath,['dist/creationTrialServer.js','--workspace',context.workspaceRoot,'--isolated',...resume?['--resume']:[]],{windowsHide:true,stdio:['ignore','pipe','pipe'],env:{...process.env,SPINE_MCP_REGISTRY_ROOT:sourceRoot}});
+  const ready=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('隔离 Host 启动超时')),20000);host.once('exit',code=>{clearTimeout(timer);reject(Error(`隔离 Host 退出 ${code}: ${output}`));});for(const stream of [host.stdout,host.stderr])stream.on('data',chunk=>{output+=chunk;for(const line of output.split('\n')){try{const m=JSON.parse(line);if(m.type==='creation-host-ready'){clearTimeout(timer);resolve(m);}}catch{}}});});
+  endpoint=ready.endpoint;console.log(JSON.stringify({type:'browser-required',endpoint,workspaceRoot:context.workspaceRoot,resume}));
+  const port=JSON.parse(await fs.readFile(path.join(context.workspaceRoot,'.spine-mcp/host-port.json'),'utf8')),start=performance.now();
+  while(performance.now()-start<180000){const s=await(await fetch(endpoint+'/api/state',{headers:{'X-Spine-Host-Token':port.token}})).json();if(s.preview?.visibilityState==='visible')return ready;await new Promise(r=>setTimeout(r,1000));}throw Error('真实 player 未可见，未进行截图验收。');
+}
+async function stop(){if(!host)return;await new HostClient(context).shutdownForSwitch();await new Promise(resolve=>{if(host.exitCode!==null)return resolve();host.once('exit',resolve);setTimeout(resolve,10000);});const stopped=host.exitCode!==null||host.signalCode!==null;host=null;await assert.rejects(fs.access(path.join(context.workspaceRoot,'.spine-mcp/writer.lock')),e=>e.code==='ENOENT');assert.equal(stopped,true);}
+try{
+  await client.connect(new StdioClientTransport({command:process.execPath,args:['dist/server.js'],stderr:'pipe',env:{...process.env,SPINE_MCP_WORKSPACE:sourceRoot,SPINE_MCP_REGISTRY_ROOT:sourceRoot,SPINE_HOST_AUTOSTART:'0'}}));
+  await call('spine_register_workspace',{rootPath:sourceRoot,projectId:originalManifest.projectId});
+  const task=await call('spine_start_creation_task',{characterId:'npc1',referencePath:'reference/body.gif',sequencePath:'reference/body.sequence.json',isolatedDirectory:`creation-diagnostic-trials/${stamp}`,dryRun:false});context=task.taskContext;taskId=task.taskId;report.task={taskId,...context};
+  const sourcePath='trial/neutral-stand-v2.pose.json',sourceHash=strictHash(await fs.readFile(path.join(context.workspaceRoot,sourcePath)));report.source={path:sourcePath,hash:sourceHash};
+  await launch();const source=await call('spine_host_open',{path:sourcePath,recheck:true});await call('spine_host_pin',{expectedRevision:source.version});
+  const args={referencePosePath:'reference/ready-v1.reference.json',visualRigPath:'trial/npc1.visual-rig.json',standardPosePath:sourcePath,sequencePath:'reference/body.sequence.json',stageId:'ready',posePath:`trial/new-stage-${stamp}.pose.json`,expectedRevision:source.version};
+  const normal=await call('spine_retarget_reference_pose',args);assert.equal(normal.adopted,false);report.defaultReportPreserved=true;
+  const dry=await call('spine_retarget_reference_pose',{...args,diagnosticMode:'newStage'});assert.equal(dry.dryRun,true);assert.equal(dry.opened,false);const before=await call('spine_preview_state',{});assert.deepEqual(before.version,source.version);report.dryRunVersionUnchanged=true;
+  const created=await call('spine_retarget_reference_pose',{...args,diagnosticMode:'newStage',dryRun:false});assert.equal(created.opened,true);assert.equal(created.state.activeDoc.memoryOnly,true);assert.equal(created.state.reference.ok,false);assert.equal(created.state.pinned,false);report.diagnostic={id:created.diagnosticId,path:created.documentPath,version:created.version,images:await images(created,'created-frame'),quality:created.state.creationQuality};
+  await assert.rejects(fs.access(path.join(context.workspaceRoot,args.posePath)),e=>e.code==='ENOENT');await assert.rejects(fs.access(path.join(context.workspaceRoot,created.documentPath)),e=>e.code==='ENOENT');
+  const firstCapture=await call('spine_preview_capture',{expectedRevision:created.version,size:960});assert.equal(firstCapture.manifest.captureValidity.status,'verified');report.firstPlayer={manifestPath:firstCapture.manifestPath,images:await images(firstCapture,'created-player'),evidenceEligible:firstCapture.manifest.evidenceEligible,note:'截图准入只表示可进入内容审查；参考失败仍阻止批准及提交。'};
+  await call('spine_host_pin',{expectedRevision:created.version});
+  const changed=await call('spine_adjust_pose_intent',{expectedRevision:created.version,headTilt:1,dryRun:false});report.changedImages=await images(changed,'changed-frame');
+  const undo=await call('spine_host_undo',{expectedRevision:changed.version,dryRun:false}),redo=await call('spine_host_redo',{expectedRevision:undo.version,dryRun:false});
+  const denied=await call('spine_host_commit',{expectedRevision:redo.version,outputPath:`trial/failed-${stamp}.pose.json`,requestId:`failed-${stamp}`,dryRun:false},true);assert.equal(denied.isError,true);assert.equal(denied.code,'COMMIT_NOT_AUTHORIZED');report.failedCommitDenied=true;
+  const tracked=await call('spine_get_creation_task',{taskId});assert.equal(tracked.currentStageId,'ready');assert.ok(tracked.diagnosticContexts.some(d=>d.diagnosticId===created.diagnosticId&&d.verified&&d.current));report.taskTracksDiagnostic=true;
+  await stop();report.firstHostStopped=true;
+  const offline=await call('spine_get_creation_task',{taskId});assert.ok(offline.diagnosticContexts.some(d=>d.diagnosticId===created.diagnosticId&&d.verified));report.offlineContextRetained=true;
+  await launch(true);
+  const preview=await call('spine_resume_diagnostic_pose',{diagnosticId:created.diagnosticId});assert.equal(preview.dryRun,true);assert.ok(preview.changeCount>0);report.recoveryPreview={sourcePath:preview.sourcePath,sourceHash:preview.sourceHash,changeCount:preview.changeCount,changes:preview.changes};
+  const resumed=await call('spine_resume_diagnostic_pose',{diagnosticId:created.diagnosticId,dryRun:false});assert.ok(resumed._images.length);assert.notEqual(resumed.version.openEpoch,redo.version.openEpoch);assert.equal(resumed.state.agentVisual.status,'notRun');assert.equal(resumed.state.capture,null);assert.equal(resumed.state.pinned,false);assert.equal(resumed.state.reference.ok,false);report.restored={version:resumed.version,images:await images(resumed,'restored-frame'),quality:resumed.state.creationQuality};
+  const oldVersion=await call('spine_host_undo',{expectedRevision:redo.version},true);assert.equal(oldVersion.isError,true);assert.equal(oldVersion.code,'REVISION_CONFLICT');report.oldVersionDenied=true;
+  const checks=['standingOrAction','silhouette','jointDirections','support','grip','occlusion','referenceDifferences'];
+  const oldEvidence=await call('spine_review_pose',{posePath:created.documentPath,expectedRevision:resumed.version,manifestPath:firstCapture.manifestPath,decision:'rejected',reviewedBy:'验收驱动（仅验证旧证据拒绝）',reason:'当前必要关系失败；此请求只检查旧证据不能附着到新打开周期。',checks,stageId:'ready'},true);assert.equal(oldEvidence.isError,true);assert.equal(oldEvidence.code,'REVISION_CONFLICT');report.oldEvidenceDenied=true;
+  const currentCapture=await call('spine_preview_capture',{expectedRevision:resumed.version,size:960});assert.equal(currentCapture.manifest.captureValidity.status,'verified');report.restoredPlayer={manifestPath:currentCapture.manifestPath,images:await images(currentCapture,'restored-player'),evidenceEligible:currentCapture.manifest.evidenceEligible};
+  const review=await call('spine_review_pose',{posePath:created.documentPath,expectedRevision:resumed.version,manifestPath:currentCapture.manifestPath,decision:'rejected',reviewedBy:'验收驱动（只验证退回存储，不代表视觉通过）',reason:'必要参考指标尚未通过，保持诊断并退回；独立 Agent 干净图审查另行记录。',checks,stageId:'ready',issues:['参考关系存在必要失败，未批准为正式姿态。'],dryRun:false});assert.equal(review.decision??review.review?.decision??review.reviewRecord?.decision,'rejected');report.rejectionRecorded=true;
+  const finalTask=await call('spine_get_creation_task',{taskId});assert.equal(finalTask.freshness.current,true);assert.equal(finalTask.currentStageId,'ready');assert.equal(strictHash(await fs.readFile(path.join(context.workspaceRoot,sourcePath))),sourceHash);report.frozenInputsUnchanged=true;report.sourceUnchanged=true;report.metrics=finalTask.metrics;report.application=finalTask.state.application;report.finalQuality=finalTask.state.creationQuality;report.visualReview={status:'pending',note:'程序退回存储验证与 Agent 独立看图分别记录。'};
+  report.passed=true;
+}catch(error){report.error=String(error);process.exitCode=1;}
+finally{try{await stop();report.hostStopped=true;report.writerReleased=true;}catch(error){report.shutdownError=String(error);}await client.close();await fs.writeFile(reportPath,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({reportPath,passed:report.passed,hostStopped:report.hostStopped,error:report.error??null}));}

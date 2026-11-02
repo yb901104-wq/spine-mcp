@@ -50,6 +50,11 @@ internal static class HostObserverSelfTest
                 async Task<bool> Js(string expression) => await core.ExecuteScriptAsync(expression) == "true";
                 await Wait(() => Js("!!document.getElementById('frame')?.complete && document.getElementById('frame').naturalWidth===480"), "当前实际帧");
                 Check(await Js("document.getElementById('status').textContent.includes('仅观察')"), "当前 Host 为观察模式");
+                if (args.Contains("--expected-view-label"))
+                {
+                    Check(await Js($"document.getElementById('status').textContent.includes({JsonSerializer.Serialize(Argument("--expected-view-label"))})"), "页面显示实际动画与时间选择");
+                    Check(await Js("document.getElementById('status').textContent.includes('仅采样观察，未完成动画验收')"), "采样观察不冒充完整动画数值验收");
+                }
                 Check(await Js("!location.search && !location.hash"), "页面 URL 不含凭据");
                 Check(!core.Settings.AreHostObjectsAllowed && !core.Settings.IsWebMessageEnabled, "未开放原生对象或 WebMessage 桥");
                 if (args.Contains("--benchmark-host"))

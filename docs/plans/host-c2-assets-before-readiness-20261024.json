@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-23T17:58:58.577Z",
+  "localDate": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "stage": "C2-4b 资产流程工程接入",
+  "sourceVersion": "0.2.0",
+  "previousStage": "host-c2-asset-data-20261023.json",
+  "developmentCandidateHash": "c04bb6b3ee9b4523e0b2c58da8746b18dc83027cad550b4e6b5d03c6778d392e",
+  "codeHashes": {
+    "src/hostAssetBinding.ts": "321e99752300f866112eab8d6339595409f895f39ea2ec055a86aaf037e4936d",
+    "src/hostAssetCommands.ts": "1ac9b264254bd3ec788f5429d99cc828d2c9ea4a02a65bdcdb703a03b8f1cc64",
+    "src/hostDocumentStore.ts": "6f74b9879297b98f8aa12de3b3a6cd04e5dc0f3956d486b0bd09711f16437193",
+    "src/hostEditorStore.ts": "831422afd815c467d966315c98e385d94adac7b474dca378c5b80582fe985d87",
+    "src/hostJournal.ts": "42494416195c663d9883caed78a7ce26c38b19a32ca24a2fc3e83ab27f61f7a5",
+    "src/hostClient.ts": "55a6ace4bb7cade1f7e2298cc146b2017cd359f94e142f62aa5112caddce390c",
+    "src/hostServer.ts": "1264de187f92eb40ca5bdc0f1b99809c60071a54769f2bb78de163b6409cbaba",
+    "src/hostTools.ts": "6ecef98c5ccfdc4ca7e9a1bb8db879d0f4095a28a0aab5b96c20ff025a98fe29",
+    "src/server.ts": "42c1f1cd55c6dc50e92e24f34e6e9fc99ec5932bbdcc21e638832cfd395e08f7",
+    "src/animationCommands.ts": "f6172eac9329485a6ac2401a8365e10efb6b60f73d818c8008cfbaee37772e12",
+    "test/hostAssets.test.ts": "55b7487eaf38294e01e45680eebacc61e3bd1250ecdf2c0e667f7d7f629afa50",
+    "test/visualRig.test.ts": "e3cbf51510b87ec4bb51c0ca7273a64b2df08df2700aff7a3787995cf97bb78a"
+  },
+  "scope": "四个既有高级工具的隔离 attached 暂存、独立 Host asset commit、跨类型来源、备份/原子保存/幂等与故障恢复；不包含源动画提交。",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 189,
+    "pass": 189,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 44412.9734,
+    "outputHash": "d2592e31b718efe2dd404b36010de3f99587b99eea4f75d9fe6a87b3995a5e8c"
+  },
+  "focused": {
+    "newFile": "test/hostAssets.test.ts",
+    "newTests": 5,
+    "extendedReferenceFixture": "test/visualRig.test.ts",
+    "coverage": [
+      "实际 stdio 发现、默认预演零落盘、暂存/精确哈希提交/来源备份/幂等、新姿态重开，源骨架和 manifest 字节不变。",
+      "已批准 pose→motion 角色/标准/阶段登记，保存不切换来源，显式重开并实际 runtime/live 回放；输出字节篡改拒绝。",
+      "显式 skeleton pin intent:asset 创建首个站姿；普通 pin 和源骨架 patch 仍拒绝，骨架字节不变。",
+      "C1、缺 pin、旧版本、内部/已有/产物/越界路径、伪批准结构、依赖漂移与无 control 凭据拒绝。",
+      "发布后模拟中断冻结；重启打开来源后 journal 按候选字节裁决，requestId 重试幂等，原未提交 head 编辑及 undo 恢复。",
+      "具真实 reference/visualRig/sequence 内容门禁的合成夹具，经实际 Host API 参考适配→暂存/保存→重开/比较→当前内存局部修正→再次保存/重开/比较，无继承视觉批准；旧 comparisonPath 拒绝。"
+    ]
+  },
+  "tools": [
+    "spine_create_pose_draft",
+    "spine_retarget_reference_pose",
+    "spine_refine_reference_pose",
+    "spine_build_motion_from_poses"
+  ],
+  "protocol": {
+    "publicToolCount": 101,
+    "assetToolExpectedRevision": "required in attached; forbidden in detached",
+    "defaultDryRun": true,
+    "falseMeans": "暂存，不落盘",
+    "saveTool": "spine_host_commit",
+    "saveIntent": "asset",
+    "exactHash": "assetCandidateHash",
+    "saveSwitchesDocument": false,
+    "pinIntent": "asset for isolated skeleton source",
+    "privateEndpoint": "/api/asset-candidate",
+    "privateEndpointRequiresControl": true,
+    "payloadLimitBytes": 8388608
+  },
+  "safeguards": {
+    "mcpRevalidatesCandidate": true,
+    "hostDoesNotSolve": true,
+    "newFileOnly": true,
+    "sourceBackup": true,
+    "atomicPublish": true,
+    "oneTimeAuthorization": true,
+    "writerGenerationBound": true,
+    "allDependenciesRechecked": true,
+    "requestIdIdempotent": true,
+    "journalRecovery": true,
+    "uncommittedSourceHistoryPreserved": true,
+    "crossTypeBindingFromCommittedJournal": true,
+    "reopenChecksCurrentReferencesAndStages": true,
+    "failedReferenceDiagnosticOnly": true,
+    "newPoseInheritsApproval": false
+  },
+  "engineeringC24bCompleted": true,
+  "wholeC2Accepted": false,
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "publicWriteEnabled": false,
+  "sourceAnimationCommitEnabled": false,
+  "acceptance": {
+    "syntheticProtocolAndRuntimePassed": true,
+    "newNativeDesktopRun": false,
+    "realArtVisualApproved": false,
+    "secondRealCharacterAccepted": false,
+    "editorImportPassed": false,
+    "realC2PerformanceAccepted": false
+  },
+  "failures": [
+    {
+      "tests": 189,
+      "pass": 171,
+      "fail": 18,
+      "outputHash": "efa34b7e141f1047d20f8036e31aa7976308b724a820e71680b75f7de69e0e72",
+      "reason": "新增参考夹具在共享注册表选择临时工作区，污染并行旧测试的默认根目录。",
+      "resolution": "注册表改为当前测试临时根，finally 恢复环境；仅清理本次误写的三个已删除临时目录登记，未改用户工程；完整复测通过。"
+    },
+    {
+      "scope": "早期定向参考联调",
+      "reason": "断言读取 open 计算前状态而非 recheck 后 state；重复运行的固定 projectId 冲突。",
+      "resolution": "检查 recheck 后 state，使用临时根对应的唯一 ID；之后定向 9/9 通过。"
+    }
+  ],
+  "c1Observation": {
+    "fixedInstallationModified": false,
+    "newOnlineVerificationPerformed": false,
+    "note": "本批未重核 C1 在线状态，不补计观察时长，不将历史采样冒充当前候选证据。"
+  },
+  "remaining": [
+    "C2-4c 精确 4.1.24 源动画候选、完整动画审查、授权/备份/恢复与提交。",
+    "真实美术/player 逐项视觉、第二真实角色、真实 C2 工作负载性能及独立 Spine 编辑器导入。",
+    "C1 原候选的性能逐轮波动、长期观察、未知退出原因及人工启用评审。"
+  ],
+  "note": "本批机械验证不替代真实美术、稳定性或编辑器验收；排除 exp/xiaoren，生产观察和旧便携包未变。"
+}

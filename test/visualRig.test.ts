@@ -1,17 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,readFile,rm,rename} from 'node:fs/promises';
+import {mkdtemp,writeFile,readFile,readdir,rm,rename} from 'node:fs/promises';
 import os from 'node:os';import path from 'node:path';
 import {createCanvas} from '@napi-rs/canvas';
 import {comparisonPolicy,compareGraphs,graphEdges,torsoFrame,torsoCoordinate} from '../src/poseGraph.js';
 import {calibrateVisualRig,reviewVisualRig,requireVisualRig,readVisualNodes,attachmentSnapshot,visualRigFingerprint} from '../src/visualRig.js';
 import {createMappingDraft,calibrateMapping,confirmMapping,saveJson} from '../src/mappingTools.js';
-import {createPoseDraft,solvePose,renderPoseComparison,reviewPose,poseChecks,requireReviewedPose,adjustPose} from '../src/poseWorkflow.js';
+import {createPoseDraft,createPoseDraftData,solvePose,renderPoseComparison,reviewPose,poseChecks,requireReviewedPose,adjustPose} from '../src/poseWorkflow.js';
 import {createReferencePose,renderReferencePoseSheet,reviewReferencePose,referenceChecks} from '../src/referencePose.js';
-import {comparePoseGraphs,retargetReferencePose,compareAnimationKeyPoses,prepareReferenceRetargetInputs} from '../src/referenceRetarget.js';
+import {comparePoseGraphs,retargetReferencePose,retargetReferencePoseData,compareAnimationKeyPoses,prepareReferenceRetargetInputs} from '../src/referenceRetarget.js';
 import {retargetReferencePoseKernel} from '../src/referenceRetargetKernel.js';
 import {requireReferencePose,referenceFingerprint} from '../src/referencePose.js';
 import {validatePoseSequence} from '../src/poseSequence.js';
+import {createPoseSequence} from '../src/creationReference.js';
 import {refineReferencePose} from '../src/referencePoseRefinement.js';
 import { withV2 } from './helpers/referenceV2.js';
 import { HostEditorStore } from '../src/hostEditorStore.js';
@@ -20,6 +21,15 @@ import { evaluateHostSnapshot } from '../src/hostEvaluator.js';
 import { prepareHostPoseReview } from '../src/hostPoseReview.js';
 import { materializeHostPose } from '../src/hostPose.js';
 import { installSimulatedHostPage } from './helpers/hostPage.js';
+import {createProject} from '../src/projectModel.js';
+import {registerWorkspace} from '../src/workspaceTools.js';
+import {startHostServer} from '../src/hostServer.js';
+import {HostClient} from '../src/hostClient.js';
+import {buildDiagnosticPose} from '../src/hostDiagnosticPose.js';
+import {describeCreationRecovery} from '../src/creationTrialServer.js';
+import {strictHash,objectHash} from '../src/hostContracts.js';
+import {releaseWriter} from '../src/writerOwnership.js';
+import {callCreationTool} from '../src/creationTasks.js';
 const correspondence={left:'left',right:'right',basis:'测试已知左右链',anatomicalIdentity:'同侧',projectedOrder:'左前右后'};
 async function fixture(factor=1,prefix='a',soleHeight=0){
  const root=await mkdtemp(path.join(os.tmpdir(),'spine-visual-')),c={workspaceRoot:root},n=(s:string)=>prefix+s;
@@ -48,7 +58,7 @@ async function fixture(factor=1,prefix='a',soleHeight=0){
  await createPoseDraft({filePath:'character.json',mappingPath:'mapping.json',posePath:'standing.json',kind:'standing',frame,dryRun:false},c);await solvePose({posePath:'standing.json',dryRun:false},c);const sheet=await renderPoseComparison({posePaths:['standing.json']},c);await reviewPose({posePath:'standing.json',manifestPath:sheet.manifestPath,decision:'approved',reviewedBy:'test-stub',reason:'测试门禁',checks:poseChecks,dryRun:false},c);
  return {root,c,rig,frame,factor,prefix};
 }
-test('版本化默认比较策略与文件一致',async()=>{assert.deepEqual(JSON.parse(await readFile('policies/pose-comparison.v3.json','utf8')),comparisonPolicy);});
+test('版本化默认比较策略与文件一致',async()=>{assert.deepEqual(JSON.parse(await readFile('policies/pose-comparison.v4.json','utf8')),comparisonPolicy);});
 test('刚性、多附件、加权三角锚点使用实际 runtime 顶点；原点候选不能确认',async()=>{
  const f=await fixture();try{
   const v=await requireVisualRig('rig.json',f.c),sk=v.rt.sample(undefined,0,'default'),actual=readVisualNodes(sk,v.rig),head=sk.findBone(v.mapping.bones.head!)!;assert.ok(Math.hypot(actual.points.head.x-head.worldX,actual.points.head.y-head.worldY)>1);
@@ -74,7 +84,7 @@ test('窄站和错误手位独立失败；未知必要节点不可验证，不�
 });
 test('不同长度角色实际视觉节点比较、逐项门禁和修改后失效',async()=>{
  let commonPoints:any=null;
- for(const [factor,prefix,soleHeight]of [[1,'a',0],[.73,'b',0],[1,'sole',12]] as const){const f=await fixture(factor,prefix,soleHeight);try{
+ for(const [factor,prefix,soleHeight]of [[1,'a',0],[.73,'b',0],[1,'sole',12]] as const){const f=await fixture(factor,prefix,soleHeight),previousRegistry=process.env.SPINE_MCP_REGISTRY_ROOT;process.env.SPINE_MCP_REGISTRY_ROOT=f.root;try{
   const created=await createPoseDraft({filePath:'character.json',mappingPath:'mapping.json',posePath:'action.json',kind:'action',standardPosePath:'standing.json',visualRigPath:'rig.json',correspondence,dryRun:false},f.c);const solved=await solvePose({posePath:'action.json',dryRun:false},f.c);
   const cv=createCanvas(400,400);await writeFile(path.join(f.root,'ref.png'),cv.toBuffer('image/png'));const points=Object.fromEntries(Object.entries(solved.report.visualNodes).map(([k,p]:any)=>[k,{x:200+p.x/factor,y:200-p.y/factor,visibility:'visible',confidence:1,basis:'已知合成姿态投影'}]));
   // 参考图按目标自身投影生成：轮廓与前后层序必须来自真实躯干切片，不能手填。
@@ -89,7 +99,20 @@ test('不同长度角色实际视觉节点比较、逐项门禁和修改后失�
   commonPoints??=structuredClone(observation.points);observation.points=structuredClone(commonPoints);Object.assign(observation,{anatomicalIdentity:{status:'confirmed',basis:'已知合成夹具的固定左右解剖身份'}});
   await createReferencePose({referencePosePath:'reference.json',observation,dryRun:false},f.c);const rs=await renderReferencePoseSheet({referencePosePaths:['reference.json'],outputDir:'ref-sheet'},f.c);await reviewReferencePose({referencePosePath:'reference.json',manifestPath:rs.manifestPath,decision:'approved',reviewedBy:'test',reason:'已知投影测试',checks:referenceChecks,dryRun:false},f.c);
   const ref=await requireReferencePose('reference.json',f.c),vr=await requireVisualRig('rig.json',f.c);
-  await saveJson('sequence.json',{version:1,id:'test-sequence',basis:'合成角色通用适配',confirmedBy:'test-stub',confirmedAt:new Date().toISOString(),correspondence,weaponHand:null,visualRigPath:'rig.json',visualRigFingerprint:visualRigFingerprint(vr.rig),stages:[{stageId:'ready',referencePosePath:'reference.json',referenceFingerprint:referenceFingerprint(ref)}]},f.c);
+  const sequenceArgs={sequencePath:'sequence.json',id:'test-sequence',basis:'合成角色通用适配',confirmedBy:'test-stub',correspondence,weaponHand:null,visualRigPath:'rig.json',stages:[{stageId:'ready',referencePosePath:'reference.json'}]};
+  const sequenceBefore=await readdir(f.root,{recursive:true});assert.equal((await createPoseSequence(sequenceArgs,f.c)).dryRun,true);assert.deepEqual(await readdir(f.root,{recursive:true}),sequenceBefore);
+  await createPoseSequence({...sequenceArgs,dryRun:false},f.c);
+  await assert.rejects(createPoseSequence({...sequenceArgs,dryRun:false},f.c),/已存在/);
+  const cancelledSequence=new AbortController();cancelledSequence.abort();await assert.rejects(createPoseSequence({...sequenceArgs,sequencePath:'cancelled-sequence.json',dryRun:false},f.c,cancelledSequence.signal),{code:'TASK_CANCELLED'});
+  await assert.rejects(readFile(path.join(f.root,'cancelled-sequence.json')),(e:any)=>e.code==='ENOENT');
+  if(prefix==='a'){
+    const unknown=structuredClone(observation);unknown.points.leftWrist={visibility:'unknown'};
+    await createReferencePose({referencePosePath:'sequence-unknown.reference.json',observation:unknown,dryRun:false},f.c);
+    const unknownSheet=await renderReferencePoseSheet({referencePosePaths:['sequence-unknown.reference.json'],outputDir:'sequence-unknown-ref-sheet'},f.c);
+    await reviewReferencePose({referencePosePath:'sequence-unknown.reference.json',manifestPath:unknownSheet.manifestPath,decision:'approved',reviewedBy:'test-stub',reason:'只检验未知必要节点的后续拒绝，不代表真实视觉批准',checks:referenceChecks,dryRun:false},f.c);
+    await assert.rejects(createPoseSequence({...sequenceArgs,sequencePath:'unknown-sequence.json',stages:[{stageId:'ready',referencePosePath:'sequence-unknown.reference.json'}],dryRun:false},f.c),(e:any)=>e.code==='CONFLICT'&&e.detail.issues.some((i:any)=>i.category==='inputMissing'));
+    await assert.rejects(readFile(path.join(f.root,'unknown-sequence.json')),(e:any)=>e.code==='ENOENT');
+  }
   const pose=solved.pose;Object.assign(pose,{sequencePath:'sequence.json',stageId:'ready'});pose.referencePosePath='reference.json';pose.reference=ref.observation;await saveJson('action.json',pose,f.c);
   const cmp=await comparePoseGraphs({posePath:'action.json',dryRun:false},f.c);assert.equal(cmp.ok,true,JSON.stringify(cmp.metrics));pose.comparisonPath=cmp.reportPath;await saveJson('action.json',pose,f.c);const sheet=await renderPoseComparison({posePaths:['action.json']},f.c);
   await retargetReferencePose({referencePosePath:'reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',posePath:'retarget.json',correspondence,sequencePath:'sequence.json',stageId:'ready',dryRun:false},f.c);
@@ -113,8 +136,90 @@ test('不同长度角色实际视觉节点比较、逐项门禁和修改后失�
   if(prefix==='a'){
     const kernelArgs={referencePosePath:'reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',posePath:'pure-reference.json',correspondence,sequencePath:'sequence.json',stageId:'ready',id:'pure-reference-test'};
     const prepared=await prepareReferenceRetargetInputs(kernelArgs,f.c),first=retargetReferencePoseKernel(kernelArgs,prepared);
+    const memoryStandard=structuredClone(prepared.base),memoryBefore=structuredClone(memoryStandard),dataArgs={...kernelArgs,posePath:'memory-reference.json',detailed:true,dryRun:false};
+    await rename(path.join(f.root,'standing.json'),path.join(f.root,'standing.hold'));
+    try{
+      const files=await readdir(f.root,{recursive:true});let reads=0;
+      const fromMemory=await retargetReferencePoseData(dataArgs,f.c,async p=>{assert.equal(p,'standing.json');reads++;return memoryStandard;});
+      assert.equal(reads,1);assert.equal(fromMemory.ok,true,JSON.stringify(fromMemory));assert.equal(fromMemory.dryRun,true);
+      assert.equal(fromMemory.pose.review,undefined);assert.deepEqual(memoryStandard,memoryBefore);assert.equal(dataArgs.dryRun,false);
+      assert.deepEqual(await readdir(f.root,{recursive:true}),files);
+      const invalid=structuredClone(memoryStandard);delete invalid.review;
+      await assert.rejects(retargetReferencePoseData(dataArgs,f.c,async()=>invalid),/未确认/);
+      await assert.rejects(retargetReferencePoseData(dataArgs,f.c));
+    }finally{await rename(path.join(f.root,'standing.hold'),path.join(f.root,'standing.json'));}
     await rename(path.join(f.root,'character.json'),path.join(f.root,'character.hold'));
     try{const second=retargetReferencePoseKernel(kernelArgs,prepared);assert.deepEqual(second.solved.bones,first.solved.bones);assert.deepEqual(second.comparison,first.comparison);}finally{await rename(path.join(f.root,'character.hold'),path.join(f.root,'character.json'));}
+    const projectId='visual-assets-'+path.basename(f.root).toLowerCase();
+    await registerWorkspace({rootPath:f.root,projectId});
+    const farObservation=structuredClone(observation);farObservation.points.leftWrist={...farObservation.points.leftWrist,x:390,y:20,basis:'仅合成不可达负例，不代表真实参考'};
+    await createReferencePose({referencePosePath:'diagnostic.reference.json',observation:farObservation,dryRun:false},f.c);
+    const farSheet=await renderReferencePoseSheet({referencePosePaths:['diagnostic.reference.json'],outputDir:'diagnostic-ref-sheet'},f.c);
+    await reviewReferencePose({referencePosePath:'diagnostic.reference.json',manifestPath:farSheet.manifestPath,decision:'approved',reviewedBy:'test-stub',reason:'合成不可达输入，仅测试失败隔离，不代表动作批准',checks:referenceChecks,dryRun:false},f.c);
+    await createPoseSequence({...sequenceArgs,sequencePath:'diagnostic.sequence.json',stages:[{stageId:'new-stage',referencePosePath:'diagnostic.reference.json'}],dryRun:false},f.c);
+    await createPoseSequence({...sequenceArgs,sequencePath:'passing.sequence.json',stages:[{stageId:'passing-stage',referencePosePath:'reference.json'}],dryRun:false},f.c);
+    await createProject({expectedAbsent:true,dryRun:false,manifest:{format:'spine-ai-workspace',schemaVersion:1,projectId,name:'参考资产机械夹具',characters:{hero:{skeletonPath:'character.json',mappingPath:'mapping.json',atlasPath:'test.atlas',visualRigPath:'rig.json',skin:'default',spineVersion:'4.1.24'}},documents:[{path:'standing.json',kind:'pose',characterId:'hero'},{path:'action.json',kind:'pose',characterId:'hero',standardPosePath:'standing.json',referencePosePath:'reference.json',sequencePath:'sequence.json',stageId:'ready'}],references:{posePaths:['reference.json','diagnostic.reference.json'],sequencePaths:['sequence.json','diagnostic.sequence.json','passing.sequence.json']},artifactRoots:{previews:'output/previews',reports:'output/reports'}}},f.c);
+    const creationContext={...f.c,projectId};
+    const assetHost=await startHostServer(creationContext,{writeEnabled:true,developmentProfile:'c2-pose'}),assetClient=new HostClient(creationContext);
+    try{
+      const opened=await assetClient.open({path:'action.json'});await assetClient.rpc('/api/pin',{expectedRevision:opened.version});
+      const staged=await assetClient.assetCommand('spine_retarget_reference_pose',{...kernelArgs,posePath:'host-reference.json',expectedRevision:opened.version,dryRun:false});assert.equal(staged.staged,true);
+      const saved=await assetClient.commit({expectedRevision:opened.version,intent:'asset',outputPath:staged.outputPath,assetCandidateHash:staged.candidateHash,requestId:'reference-asset',dryRun:false});assert.equal(saved.switched,false);
+      const retargeted=await assetClient.open({path:'host-reference.json',expectedRevision:opened.version,recheck:true});assert.equal(retargeted.state.reference.ok,true);
+      await assetClient.rpc('/api/pin',{expectedRevision:retargeted.version});
+      const refineArgs={posePath:'host-reference.json',outputPosePath:'host-refined.json',expectedRevision:retargeted.version,dryRun:false};
+      await assert.rejects(assetClient.assetCommand('spine_refine_reference_pose',{...refineArgs,comparisonPath:'old.json'}),{code:'TARGET_DRIFT'});
+      const refined=await assetClient.assetCommand('spine_refine_reference_pose',refineArgs);assert.equal(refined.staged,true);
+      await assetClient.commit({expectedRevision:retargeted.version,intent:'asset',outputPath:refined.outputPath,assetCandidateHash:refined.candidateHash,requestId:'refined-asset',dryRun:false});
+      const final=await assetClient.open({path:'host-refined.json',expectedRevision:retargeted.version,recheck:true});assert.equal(final.state.reference.ok,true);assert.equal(final.state.agentVisual.status,'notRun');
+      await assetClient.rpc('/api/pin',{expectedRevision:final.version});
+      const unknownDiagnostic=await assetClient.assetCommand('spine_retarget_reference_pose',{referencePosePath:'unknown.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',posePath:'unknown-memory.pose.json',sequencePath:'unknown.sequence.json',stageId:'ready',correspondence,expectedRevision:final.version,diagnosticMode:'newStage',dryRun:false});assert.equal(unknownDiagnostic.partialResult,true);assert.equal(unknownDiagnostic.adopted,false);assert.deepEqual(assetHost.store.active!.version,final.version);await assert.rejects(readFile(path.join(f.root,'unknown-memory.pose.json')),(e:any)=>e.code==='ENOENT');
+      const diagnosticArgs={referencePosePath:'diagnostic.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',posePath:'new-stage.pose.json',sequencePath:'diagnostic.sequence.json',stageId:'new-stage',correspondence,expectedRevision:final.version,diagnosticMode:'newStage'};
+      const beforeDiagnostic=objectHash(assetHost.store.active),beforeFiles=await readdir(f.root,{recursive:true});
+      const diagnosticDry=await assetClient.assetCommand('spine_retarget_reference_pose',diagnosticArgs);assert.equal(diagnosticDry.dryRun,true);assert.equal(diagnosticDry.opened,false);assert.equal(objectHash(assetHost.store.active),beforeDiagnostic);assert.deepEqual(await readdir(f.root,{recursive:true}),beforeFiles);
+      const diagnostic=await assetClient.assetCommand('spine_retarget_reference_pose',{...diagnosticArgs,dryRun:false});assert.equal(diagnostic.opened,true);assert.equal(diagnostic.state.activeDoc.memoryOnly,true);assert.equal(diagnostic.state.activeDoc.stageId,'new-stage');assert.equal(diagnostic.state.reference.ok,false);assert.ok(diagnostic.__imageData);assert.equal(assetHost.store.pinned,null);
+      await assert.rejects(readFile(path.join(f.root,'new-stage.pose.json')),(e:any)=>e.code==='ENOENT');await assert.rejects(readFile(path.join(f.root,diagnostic.documentPath)),(e:any)=>e.code==='ENOENT');
+      await assetClient.rpc('/api/pin',{expectedRevision:diagnostic.version});
+      const changedDiagnostic=await assetClient.patch({expectedRevision:diagnostic.version,ops:[{op:'setPoseParameters',path:'pose/frame/head',patch:{rotate:3}}],dryRun:false});assert.ok(changedDiagnostic.__imageData);
+      await assert.rejects(assetClient.commit({expectedRevision:changedDiagnostic.version,outputPath:'failed-diagnostic.json'}),{code:'COMMIT_NOT_AUTHORIZED'});
+      const undoDiagnostic=await assetClient.history('undo',{expectedRevision:changedDiagnostic.version,dryRun:false});const redoDiagnostic=await assetClient.history('redo',{expectedRevision:undoDiagnostic.version,dryRun:false});
+      const recoveryPreview=await assetClient.resumeDiagnostic({diagnosticId:diagnostic.diagnosticId,expectedRevision:redoDiagnostic.version});assert.equal(recoveryPreview.dryRun,true);assert.ok(recoveryPreview.changeCount>0);assert.deepEqual(assetHost.store.active!.version,redoDiagnostic.version);
+      const descriptions=await describeCreationRecovery(f.c);assert.ok(descriptions.some((d:any)=>d.diagnosticId===diagnostic.diagnosticId&&d.memoryOnly&&d.sourceToDiagnosticChangeCount>0));
+      const initialDiagnosticSnapshot=await assetHost.store.snapshot(redoDiagnostic.version),sourceBytes=await readFile(path.join(f.root,'host-refined.json'));await assetHost.stop();
+      const resumeHost=await startHostServer(creationContext,{writeEnabled:true,developmentProfile:'c2-pose'}),resumeClient=new HostClient(creationContext);
+      try{
+        const restored=await resumeClient.resumeDiagnostic({diagnosticId:diagnostic.diagnosticId,dryRun:false});assert.ok(restored.__imageData);assert.equal(restored.state.agentVisual.status,'notRun');assert.equal(restored.state.capture,null);assert.equal(restored.state.pinned,false);assert.notEqual(restored.version.openEpoch,redoDiagnostic.version.openEpoch);assert.equal(resumeHost.store.active!.value.frame.head,3);
+        await assert.rejects(resumeClient.rpc('/api/snapshot',{expectedRevision:redoDiagnostic.version},true),{code:'REVISION_CONFLICT'});
+        const wrong=structuredClone(initialDiagnosticSnapshot.document);wrong.sequencePath='passing.sequence.json';await assert.rejects(resumeHost.store.adoptDiagnostic({expectedRevision:restored.version,snapshotHash:resumeHost.store.active!.snapshotHash,document:wrong,dryRun:false}),/pin|绑定|当前/);
+        assert.deepEqual(await readFile(path.join(f.root,'host-refined.json')),sourceBytes);
+        // 独立的可达夹具验证通过后可受控另存；没有降低失败参考门限。
+        const standing=await resumeClient.open({path:'standing.json',expectedRevision:restored.version});await resumeClient.rpc('/api/pin',{expectedRevision:standing.version});
+        const referenceSeed=JSON.parse(await readFile(path.join(f.root,'retarget.json'),'utf8'));
+        const seed=await createPoseDraftData({...referenceSeed,sequencePath:'passing.sequence.json',stageId:'passing-stage',posePath:'passed-diagnostic.json'},f.c);
+        const creationTask=await callCreationTool('spine_start_creation_task',{characterId:'hero',referencePath:'ref.png',sequencePath:'passing.sequence.json',dryRun:false},creationContext);
+        const snapshot=await resumeHost.store.snapshot(standing.version),preparedDiagnostic=await buildDiagnosticPose({sourcePath:snapshot.path,sourceHash:snapshot.fileHash,document:seed,outputPath:'passed-diagnostic.json',characterId:'hero'},snapshot.version.sessionId,creationContext);
+        const positive=await resumeClient.rpc('/api/diagnostic-open',{expectedRevision:standing.version,snapshotHash:snapshot.snapshotHash,document:seed,outputPath:'passed-diagnostic.json',dependencies:preparedDiagnostic.document.dependencies,dryRun:false},true);await resumeClient.evaluate(positive.version);await resumeClient.rpc('/api/pin',{expectedRevision:positive.version});
+        const passingState=await resumeClient.state();assert.equal(passingState.reference.ok,true);assert.equal(passingState.numeric.ok,true);
+        const promoted=await resumeClient.commit({expectedRevision:positive.version,outputPath:'passed-diagnostic.json',requestId:'promote-diagnostic',dryRun:false});assert.equal(promoted.committed,true);assert.equal(resumeHost.store.active!.diagnostic,undefined);assert.equal(strictHash(await readFile(path.join(f.root,promoted.backupPath))),preparedDiagnostic.document.fileHash);
+        const realAsset=await resumeClient.open({path:'passed-diagnostic.json',expectedRevision:promoted.version,recheck:true});assert.equal(realAsset.state.reference.ok,true);assert.equal(realAsset.state.activeDoc.memoryOnly,false);assert.equal(realAsset.state.activeDoc.stageId,'passing-stage');
+        const creationInfo=await callCreationTool('spine_get_creation_task',{taskId:creationTask.taskId},creationContext);assert.equal(creationInfo.currentStageId,'passing-stage');assert.ok(creationInfo.diagnosticContexts.some((d:any)=>d.committedOutputPath==='passed-diagnostic.json'&&d.current&&d.nextAction.tool==='spine_host_open'));
+        await assert.rejects(resumeClient.resumeDiagnostic({diagnosticId:positive.diagnosticId,expectedRevision:realAsset.version,dryRun:false}),{code:'DIAGNOSTIC_COMMITTED'});
+        const again=await resumeClient.open({path:'standing.json',expectedRevision:realAsset.version});await resumeClient.rpc('/api/pin',{expectedRevision:again.version});
+        const againSnapshot=await resumeHost.store.snapshot(again.version),againPrepared=await buildDiagnosticPose({sourcePath:againSnapshot.path,sourceHash:againSnapshot.fileHash,document:seed,outputPath:'interrupted-diagnostic.json',characterId:'hero'},again.version.sessionId,creationContext);
+        const interrupted=await resumeClient.rpc('/api/diagnostic-open',{expectedRevision:again.version,snapshotHash:againSnapshot.snapshotHash,document:seed,outputPath:'interrupted-diagnostic.json',dependencies:againPrepared.document.dependencies,dryRun:false},true);await resumeClient.evaluate(interrupted.version);await resumeClient.rpc('/api/pin',{expectedRevision:interrupted.version});
+        const commitArgs={expectedRevision:interrupted.version,outputPath:'interrupted-diagnostic.json',requestId:'interrupted-diagnostic',dryRun:false};resumeHost.store.fault=point=>{if(point==='afterPublish')throw Error('模拟诊断发布后断电');};
+        await assert.rejects(resumeClient.commit(commitArgs),{code:'WRITE_OWNERSHIP_UNCERTAIN'});assert.equal(resumeHost.store.frozen,true);
+        // 同现有断电测试：显式清理故障进程的测试 lease，再建立新 Host，不在运行会话内解冻。
+        if(resumeHost.store.writer){await releaseWriter(resumeHost.store.writer,f.c);resumeHost.store.writer=null;}await resumeHost.stop();
+        const commitRecoveryHost=await startHostServer(creationContext,{writeEnabled:true,developmentProfile:'c2-pose'}),commitRecoveryClient=new HostClient(creationContext);
+        try{
+          const preflight=await commitRecoveryClient.resumeDiagnostic({diagnosticId:interrupted.diagnosticId});assert.equal(preflight.commitRecovery[0].verdict,'published');
+          await assert.rejects(commitRecoveryClient.resumeDiagnostic({diagnosticId:interrupted.diagnosticId,dryRun:false}),{code:'DIAGNOSTIC_COMMITTED'});
+          const receipt=await commitRecoveryClient.commit(commitArgs);assert.equal(receipt.replayed,true);
+          const recoveredAsset=await commitRecoveryClient.open({path:'interrupted-diagnostic.json',recheck:true});assert.equal(recoveredAsset.state.reference.ok,true);assert.equal(recoveredAsset.state.activeDoc.memoryOnly,false);
+        }finally{await commitRecoveryHost.stop();}
+      }finally{await resumeHost.stop();}
+    }finally{await assetHost.stop();}
     // 真参考/visualRig/sequence 门禁 + 模拟页面协议；不是美术视觉验收。
     const store=new HostEditorStore(f.c,'mirror');await store.open({path:'action.json'});
     const input=await store.snapshot(store.active!.version),derived=await evaluateHostSnapshot(input,f.c);
@@ -136,7 +241,7 @@ test('不同长度角色实际视觉节点比较、逐项门禁和修改后失�
   }
   await adjustPose({posePath:'action.json',outputPosePath:'changed.json',patch:{frame:{targets:{leftHand:{x:.4}}}},dryRun:false},f.c);await assert.rejects(()=>requireReviewedPose('changed.json',f.c),/比较报告/);
   const json=JSON.parse(await readFile(path.join(f.root,'character.json'),'utf8'));json.animations.bad={bones:{[f.rig.nodes.leftWrist.bone]:{rotate:[{time:0,value:0}],translate:[{time:0,x:60,y:0}]}}};await saveJson('candidate-animation.json',json,f.c);const keys=await compareAnimationKeyPoses('candidate-animation.json','bad',{duration:1,poseWorkflow:{keyPoses:[{posePath:'action.json',stageId:'ready',time:0}]}},1,f.c);assert.equal(keys.ok,false);
- }finally{await rm(f.root,{recursive:true,force:true});}}
+ }finally{if(previousRegistry===undefined)delete process.env.SPINE_MCP_REGISTRY_ROOT;else process.env.SPINE_MCP_REGISTRY_ROOT=previousRegistry;await rm(f.root,{recursive:true,force:true});}}
 });
 test('真实 npc1 旧准备帧：低 IK 误差不抵消窄站、手位失败，Agent 不能覆盖',async t=>{
  const workspaceRoot='D:/AI_cc/spine test',base='previews/visual-rig-20261009',c={workspaceRoot},posePath=base+'/old-ready.pose.json';

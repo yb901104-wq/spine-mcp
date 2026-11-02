@@ -1,0 +1,194 @@
+{
+  "at": "2026-10-23T13:52:46.328Z",
+  "stage": "C2-3",
+  "sourceVersion": "0.2.0",
+  "scope": "隔离 c2-pose profile 的受管 4.1.x skeleton、v2 motion 显式动画/时间/setup 只读观察与跨 kind 草稿恢复；不含动画提交。",
+  "developmentCandidateHash": "2d9005027f930ca20f3cb4d929ab400a2fb87a8eda0d058193c012f81c8b5313",
+  "codeHashes": {
+    "src/hostPlayback.ts": "9daf344d8aebf810d3a4ca60dd4eada9e86a216f7682a1a9dc09222a81cac622",
+    "src/hostAnimationEvaluator.ts": "b1275ba8ab6d6a6593a9e99ae3799e05a859d8d11a6e87c4faf0fa45691800dc",
+    "src/hostDocumentStore.ts": "4f2e4d66c33f663098a49ad35d9ce13ac050ad88ac0b5b6af04f572833e8488e",
+    "src/hostEvaluator.ts": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121",
+    "src/hostCapture.ts": "bb8f2b1240d5d026117d1f6e2c16a9209327ed075464c01153bcecb36cc765ab",
+    "src/hostClient.ts": "23898a6a7df48fc71e3cf635c623c29c6374eb7e9feef981b13584eaaa3a9e33",
+    "src/hostReadiness.ts": "830b6589438ee3f5c843cc559ab2b73d2716a0d3d1daeaf9f2f767ef2f17dcc0",
+    "src/hostServer.ts": "c4531e774af4ce2cb5647c62dfc3e15fa6e3a0fdc9bab19cf1283c0bb7e73ae8",
+    "src/hostTools.ts": "8c47255b1dead99391c957b13a28a8fe7b7cab093cbfabfb910257a4b40a4e45",
+    "preview/host.html": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36",
+    "test/hostPlayback.test.ts": "865f45948b1096e8c6e725766c9fd64250cfca60e86fed9213f6b534c75d91b0",
+    "test/hostWorkflow.test.ts": "a4f9092e15d04a2ae1eb121296021fd861b49b6299b67362e0722d0211075b5a",
+    "test/helpers/hostFixture.ts": "11846a1995744a9305ababe838acd01fa67ed5975bc11abed92eb3ebba9dcc3a",
+    "scripts/acceptance-winforms-host.ts": "f24011c1f4a57bc14927fc0af3402de614b1ae21cde593d45c91fc035d8ec23f",
+    "apps/winforms-observer/HostObserverSelfTest.cs": "014d8b26c52944d726b049e3d3177fb7de2fc416e5f4af577a2bcb39ab27e3e8",
+    "apps/winforms-observer/bin/Debug/net9.0-windows/SpineMcp.WinFormsObserver.dll": "56928a2675f02191fa8e2cc9c2934a873691c2653946a1168aad3a7f60fc22da"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "nativeBuild": {
+    "command": "dotnet build apps/winforms-observer/SpineMcp.WinFormsObserver.csproj --no-restore",
+    "exitCode": 0,
+    "warnings": [
+      "MSB3277 WindowsBase 版本冲突警告，零编译错误；旧便携包未更新。"
+    ]
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 175,
+    "pass": 175,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 28742.8623,
+    "outputHash": "896c5178bd6d99ca4aae35ab45a8c310abeeaab9bbb1ed98f842c7ec69e866a8"
+  },
+  "focused": {
+    "file": "test/hostPlayback.test.ts",
+    "tests": 6,
+    "pass": 6,
+    "coverage": "显式选择/setup、无默认、旧帧/候选/在途截图隔离、实际 MCP stdio、只读 motion、取消、跨 kind journal、C1/mirror/非 4.1 拒绝、缓存与截图篡改、关键姿态传递依赖。"
+  },
+  "repairs": [
+    "定向测试发现 PNG 缓存命中未重验 live；修复为每次核验并覆盖截图包/回传/登记，资源包使用同一份已核验字节。",
+    "非 4.1 夹具最初只改 JSON 未同步 manifest，被绑定门禁正确拒绝；修正夹具后结构只读与能力拒绝通过。",
+    "首次全量 174/175；旧测试匹配已变动的人类错误文案，改核对稳定 UNSUPPORTED_DOC_KIND，完整复跑通过。",
+    "页面新增实际动画/时间和 previewOnly 中文提示，取帧失败清除旧图；最终桌面自检新增两项状态断言。"
+  ],
+  "native": [
+    {
+      "file": "host-winforms-2026-10-23T13-46-03-743Z.json",
+      "hash": "4ce83d00cfbfa1469028a518d2a2d30c32863819379ffda225268aa97f735bb7",
+      "kind": "skeleton",
+      "view": {
+        "animation": null,
+        "time": 0
+      },
+      "checks": 29,
+      "passed": true,
+      "reconnectPixelsIdentical": true,
+      "allInputsUnchanged": true,
+      "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-46-03-743Z\\host-workspace.png",
+      "diagnosticScreenshotViewed": true,
+      "captures": [
+        {
+          "stage": "initial",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-46-03-743Z\\initial-player.png",
+          "pngHash": "abc3b471999bf13d35c94887a1174e840e76f1fb40081a00784245dc8a0851c1",
+          "manifestHash": "562c10faaa42610000fe986b50ef42e8691ac2c45358491ad26e7a0ada8078ed",
+          "captureValidity": "verified"
+        },
+        {
+          "stage": "restored",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-46-03-743Z\\restored-player.png",
+          "pngHash": "abc3b471999bf13d35c94887a1174e840e76f1fb40081a00784245dc8a0851c1",
+          "manifestHash": "83ade1d1d6d70d6794c6a82bdb52c91f7e50f0870c5ffeb94c150d99952749ec",
+          "captureValidity": "verified"
+        }
+      ]
+    },
+    {
+      "file": "host-winforms-2026-10-23T13-48-30-841Z.json",
+      "hash": "3ef33d884f2b3514f41b589c714e7b3da4a4d0fb635b9a8fa4731266b4d4f848",
+      "kind": "skeleton",
+      "view": {
+        "animation": "move",
+        "time": 0.5
+      },
+      "checks": 29,
+      "passed": true,
+      "reconnectPixelsIdentical": true,
+      "allInputsUnchanged": true,
+      "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-48-30-841Z\\host-workspace.png",
+      "diagnosticScreenshotViewed": true,
+      "captures": [
+        {
+          "stage": "initial",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-48-30-841Z\\initial-player.png",
+          "pngHash": "a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc",
+          "manifestHash": "569b7ce00922ac26b16d2e2d6199a80d2ae3112cca4ab725359821e0a6c415d3",
+          "captureValidity": "verified"
+        },
+        {
+          "stage": "restored",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-48-30-841Z\\restored-player.png",
+          "pngHash": "a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc",
+          "manifestHash": "0b0c7efaf7552f4619aa19e199ee3e5b95565730764f9bc5c1291e04f7e6d0a1",
+          "captureValidity": "verified"
+        }
+      ]
+    },
+    {
+      "file": "host-winforms-2026-10-23T13-49-52-280Z.json",
+      "hash": "b1256a3ef430d03b7a7b7968a62f3838473f7cbc71b5a5da1958db01dbf0e8e9",
+      "kind": "motion",
+      "view": {
+        "animation": "wave",
+        "time": 0.5
+      },
+      "checks": 29,
+      "passed": true,
+      "reconnectPixelsIdentical": true,
+      "allInputsUnchanged": true,
+      "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-49-52-280Z\\host-workspace.png",
+      "diagnosticScreenshotViewed": true,
+      "captures": [
+        {
+          "stage": "initial",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-49-52-280Z\\initial-player.png",
+          "pngHash": "e953e0a1372b5df9fb04f899ac58b3d5870b17844d541c3f3cb9360a7db18700",
+          "manifestHash": "13403d552d3c4c1bb4861133520d767f45936f259c74fe1553ffbd1a535bc9d7",
+          "captureValidity": "verified"
+        },
+        {
+          "stage": "restored",
+          "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-49-52-280Z\\restored-player.png",
+          "pngHash": "e953e0a1372b5df9fb04f899ac58b3d5870b17844d541c3f3cb9360a7db18700",
+          "manifestHash": "7385c33f8c60d6c2b271b6c4f8f8cd4138579142a38a5338e3c7fc1faf619322",
+          "captureValidity": "verified"
+        }
+      ]
+    }
+  ],
+  "preliminaryNativeRecords": [
+    "host-winforms-2026-10-23T13-41-13-417Z.json",
+    "host-winforms-2026-10-23T13-41-44-156Z.json",
+    "host-winforms-2026-10-23T13-43-22-435Z.json"
+  ],
+  "checks": [
+    "Host 只回放；MCP 生成不可变 live，结构/官方规范与实际 runtime 核验。",
+    "显式选择绑定完整版本、view、snapshotHash 和 derivedHash；换选择创建新 epoch。",
+    "首次仅结构，同路径省略选择保留活动选择；无隐式首动画、循环取模或重算。",
+    "source JSON/atlas/PNG/mapping/motion 不变，non-pose 无 pin/patch/review/commit 或动画令牌。",
+    "采样标 previewOnly 与 diagnosticOnly；player 截图准入独立于 rendererParity、动作视觉批准和编辑器导入。",
+    "切换前保存 pose journal，恢复不继承 non-pose 选择或旧批准。"
+  ],
+  "publicToolCount": 101,
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "developmentEntry": "仅程序内隔离构造；无生产命令行/HTTP/页面切换入口",
+  "publicWriteEnabled": false,
+  "wholeC2Accepted": false,
+  "realArtVisualApproved": false,
+  "realPlayerArtEvidenceCollected": false,
+  "editorImportPassed": false,
+  "c1Observation": {
+    "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+    "verification": "host-observation-frozen-verification-2026-10-23T13-42-43-739Z.json",
+    "runningAtVerification": true,
+    "currentRunSamples": 64,
+    "totalSamples": 101,
+    "inputFilesVerified": 32,
+    "writerAbsent": true,
+    "knownInterruptedSessions": 1,
+    "unexpectedExitCause": "unknown",
+    "interruptedTimeCredited": false,
+    "twoWeekWindowSatisfied": false
+  },
+  "remaining": [
+    "C2-4 高级创作附着适配与动画提交，完整动画/第二真实角色/Spine 编辑器导入。",
+    "真实 C2 美术/player 逐项审查与实际工作负载性能。",
+    "C1 原候选逐轮性能波动、实际两周和使用覆盖、已知未知退出原因及人工启用评审。"
+  ],
+  "note": "三类桌面场景为合成 region 夹具，只验证协议、呈现与恢复。已查看诊断截图，未批准真实角色美术；排除 exp/xiaoren。前两批/C1 证据保留，不能当作当前构建长期验收。"
+}

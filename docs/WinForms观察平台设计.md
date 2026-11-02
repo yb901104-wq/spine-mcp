@@ -1,5 +1,39 @@
 # WinForms 观察平台设计
 
+
+连接监视器对相同上下文不再每次工具调用重复落盘，显式身份变化与定时真实心跳继续记录，失联检测不变。计量按当前 documentId 核验单个 journal，不扫描无关文档；不会把旧日志当作当前会话批准。
+## 2026-10-26：创作区间与校准续建
+
+MCP 现有 115 工具；新增连续动画区间编辑及独立单臂校准/审查，资产仍由 MCP 控制。Host 网页新增只读官方 player 的播放、暂停、拖动及关键姿态定位，独立绑定版本、候选与相机；正式截图仍另行暂停核验。网页实现不等于本轮 WebView2/WinForms 发行包验收。
+
+2026-10-27：上述播放控件已经真实浏览器验证，npc1 受限试用 motion 的当前候选/修订/动画绑定与阶段定位有截图记录。Node 隔离试用 ZIP 需手动准备依赖，已解包复验字节、模块篡改拒绝、115 工具发现、正式隔离启动/出图及 Writer 释放；不称为新的 WinForms 发行包。版本和路径见 [专项汇总](plans/creation-completion-implementation-20261027.json)。
+
+隔离试用包使用 `scripts/run-creation-trial.mjs` 先验证文件/构建，参数仍为 --workspace、可选 --resume/--port，再调用原 --isolated 入口；不会修改全局 Agent 配置。自动选端口遇 EADDRINUSE/EACCES 最多重试十次，显式端口不静默改变，仍只监听 127.0.0.1。生产 C1、原两周观察及人工评审不扩权。
+
+## 2026-10-26 创作任务与隔离入口
+
+新增独立内存阶段及 `spine_resume_diagnostic_pose`，工具现共 112。嵌入 Host 页面区分逻辑草稿与正式文档，并列来源/拟保存路径；新阶段开启与恢复仅 MCP 控制通道可用，不新增原生写入入口。重启使用原隔离 --resume 流程，再由 Agent 显式预演和恢复上下文；旧 exe/便携包不因本次源码验证视为已更新。
+
+本专项首批新增 8 个工具，后续增加 `spine_create_pose_sequence`，当前共 112；任务冻结、阶段选择、目录、准备/预检和身体意图见 [操作清单](MCP操作清单.md)。参考准备可不启动 Host，后续修订按完整版本显式选择；不新增原生写入按钮。已有连接握手和配置向导不改全局配置。默认静态 tools/list；动态分组是单连接显式选项，SDK 通知回归不代替 Codex/Claude/opencode 各客户端实测；不可见工具先引导目录。
+
+嵌入的 Host 页面增加创作检查及参考/当前/前次图；WinForms 仍是观察载体，修改经过 MCP，不新增原生 JSON 写入按钮。页面显示实际构建/profile，掉线不继续展示可编辑/可批准。旧 exe/便携包不因源码更新自动算已发布，本批真实页面验证与桌面包验收分别记录。
+
+新增独立 `npm run host:creation -- --workspace <隔离目录> --isolated [--resume] [--port N]`：只接受正式任务创建的隔离来源，既有 journal 默认停止并列差异；显式 resume 才恢复。绑定 127.0.0.1，默认随机端口，不将生产 C1 审批扩大为 C2。原 `observer` 启动脚本、默认观察模式和生产启用条件不变。
+
+2026-10-25：隔离 C2 capability 增加 perspective 诊断操作与倍率 schema，默认生产 C1 不扩权。现有画面链路接收含 scale 的完整回放；参考部件分析新增一个 MCP 工具，工具数 102，不修改连接向导、全局配置或启动端口。透视诊断数值状态可单独通过，但不取得正式审查/源动画资格，截图准入标为仅诊断。桌面便携包与整段动作未据此发布；新负载性能未过原预算。[专项说明](身体部件观测与透视缩放-20261025.md)。
+
+2026-10-24 state 收敛：Agent 连接的端口/control 文件改为本次调用内异步并发读取，实际 API、项目、实例/会话及 PID 核对保持，不复用旧凭据或修改全局配置。state/动画取帧在保持严格新鲜度下减少重复 I/O 与 runtime 构建，无新增界面、开关或生产 C2 入口。实际 npc1 与合成源事务桌面各 29 项通过，优化前后及重连像素一致，203 项回归通过。[三进程 90 样本证据](plans/host-state-performance-closeout-20261024.json) 中 state P95 12.39ms、frame 25.51ms；测试 worker 只接受 IPC 和已通过的隔离桌面报告，结束关闭及释放测试 Writer。旧混进程失败及冻结 C1 候选资格均保留，便携包未发布。
+
+2026-10-24 C2-4c：Agent 会话增加当前精确动画候选及完整审查摘要，能力见 `editing.animationCandidates` 独立 readiness；仍由 MCP 创作和批准，Host 负责备份/原子发布，WinForms 沿用观察页面，不新增写入按钮或生产开关。准备令牌、当前 player 准入、完整动画批准和提交授权分开；提交使当前 motion revision 加一并清空旧结果。新增 `--animation-candidate` 开发自检在隔离合成工程完成实际 WebView2 截图、重连、完整审查与源提交，29 项通过，[记录](plans/host-winforms-2026-10-23T19-45-46-267Z.json)。连接向导/握手与全局配置策略不变，便携包未发布，真实角色及编辑器导入仍另验。
+
+2026-10-24 C2-4b：能力新增 editing.assetDrafts，当前暂存摘要为 state.assetCandidate；四个高级 MCP 入口暂存后独立 asset commit，保存 switched:false，当前观察文档保持来源。Agent 显式打开新资产后更新既有观察状态，没有新增 WinForms 写入按钮或生产入口。skeleton 在隔离 C2 可用 pin intent:asset 作为独立资产来源，源修改仍拒绝；候选端点受 control 保护。连接向导/握手和全局配置策略保持。189 项机械回归通过，本批没有新增真实桌面或美术验收，C2-4c/公开启用另验。
+
+资产就绪独立列于 editing.assetDrafts.readiness.stage/commit，避免普通 pose draft 对 non-pose/无派生的限制误报资产操作；仍以实际 Writer、pin、依赖、队列和精确候选为准。界面没有新增保存按钮，不把资产就绪展示成动画写入许可。
+
+C2-4a 追加（2026-10-23）：Host `editing.commandAdapters` 列出四个既有姿态命令的实际附着能力、内存执行、完整版本要求及独立保存入口，WinForms 不新增编辑或批准面板。真实桌面诊断组合完成 27 项检查，数值失败与 player 核验状态分别显示；曾有一次恢复检查点未到达且原生原因未取得，保留失败记录，脚本现于失败时也保存原生报告。[本批记录](plans/host-c2-pose-commands-20261023.json)。启动、连接握手、端口及便携包不变。
+
+2026-10-23 C2-1～3 隔离研发：Host 由 `capabilities.editing/viewing` 声明实际 profile、参数/目标/呈现及动画名称/时长/选择。WinForms 继续嵌入观察页，Agent 通过 MCP 显式选 motion/skeleton 动画/时间或 setup；页面显示选择及采样观察状态，不提供 C2 开关或编辑/批准面板。真实 WebView2 合成夹具验证三种模式的 frame/player 截图、后台卸载、恢复和像素一致，未批准真实美术或动画提交。原 C1 固定候选继续独立采样，一次未知退出保留且不补时。启动脚本/端口策略未改，旧便携包未升级。[C2-3 证据](plans/host-c2-playback-20261023.json)、[前两批](plans/host-c2-pose-20261023.json)。
+
 2026-10-23 长期观察与启停：平台消费 Host 页的 observation/rollout 状态，新增采样次数与错误提示，不读取私钥/control，不签发人工审批。采样运行在 Host，切走页面仍记录；Host 退出后须显式重开新记录，不自动补时。启动 C1 需 `SPINE_HOST_WRITE=1` 及有效 `SPINE_HOST_ROLLOUT_APPROVAL`，平台不会设置这两个变量；关闭由受保护本机 CLI 排空事务、落盘撤销并释放 Writer，失败保持冻结。见 [操作流程](Host长期观察与启用流程.md)。旧便携包、原一键脚本及默认端口未变，实际生产写入仍关闭。
 
 新增后 [真实桌面 28 项](plans/host-winforms-2026-10-23T09-53-17-726Z.json) 通过，重载 P95 105.65ms、实际 stdio/player 截图完整回传 383.35ms，零重复 frame，新增观察状态已查看；输入、版本和重连像素一致。完整 160/160 回归通过，编辑首轮超预算仍保留，无生产启用；[最新证据](plans/host-c1-observation-implementation-20261023.json)。

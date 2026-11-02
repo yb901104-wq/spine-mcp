@@ -1,8 +1,108 @@
 # MCP 操作清单
 
+
+`spine_calibrate_arm_perspective` 新增 sweepFrames（17–121，默认 33）和 sweepDuration（0.25–10 秒，默认 2），按样本顺序生成诊断 continuity.gif/continuity-sheet.png，返回 numericOk、branchStable、最大归一关节步长。该轨迹不创建正式 pose/motion，不产生批准。校准批准必须核验完整扫掠及产物字节，单靠静态点不能批准。Host 内部回放只对当前已核验校准的三段臂链给出 scaleLimits；该范围不从外部派生结果或浏览器参数接收。
+## 2026-10-26 续建入口（当前 115 项）
+
+| 工具 | 中文操作与约束 |
+|---|---|
+| `spine_edit_motion_interval` | 当前隔离 C2 v2 motion，必填完整 `expectedRevision`、既有 `start/end` 边界；`frames` 只改内部已声明 body/head/channels/targets，关键姿态只用 `keyPoses[{stageId,posePath?,time?}]` 替换已批准修订或移时。边界不变、重叠/换支撑/改分支/挪动区间外拒绝。默认 dryRun，实际修改后出图，可 undo/redo、重启恢复、用原 commit 备份保存为新 motion。 |
+| `spine_calibrate_arm_perspective` | `posePath/calibrationPath/limb/basis/samples` 创建独立校准，3–25 个明确样本且含 1/1 基准；`upper/lower` 为世界段长比，目标为已校准 normalizedSkeleton。可显式声明新校准的固定 `bendDirection`，不用于局部修正换支。样本可给 body 和 widthUpper/widthLower；默认 dryRun，无通过令牌，不修改 Spine JSON。 |
+| `spine_review_arm_perspective` | 校准路径/哈希、逐样本 player 清单、decision、reviewedBy/reason 和 sliceConnections/endDirection/continuity/range/depthEvidence 五项独立检查。批准须实际 runtime 回读及截图字节一致；独立新建 review 文件，不能用旧诊断批准。默认 dryRun。 |
+
+`spine_adjust_pose_intent` 增加 `perspective`，与 `spine_host_patch` 的 setPosePerspective 共用 schema：diagnostic 保留原局部纵向试验；calibration 仅载入校准文件中的精确样本；calibrated 验证当前独立批准、角色/切片哈希、身体/目标/宽度范围与分支。所有模式仍不自动推断前后层。`widthUpper/widthLower` 是经切片校准的局部横向倍率；世界宽度另外实测，不冒充世界缩短比。
+
+`spine_host_patch` 公布 pose 批次或单个 motion 区间的互斥 schema，实际能力按当前 kind/profile 判断。C1 不开放 motion；C2 motion 的普通 pin 仅用于区间和新修订，源动画提交仍另需 intent:animation、完整候选及视觉批准。Host 历史返回 `timings.undoTransactionMs/redoTransactionMs`，它只计 Host 事务，不代替工具至出图耗时。
+
+只读 `GET /api/playback-bundle` 需完整版本和 candidateHash，返回当前不可变动画、相机、时间/阶段与资源；始终 advisory、evidenceEligible:false。页面播放不修改资产或 MCP 选定时间。新工具归目录 reference/review/animation，静态兼容，实际目标 Agent 客户端验证仍单列。
+
+## 2026-10-26 创作可用性接口（当前 112 个工具）
+
+新增 `spine_resume_diagnostic_pose{diagnosticId,expectedRevision?,dryRun?}`：默认预演来源、源哈希、相对诊断基线差异及未完成提交裁决；已有活动文档须完整 expectedRevision。只允许隔离 C2 Host，实际恢复产生新 openEpoch、清除 pin/批准/旧截图并重新求解返回 PNG，不接管失联 Writer。已提交上下文拒绝恢复，提示真实输出；发布后回执未知时按实际目标哈希裁决，原 requestId 可读取原回执。
+
+`spine_retarget_reference_pose` 新增 `diagnosticMode:"report"|"newStage"`，默认 report。只有显式 newStage 才可将不同绑定的合法失败候选载入独立内存文档；默认 dryRun，不改当前绑定。必要节点/能力未知时返回 partialResult 与已有诊断，不编造完整参考或打开新阶段。独立上下文以已审查参考确定初始分支，后续修正固定身份、支撑、分支和绑定；该计算复用原适配公式，未改阈值。C1/detached 拒绝 newStage，不降级为磁盘写入。
+
+任务新增 diagnosticContexts（至多 20 项、单列 truncated），关联角色/sequence、来源哈希、阶段、恢复 ID、依赖验证及当前状态；与正式提交候选分开。未创建正式姿态文件，恢复资料只在 Host journal；虚拟路径 `.spine-mcp/diagnostics/<id>.pose.json` 不能用普通 open 当资产打开。准备任务即使没有目标姿态，也冻结 sequence 全部参考及证据。实际调用与诊断 stage/上下文关联，不把其它 sequence 的操作标作当前阶段。
+
+| 工具 | 中文说明及边界 |
+|---|---|
+| `spine_start_creation_task` | `characterId/referencePath` 必填；`stages` 可省略以进入 referencePreparation；有阶段时接受根清单或已确认提交的文档。`sequencePath/isolatedDirectory` 可选；默认 dryRun。新、未登记序列仅可在 stages 为空的全新隔离副本中登记，须已通过参考/rig/对应校验且 rig 属于当前角色。不覆盖原清单/冻结记录或复制 Writer/journal。 |
+| `spine_get_creation_task` | `taskId` 必填；事件 `eventOffset/eventLimit` 分页。返回冻结新鲜度、currentStageId、stageContexts 及当前 Host；每阶段至多 20 个提交候选（truncated 表示未列全），逐个标记哈希/绑定验证，顺序不表示时间。计量为已落盘调用/时间/文本字节/图片数；token 为 null。当前阶段已打开时不建议跳回源修订。 |
+| `spine_select_creation_stage` | `taskId/stageId`；当前已有文档时必须完整 expectedRevision。可选 `documentPath` 继续该阶段已提交的后续修订；必须沿 journal 来源链归于冻结原文档，且类型/角色/参考/sequence/stage/standard 绑定不变、字节匹配。省略则打开原文档；默认 dryRun，不自动 pin/批准。 |
+| `spine_create_pose_sequence` | 新动作记录入口；必填 `sequencePath/id/basis/confirmedBy/visualRigPath/correspondence/weaponHand/stages[{stageId,referencePosePath}]`。weaponHand 可显式 null；阶段 1–60 项且 ID 唯一。默认 dryRun，依赖已审查 rig/参考，自动填依赖指纹并调用同源校验；必要点未知、支撑/身份/视角冲突拒绝。真实操作原子新建，拒绝覆盖；registered:false/approvedAnimation:false，不批准目标姿态，不写源角色。 |
+| `spine_get_tool_catalog` | 按 `group` 查询实际目录：project/observe/reference/pose/animation/review/workflow/discovery。默认静态完整 tools/list。 |
+| `spine_set_tool_groups` | `groups` 必填，默认 dryRun；仅启动时显式 dynamic 的连接可执行。核心组常驻，发出 list_changed；不扩张能力或写入权限。 |
+| `spine_inspect_character_preparation` | 完整 expectedRevision；只读汇总 mapping、视觉切片绑定/视角、继承/约束与缺项。报告不自动批准；骨骼原点不替代视觉锚点。 |
+| `spine_precheck_pose` | 完整 expectedRevision；当前 pose 一次共享求解，报告不可达/误差/参考缺项；按校准段长、实际视觉躯干长检查参考肘角与肩腕距离的允许区间。缺少标尺或涉及透视则 unknown；有交集不保证可达，无交集仅为当前条件冲突。不发布、不保存、不执行 60 次参考优化，不宣称全局无解。 |
+| `spine_adjust_pose_intent` | 完整 expectedRevision，`bodyTilt/headTilt` 为 setup 相对平面角；`targets[{role,lateral,height,angle?}]` 依据已审查实际肩髋轴，以髋中心为原点、躯干长为单位、轴右侧为 lateral 正方向。默认 dryRun，仅隔离 C2；支撑脚或武器控制字段明确拒绝。 |
+
+所有工具 schema 新增 `responseDetail:summary|full`；实际摘要投影用于 Host 状态/编辑结果、任务和预检，内部核验不裁剪。完整资源可读 `spine://session?projectId=…&responseDetail=full`。默认不重复发送骨骼/顶点或 patch schema，完整 VersionRef、必要失败及详情入口保留。
+
+`spine_analyze_reference_gif` 默认也返回时序摘要：`frameCount/uniqueFrameCount/duration/manifestPath`，全帧表读取 manifest 或显式 full；不改原时序和关键帧抽取。动态工具组下，当前不可见的下一步改为查询对应目录，不自动启用组或扩大权限。
+
+`spine_preview_frame` 新增 `variant:previous`：只读同文档/openEpoch/相机下已缓存的前次 480 图，返回旧 `version` 与请求的 `currentVersion`，明确 `advisory:true/evidenceEligible:false`；不接受另选动画/时间/尺寸，不跨文档或回退旧磁盘图。当前帧接口不变。
+
+`spine_refine_reference_pose` / `spine_retarget_reference_pose` 在 attached 失败且候选与当前 pose 绑定完全相同时，合法 frame 可进入内存诊断及撤销链；默认预演不变，不能更改身份/支撑/分支/绑定。失败 reference draft 不发保存令牌；独立 passing asset 仍按自己的精确候选重验，不能误用来源文档失败状态代替目标门禁。
+
+比较策略 v4 统一长度类的躯干归一，旧 v3 文件和证据保留；不得把不同策略结果当作同口径性能/质量对照。专项与各阶段状态见 [工单](plans/creation-usability.md)。
+
+同日后续：`spine_analyze_reference_parts` 使用观测策略 v2，轮廓/误差圆不可用但两点可用时返回 `method:"twoPoint"`、`status:"estimated"` 和 `directionDegrees`，`ok` 表示可用观测而非动作批准；未知半径不补造。参考图标出回退连线；参考审查记录方法与 partsPolicyVersion:2，拒绝旧策略图/批准自动继承。两点回退继续使用原 segment 门禁，不另加必需轮廓指标。工具数仍 102；[实际回退结果](plans/reference-fallback-20261025.json)。
+
+2026-10-25：共 **102** 个工具。新增 `spine_analyze_reference_parts{referencePosePath,reportPath?,dryRun?}`，默认只读分析参考 v2 的 `parts` 与节点 `uncertaintyRadius`；未知/轮廓退化/冲突不判通过，保存只新建报告。`spine_create_reference_pose` 可记录这些字段；参考图、审查与比较同步纳入。`spine_create_pose_draft` / `spine_adjust_pose` 新增诊断 `frame.perspective{mode:"diagnostic",limb:"leftArm"|"rightArm",upper,lower,basis}`，倍率正数且不大于 1。隔离 C2 `spine_host_patch` 新增 `setPosePerspective`（path 固定 `pose/frame/perspective`，value 为该对象或 null 重置），保留完整版本、默认预演、撤销与草稿备份；C1 拒绝。透视诊断不能批准、生成正式 motion、进入完整参考修正或取得源动画提交资格。[完整说明](身体部件观测与透视缩放-20261025.md)。下文旧工具数量按历史日期保留。
+
+2026-10-24 state 性能优化不增删工具或参数，仍 101 个。HostClient 每次发现并发读取端口/control，核对实际 API、项目、实例、会话和 PID 后才使用匹配 control；不复用旧凭据。state 只在当前请求内按真实路径去重字节读取，每个目标仍核验边界，各自预期哈希独立比较；新请求及提交阶段重新核验。动画 frame 的 PNG/runtime 计算缓存不替代 live 字节、版本/选择和依赖检查。实际三进程 90 样本 state P95 12.39ms，203 项回归通过；[范围与证据](plans/host-state-performance-closeout-20261024.json)。
+
+## 2026-10-24 C2-4c 当前接口
+
+工具总数仍为 101，以下扩展只在隔离 `c2-pose` profile、受管同角色及完整 `expectedRevision` 下开放，生产默认 C1。
+
+| 工具 | 当前隔离 C2 语义 |
+|---|---|
+| spine_retarget_motion | 只制作当前同名 v2 motion 的精确 4.1.24 拟合候选；默认 dryRun，拒绝 false/旧写入令牌。已有动画必须显式 overwrite:true；不得缩放周期或放宽门限。成功返回完整报告、原速 GIF、联系图和准备 reviewToken，无提交授权 |
+| spine_render_animation_comparison | 新增 expectedRevision；用当前 targetManifestPath/poseManifestPath 和明确参考 phaseMap 生成上下同步对比；仅写当前 live 目录 |
+| spine_review_animation | 新增 expectedRevision、playerManifestPath 和 checkResults；准备令牌绑定当前候选。批准需 transitions/timing/followThrough/keyPoses/loop 各自 pass 及不同具体理由、当前已登记 player 证据，有参考时还需同步对比；默认只预演 |
+| spine_host_pin | intent 新增 animation，仅限隔离 C2 当前 4.1.24 motion 的源动画提交意图；asset 原语义不变 |
+| spine_host_commit | intent 新增 animation，必填 animationCandidateHash/expectedHash/reviewToken，outputPath 必须精确角色源；默认预演。真实提交还需稳定 requestId，MCP 复验后一次性授权，Host 备份及原子替换一个动画，当前 motion revision 加一、switched:false，旧审查/截图/派生清除 |
+
+`editing.animationCandidates` 提供实际支持、pinIntent、commitIntent 和独立提交 readiness；`state.animationCandidate` 提供准备与审查摘要。准备令牌、完整动画批准令牌、一次性事务授权分别绑定，不互相替代。私有 `/api/animation-candidate`、`/api/animation-session`、`/api/animation-review` 及 authorize 仍须 MCP control，页面 token 不能登记批准。detached 不接受 Host 版本或 player 参数；原 detached 路径保留。下列各批“动画提交未开放”是当时范围，不覆盖本节。
+
+2026-10-24 C2-4b：以下四入口新增 expectedRevision，detached 拒绝该参数，隔离 C2 attached 必须完整版本及受管同角色来源/pin。默认预演，false 仅暂存；再用 Host asset commit 保存，工具仍 101 个。[189 项证据](plans/host-c2-assets-20261024.json)。
+
+| 工具 | 隔离 C2 attached 语义 |
+|---|---|
+| spine_create_pose_draft | posePath 为新候选输出；standing 可从显式 asset pin 的 skeleton 创建，action 需已批准标准站姿 |
+| spine_retarget_reference_pose | posePath 为新输出；参考/visualRig/动作级身份通过才暂存，不写 reportPath |
+| spine_refine_reference_pose | posePath 为当前文档，outputPosePath 为新路径；当前内存及静态比较，最多 60 次，拒绝旧比较和 reportPath |
+| spine_build_motion_from_poses | motionPath 为新输出；标准/关键姿态重验，引用当前 pose 前须保存修订及批准 |
+| spine_host_pin | 可选 intent:asset；仅隔离 C2 为 pose/skeleton 绑定独立资产来源，不授权源骨架/动画修改 |
+| spine_host_commit | intent:draft 沿用 pose 新修订；intent:asset 必须精确 assetCandidateHash/outputPath，真实保存还需稳定 requestId，switched:false 后显式打开新资产 |
+
+editing.assetDrafts 声明工具、pinIntent、saveTool/intent 和哈希要求，state.assetCandidate 列当前版本暂存摘要。私有 POST /api/asset-candidate 需 control/Origin/JSON 门禁，最多 8MiB，重验绑定/依赖；普通页面 token 不能暂存。参考失败仅诊断，不取得保存授权；成功草稿无批准。新资产备份、原子创建及来源登记不切换当前文档，C1/mirror 和动画源提交仍拒绝。
+
+新资产暂存/保存就绪分别读取 editing.assetDrafts.readiness.stage/commit；检查 profile、写入权/冻结/收束、受管工程、pin、严格依赖、Host 队列及当前候选。普通 operations.commit 仍描述 pose draft，不用于判断 skeleton 资产来源提交。
+
+2026-10-23 C2-4b 内部计算基础：`spine_create_pose_draft`、`spine_retarget_reference_pose` 的只读计算，以及 `spine_build_motion_from_poses`、motion poseGate 复用明确输入的 Data 入口；`spine_refine_reference_pose` 的共用计算层复制姿态/比较值。公共工具数和参数 schema 不变，仍 101 个。高级资产工具的 attached 调用尚未开放；跨类型来源登记及 Host 原子保存完成前，继续按既有规则拒绝，不能使用 Data 入口绕过 Writer/版本/授权直接落盘。motion 复核现在与生成共用阶段唯一性、标准站姿、角色/地面与 action 标准绑定检查，原参考门禁保留。[本批证据](plans/host-c2-asset-data-20261023.json)。
+
+2026-10-23 C2-4a：既有四个姿态命令增加隔离 attached 适配，工具仍 101 个。发现 schema 提供 expectedRevision 与 outputPosePath 二选一的入口；实际 detached 必须新输出路径且不接受 Host 版本，隔离 C2 attached 必须完整版本及当前 posePath、禁止 outputPosePath，只修改内存并经 MCP 重算出图，保存另用 spine_host_commit。不得静默忽略输出路径、重读旧磁盘或默认选择最新版本。`capabilities.editing.commandAdapters` 声明实际能力，readiness 沿用 patch。详见 [本批记录](plans/host-c2-pose-commands-20261023.json)。
+
+| 既有工具 | C2 attached 已开放内容 |
+|---|---|
+| spine_set_pose_target | 当前既有手脚目标 x/y/angle；contact 及原受控字段拒绝 |
+| spine_set_pose_channel | mapping 已声明且未被 IK/follow 接管通道的 x/y/rotate |
+| spine_batch_pose_ops | 1–200 个 target/channel 原子批次；weapon、render:true、region 拒绝，render:false 可用 |
+| spine_adjust_pose | patch.frame 的 body/head/channels/targets/presentation；其它固定条件和 frame.time/action/bendDirections 拒绝 |
+
+默认 dryRun 不改 revision/journal/资产，真实编辑一个 revision 与 undo，经原 schema、引用和固定条件检查。C1/mirror 不扩权，未适配高级工具不回退写盘；参考/关键姿态创建、motion 生成、动画审查/提交仍待 C2-4b/c。motion 观察的 poseWorkflow 失败必须阻止发布，不能把 await 视为通过。
+
 2026-10-23 长期观察与启停：工具仍为 101 个，不新增 MCP 批准/启用工具。`spine_preview_state` 附带 `observation`（运行、次数、间隔、错误）和 `rollout`（意图、实际状态、范围、原因），不暴露私钥或控制凭据。私有 `POST /api/observation` 仅接受 start/stop，`POST /api/rollout-disable` 收束事务并撤销审批；均需原 control/Origin/JSON 门禁，无 HTTP enable。生产启动需开关加有效人工审批，目前继续观察。见 [操作说明](Host长期观察与启用流程.md)。
 
 本轮构建和 160/160 回归、真实桌面 28 项通过。新增采样在用户指定的 npc1 已验收站姿隔离工程运行，输入不变、无 Writer；编辑性能有一轮 120.50ms 超预算，未满足全部退出条件。[最新证据索引](plans/host-c1-observation-implementation-20261023.json)。
+
+2026-10-23 C2 研发首批：`spine_host_patch` 的发现 schema 增加最多 200 项原子批次，支持 `setPoseParameters` 的 body/head/已声明通道及四肢既有目标。实际执行以 `capabilities.editing.profile/patchOps/targets/parameters` 为准，生产 C1 仍仅单手，超范围明确拒绝；`c2-pose` 仅程序内隔离研发，C1 审批不能开启它。默认 dryRun，整批失败不半应用，一次真实批次一个 revision/undo，清除旧结果/批准；坐标、参考及原写入门禁不变。没有新增工具，仍 101 个。精确参数和待交付范围见 [主工单 §5.7.1](plans/host-evolution.md#571-c2-研发增量2026-10-23用户指示开始)。
+
+C2 同日续接 `setSlotAttachment`/`setDrawOrder`：切换当前皮肤/default 中已有附件或 null 隐藏，层序须为现有插槽全集唯一排列；path 按 slot 名规范转义且精确核对。能力新增 `editing.presentation` 声明，实际附件/层序从 runtime/live 回读。源 setup/skins/atlas/PNG 不变，保存仍为 pose 新路径草稿，生产 C1 及动画提交门禁不变。
+
+C2-3 续接只读动画观察：`spine_host_open` 新增成对的 animation/time 和 MCP 侧 recheck（默认 false）。受管 4.1.x skeleton 可选既有动画或 null/time:0 setup；v2 motion 可选同名候选，时间不得超过时长。不带选择首次只读结构，同路径保留当前选择；改变选择需完整旧版本，创建新 openEpoch 并清除旧证据。`capabilities.viewing` 列名称、时长、选择和可用 kind，非匹配 runtime/C1/mirror 不扩权。frame/capture 可选 animation/time 只核对当前选择，不用于切换；截图 manifest 增加 kind/view。recheck 由 MCP 预计算 live，Host 只回放，数值标 previewOnly，不新增工具、源写入或动画提交令牌。见 [C2-3 证据](plans/host-c2-playback-20261023.json)。
 
 2026-10-23 前一轮 C1 技术基线：内部严格依赖和 journal 路径核验改为原生异步调度，仍逐文件核对真实边界及字节哈希；工具数量 101、参数 schema、C1 单手白名单和默认 dryRun 不变。该轮完整 154 项回归、编辑/事务各三轮性能及真实桌面 28 项均通过。见 [历史证据索引](plans/host-c1-technical-closeout-20261023.json)。
 
@@ -27,16 +127,16 @@
 | 工具 | 当前行为与边界 |
 |---|---|
 | spine_create_project | 显式初始化根 `.spine-workflow.json`；先登记工作区；默认 dryRun，`expectedAbsent:true` 必填；验证角色/文档/纹理/引用，不覆盖已有清单或修改角色资源 |
-| spine_host_open | 打开工程与显式文档；同路径未变幂等，切换/重载使用当前完整版本；无 Host 时建立 mirror |
+| spine_host_open | 打开工程与显式文档；隔离 C2 可成对给 animation/time，recheck:true 显式计算并出图；改变选择/切换/重载需完整版本；无 Host 时 mirror 不支持动画扩展 |
 | spine_preview_state | 只读工程、版本、能力/readiness 与分层状态；不隐式求解，`includeCapabilities:false` 可省略能力明细 |
-| spine_preview_frame | 当前 pose 的 320/480 PNG；必须给完整 `expectedRevision`；无结果、过期与不支持的 kind 明确拒绝 |
+| spine_preview_frame | 当前 pose 或隔离 C2 所选动画/时间的 320/480 PNG；完整 expectedRevision 必填，显式 animation/time 必须匹配；无结果/过期/不支持明确拒绝 |
 | spine_preview_capture | 真实可见 player 摆帧；320/480/960；分别返回 rendererParity、captureValidity、evidenceEligible；当前 Host 登记核验通过才可进入视觉审查，旧图不升级 |
 | spine_host_pin | 绑定当前文档与磁盘基线；不授予批准；观察/镜像模式拒绝 |
 | spine_host_patch | C1 只允许一个既有手目标的 x/y/angle；默认 dryRun；隔离真实编辑经 MCP 重算并返回 image 内容块；生产未开放 |
 | spine_host_commit | C1 只支持 pose 新路径草稿；默认 dryRun；真实保存须稳定 requestId、精确候选审查、一次性控制授权、备份与原子创建；生产未开放 |
 | spine_host_undo / spine_host_redo | 当前未提交历史；默认 dryRun；真实操作产生新 revision、清除旧结果和批准，再显式重算；生产未开放 |
 
-`expectedRevision={sessionId,documentId,openEpoch,revision}` 四项均必需；不能仅传 revision 数字。快照、派生、review 与 authorize 为独立控制通道，不开放给页面自由填写批准。C2 操作与动画提交未开放；掉线不自动退回直写。
+`expectedRevision={sessionId,documentId,openEpoch,revision}` 四项均必需；不能仅传 revision 数字。快照、派生、review 与 authorize 为独立控制通道，不开放给页面自由填写批准。C2 仅按隔离实例实际能力执行，生产不开启；non-pose pin/patch/review/commit 和动画提交仍拒绝，掉线不自动退回直写。
 
 2026-10-22：frame/capture 使用首次可信回放初始化的完整角色相机（实际可见边界加 5% 边距，并与校准初值取并集），同一 openEpoch 的编辑和撤销保持固定。无可信结果须显式求解。严格依赖门禁每轮重读字节，最多并发 8 个文件，不复用上轮校验；路径每次重新核实真实边界。没有新增工具或放宽批准规则。
 

@@ -1,0 +1,2966 @@
+{
+  "startedAt": "2026-10-24T15:06:31.512Z",
+  "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "release": "10.0.19045",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "logicalCores": 12,
+  "renderer": "canvas-region-msaa4-v4",
+  "sampleCount": 30,
+  "warmups": 2,
+  "size": 480,
+  "interSampleDelayMs": 120,
+  "diagnosticTracing": false,
+  "frameMeasurement": "firstFrameClientMs 为 patch 内首次新版本 PNG 的 RPC 完整读取；frameHttpMs 为随后相同版本的缓存读取。样本间隔在所有计时之外，保留每秒 20 次截图限流。",
+  "samples": [
+    {
+      "endToEndMs": 93.88079999999991,
+      "stateHttpMs": 2.3230999999998403,
+      "stateClientMs": 4.869200000000092,
+      "firstFrameClientMs": 29.43809999999985,
+      "frameHttpMs": 3.768000000000029,
+      "startedMs": 1334.4881,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 22.34960000000001
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 28.913700000000063
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 43.91039999999998
+        }
+      ],
+      "cpuMs": {
+        "user": 110,
+        "system": 47
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 1342.1107,
+          "durationMs": 9.031400000000076
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 1352.7201,
+          "durationMs": 2.9038000000000466
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 1384.4845,
+          "durationMs": 9.206699999999955
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 1394.971,
+          "durationMs": 3.9121999999999844
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 1398.9181,
+          "durationMs": 29.43809999999985
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.875099999999975
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 7.647300000000087
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.30979999999999563
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.0633000000000266
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 7.116700000000037
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.21800000000007458
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.187400000000025
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 28.27819999999997
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 4.0625,
+        "/api/patch": 7.647300000000087,
+        "/api/evaluation-task": 0.5278000000000702,
+        "/api/snapshot": 2.0633000000000266,
+        "/api/derived": 7.116700000000037,
+        "/api/frame": 28.27819999999997
+      }
+    },
+    {
+      "endToEndMs": 54.98790000000008,
+      "stateHttpMs": 2.381399999999985,
+      "stateClientMs": 3.256700000000137,
+      "firstFrameClientMs": 20.6887999999999,
+      "frameHttpMs": 3.4498000000000957,
+      "startedMs": 1563.6787,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.34640000000013
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 17.061100000000124
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 25.807900000000018
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 31
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 1567.6448,
+          "durationMs": 5.127799999999979
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 1573.6011,
+          "durationMs": 2.3620999999998276
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 1590.6497,
+          "durationMs": 3.843399999999974
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 1595.3808,
+          "durationMs": 2.561200000000099
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 1597.9636,
+          "durationMs": 20.6887999999999
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.5054000000000087
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.4565000000000055
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.17010000000004766
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.700399999999945
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.822099999999864
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15909999999985303
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.331000000000131
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 19.891900000000078
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.8364000000001397,
+        "/api/patch": 4.4565000000000055,
+        "/api/evaluation-task": 0.3291999999999007,
+        "/api/snapshot": 1.700399999999945,
+        "/api/derived": 2.822099999999864,
+        "/api/frame": 19.891900000000078
+      }
+    },
+    {
+      "endToEndMs": 52.91229999999996,
+      "stateHttpMs": 2.1193000000000666,
+      "stateClientMs": 2.9368999999999232,
+      "firstFrameClientMs": 17.41690000000017,
+      "frameHttpMs": 2.8596000000000004,
+      "startedMs": 1751.0734,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.723999999999933
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.424999999999955
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 27.047600000000102
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 63
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 1754.7983,
+          "durationMs": 4.975000000000136
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 1760.6943,
+          "durationMs": 2.133299999999963
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 1779.3958,
+          "durationMs": 3.7502999999999247
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 1784.0684,
+          "durationMs": 2.465599999999995
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 1786.5564,
+          "durationMs": 17.41690000000017
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.378500000000031
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.316199999999981
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.18889999999987594
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.4894999999999072
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.3315000000000055
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.20039999999994507
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2953999999999724
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.648099999999886
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.6739000000000033,
+        "/api/patch": 4.316199999999981,
+        "/api/evaluation-task": 0.389299999999821,
+        "/api/snapshot": 1.4894999999999072,
+        "/api/derived": 2.3315000000000055,
+        "/api/frame": 16.648099999999886
+      }
+    },
+    {
+      "endToEndMs": 47.90169999999989,
+      "stateHttpMs": 2.1902000000000044,
+      "stateClientMs": 2.93119999999999,
+      "firstFrameClientMs": 16.832599999999957,
+      "frameHttpMs": 2.8315999999999804,
+      "startedMs": 1936.3837,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.410699999999906
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 15.867799999999988
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.551299999999856
+        }
+      ],
+      "cpuMs": {
+        "user": 62,
+        "system": 94
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 1939.918,
+          "durationMs": 4.974500000000035
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 1945.6914,
+          "durationMs": 2.1521999999999935
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 1960.8645,
+          "durationMs": 3.0340000000001055
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 1964.591,
+          "durationMs": 2.824600000000146
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 1967.4368,
+          "durationMs": 16.832599999999957
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.2725000000000364
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.376600000000053
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.17800000000011096
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.505200000000059
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.285000000000082
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1492000000000644
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.6854000000000724
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.130499999999984
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.9579000000001088,
+        "/api/patch": 4.376600000000053,
+        "/api/evaluation-task": 0.32720000000017535,
+        "/api/snapshot": 1.505200000000059,
+        "/api/derived": 2.285000000000082,
+        "/api/frame": 16.130499999999984
+      }
+    },
+    {
+      "endToEndMs": 56.72370000000001,
+      "stateHttpMs": 2.0808999999999287,
+      "stateClientMs": 2.904199999999946,
+      "firstFrameClientMs": 17.32890000000043,
+      "frameHttpMs": 3.2613000000001193,
+      "startedMs": 2120.8641,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 15.091499999999996
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 20.157300000000305
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 30.16280000000006
+        }
+      ],
+      "cpuMs": {
+        "user": 94,
+        "system": 31
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 2124.7165,
+          "durationMs": 5.806700000000092
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 2131.4933,
+          "durationMs": 3.0579999999999927
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 2152.5686,
+          "durationMs": 3.6952000000001135
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 2157.0081,
+          "durationMs": 3.2204000000001543
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 2160.2454,
+          "durationMs": 17.32890000000043
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.4816999999998188
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.984199999999873
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.19219999999995707
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.406199999999899
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.5947000000001026
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14329999999972642
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2977000000000771
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.36070000000018
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.779399999999896,
+        "/api/patch": 4.984199999999873,
+        "/api/evaluation-task": 0.3354999999996835,
+        "/api/snapshot": 2.406199999999899,
+        "/api/derived": 2.5947000000001026,
+        "/api/frame": 16.36070000000018
+      }
+    },
+    {
+      "endToEndMs": 92.6568000000002,
+      "stateHttpMs": 3.341899999999896,
+      "stateClientMs": 4.878899999999703,
+      "firstFrameClientMs": 30.66989999999987,
+      "frameHttpMs": 3.43349999999964,
+      "startedMs": 2307.7826,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 27.58269999999993
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 34.39269999999988
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 49.63310000000001
+        }
+      ],
+      "cpuMs": {
+        "user": 47,
+        "system": 0
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 2317.8876,
+          "durationMs": 9.82069999999976
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 2329.5555,
+          "durationMs": 4.0810999999998785
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 2359.792,
+          "durationMs": 5.073699999999917
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 2365.7636,
+          "durationMs": 3.9273999999995794
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 2369.7223,
+          "durationMs": 30.66989999999987
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 3.2452000000002954
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 8.182500000000346
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.438499999999749
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.0057999999999083
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.806500000000142
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1748000000002321
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.834599999999682
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 29.465799999999945
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 5.0797999999999774,
+        "/api/patch": 8.182500000000346,
+        "/api/evaluation-task": 0.6132999999999811,
+        "/api/snapshot": 3.0057999999999083,
+        "/api/derived": 3.806500000000142,
+        "/api/frame": 29.465799999999945
+      }
+    },
+    {
+      "endToEndMs": 51.4049,
+      "stateHttpMs": 2.2988000000000284,
+      "stateClientMs": 3.218499999999949,
+      "firstFrameClientMs": 17.874499999999898,
+      "frameHttpMs": 2.879700000000412,
+      "startedMs": 2538.1206,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.219299999999748
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.791699999999764
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 25.497899999999845
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 63
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 2541.8193,
+          "durationMs": 4.962299999999686
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 2547.6281,
+          "durationMs": 2.44170000000031
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 2564.7049,
+          "durationMs": 3.672599999999875
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 2569.1443,
+          "durationMs": 2.445900000000165
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 2571.61,
+          "durationMs": 17.874499999999898
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.3244999999997162
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.28630000000021
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15810000000010405
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.735899999999674
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.7085000000001855
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14989999999988868
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2977999999998246
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.057800000000043
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.622299999999541,
+        "/api/patch": 4.28630000000021,
+        "/api/evaluation-task": 0.3079999999999927,
+        "/api/snapshot": 1.735899999999674,
+        "/api/derived": 2.7085000000001855,
+        "/api/frame": 17.057800000000043
+      }
+    },
+    {
+      "endToEndMs": 49.673899999999776,
+      "stateHttpMs": 2.232800000000225,
+      "stateClientMs": 2.9274999999997817,
+      "firstFrameClientMs": 17.7829999999999,
+      "frameHttpMs": 2.777100000000246,
+      "startedMs": 2724.5183,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.872999999999593
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.440099999999802
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.874199999999746
+        }
+      ],
+      "cpuMs": {
+        "user": 62,
+        "system": 47
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 2728.1666,
+          "durationMs": 5.180899999999838
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 2734.3188,
+          "durationMs": 2.020599999999831
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 2749.4003,
+          "durationMs": 3.699800000000323
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 2753.8876,
+          "durationMs": 2.486399999999776
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 2756.3941,
+          "durationMs": 17.7829999999999
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.362999999999829
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.538700000000063
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.21720000000004802
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.4503999999997177
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.746100000000297
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15209999999979118
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.4297999999998865
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.056600000000344
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.7927999999997155,
+        "/api/patch": 4.538700000000063,
+        "/api/evaluation-task": 0.3692999999998392,
+        "/api/snapshot": 1.4503999999997177,
+        "/api/derived": 2.746100000000297,
+        "/api/frame": 17.056600000000344
+      }
+    },
+    {
+      "endToEndMs": 50.35909999999967,
+      "stateHttpMs": 2.0942000000000007,
+      "stateClientMs": 2.902599999999893,
+      "firstFrameClientMs": 17.35550000000012,
+      "frameHttpMs": 2.721400000000358,
+      "startedMs": 2909.8292,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.77559999999994
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 17.18899999999985
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.99440000000004
+        }
+      ],
+      "cpuMs": {
+        "user": 63,
+        "system": 62
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 2914.4667,
+          "durationMs": 5.39449999999988
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 2920.616,
+          "durationMs": 1.981999999999971
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 2935.9553,
+          "durationMs": 3.7883999999999105
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 2940.4563,
+          "durationMs": 2.3524999999999636
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 2942.8233,
+          "durationMs": 17.35550000000012
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.3021000000003369
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.441899999999805
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14180000000033033
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.408600000000206
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.7298000000000684
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1485000000002401
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2791999999999462
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.665799999999763
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.581300000000283,
+        "/api/patch": 4.441899999999805,
+        "/api/evaluation-task": 0.29030000000057044,
+        "/api/snapshot": 1.408600000000206,
+        "/api/derived": 2.7298000000000684,
+        "/api/frame": 16.665799999999763
+      }
+    },
+    {
+      "endToEndMs": 48.28530000000001,
+      "stateHttpMs": 2.2083000000002357,
+      "stateClientMs": 3.0001000000002023,
+      "firstFrameClientMs": 17.30390000000034,
+      "frameHttpMs": 3.2923000000000684,
+      "startedMs": 3094.1937,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.945100000000366
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.334800000000087
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.87990000000036
+        }
+      ],
+      "cpuMs": {
+        "user": 46,
+        "system": 156
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 3098.1947,
+          "durationMs": 5.303399999999783
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 3104.253,
+          "durationMs": 1.9206999999996697
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 3119.0818,
+          "durationMs": 3.1421000000000276
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 3122.9017,
+          "durationMs": 2.2514000000001033
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 3125.1701,
+          "durationMs": 17.30390000000034
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.3578999999999724
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.658100000000104
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14069999999992433
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.3510999999998603
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.4119000000000597
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14669999999978245
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2265999999999622
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.652399999999943
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.5844999999999345,
+        "/api/patch": 4.658100000000104,
+        "/api/evaluation-task": 0.2873999999997068,
+        "/api/snapshot": 1.3510999999998603,
+        "/api/derived": 2.4119000000000597,
+        "/api/frame": 16.652399999999943
+      }
+    },
+    {
+      "endToEndMs": 48.10390000000007,
+      "stateHttpMs": 2.1015000000002146,
+      "stateClientMs": 2.988900000000285,
+      "firstFrameClientMs": 16.93679999999995,
+      "frameHttpMs": 2.8840000000000146,
+      "startedMs": 3279.678,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.882399999999961
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.333900000000085
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.131600000000162
+        }
+      ],
+      "cpuMs": {
+        "user": 47,
+        "system": 140
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 3283.2971,
+          "durationMs": 5.124400000000151
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 3289.1726,
+          "durationMs": 2.4178000000001703
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 3304.8117,
+          "durationMs": 3.0023999999998523
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 3308.4656,
+          "durationMs": 2.350199999999859
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 3310.8365,
+          "durationMs": 16.93679999999995
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.3584000000000742
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.364700000000084
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1493000000000393
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.7482999999997446
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.2089999999998327
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12469999999984793
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.290899999999965
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.195200000000114
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.6493000000000393,
+        "/api/patch": 4.364700000000084,
+        "/api/evaluation-task": 0.2739999999998872,
+        "/api/snapshot": 1.7482999999997446,
+        "/api/derived": 2.2089999999998327,
+        "/api/frame": 16.195200000000114
+      }
+    },
+    {
+      "endToEndMs": 49.40059999999994,
+      "stateHttpMs": 2.133100000000013,
+      "stateClientMs": 3.3170000000000073,
+      "firstFrameClientMs": 16.621399999999994,
+      "frameHttpMs": 2.9227999999998246,
+      "startedMs": 3464.185,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.716899999999896
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.071899999999914
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.990600000000086
+        }
+      ],
+      "cpuMs": {
+        "user": 47,
+        "system": 16
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 3468.1775,
+          "durationMs": 5.109000000000378
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 3473.9647,
+          "durationMs": 1.9728000000000065
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 3489.2183,
+          "durationMs": 4.351500000000215
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 3494.5638,
+          "durationMs": 2.378400000000056
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 3496.9571,
+          "durationMs": 16.621399999999994
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.459100000000035
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.449299999999766
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1366000000002714
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.4291000000002896
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.5758999999998196
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.15099999999983993
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3338000000003376
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.01890000000003
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.7929000000003725,
+        "/api/patch": 4.449299999999766,
+        "/api/evaluation-task": 0.2876000000001113,
+        "/api/snapshot": 1.4291000000002896,
+        "/api/derived": 2.5758999999998196,
+        "/api/frame": 16.01890000000003
+      }
+    },
+    {
+      "endToEndMs": 47.76989999999978,
+      "stateHttpMs": 2.4144999999998618,
+      "stateClientMs": 2.9887000000003354,
+      "firstFrameClientMs": 17.450400000000172,
+      "frameHttpMs": 2.6096999999999753,
+      "startedMs": 3650.9376,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.674599999999828
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.052599999999984
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.530499999999847
+        }
+      ],
+      "cpuMs": {
+        "user": 47,
+        "system": 0
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 3654.7249,
+          "durationMs": 5.1237999999998465
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 3660.5301,
+          "durationMs": 2.1475000000000364
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 3675.4842,
+          "durationMs": 2.8468000000002576
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 3678.9526,
+          "durationMs": 2.2840000000001055
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 3681.2508,
+          "durationMs": 17.450400000000172
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.4083000000000538
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.477699999999913
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1307000000001608
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5684999999998581
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.1228000000000975
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12069999999994252
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.2625000000002728
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.80450000000019
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.6708000000003267,
+        "/api/patch": 4.477699999999913,
+        "/api/evaluation-task": 0.2514000000001033,
+        "/api/snapshot": 1.5684999999998581,
+        "/api/derived": 2.1228000000000975,
+        "/api/frame": 16.80450000000019
+      }
+    },
+    {
+      "endToEndMs": 47.98590000000013,
+      "stateHttpMs": 2.1085000000002765,
+      "stateClientMs": 3.0693999999998596,
+      "firstFrameClientMs": 17.062600000000202,
+      "frameHttpMs": 2.631199999999808,
+      "startedMs": 3837.8957,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.74310000000014
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.988600000000133
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.248000000000047
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 16
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 3841.7906,
+          "durationMs": 5.736200000000281
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 3848.2134,
+          "durationMs": 2.4663000000000466
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 3863.0859,
+          "durationMs": 2.725800000000163
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 3866.4488,
+          "durationMs": 2.3494000000000597
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 3868.8134,
+          "durationMs": 17.062600000000202
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.4191999999998188
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.088600000000042
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1319999999996071
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.8429000000000997
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.110899999999674
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1329000000000633
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3081999999999425
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.467200000000048
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.7273999999997613,
+        "/api/patch": 5.088600000000042,
+        "/api/evaluation-task": 0.2648999999996704,
+        "/api/snapshot": 1.8429000000000997,
+        "/api/derived": 2.110899999999674,
+        "/api/frame": 16.467200000000048
+      }
+    },
+    {
+      "endToEndMs": 46.822799999999916,
+      "stateHttpMs": 2.796700000000328,
+      "stateClientMs": 2.9791000000000167,
+      "firstFrameClientMs": 16.211099999999988,
+      "frameHttpMs": 2.748199999999997,
+      "startedMs": 4023.3049,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.768399999999929
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 15.93249999999989
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.29930000000013
+        }
+      ],
+      "cpuMs": {
+        "user": 15,
+        "system": 31
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 4027.1772,
+          "durationMs": 4.983499999999822
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 4032.9316,
+          "durationMs": 2.151900000000296
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 4047.6312,
+          "durationMs": 3.224800000000414
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 4051.5469,
+          "durationMs": 2.3497999999999593
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 4053.9111,
+          "durationMs": 16.211099999999988
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.5379000000002634
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.423099999999977
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.19239999999990687
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5025000000000546
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.6204999999999927
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13990000000012515
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.366899999999987
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.645500000000084
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.9048000000002503,
+        "/api/patch": 4.423099999999977,
+        "/api/evaluation-task": 0.332300000000032,
+        "/api/snapshot": 1.5025000000000546,
+        "/api/derived": 2.6204999999999927,
+        "/api/frame": 15.645500000000084
+      }
+    },
+    {
+      "endToEndMs": 63.14919999999984,
+      "stateHttpMs": 2.1945999999998094,
+      "stateClientMs": 3.0756000000001222,
+      "firstFrameClientMs": 17.471700000000055,
+      "frameHttpMs": 2.5744000000004235,
+      "startedMs": 4209.716,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 22.88879999999972
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 30.348299999999654
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 38.33929999999964
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 16
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 4216.2972,
+          "durationMs": 9.861899999999878
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 4227.2032,
+          "durationMs": 3.435699999999997
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 4248.9668,
+          "durationMs": 3.3432000000002517
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 4252.9993,
+          "durationMs": 2.3726999999998952
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 4255.3866,
+          "durationMs": 17.471700000000055
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 2.340100000000348
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 8.816899999999805
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.18249999999989086
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.735200000000077
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.382499999999709
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1224000000001979
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3090999999994892
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.733099999999467
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.649199999999837,
+        "/api/patch": 8.816899999999805,
+        "/api/evaluation-task": 0.30490000000008877,
+        "/api/snapshot": 2.735200000000077,
+        "/api/derived": 2.382499999999709,
+        "/api/frame": 16.733099999999467
+      }
+    },
+    {
+      "endToEndMs": 87.86599999999999,
+      "stateHttpMs": 4.154599999999846,
+      "stateClientMs": 6.954600000000028,
+      "firstFrameClientMs": 29.6237000000001,
+      "frameHttpMs": 12.31710000000021,
+      "startedMs": 4409.1538,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 25.124799999999595
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 30.529700000000048
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 43.82880000000023
+        }
+      ],
+      "cpuMs": {
+        "user": 63,
+        "system": 46
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 4416.8453,
+          "durationMs": 9.367100000000391
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 4427.4039,
+          "durationMs": 4.645199999999932
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 4455.3435,
+          "durationMs": 7.014400000000023
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 4464.0475,
+          "durationMs": 3.317500000000109
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 4467.3862,
+          "durationMs": 29.6237000000001
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 2.5981000000001586
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 7.942900000000009
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.202900000000227
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 3.841899999999441
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 3.4539999999997235
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1558999999997468
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.0353000000004613
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 28.584399999999732
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 4.63340000000062,
+        "/api/patch": 7.942900000000009,
+        "/api/evaluation-task": 0.3587999999999738,
+        "/api/snapshot": 3.841899999999441,
+        "/api/derived": 3.4539999999997235,
+        "/api/frame": 28.584399999999732
+      }
+    },
+    {
+      "endToEndMs": 51.66409999999996,
+      "stateHttpMs": 2.2547999999997046,
+      "stateClientMs": 3.0726000000004206,
+      "firstFrameClientMs": 17.390699999999924,
+      "frameHttpMs": 2.8127999999996973,
+      "startedMs": 4641.5036,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 14.59230000000025
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 18.30119999999988
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 26.4966000000004
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 47
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 4646.063,
+          "durationMs": 5.966699999999946
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 4652.8236,
+          "durationMs": 2.173999999999978
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 4669.0588,
+          "durationMs": 3.645100000000639
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 4673.3675,
+          "durationMs": 2.386899999999514
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 4675.7698,
+          "durationMs": 17.390699999999924
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6159999999999854
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.283099999999649
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13650000000052387
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.6031999999995605
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.7782999999999447
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12699999999949796
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3809000000001106
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.755599999999504
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.996900000000096,
+        "/api/patch": 5.283099999999649,
+        "/api/evaluation-task": 0.26350000000002183,
+        "/api/snapshot": 1.6031999999995605,
+        "/api/derived": 2.7782999999999447,
+        "/api/frame": 16.755599999999504
+      }
+    },
+    {
+      "endToEndMs": 72.07650000000012,
+      "stateHttpMs": 2.582399999999325,
+      "stateClientMs": 3.464799999999741,
+      "firstFrameClientMs": 18.05040000000008,
+      "frameHttpMs": 3.225000000000364,
+      "startedMs": 4827.1979,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 24.52269999999953
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 31.15059999999994
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 45.24659999999949
+        }
+      ],
+      "cpuMs": {
+        "user": 16,
+        "system": 62
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 4833.902,
+          "durationMs": 10.394900000000234
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 4845.2358,
+          "durationMs": 3.3467000000000553
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 4875.0892,
+          "durationMs": 3.125
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 4878.8365,
+          "durationMs": 2.357199999999466
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 4881.2172,
+          "durationMs": 18.05040000000008
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 2.085800000000745
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 9.526599999999235
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.16970000000037544
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 2.5670000000000073
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.228900000000067
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11830000000009022
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3959999999997308
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.389900000000125
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.481800000000476,
+        "/api/patch": 9.526599999999235,
+        "/api/evaluation-task": 0.28800000000046566,
+        "/api/snapshot": 2.5670000000000073,
+        "/api/derived": 2.228900000000067,
+        "/api/frame": 17.389900000000125
+      }
+    },
+    {
+      "endToEndMs": 53.198600000000624,
+      "stateHttpMs": 2.386000000000422,
+      "stateClientMs": 3.1579000000001543,
+      "firstFrameClientMs": 17.627700000000004,
+      "frameHttpMs": 2.6927000000005137,
+      "startedMs": 5028.3087,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 14.787000000000262
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 18.683400000000802
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 27.842900000000554
+        }
+      ],
+      "cpuMs": {
+        "user": 63,
+        "system": 0
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5033.3269,
+          "durationMs": 5.865399999999681
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5039.9308,
+          "durationMs": 2.0868000000000393
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5057.2757,
+          "durationMs": 3.461199999999735
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5061.4578,
+          "durationMs": 2.3980000000001382
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5063.8699,
+          "durationMs": 17.627700000000004
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6840000000001965
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.990799999999581
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1374999999998181
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.582999999999629
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.5657000000001062
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13839999999981956
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.4044999999996435
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 17.04570000000058
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.08849999999984,
+        "/api/patch": 4.990799999999581,
+        "/api/evaluation-task": 0.27589999999963766,
+        "/api/snapshot": 1.582999999999629,
+        "/api/derived": 2.5657000000001062,
+        "/api/frame": 17.04570000000058
+      }
+    },
+    {
+      "endToEndMs": 51.816100000000006,
+      "stateHttpMs": 2.04740000000038,
+      "stateClientMs": 3.204099999999926,
+      "firstFrameClientMs": 16.284700000000157,
+      "frameHttpMs": 2.6134000000001834,
+      "startedMs": 5214.9631,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 14.794300000000476
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 19.836100000000442
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 27.88640000000032
+        }
+      ],
+      "cpuMs": {
+        "user": 47,
+        "system": 94
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5219.7227,
+          "durationMs": 5.638899999999921
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5226.1203,
+          "durationMs": 2.3351000000002387
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5243.845,
+          "durationMs": 3.426800000000185
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5247.9268,
+          "durationMs": 2.5474999999996726
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5250.4886,
+          "durationMs": 16.284700000000157
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.9099000000005617
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.977600000000166
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.14050000000042928
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.6105999999999767
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.5715000000000146
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11660000000028958
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.5541000000002896
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.76379999999972
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.4640000000008513,
+        "/api/patch": 4.977600000000166,
+        "/api/evaluation-task": 0.25710000000071886,
+        "/api/snapshot": 1.6105999999999767,
+        "/api/derived": 2.5715000000000146,
+        "/api/frame": 15.76379999999972
+      }
+    },
+    {
+      "endToEndMs": 49.03110000000015,
+      "stateHttpMs": 2.2467999999998938,
+      "stateClientMs": 3.093499999999949,
+      "firstFrameClientMs": 16.516599999999926,
+      "frameHttpMs": 2.6159000000006927,
+      "startedMs": 5400.8459,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.268799999999828
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 17.031199999999444
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 25.132700000000114
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 15
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5405.0285,
+          "durationMs": 5.13379999999961
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5411.0013,
+          "durationMs": 2.125500000000102
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5426.9789,
+          "durationMs": 3.0194000000001324
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5430.6132,
+          "durationMs": 2.7199000000000524
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5433.3525,
+          "durationMs": 16.516599999999926
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.5967000000000553
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.51969999999983
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1657999999997628
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5114999999996144
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.2411000000001877
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11369999999988067
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.521299999999428
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.871299999999792
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.1179999999994834,
+        "/api/patch": 4.51969999999983,
+        "/api/evaluation-task": 0.2794999999996435,
+        "/api/snapshot": 1.5114999999996144,
+        "/api/derived": 2.2411000000001877,
+        "/api/frame": 15.871299999999792
+      }
+    },
+    {
+      "endToEndMs": 49.26119999999992,
+      "stateHttpMs": 1.9738999999999578,
+      "stateClientMs": 2.8768999999992957,
+      "firstFrameClientMs": 16.004399999999805,
+      "frameHttpMs": 3.60320000000047,
+      "startedMs": 5587.3084,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.386099999999715
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 17.1221000000005
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.984800000000178
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 47
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5591.3932,
+          "durationMs": 5.377899999999499
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5597.4074,
+          "durationMs": 2.016099999999824
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5613.3781,
+          "durationMs": 3.3820000000005166
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5617.7407,
+          "durationMs": 2.8037999999996828
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5620.56,
+          "durationMs": 16.004399999999805
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6370000000006257
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.817500000000109
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12309999999979482
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.4882000000006883
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.4898000000002867
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13509999999951106
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.5900000000001455
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.480899999999565
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.2270000000007713,
+        "/api/patch": 4.817500000000109,
+        "/api/evaluation-task": 0.2581999999993059,
+        "/api/snapshot": 1.4882000000006883,
+        "/api/derived": 2.4898000000002867,
+        "/api/frame": 15.480899999999565
+      }
+    },
+    {
+      "endToEndMs": 46.98900000000049,
+      "stateHttpMs": 2.1333999999997104,
+      "stateClientMs": 2.964100000000144,
+      "firstFrameClientMs": 16.995600000000195,
+      "frameHttpMs": 2.550799999999981,
+      "startedMs": 5772.4298,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.783199999999852
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.099299999999857
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.30670000000009
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 63
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5776.4028,
+          "durationMs": 5.180000000000291
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5782.2092,
+          "durationMs": 2.0880999999999403
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5796.743,
+          "durationMs": 2.765599999999722
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5800.1068,
+          "durationMs": 2.2939000000005763
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5802.4167,
+          "durationMs": 16.995600000000195
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6355000000003201
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.6215000000001965
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12259999999969295
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5919000000003507
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.1797999999998865
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12119999999958964
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.3275000000003274
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.376899999999296
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.9630000000006476,
+        "/api/patch": 4.6215000000001965,
+        "/api/evaluation-task": 0.2437999999992826,
+        "/api/snapshot": 1.5919000000003507,
+        "/api/derived": 2.1797999999998865,
+        "/api/frame": 16.376899999999296
+      }
+    },
+    {
+      "endToEndMs": 47.82040000000052,
+      "stateHttpMs": 2.0820999999996275,
+      "stateClientMs": 2.951999999999316,
+      "firstFrameClientMs": 16.34940000000006,
+      "frameHttpMs": 2.5195000000003347,
+      "startedMs": 5957.2814,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.397700000000441
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 15.644100000000435
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.105099999999766
+        }
+      ],
+      "cpuMs": {
+        "user": 16,
+        "system": 62
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 5961.1846,
+          "durationMs": 5.073800000000119
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 5966.8703,
+          "durationMs": 1.8630000000002838
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 5981.3048,
+          "durationMs": 3.0807999999997264
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 5984.9871,
+          "durationMs": 3.745199999999386
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 5988.7474,
+          "durationMs": 16.34940000000006
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.553899999999885
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.545599999999467
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12519999999949505
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.3729000000002998
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.5052999999998065
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1253999999998996
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 2.7645999999995183
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.824599999999919
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 4.318499999999403,
+        "/api/patch": 4.545599999999467,
+        "/api/evaluation-task": 0.25059999999939464,
+        "/api/snapshot": 1.3729000000002998,
+        "/api/derived": 2.5052999999998065,
+        "/api/frame": 15.824599999999919
+      }
+    },
+    {
+      "endToEndMs": 45.810199999999895,
+      "stateHttpMs": 2.028400000000147,
+      "stateClientMs": 2.910800000000563,
+      "firstFrameClientMs": 16.20049999999992,
+      "frameHttpMs": 2.557600000000093,
+      "startedMs": 6143.4429,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 12.784300000000258
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 15.823199999999815
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 23.09019999999964
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 47
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 6147.3729,
+          "durationMs": 5.268299999999726
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 6153.2729,
+          "durationMs": 1.9350000000004002
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 6167.407,
+          "durationMs": 2.6723999999994703
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 6170.633,
+          "durationMs": 2.400800000000345
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 6173.0477,
+          "durationMs": 16.20049999999992
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6338999999998123
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.6872999999995955
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12749999999959982
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.453599999999824
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.085900000000038
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11219999999957508
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.4365000000007058
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.707499999999527
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.070400000000518,
+        "/api/patch": 4.6872999999995955,
+        "/api/evaluation-task": 0.2396999999991749,
+        "/api/snapshot": 1.453599999999824,
+        "/api/derived": 2.085900000000038,
+        "/api/frame": 15.707499999999527
+      }
+    },
+    {
+      "endToEndMs": 48.107600000000275,
+      "stateHttpMs": 2.472200000000157,
+      "stateClientMs": 3.818099999999504,
+      "firstFrameClientMs": 16.360900000000584,
+      "frameHttpMs": 5.633300000000418,
+      "startedMs": 6328.0022,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.252000000000407
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.595000000000255
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.574900000000525
+        }
+      ],
+      "cpuMs": {
+        "user": 0,
+        "system": 109
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 6331.7845,
+          "durationMs": 5.762000000000626
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 6338.2462,
+          "durationMs": 2.056800000000294
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 6353.6047,
+          "durationMs": 3.003099999999904
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 6357.192,
+          "durationMs": 2.534599999999955
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 6359.7431,
+          "durationMs": 16.360900000000584
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.5075999999999112
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.165899999999965
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12520000000040454
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5052000000005137
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.2532000000001062
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.11409999999978027
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.5639000000001033
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.793399999999565
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.0715000000000146,
+        "/api/patch": 5.165899999999965,
+        "/api/evaluation-task": 0.2393000000001848,
+        "/api/snapshot": 1.5052000000005137,
+        "/api/derived": 2.2532000000001062,
+        "/api/frame": 15.793399999999565
+      }
+    },
+    {
+      "endToEndMs": 49.65930000000026,
+      "stateHttpMs": 2.152200000000448,
+      "stateClientMs": 3.2942000000002736,
+      "firstFrameClientMs": 17.478900000000067,
+      "frameHttpMs": 2.6588000000001557,
+      "startedMs": 6512.038,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.441200000000208
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.81540000000041
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.564700000000812
+        }
+      ],
+      "cpuMs": {
+        "user": 32,
+        "system": 94
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 6516.1323,
+          "durationMs": 5.632399999999507
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 6522.4682,
+          "durationMs": 2.0641999999998006
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 6537.5961,
+          "durationMs": 3.1972999999998137
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 6541.3778,
+          "durationMs": 2.8152000000000044
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 6544.2085,
+          "durationMs": 17.478900000000067
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.613100000000486
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 4.849599999999555
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13100000000031287
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.537199999999757
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.4516999999996187
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1213000000007014
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.8410000000003492
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 16.912900000000263
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.4541000000008353,
+        "/api/patch": 4.849599999999555,
+        "/api/evaluation-task": 0.25230000000101427,
+        "/api/snapshot": 1.537199999999757,
+        "/api/derived": 2.4516999999996187,
+        "/api/frame": 16.912900000000263
+      }
+    },
+    {
+      "endToEndMs": 47.66899999999987,
+      "stateHttpMs": 2.10149999999976,
+      "stateClientMs": 3.4002999999993335,
+      "firstFrameClientMs": 16.15689999999995,
+      "frameHttpMs": 2.6418000000003303,
+      "startedMs": 6698.4372,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.68369999999959
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.919199999999364
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.722899999999754
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 16
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 6702.4876,
+          "durationMs": 6.004699999999502
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 6709.1586,
+          "durationMs": 2.015900000000329
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 6724.1312,
+          "durationMs": 2.839799999999741
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 6727.5234,
+          "durationMs": 2.4045999999998457
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 6729.9424,
+          "durationMs": 16.15689999999995
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.470299999999952
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.411399999999958
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.12030000000049768
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.5163000000002285
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.1810999999997875
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.1081000000003769
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.4807000000000698
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.618099999999686
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 2.951000000000022,
+        "/api/patch": 5.411399999999958,
+        "/api/evaluation-task": 0.22840000000087457,
+        "/api/snapshot": 1.5163000000002285,
+        "/api/derived": 2.1810999999997875,
+        "/api/frame": 15.618099999999686
+      }
+    },
+    {
+      "endToEndMs": 48.231400000000576,
+      "stateHttpMs": 1.9934999999995853,
+      "stateClientMs": 3.2817000000004555,
+      "firstFrameClientMs": 16.454899999999725,
+      "frameHttpMs": 2.6840000000001965,
+      "startedMs": 6882.0786,
+      "progress": [
+        {
+          "stage": "准备角色依赖",
+          "elapsedMs": 13.315800000000309
+        },
+        {
+          "stage": "回读 runtime 实际节点",
+          "elapsedMs": 16.743500000000495
+        },
+        {
+          "stage": "发布当前求解与只读 player 候选",
+          "elapsedMs": 24.800200000000586
+        }
+      ],
+      "cpuMs": {
+        "user": 31,
+        "system": 16
+      },
+      "clientRoutes": [
+        {
+          "route": "/api/patch",
+          "startedMs": 6886.269,
+          "durationMs": 5.650799999999435
+        },
+        {
+          "route": "/api/snapshot",
+          "startedMs": 6892.5844,
+          "durationMs": 1.8865999999998166
+        },
+        {
+          "route": "/api/derived",
+          "startedMs": 6907.869,
+          "durationMs": 3.024000000000342
+        },
+        {
+          "route": "/api/state",
+          "startedMs": 6911.4853,
+          "durationMs": 2.3476000000000568
+        },
+        {
+          "route": "/api/frame",
+          "startedMs": 6913.8484,
+          "durationMs": 16.454899999999725
+        }
+      ],
+      "routes": [
+        {
+          "route": "/api/state",
+          "durationMs": 1.6618999999991502
+        },
+        {
+          "route": "/api/patch",
+          "durationMs": 5.0109999999995125
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.17249999999967258
+        },
+        {
+          "route": "/api/snapshot",
+          "durationMs": 1.4036999999998443
+        },
+        {
+          "route": "/api/derived",
+          "durationMs": 2.2739000000001397
+        },
+        {
+          "route": "/api/evaluation-task",
+          "durationMs": 0.13609999999971478
+        },
+        {
+          "route": "/api/state",
+          "durationMs": 1.4391999999998006
+        },
+        {
+          "route": "/api/frame",
+          "durationMs": 15.833400000000438
+        }
+      ],
+      "taskHttpCount": 2,
+      "serverRouteMs": {
+        "/api/state": 3.101099999998951,
+        "/api/patch": 5.0109999999995125,
+        "/api/evaluation-task": 0.30859999999938736,
+        "/api/snapshot": 1.4036999999998443,
+        "/api/derived": 2.2739000000001397,
+        "/api/frame": 15.833400000000438
+      }
+    }
+  ],
+  "publicWriteEnabled": false,
+  "codeHashes": {
+    "src/hostClient.ts": "1fdffbdbc8329a85b8f7eb95346a2001265eabdd81ee260d9523c4391de4b544",
+    "src/hostServer.ts": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd",
+    "src/hostDocumentStore.ts": "cafb56906dad2949967e2dbca9f6571948b5e48c1cae2fee29383fbf7b987e1d",
+    "src/hostEditorStore.ts": "a809b322c602054b4b9ab8d238af99052df92566d8565d1fe5090c30348c76b6",
+    "src/hostObservation.ts": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8",
+    "src/hostObservationCatalog.ts": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b",
+    "src/hostReleaseEvidence.ts": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13",
+    "src/hostFileProtection.ts": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc",
+    "src/hostRollout.ts": "1e6d09503fb963d4a4f562456c985c53af3abbbf8a75316a4bbff1e5969981ba",
+    "src/hostEvaluationTasks.ts": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963",
+    "src/hostReadiness.ts": "830b6589438ee3f5c843cc559ab2b73d2716a0d3d1daeaf9f2f767ef2f17dcc0",
+    "src/hostJournal.ts": "6cdf2be0156b70250b14214508e2d9274af81b3fe5435a280e0b365961500d0e",
+    "src/spineJson.ts": "b57ba79fc213e29c54e0a35caeed52ccf6bac1b9b73773605d4a01175bc649ab",
+    "src/strictFileChecks.ts": "2d80096e90bace7ffdf394a98760e7c96e3601b6868d4316518c728622133f02",
+    "src/hostEvaluator.ts": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121",
+    "src/rasterRenderer.ts": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d",
+    "test/helpers/hostFixture.ts": "11846a1995744a9305ababe838acd01fa67ed5975bc11abed92eb3ebba9dcc3a",
+    "package-lock.json": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+  },
+  "coldOpenEvaluateFrameMs": 139.5824,
+  "workloadFingerprint": "f90bd696cc5e85f02a6633ba75a6464023e60bb24987f65a35bcdc1501e519ef",
+  "camera": {
+    "minX": -116.00000019377153,
+    "maxX": 124.00000019377153,
+    "minY": -18.000000032295254,
+    "maxY": 222.0000003552478
+  },
+  "sourceUnchanged": true,
+  "hostStopped": true,
+  "phases": {
+    "endToEndMs": {
+      "p50": 49.40059999999994,
+      "p95": 92.6568000000002,
+      "maximum": 93.88079999999991
+    },
+    "stateHttpMs": {
+      "p50": 2.1902000000000044,
+      "p95": 3.341899999999896,
+      "maximum": 4.154599999999846
+    },
+    "stateClientMs": {
+      "p50": 3.0726000000004206,
+      "p95": 4.878899999999703,
+      "maximum": 6.954600000000028
+    },
+    "firstFrameClientMs": {
+      "p50": 17.30390000000034,
+      "p95": 29.6237000000001,
+      "maximum": 30.66989999999987
+    },
+    "frameHttpMs": {
+      "p50": 2.777100000000246,
+      "p95": 5.633300000000418,
+      "maximum": 12.31710000000021
+    }
+  },
+  "budgets": {
+    "endToEndMs": 120,
+    "stateHttpMs": 20,
+    "stateClientMs": 20,
+    "firstFrameClientMs": 50,
+    "frameHttpMs": 50
+  },
+  "budgetsPassed": true,
+  "mechanicsPassed": true,
+  "finishedAt": "2026-10-24T15:06:38.127Z"
+}

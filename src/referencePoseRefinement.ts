@@ -15,16 +15,16 @@ import {resolveWorkspacePath} from './spineJson.js';
 export function graphResiduals(report:any):number[]{
  const residuals:number[]=[];
  // 角度类必须走最短弧，否则 179°/-179° 会被当成巨大残差。
- const angular=/^(body\.(torsoDirection|shoulderLine|hipLine|twist)|head\.orientation|grip\.direction|.+\.segment\d)$/;
+ const angular=/^(body\.(torsoDirection|shoulderLine|hipLine|twist)|head\.orientation|grip\.direction|.+\.segment\d|part\..+\.axis)$/;
  // 二元/字符串判据对阻尼最小二乘不可导，只做门禁，不参与优化。
- const binary=/^(action\.|depth\.)|\.(bendSide|extension|order|relation|support|frontGrip|wristOutsideTorso)$|^head\.turnBand$/;
+ const binary=/^(action\.|depth\.)|\.(bendSide|extension|order|relation|support|frontGrip|wristOutsideTorso|certainty|availability)$|^head\.turnBand$/;
  for(const m of report.metrics){
   if(!m.required)continue;
   if(binary.test(m.id))continue;
   if(m.error===null){residuals.push(10);continue;}
   const tolerance=m.tolerance||1;
   if(Array.isArray(m.reference)&&Array.isArray(m.target))residuals.push(...m.reference.map((v:number,i:number)=>(m.target[i]-v)/tolerance));
-  else if(typeof m.reference==='number'&&typeof m.target==='number'){let delta=angular.test(m.id)?signedAngle(m.reference,m.target):m.target-m.reference;if(m.id==='grip.direction'){if(delta>90)delta-=180;if(delta< -90)delta+=180;}residuals.push(delta/tolerance);}
+  else if(typeof m.reference==='number'&&typeof m.target==='number'){let delta=angular.test(m.id)?signedAngle(m.reference,m.target):m.target-m.reference;if(m.id==='grip.direction'||/^part\..+\.axis$/.test(m.id)){if(delta>90)delta-=180;if(delta< -90)delta+=180;}residuals.push(delta/tolerance);}
   else residuals.push(m.error/tolerance);
  }
  return residuals;
@@ -39,7 +39,9 @@ export async function refineReferencePose(a:any,c:ToolContext={}){
  if(a.dryRun===false){if(poseFingerprint(await readJson(a.posePath,c))!==result.sourcePoseFingerprint||(await sequenceForPose(p,c)).fingerprint!==result.sequenceFingerprint)throw new Error('修正过程中输入改变，请从最新确认姿态重新开始。');await adjustPose({posePath:a.posePath,outputPosePath:a.outputPosePath,patch:{frame:result.frame},dryRun:false},c);await solvePose({posePath:a.outputPosePath,dryRun:false},c);const cmp=await comparePoseGraphs({posePath:a.outputPosePath,dryRun:false},c),q=await readJson(a.outputPosePath,c);q.comparisonPath=cmp.reportPath;await saveJson(a.outputPosePath,q,c);await saveJson(reportPath,{...result,sourceComparisonPath:a.comparisonPath??p.comparisonPath},c);}
  return {...refinementSummary(result,a.detailed),dryRun:a.dryRun??true,posePath:a.outputPosePath,reportPath};
 }
-export async function refinePoseData(p:any,old:any,c:ToolContext){
+export async function refinePoseData(value:any,comparison:any,c:ToolContext){
+ if(value.frame?.perspective)throw new Error('单臂透视诊断尚未开放完整参考局部修正；请保留固定躯干与分支进行受控对照。');
+ const p=structuredClone(value),old=structuredClone(comparison);
  return withStrict(async()=>{
 
  const sequence=await sequenceForPose(p,c),reference=await requireReferencePose(p.referencePosePath,c),rig=await requireVisualRig(p.visualRigPath,c),initial=await solvePoseData(p,c);

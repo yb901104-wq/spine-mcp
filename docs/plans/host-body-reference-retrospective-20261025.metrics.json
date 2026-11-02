@@ -1,0 +1,1501 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "scope": "本次完整 GIF 请求的已结束回合；不包含此前 PNG 补传、局部头手演示、性能施工，也不包含当前复盘回合。",
+  "sample": {
+    "referenceFrames": 171,
+    "referenceDurationSeconds": 5.88,
+    "completedReferenceStages": 0,
+    "diagnosticReferenceStages": 1,
+    "fullBodyAnimationDelivered": false
+  },
+  "execution": {
+    "startUtc": "2026-10-24T15:50:53.694Z",
+    "endUtc": "2026-10-24T16:13:04.274Z",
+    "wallMs": 1330580,
+    "callReceiptSpanMs": 1122803,
+    "agentToolInteractions": 29,
+    "agentToolNames": {
+      "exec": 26,
+      "js": 3
+    },
+    "modelRequests": 30,
+    "mcpToolsCalls": 24,
+    "mcpToolTypes": 19,
+    "mcpTools": {
+      "spine_create_project": 1,
+      "spine_analyze_reference_gif": 1,
+      "spine_extract_reference_keyframes": 1,
+      "spine_calibrate_visual_rig": 1,
+      "spine_extract_motion": 1,
+      "spine_review_visual_rig": 1,
+      "spine_create_pose_draft": 1,
+      "spine_solve_pose": 2,
+      "spine_render_pose_comparison": 3,
+      "spine_create_reference_pose": 1,
+      "spine_render_reference_pose_sheet": 1,
+      "spine_adjust_pose": 1,
+      "spine_review_pose": 2,
+      "spine_review_reference_pose": 1,
+      "spine_validate_pose_sequence": 1,
+      "spine_retarget_reference_pose": 1,
+      "spine_compare_pose_graphs": 1,
+      "spine_host_open": 2,
+      "spine_preview_capture": 1
+    },
+    "hostRelatedCalls": 3,
+    "hostRelatedSuccessfulCalls": 2,
+    "hostEditingCalls": 0,
+    "detachedCalls": 21,
+    "stdioSessionsFromScriptInvocations": 10,
+    "callErrorCount": 1,
+    "domainOkFalseCount": 4,
+    "optimizerInternalIterations": 60,
+    "optimizerMcpCalls": 1,
+    "notes": [
+      "MCP tools/call 数不包含初始化、tools/list、SSE/心跳、Host HTTP 内部请求、60 次内部数值迭代。",
+      "Agent 外层工具交互含 exec 和浏览器 js，不能与 MCP tools/call 相加称总业务调用。",
+      "回执跨度含 Agent 看图、读代码、编写胶水脚本、等待与客户端调度，不是纯计算时间。",
+      "10 次 stdio 会话来自八批 body-reference-trial 脚本与两次 body-ready-preview 尝试，每次建立一个客户端；不含额外隐藏请求计数。"
+    ]
+  },
+  "tokens": {
+    "source": "当前聊天本地 token_usage_record，按唯一 response_id 汇总 30 条，且与本回合 turn_token_usage 最终值一致。",
+    "turnId": "01a16e9b-99b8-7102-9cb4-cb9b1378c96a",
+    "input": 6697658,
+    "cachedInput": 6611200,
+    "nonCachedInput": 86458,
+    "output": 25198,
+    "reasoningOutputSubset": 9044,
+    "total": 6722856,
+    "cacheFraction": 0.9870913086335552,
+    "providerBillVerified": false,
+    "legacySameTaskTokens": null,
+    "notes": [
+      "reasoning_output_tokens 是 output_tokens 的子集，不再次相加。",
+      "缓存输入是重复上下文读取，不是新增输入；不把总量当成新增内容或未缓存账单。",
+      "用量含长聊天历史、图片、读源码、脚本和报告；无法单独归因给 Host 或 MCP。",
+      "没有同模型/同参考/同输入/同审查规则的旧模式对照，不能宣布节省 token 百分比。"
+    ],
+    "responses": [
+      {
+        "at": "2026-10-24T15:52:10.266Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd3fd6a5481919e5a443bbe509bda",
+        "input_tokens": 154189,
+        "cached_input_tokens": 153344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 360,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 154549
+      },
+      {
+        "at": "2026-10-24T15:52:33.209Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd42a9ce08191b2ad8b10106e2297",
+        "input_tokens": 163674,
+        "cached_input_tokens": 154368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 616,
+        "reasoning_output_tokens": 378,
+        "total_tokens": 164290
+      },
+      {
+        "at": "2026-10-24T15:53:11.511Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd4467eb08191a9a813c4f88f0438",
+        "input_tokens": 173402,
+        "cached_input_tokens": 164096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1819,
+        "reasoning_output_tokens": 465,
+        "total_tokens": 175221
+      },
+      {
+        "at": "2026-10-24T15:53:34.604Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd4798d908191b25e7d3f14a382c4",
+        "input_tokens": 175770,
+        "cached_input_tokens": 174976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 141,
+        "reasoning_output_tokens": 29,
+        "total_tokens": 175911
+      },
+      {
+        "at": "2026-10-24T15:53:49.186Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd484ef1c81919ccebebd2e292f11",
+        "input_tokens": 183762,
+        "cached_input_tokens": 175744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 248,
+        "reasoning_output_tokens": 25,
+        "total_tokens": 184010
+      },
+      {
+        "at": "2026-10-24T15:54:09.867Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd48e480c81918a5f659b8d457dfa",
+        "input_tokens": 192105,
+        "cached_input_tokens": 183808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 754,
+        "reasoning_output_tokens": 234,
+        "total_tokens": 192859
+      },
+      {
+        "at": "2026-10-24T15:54:21.497Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd4a75ec88191bc05fd0055d75801",
+        "input_tokens": 194870,
+        "cached_input_tokens": 192640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 85,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 194955
+      },
+      {
+        "at": "2026-10-24T16:01:10.358Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd6340958819193261cbf9b9f98d2",
+        "input_tokens": 196515,
+        "cached_input_tokens": 194816,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 612,
+        "reasoning_output_tokens": 306,
+        "total_tokens": 197127
+      },
+      {
+        "at": "2026-10-24T16:01:36.888Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd648912c81919e2a32b43421210e",
+        "input_tokens": 205018,
+        "cached_input_tokens": 196992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 658,
+        "reasoning_output_tokens": 516,
+        "total_tokens": 205676
+      },
+      {
+        "at": "2026-10-24T16:02:12.053Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd6652708819183612f980e996214",
+        "input_tokens": 211732,
+        "cached_input_tokens": 205440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1095,
+        "reasoning_output_tokens": 478,
+        "total_tokens": 212827
+      },
+      {
+        "at": "2026-10-24T16:02:36.729Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd69069dc81918c7f58402419d1dc",
+        "input_tokens": 213052,
+        "cached_input_tokens": 212736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 391,
+        "reasoning_output_tokens": 107,
+        "total_tokens": 213443
+      },
+      {
+        "at": "2026-10-24T16:04:17.703Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd6afc3f88191bf2906b6209fa578",
+        "input_tokens": 220729,
+        "cached_input_tokens": 213248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3425,
+        "reasoning_output_tokens": 1301,
+        "total_tokens": 224154
+      },
+      {
+        "at": "2026-10-24T16:04:33.216Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd70a5730819190b0218bb01922ba",
+        "input_tokens": 224543,
+        "cached_input_tokens": 224000,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 240,
+        "reasoning_output_tokens": 41,
+        "total_tokens": 224783
+      },
+      {
+        "at": "2026-10-24T16:05:51.668Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd742d41881918bb2dc636483e758",
+        "input_tokens": 225518,
+        "cached_input_tokens": 224640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 949,
+        "reasoning_output_tokens": 653,
+        "total_tokens": 226467
+      },
+      {
+        "at": "2026-10-24T16:06:04.483Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd767f77c8191a959ff7c3590ca92",
+        "input_tokens": 226715,
+        "cached_input_tokens": 226304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 195,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 226910
+      },
+      {
+        "at": "2026-10-24T16:07:04.149Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd773389c81918eee870ac3433f29",
+        "input_tokens": 231970,
+        "cached_input_tokens": 226816,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2260,
+        "reasoning_output_tokens": 753,
+        "total_tokens": 234230
+      },
+      {
+        "at": "2026-10-24T16:07:26.745Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd7b1b56c8191900142cd438228ba",
+        "input_tokens": 234587,
+        "cached_input_tokens": 234112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 551,
+        "reasoning_output_tokens": 93,
+        "total_tokens": 235138
+      },
+      {
+        "at": "2026-10-24T16:07:43.924Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd7c865348191b33c54ff2505d3ec",
+        "input_tokens": 236732,
+        "cached_input_tokens": 235008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 226,
+        "reasoning_output_tokens": 34,
+        "total_tokens": 236958
+      },
+      {
+        "at": "2026-10-24T16:09:30.075Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd7d8c0488191b7162b0c2e1f563b",
+        "input_tokens": 242946,
+        "cached_input_tokens": 236800,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4524,
+        "reasoning_output_tokens": 1832,
+        "total_tokens": 247470
+      },
+      {
+        "at": "2026-10-24T16:09:46.155Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8453c788191b20380c4478c0b22",
+        "input_tokens": 247852,
+        "cached_input_tokens": 247424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 32,
+        "total_tokens": 247950
+      },
+      {
+        "at": "2026-10-24T16:09:56.023Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd84bfb1c8191a72aeef87d5508c0",
+        "input_tokens": 249806,
+        "cached_input_tokens": 247808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 381,
+        "reasoning_output_tokens": 34,
+        "total_tokens": 250187
+      },
+      {
+        "at": "2026-10-24T16:10:18.327Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8649f308191b899b8a6ee3616df",
+        "input_tokens": 251170,
+        "cached_input_tokens": 250112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_output_tokens": 28,
+        "total_tokens": 251262
+      },
+      {
+        "at": "2026-10-24T16:10:27.316Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd86f37708191bee615dc1b01c74e",
+        "input_tokens": 251680,
+        "cached_input_tokens": 251136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 97,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 251777
+      },
+      {
+        "at": "2026-10-24T16:10:55.189Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd879833881919d37907fc0369d0f",
+        "input_tokens": 252161,
+        "cached_input_tokens": 251648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 773,
+        "reasoning_output_tokens": 516,
+        "total_tokens": 252934
+      },
+      {
+        "at": "2026-10-24T16:11:06.636Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd890065c81918e435b0264dc70d5",
+        "input_tokens": 253119,
+        "cached_input_tokens": 252800,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 264,
+        "reasoning_output_tokens": 202,
+        "total_tokens": 253383
+      },
+      {
+        "at": "2026-10-24T16:11:15.470Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd89c03dc8191879d5d3247de2109",
+        "input_tokens": 254037,
+        "cached_input_tokens": 253312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 18,
+        "total_tokens": 254166
+      },
+      {
+        "at": "2026-10-24T16:11:25.507Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8a4c314819199385ab64a68df62",
+        "input_tokens": 255135,
+        "cached_input_tokens": 254080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 182,
+        "reasoning_output_tokens": 131,
+        "total_tokens": 255317
+      },
+      {
+        "at": "2026-10-24T16:11:56.818Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8aeb3ec819194f3273aa88722fa",
+        "input_tokens": 256623,
+        "cached_input_tokens": 255232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1189,
+        "reasoning_output_tokens": 436,
+        "total_tokens": 257812
+      },
+      {
+        "at": "2026-10-24T16:12:43.658Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8d40db88191b88d776d8f938f26",
+        "input_tokens": 257947,
+        "cached_input_tokens": 257664,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2237,
+        "reasoning_output_tokens": 39,
+        "total_tokens": 260184
+      },
+      {
+        "at": "2026-10-24T16:13:05.242Z",
+        "responseId": "resp_045cf5d10dc49aa9016adcd8ff28f88191b9b45e8ddddbb253",
+        "input_tokens": 260299,
+        "cached_input_tokens": 260096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 607,
+        "reasoning_output_tokens": 363,
+        "total_tokens": 260906
+      }
+    ]
+  },
+  "payloads": {
+    "recordFileBytes": 2078722,
+    "resultCompactChars": 844327,
+    "inputRecordedCompactChars": 13348,
+    "large": [
+      {
+        "tool": "spine_host_open",
+        "file": "1792858205389-preview-1-spine_host_open.json",
+        "responseChars": 297333,
+        "fields": [
+          {
+            "key": "state",
+            "chars": 196421,
+            "nested": [
+              {
+                "key": "reference",
+                "chars": 96886
+              },
+              {
+                "key": "numeric",
+                "chars": 81293
+              },
+              {
+                "key": "capabilities",
+                "chars": 15505
+              },
+              {
+                "key": "evaluationTasks",
+                "chars": 448
+              },
+              {
+                "key": "activeDoc",
+                "chars": 289
+              }
+            ]
+          },
+          {
+            "key": "numeric",
+            "chars": 83318,
+            "nested": [
+              {
+                "key": "visual",
+                "chars": 76487
+              },
+              {
+                "key": "visualNodes",
+                "chars": 2681
+              },
+              {
+                "key": "bones",
+                "chars": 1839
+              },
+              {
+                "key": "joints",
+                "chars": 723
+              },
+              {
+                "key": "solverNodes",
+                "chars": 723
+              }
+            ]
+          },
+          {
+            "key": "capabilities",
+            "chars": 15689,
+            "nested": [
+              {
+                "key": "editing",
+                "chars": 8530
+              },
+              {
+                "key": "operations",
+                "chars": 3141
+              },
+              {
+                "key": "character",
+                "chars": 2009
+              },
+              {
+                "key": "characters",
+                "chars": 1490
+              },
+              {
+                "key": "context",
+                "chars": 269
+              }
+            ]
+          },
+          {
+            "key": "activeDoc",
+            "chars": 289,
+            "nested": [
+              {
+                "key": "version",
+                "chars": 196
+              },
+              {
+                "key": "path",
+                "chars": 26
+              },
+              {
+                "key": "kind",
+                "chars": 6
+              },
+              {
+                "key": "characterId",
+                "chars": 6
+              },
+              {
+                "key": "view",
+                "chars": 4
+              }
+            ]
+          },
+          {
+            "key": "version",
+            "chars": 196,
+            "nested": [
+              {
+                "key": "documentId",
+                "chars": 66
+              },
+              {
+                "key": "sessionId",
+                "chars": 38
+              },
+              {
+                "key": "openEpoch",
+                "chars": 38
+              },
+              {
+                "key": "revision",
+                "chars": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tool": "spine_solve_pose",
+        "file": "1792857866131-3-spine_solve_pose.json",
+        "responseChars": 165489,
+        "fields": [
+          {
+            "key": "pose",
+            "chars": 84165,
+            "nested": [
+              {
+                "key": "solution",
+                "chars": 83248
+              },
+              {
+                "key": "frame",
+                "chars": 424
+              },
+              {
+                "key": "sourceFingerprint",
+                "chars": 66
+              },
+              {
+                "key": "mappingPath",
+                "chars": 51
+              },
+              {
+                "key": "policy",
+                "chars": 33
+              }
+            ]
+          },
+          {
+            "key": "report",
+            "chars": 81279,
+            "nested": [
+              {
+                "key": "visual",
+                "chars": 76460
+              },
+              {
+                "key": "visualNodes",
+                "chars": 2675
+              },
+              {
+                "key": "joints",
+                "chars": 719
+              },
+              {
+                "key": "solverNodes",
+                "chars": 719
+              },
+              {
+                "key": "errors",
+                "chars": 138
+              }
+            ]
+          },
+          {
+            "key": "ok",
+            "chars": 5
+          },
+          {
+            "key": "dryRun",
+            "chars": 5
+          }
+        ]
+      },
+      {
+        "tool": "spine_solve_pose",
+        "file": "1792857959730-2-spine_solve_pose.json",
+        "responseChars": 165452,
+        "fields": [
+          {
+            "key": "pose",
+            "chars": 84158,
+            "nested": [
+              {
+                "key": "solution",
+                "chars": 83222
+              },
+              {
+                "key": "frame",
+                "chars": 424
+              },
+              {
+                "key": "sourceFingerprint",
+                "chars": 66
+              },
+              {
+                "key": "mappingPath",
+                "chars": 51
+              },
+              {
+                "key": "id",
+                "chars": 38
+              }
+            ]
+          },
+          {
+            "key": "report",
+            "chars": 81250,
+            "nested": [
+              {
+                "key": "visual",
+                "chars": 76479
+              },
+              {
+                "key": "visualNodes",
+                "chars": 2670
+              },
+              {
+                "key": "joints",
+                "chars": 713
+              },
+              {
+                "key": "solverNodes",
+                "chars": 713
+              },
+              {
+                "key": "errors",
+                "chars": 138
+              }
+            ]
+          },
+          {
+            "key": "dryRun",
+            "chars": 5
+          },
+          {
+            "key": "ok",
+            "chars": 4
+          }
+        ]
+      },
+      {
+        "tool": "spine_compare_pose_graphs",
+        "file": "1792858055642-1-spine_compare_pose_graphs.json",
+        "responseChars": 96952,
+        "fields": [
+          {
+            "key": "target",
+            "chars": 77558,
+            "nested": [
+              {
+                "key": "attachments",
+                "chars": 72479
+              },
+              {
+                "key": "points",
+                "chars": 2681
+              },
+              {
+                "key": "segments",
+                "chars": 923
+              },
+              {
+                "key": "actionState",
+                "chars": 848
+              },
+              {
+                "key": "edges",
+                "chars": 231
+              }
+            ]
+          },
+          {
+            "key": "metrics",
+            "chars": 14097
+          },
+          {
+            "key": "reference",
+            "chars": 3168,
+            "nested": [
+              {
+                "key": "points",
+                "chars": 1623
+              },
+              {
+                "key": "silhouette",
+                "chars": 433
+              },
+              {
+                "key": "depth",
+                "chars": 311
+              },
+              {
+                "key": "edges",
+                "chars": 231
+              },
+              {
+                "key": "anatomicalIdentity",
+                "chars": 115
+              }
+            ]
+          },
+          {
+            "key": "uncertainties",
+            "chars": 834
+          },
+          {
+            "key": "policy",
+            "chars": 343,
+            "nested": [
+              {
+                "key": "headBandDegrees",
+                "chars": 7
+              },
+              {
+                "key": "stance",
+                "chars": 4
+              },
+              {
+                "key": "wrist",
+                "chars": 4
+              },
+              {
+                "key": "grip",
+                "chars": 4
+              },
+              {
+                "key": "extensionNeutral",
+                "chars": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tool": "spine_analyze_reference_gif",
+        "file": "1792857230479-2-spine_analyze_reference_gif.json",
+        "responseChars": 37467,
+        "fields": [
+          {
+            "key": "frames",
+            "chars": 36978
+          },
+          {
+            "key": "warnings",
+            "chars": 82
+          },
+          {
+            "key": "sourceHash",
+            "chars": 66
+          },
+          {
+            "key": "manifestPath",
+            "chars": 42
+          },
+          {
+            "key": "bounds",
+            "chars": 41,
+            "nested": [
+              {
+                "key": "maxX",
+                "chars": 3
+              },
+              {
+                "key": "maxY",
+                "chars": 3
+              },
+              {
+                "key": "minX",
+                "chars": 1
+              },
+              {
+                "key": "minY",
+                "chars": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tool": "spine_retarget_reference_pose",
+        "file": "1792858033840-2-spine_retarget_reference_pose.json",
+        "responseChars": 27151,
+        "fields": [
+          {
+            "key": "comparison",
+            "chars": 15476,
+            "nested": [
+              {
+                "key": "metrics",
+                "chars": 14097
+              },
+              {
+                "key": "uncertainties",
+                "chars": 834
+              },
+              {
+                "key": "policy",
+                "chars": 343
+              },
+              {
+                "key": "policyFingerprint",
+                "chars": 66
+              },
+              {
+                "key": "message",
+                "chars": 42
+              }
+            ]
+          },
+          {
+            "key": "numeric",
+            "chars": 4796,
+            "nested": [
+              {
+                "key": "visualNodes",
+                "chars": 2681
+              },
+              {
+                "key": "joints",
+                "chars": 723
+              },
+              {
+                "key": "solverNodes",
+                "chars": 723
+              },
+              {
+                "key": "errors",
+                "chars": 142
+              },
+              {
+                "key": "flexion",
+                "chars": 117
+              }
+            ]
+          },
+          {
+            "key": "optimizer",
+            "chars": 2561,
+            "nested": [
+              {
+                "key": "history",
+                "chars": 2407
+              },
+              {
+                "key": "method",
+                "chars": 27
+              },
+              {
+                "key": "cost",
+                "chars": 18
+              },
+              {
+                "key": "reason",
+                "chars": 16
+              },
+              {
+                "key": "iterations",
+                "chars": 2
+              }
+            ]
+          },
+          {
+            "key": "variables",
+            "chars": 1549
+          },
+          {
+            "key": "pose",
+            "chars": 655,
+            "nested": [
+              {
+                "key": "frame",
+                "chars": 627
+              },
+              {
+                "key": "status",
+                "chars": 8
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "字符量为解析后结果对象重新紧凑序列化的长度，非实际 token，且不含独立图像块。",
+      "本次脚本大多仅向模型打印摘要，因此落盘完整结果不等于全部进入模型上下文。",
+      "Host open 在同一结果里重复携带 state、numeric 与 capabilities；仅新增 Host 并未自动解决返回体膨胀。"
+    ]
+  },
+  "feasibility": {
+    "scope": "固定本轮目标链长/躯干比例和已标注肘角；仅分析现有门限是否兼容，不执行新增局部修正。",
+    "refTorso": 65.37583651472461,
+    "targetTorso": 47.32817821965526,
+    "targetUpper": 0.6135997408773225,
+    "targetLower": 0.3700278432132976,
+    "refBendDegrees": 63.43494882292202,
+    "allowedMaximumBendDegrees": 78.43494882292202,
+    "referenceReach": 0.5063933783399812,
+    "allowedMaximumReach": 0.6563933783399812,
+    "minimumReachAtAllowedBend": 0.7774721714712807,
+    "intersectionExists": false,
+    "assumptions": [
+      "本轮链长与 torso 通道保持不变，body 只有平移/旋转",
+      "参考肩/肘有遮挡估计，结论只适用于本轮标注，不证明真实动作或其它标注无解",
+      "解析使用二维两段链，不支持据此自动改变现行比较策略"
+    ]
+  },
+  "historical": [
+    {
+      "directory": "D:/AI_cc/spine test/previews/ready-refinement-2026-10-10T04-03-50.693Z",
+      "loggedToolsCallCount": 23,
+      "hostCalls": 0,
+      "comparableAB": false,
+      "reason": "旧攻击参考与本次身体 GIF 不同；旧记录还包含多阶段参考升级或诊断动画导出，缺统一墙钟和同口径 token，不能计算提速/节省比例。",
+      "entries": [
+        {
+          "file": "finalize-1-spine_compare_pose_graphs.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_compare_pose_graphs"
+        },
+        {
+          "file": "finalize-2-spine_render_pose_comparison.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_pose_comparison"
+        },
+        {
+          "file": "finalize-3-spine_review_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_pose"
+        },
+        {
+          "file": "finalize-4-spine_retarget_motion.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_retarget_motion"
+        },
+        {
+          "file": "finalize-5-spine_runtime_validate.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_runtime_validate"
+        },
+        {
+          "file": "prepare-1-spine_calibrate_visual_rig.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_calibrate_visual_rig"
+        },
+        {
+          "file": "prepare-2-spine_create_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_create_reference_pose"
+        },
+        {
+          "file": "prepare-3-spine_create_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_create_reference_pose"
+        },
+        {
+          "file": "prepare-4-spine_create_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_create_reference_pose"
+        },
+        {
+          "file": "prepare-5-spine_create_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_create_reference_pose"
+        },
+        {
+          "file": "prepare-6-spine_render_reference_pose_sheet.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_reference_pose_sheet"
+        },
+        {
+          "file": "solve-1-spine_review_visual_rig.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_visual_rig"
+        },
+        {
+          "file": "solve-10-spine_retarget_reference_pose.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_retarget_reference_pose"
+        },
+        {
+          "file": "solve-11-spine_compare_pose_graphs.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_compare_pose_graphs"
+        },
+        {
+          "file": "solve-12-spine_render_pose_comparison.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_pose_comparison"
+        },
+        {
+          "file": "solve-2-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "solve-3-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "solve-4-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "solve-5-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "solve-6-spine_validate_pose_sequence.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_validate_pose_sequence"
+        },
+        {
+          "file": "solve-7-spine_adjust_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_adjust_pose"
+        },
+        {
+          "file": "solve-8-spine_solve_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_solve_pose"
+        },
+        {
+          "file": "solve-9-spine_validate_pose_sequence.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_validate_pose_sequence"
+        }
+      ]
+    },
+    {
+      "directory": "D:/AI_cc/spine test/previews/ref-v2-2026-10-20T10-09-22.529Z",
+      "loggedToolsCallCount": 26,
+      "hostCalls": 0,
+      "comparableAB": false,
+      "reason": "旧攻击参考与本次身体 GIF 不同；旧记录还包含多阶段参考升级或诊断动画导出，缺统一墙钟和同口径 token，不能计算提速/节省比例。",
+      "entries": [
+        {
+          "file": "fixready-1-spine_create_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_create_reference_pose"
+        },
+        {
+          "file": "fixready-2-spine_render_reference_pose_sheet.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_reference_pose_sheet"
+        },
+        {
+          "file": "fixready-3-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "fixready-4-spine_retarget_reference_pose.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_retarget_reference_pose"
+        },
+        {
+          "file": "fixready-5-spine_solve_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_solve_pose"
+        },
+        {
+          "file": "fixready-6-spine_compare_pose_graphs.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_compare_pose_graphs"
+        },
+        {
+          "file": "fixready-7-spine_render_pose_comparison.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_pose_comparison"
+        },
+        {
+          "file": "prepare-1-spine_calibrate_visual_rig.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_calibrate_visual_rig"
+        },
+        {
+          "file": "prepare-2-spine_upgrade_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_upgrade_reference_pose"
+        },
+        {
+          "file": "prepare-3-spine_upgrade_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_upgrade_reference_pose"
+        },
+        {
+          "file": "prepare-4-spine_upgrade_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_upgrade_reference_pose"
+        },
+        {
+          "file": "prepare-5-spine_upgrade_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_upgrade_reference_pose"
+        },
+        {
+          "file": "prepare-6-spine_render_reference_pose_sheet.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_reference_pose_sheet"
+        },
+        {
+          "file": "retarget-1-spine_retarget_reference_pose.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_retarget_reference_pose"
+        },
+        {
+          "file": "retarget-2-spine_solve_pose.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_solve_pose"
+        },
+        {
+          "file": "retarget-3-spine_compare_pose_graphs.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_compare_pose_graphs"
+        },
+        {
+          "file": "retarget-4-spine_render_pose_comparison.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_render_pose_comparison"
+        },
+        {
+          "file": "review-1-spine_review_visual_rig.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_visual_rig"
+        },
+        {
+          "file": "review-2-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "review-3-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "review-4-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "review-5-spine_review_reference_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_review_reference_pose"
+        },
+        {
+          "file": "review-6-spine_validate_pose_sequence.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_validate_pose_sequence"
+        },
+        {
+          "file": "review-7-spine_adjust_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_adjust_pose"
+        },
+        {
+          "file": "review-8-spine_solve_pose.json",
+          "ok": true,
+          "isError": false,
+          "tool": "spine_solve_pose"
+        },
+        {
+          "file": "review-9-spine_compare_pose_graphs.json",
+          "ok": false,
+          "isError": false,
+          "tool": "spine_compare_pose_graphs"
+        }
+      ]
+    }
+  ],
+  "codeHashes": {
+    "src/referenceRetargetKernel.ts": "010544696fe0926a29706c063222f7771f6a8d3e934194d2bbcaaf7ad8dda1e4",
+    "src/referencePoseRefinement.ts": "76b2d90c1b925f2914f7e337d43271f68647b6a4d044ecefebf6524214c0900a",
+    "src/poseGraph.ts": "504dd08477847d50fc04680cafa6e1de05dddbb6f8dde4e0a62bd13873b7336d",
+    "src/hostClient.ts": "1fdffbdbc8329a85b8f7eb95346a2001265eabdd81ee260d9523c4391de4b544",
+    "src/hostEvaluator.ts": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121",
+    "src/hostServer.ts": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd",
+    "preview/host.html": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36",
+    "src/poseOps.ts": "ec48dc3a558bb36e9ae3a852c433ae32a7aa57d372ed01d187b558d4dc1b0d10"
+  },
+  "callEvidence": [
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857201501-1-spine_create_project.json",
+      "sha256": "f4fef47808f86f803989fef2f8d505f9c9b7243137441a4b326db5c49e395578",
+      "tool": "spine_create_project",
+      "at": "2026-10-24T15:53:21.501Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1197
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857230479-2-spine_analyze_reference_gif.json",
+      "sha256": "ac92fff29282200fac889b11c83dff6fa4b48353b9cbfdcf6b24290771944f06",
+      "tool": "spine_analyze_reference_gif",
+      "at": "2026-10-24T15:53:50.479Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 37467
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857230487-3-spine_extract_reference_keyframes.json",
+      "sha256": "b77d6495614dc43f59b36f8a66e5c3f57f6039ea90cf51def64acc3fc9d592cd",
+      "tool": "spine_extract_reference_keyframes",
+      "at": "2026-10-24T15:53:50.487Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 2805
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857744629-1-spine_calibrate_visual_rig.json",
+      "sha256": "3c11a03ebf8d95584cd477b01fe4c93f61bd74d319ec00aa046c95380f1f9664",
+      "tool": "spine_calibrate_visual_rig",
+      "at": "2026-10-24T16:02:24.629Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 7369
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857744660-2-spine_extract_motion.json",
+      "sha256": "eb699ce0304b4d2ef0233e060caa74508745611651804bccf0441e9db3fd0455",
+      "tool": "spine_extract_motion",
+      "at": "2026-10-24T16:02:24.660Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 2482
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866012-1-spine_review_visual_rig.json",
+      "sha256": "4a8d5498ad49938c0c304489ab0851bd01bca77c6d41e1b775a15bae0f61221b",
+      "tool": "spine_review_visual_rig",
+      "at": "2026-10-24T16:04:26.012Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 872
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866045-2-spine_create_pose_draft.json",
+      "sha256": "ccd5c983b7c73d268a1b8ce1821366f28f5374463f7b042698e82b3fdc6d61ea",
+      "tool": "spine_create_pose_draft",
+      "at": "2026-10-24T16:04:26.045Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 984
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866131-3-spine_solve_pose.json",
+      "sha256": "01928784cb5a7a495eb0f5f4d775dfac573de7d21379b18058a8b016d0842d92",
+      "tool": "spine_solve_pose",
+      "at": "2026-10-24T16:04:26.131Z",
+      "isError": false,
+      "domainOk": false,
+      "responseCompactChars": 165489
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866241-4-spine_render_pose_comparison.json",
+      "sha256": "a9d457500a25d08c3eeaa8834e6e47a52c82a0f285fa10685ebb9b13249a7edd",
+      "tool": "spine_render_pose_comparison",
+      "at": "2026-10-24T16:04:26.241Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1089
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866255-5-spine_create_reference_pose.json",
+      "sha256": "1fbd575937df42a35b3aa3950d248bf4461746d7973c71ec27f1c30139915038",
+      "tool": "spine_create_reference_pose",
+      "at": "2026-10-24T16:04:26.255Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 3346
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857866308-6-spine_render_reference_pose_sheet.json",
+      "sha256": "7812f62d9eb7bef18b3eee6a7caa9c767fd2b6ffa62d914cf477c13c3b13b6e6",
+      "tool": "spine_render_reference_pose_sheet",
+      "at": "2026-10-24T16:04:26.308Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 811
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857959616-1-spine_adjust_pose.json",
+      "sha256": "4d0ab900462dccebf91e35697beeff2641fbd9abb5454b361b4176c3ccedfb90",
+      "tool": "spine_adjust_pose",
+      "at": "2026-10-24T16:05:59.616Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1003
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857959730-2-spine_solve_pose.json",
+      "sha256": "ad119c4614ab5e65b103d9ae6857913f614ff2ff78c48517280165569601d388",
+      "tool": "spine_solve_pose",
+      "at": "2026-10-24T16:05:59.730Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 165452
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792857960002-3-spine_render_pose_comparison.json",
+      "sha256": "d47298d676119ee2b3e5acda915064ea67a82bafd92576b51726c965a04f5794",
+      "tool": "spine_render_pose_comparison",
+      "at": "2026-10-24T16:06:00.002Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1127
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858031273-1-spine_review_pose.json",
+      "sha256": "e55c888ab7993976394ac254a0969963d0caf82bbf9fe63ecc660144a983bae6",
+      "tool": "spine_review_pose",
+      "at": "2026-10-24T16:07:11.273Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1512
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858031287-2-spine_review_reference_pose.json",
+      "sha256": "145e12bb65fe552828f166712e3b9b9bdf1c230dd4380b5f837e633e22cc4dc3",
+      "tool": "spine_review_reference_pose",
+      "at": "2026-10-24T16:07:11.287Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 805
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858032698-1-spine_validate_pose_sequence.json",
+      "sha256": "3f5ebc9dcba949862b87b7a6bb8c50977808f9280a1a7b85f818ce4d5189260e",
+      "tool": "spine_validate_pose_sequence",
+      "at": "2026-10-24T16:07:12.698Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 329
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858033840-2-spine_retarget_reference_pose.json",
+      "sha256": "44812395aadbf07ee3bdcd7f97688a7410aca0f8f73e466821ea22b890be79a3",
+      "tool": "spine_retarget_reference_pose",
+      "at": "2026-10-24T16:07:13.840Z",
+      "isError": false,
+      "domainOk": false,
+      "responseCompactChars": 27151
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858055642-1-spine_compare_pose_graphs.json",
+      "sha256": "06605d00fdbcbaf3725391b9d31caf2d93d1608fb158b2593eea7ea5f91f80cb",
+      "tool": "spine_compare_pose_graphs",
+      "at": "2026-10-24T16:07:35.642Z",
+      "isError": false,
+      "domainOk": false,
+      "responseCompactChars": 96952
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858056256-2-spine_render_pose_comparison.json",
+      "sha256": "bfef0a3a15d76892b3afe01dbd5a6b47894e9ff2e30ba81b1951ad279b51279c",
+      "tool": "spine_render_pose_comparison",
+      "at": "2026-10-24T16:07:36.256Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 4585
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858180846-preview-1-spine_host_open.json",
+      "sha256": "4898723c4a8e26e98e6cbf0223029159e91008b2d2c63de0334575c4c1cea3e3",
+      "tool": "spine_host_open",
+      "at": "2026-10-24T16:09:40.846Z",
+      "isError": true,
+      "domainOk": false,
+      "responseCompactChars": 358
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858205389-preview-1-spine_host_open.json",
+      "sha256": "3123cd2cc07b34c8b6923083aff20cd82ea4e9ce8d547d69b22784fac5eef04c",
+      "tool": "spine_host_open",
+      "at": "2026-10-24T16:10:05.389Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 297333
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858224915-preview-2-spine_preview_capture.json",
+      "sha256": "801e56a3b01c4c2102443ebedad9c38a6e0f35af1a53b46a43c7ada8e49a0e71",
+      "tool": "spine_preview_capture",
+      "at": "2026-10-24T16:10:24.915Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 21983
+    },
+    {
+      "file": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\trial\\calls\\1792858324304-1-spine_review_pose.json",
+      "sha256": "0ba3b6d5bcfc72738566722c56a8cc62093533d40676c21ff8ca17dc08a2046d",
+      "tool": "spine_review_pose",
+      "at": "2026-10-24T16:12:04.304Z",
+      "isError": false,
+      "domainOk": true,
+      "responseCompactChars": 1826
+    }
+  ],
+  "externalComparison": {
+    "method": "2026-10-25 对项目维护者源码/文档作静态机制对照，未安装外部工具或做同任务性能测试；不以工具数、星数或项目自述倍数断言成熟度。",
+    "sources": [
+      {
+        "project": "CoplayDev/unity-mcp",
+        "ref": "v10.3.0",
+        "urls": [
+          "https://github.com/CoplayDev/unity-mcp/blob/v10.3.0/Server/src/services/resources/editor_state.py",
+          "https://github.com/CoplayDev/unity-mcp/blob/v10.3.0/Server/src/services/tools/manage_tools.py"
+        ]
+      },
+      {
+        "project": "ahujasid/mcp-for-blender",
+        "ref": "main（本次读取，非固定 commit）",
+        "urls": [
+          "https://github.com/ahujasid/mcp-for-blender/blob/main/addon.py",
+          "https://github.com/ahujasid/mcp-for-blender/blob/main/src/blender_mcp/server.py"
+        ]
+      },
+      {
+        "project": "satelliteoflove/godot-mcp",
+        "ref": "main（本次读取，非固定 commit）",
+        "urls": [
+          "https://github.com/satelliteoflove/godot-mcp/blob/main/docs/tools/animation.md"
+        ]
+      },
+      {
+        "project": "MalloyTheDev/aseprite-mcp",
+        "ref": "main（2D 机制参照，未独立认证成熟度）",
+        "urls": [
+          "https://github.com/MalloyTheDev/aseprite-mcp#readme"
+        ]
+      }
+    ]
+  },
+  "codeChanged": false,
+  "acceptanceRulesChanged": false,
+  "sourceAssetsChanged": false
+}

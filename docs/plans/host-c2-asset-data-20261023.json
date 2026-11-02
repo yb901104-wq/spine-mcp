@@ -1,0 +1,92 @@
+{
+  "at": "2026-10-23T15:16:23.688Z",
+  "stage": "C2-4b 内存计算与共用审查基础",
+  "sourceVersion": "0.2.0",
+  "scope": "姿态创建、明确内存值的姿态审查、参考适配、motion 生成与复核；未接入高级资产工具 attached 保存。",
+  "previousStage": "host-c2-pose-commands-20261023.json",
+  "developmentCandidateHash": "0723a6311b9cbe17c96c04204c59318912f0773793ace467df53a74e814e02e4",
+  "codeHashes": {
+    "src/poseWorkflow.ts": "1753e2e20f18e36e1e97834da038b5fbd81662b3bf8ad97a57b510912061689b",
+    "src/referenceRetarget.ts": "00b2493ecdb2376fdfbee7ced67cb8f1fc81ba878c825b14b2c21be77877e7fa",
+    "src/referencePoseRefinement.ts": "76b2d90c1b925f2914f7e337d43271f68647b6a4d044ecefebf6524214c0900a",
+    "test/poseWorkflow.test.ts": "730fda8aba2ca509878ab486147a627d7aa7a65a81d084d11111d6ce14e2be05",
+    "test/visualRig.test.ts": "c2f865e3d0e072ea9c9618b23f07364ccec3431edcd50070e274a7022344eef9"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "note": "普通沙箱写 dist 遇 EPERM，批准的构建执行成功，无 TypeScript 错误。"
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 184,
+    "pass": 184,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 29566.2033,
+    "outputHash": "e9d3d24e6927c906c69ee3c8cff168664c0b9ca0745eb4e94cff1f28a0076a2b"
+  },
+  "focused": {
+    "command": "npx tsx --test test/poseWorkflow.test.ts test/visualRig.test.ts test/hostPoseCommands.test.ts",
+    "tests": 19,
+    "pass": 19,
+    "fail": 0,
+    "addedTests": 4,
+    "extendedReferenceFixture": true,
+    "coverage": [
+      "同名磁盘不可用时明确内存标准姿态仍经内容审查，Data 入口不写文件、不改变参数或继承批准。",
+      "调用后修改原对象不改变本次审查；有效旧磁盘批准不覆盖内存失效，证据字节变化仍拒绝。",
+      "motion 生成/复核对重复路径及 ./ 别名只读一次，同输入与原 detached 候选相同；零落盘、结果与源值隔离。",
+      "重复/空/逆序阶段、错误标准类型、错误 action 标准绑定、motion 地面漂移及超过 2000 项拒绝；失败无门禁指纹。",
+      "既有真实 reference/visualRig/sequence 审查夹具中移走 standing 文件，明确内存标准仍可完成参考适配/局部修正；失效输入不回退，pose/seed/report 零落盘。",
+      "保留既有 Host 实际 stdio 命令、PNG、完整版本、取消/竞态、恢复、安全保存及 poseWorkflow 失败拒绝回归。"
+    ]
+  },
+  "internalEntries": [
+    "createPoseDraftData",
+    "requireReviewedPoseData",
+    "buildMotionFromPosesData",
+    "poseGateData",
+    "retargetReferencePoseData",
+    "refinePoseData"
+  ],
+  "safeguards": {
+    "rawValueReaderOnly": true,
+    "revalidateReviewAndEvidence": true,
+    "cloneInputs": true,
+    "perOperationPoseSnapshot": true,
+    "noFallbackToOldPose": true,
+    "dataEntriesWriteAssets": false,
+    "dataEntriesIssueAuthorization": false,
+    "originalReferenceAndVisualThresholds": true
+  },
+  "gateChange": "生成与复核统一 2–2000 个递增唯一阶段、非空 ID、0/duration、standing 标准、同角色/地面、action 标准绑定、参考身份/绑定/独立理由；复核再检查 motion 结构/地面/当前批准关键帧。",
+  "validationNotes": [
+    "首轮定向回归 18/19，唯一失败是越界错误文本断言预期中文而现有实现返回英文；修正断言后 19/19。没有放宽实现或门禁。",
+    "无本批新增真实桌面、美术、第二角色或 Spine 编辑器导入结论；此前 native 证据不可外推到本批构建。"
+  ],
+  "publicToolCount": 101,
+  "publicSchemaChanged": false,
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "publicWriteEnabled": false,
+  "wholeC24bCompleted": false,
+  "wholeC24Completed": false,
+  "wholeC2Accepted": false,
+  "nativeRunForThisCandidate": false,
+  "realArtVisualApproved": false,
+  "editorImportPassed": false,
+  "c1Observation": {
+    "fixedInstallationModified": false,
+    "newObservationVerificationPerformed": false,
+    "note": "沿用固定安装继续独立记录，本批未重新核验其在线状态或补计时长。"
+  },
+  "remaining": [
+    "C2-4b 跨类型资产来源/角色/阶段登记与重开核验。",
+    "C2-4b Host 精确候选授权、原子保存、备份、幂等与故障恢复，以及高级工具 attached 调用。",
+    "C2-4c 精确 4.1.24 动画候选、完整动画审查和受控提交。",
+    "真实 C2 美术与工作负载性能、第二真实角色、独立编辑器导入及原 C1 观察/启用条件。"
+  ],
+  "note": "本批完成计算基础，不冒充 Host 资产事务或整阶段验收。合成夹具不作真实美术结论；排除 exp/xiaoren，旧便携 exe 未更新。"
+}

@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T07:22:43.916Z",
+  "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "scope": "新参考绑定的失败阶段载入与持续编辑；复用已审查起始帧，不批准参考匹配或完整动画。",
+  "calls": [
+    {
+      "tool": "spine_register_workspace",
+      "durationMs": 11.517900000000054,
+      "textBytes": 392,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 448.7413999999999,
+      "textBytes": 1116,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 533.6541999999972,
+      "textBytes": 46104,
+      "images": 1,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 43.539300000004005,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_retarget_reference_pose",
+      "durationMs": 714.0441000000064,
+      "textBytes": 220218,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_retarget_reference_pose",
+      "durationMs": 1054.314999999995,
+      "textBytes": 733,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_preview_state",
+      "durationMs": 27.136399999995774,
+      "textBytes": 22180,
+      "images": 0,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_retarget_reference_pose",
+      "durationMs": 1778.7564999999959,
+      "textBytes": 33100,
+      "images": 1,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_preview_capture",
+      "durationMs": 408.94260000000213,
+      "textBytes": 36686,
+      "images": 1,
+      "error": false,
+      "code": null
+    }
+  ],
+  "passed": false,
+  "formalAnimationDelivered": false,
+  "publicWriteEnabled": false,
+  "task": {
+    "taskId": "d6df9e49-2966-4569-a0cd-1ef26fbc7d6e",
+    "projectId": "creation-7710ea50-9c6e-4c3d-92a8-9152bf02fbf4",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-diagnostic-trials\\2026-10-26T07-22-43-915Z"
+  },
+  "source": {
+    "path": "trial/neutral-stand-v2.pose.json",
+    "hash": "ba115c2c20bfdcd001b30a6c21ece6f48391e8e8725038132e2ebf747f59f7dd"
+  },
+  "defaultReportPreserved": true,
+  "dryRunVersionUnchanged": true,
+  "diagnostic": {
+    "id": "dd9e583b06dda15bfbc8b8bc6be721c911d516ff1fd5b529dacc6771d48d4ecb",
+    "path": ".spine-mcp/diagnostics/dd9e583b06dda15bfbc8b8bc6be721c911d516ff1fd5b529dacc6771d48d4ecb.pose.json",
+    "version": {
+      "sessionId": "7157ff72-04c2-4843-aadb-b5ae0f64cbb3",
+      "documentId": "dd9e583b06dda15bfbc8b8bc6be721c911d516ff1fd5b529dacc6771d48d4ecb",
+      "openEpoch": "fc5b3ab5-84bb-44d7-bd9f-66e09a127bd7",
+      "revision": 0
+    },
+    "images": [
+      {
+        "path": "output/reports/new-diagnostic-2026-10-26T07-22-43-915Z/created-frame-0.png",
+        "hash": "6a7869cfef9965c136b68107e1451e8ebd1885e38188471886914bf59c42a566"
+      }
+    ],
+    "quality": {
+      "stageId": "ready",
+      "methods": [],
+      "numericPassed": true,
+      "referenceStatus": "failed",
+      "failures": [
+        {
+          "id": "arm.left.wristReach",
+          "status": "fail",
+          "error": 0.260655431112786,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.leftHand {x,y}",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "arm.left.wristTorsoHeight",
+          "status": "fail",
+          "error": 0.13413395626418023,
+          "tolerance": 0.12,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.leftHand {x,y}",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "arm.right.wristReach",
+          "status": "fail",
+          "error": 0.15304672367811367,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "arm.right.wristOutsideTorso",
+          "status": "fail",
+          "error": 1,
+          "tolerance": 0,
+          "category": "fit",
+          "instruction": "外伸/高度/偏置/轮廓内外都在手位目标上；够不到时会停在可达边界。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "arm.right.wristHeadGap",
+          "status": "fail",
+          "error": 0.34826768769882777,
+          "tolerance": 0.2,
+          "category": "fit",
+          "instruction": "手离头部太近/太远；同时会触发头部包围盒硬门禁。",
+          "knob": "targets.rightHand {x,y}",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "leftArm.segment1",
+          "status": "fail",
+          "error": 17.056355741998914,
+          "tolerance": 15,
+          "category": "fit",
+          "instruction": "通过已开放的末端目标调整段方向、屈曲或伸展；保持身份、支撑与弯曲分支。",
+          "knob": "targets",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "leftArm.flexion",
+          "status": "fail",
+          "error": 17.06622257494837,
+          "tolerance": 15,
+          "category": "fit",
+          "instruction": "通过已开放的末端目标调整段方向、屈曲或伸展；保持身份、支撑与弯曲分支。",
+          "knob": "targets",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "leftArm.wrist",
+          "status": "fail",
+          "error": 0.27624355128282985,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "通过已开放的末端目标调整段方向、屈曲或伸展；保持身份、支撑与弯曲分支。",
+          "knob": "targets",
+          "nextAction": null,
+          "examples": []
+        },
+        {
+          "id": "rightArm.wrist",
+          "status": "fail",
+          "error": 0.1534390064137938,
+          "tolerance": 0.15,
+          "category": "fit",
+          "instruction": "通过已开放的末端目标调整段方向、屈曲或伸展；保持身份、支撑与弯曲分支。",
+          "knob": "targets",
+          "nextAction": null,
+          "examples": []
+        }
+      ],
+      "failureCount": 9,
+      "canContinueEditing": false,
+      "canReview": false,
+      "canBuildFormalMotion": false,
+      "canCommit": false,
+      "observationMode": "普通两点或尚无参考；未声称误差已知",
+      "note": "可编辑、数值、参考、视觉、正式组装与提交分别判定；未知或失败不因摘要而省略。"
+    }
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n",
+  "hostStopped": true,
+  "writerReleased": true
+}

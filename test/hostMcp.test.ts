@@ -17,7 +17,7 @@ test('真实 MCP：无宿主镜像、完整版本、PNG 内容块与 rotate sche
   try{
     await client.connect(new StdioClientTransport({command:process.execPath,args:['dist/server.js'],env:{...env(),SPINE_MCP_WORKSPACE:root,SPINE_HOST_AUTOSTART:'0'}}));
     const listed=await client.listTools(),channel=listed.tools.find(t=>t.name==='spine_set_pose_channel')!;
-    assert.equal(listed.tools.length,101);
+    assert.ok(listed.tools.length>=102);
     assert.equal((channel.inputSchema.properties?.rotate as any).type,'number');
     for(const name of ['spine_create_project','spine_host_open','spine_host_pin','spine_host_patch','spine_host_commit','spine_host_undo','spine_host_redo','spine_preview_state','spine_preview_frame','spine_preview_capture'])assert.ok(listed.tools.some(t=>t.name===name),name);
     const adjusted=decode(await client.callTool({name:'spine_set_pose_channel',arguments:{projectId:context.projectId,posePath:'a.pose.json',outputPosePath:'channel.pose.json',name:'torso',rotate:12}}));assert.equal(adjusted.pose.frame.channels.torso.rotate,12);

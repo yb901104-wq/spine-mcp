@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-25T07:48:15.493Z",
+  "reportPath": "docs/plans/host-perspective-trial-2026-10-25T07-44-44-456Z.json",
+  "reportHash": "57e2b9bbf47ca3e318cc2dc5115238dc1f6b933573fe2d0cf980d6922e17c4d1",
+  "comparison": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z\\trial\\perspective-2026-10-25T07-44-44-456Z\\comparison-reviewed.png",
+  "comparisonHash": "ae67cb3f0fecf990680aad2a1ab06d076eeaa4b2f1afe842a00ffc05f75c9c11",
+  "observedBuild": {
+    "perspective": "aab324df3ce7539adbdf5909c25f1355ed619372b7ee6255cedd31dc7971f484",
+    "retargetEngine": "5765c912d091939f16767033f637bb011ea3bb1f1b785a5bae2c0f52d477a03c",
+    "referenceParts": "69a857a376fe0779446db1bcf17934c533613ff6245640aa789f9141c948c8b9",
+    "renderSnapshot": "507879cbdfc96b5f838070742ad586b1b236d69cecb351067ba12c4562f580bb",
+    "hostEvaluator": "1e940961db29a192e87a275da507b88f3d2b8f31fca45eccd526de9819a635d3",
+    "server": "5a24c004c331746b3feb6ec8897eae6164dacab7d21f1f1d5ef852487c361938",
+    "poseWorkflow": "ceea50e3d0e8b7764a8257d4cb12a95a2733fd1048a439b421f1f49a955c2f47"
+  },
+  "buildAttestation": "实际采集结束后、下一次构建前读取 dist 模块；不把后续新增测试/说明的源码声明当成当时运行版本。",
+  "visuals": {
+    "status": "diagnosticReviewed",
+    "reviewer": "Agent",
+    "evidence": [
+      {
+        "label": "baseline",
+        "path": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z\\trial\\perspective-2026-10-25T07-44-44-456Z\\baseline-player.png",
+        "hash": "00980179b2df2bd2a6e4aac5c5000d1b744ad2276778150bb3f06716809c0b22"
+      },
+      {
+        "label": "shorten-1",
+        "path": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z\\trial\\perspective-2026-10-25T07-44-44-456Z\\shorten-1-player.png",
+        "hash": "f08896f35319bd889e75a3762d48c5f143e17acbac3e16c58d0f5631e388eed3"
+      },
+      {
+        "label": "shorten-2",
+        "path": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z\\trial\\perspective-2026-10-25T07-44-44-456Z\\shorten-2-player.png",
+        "hash": "203ed052cc97b178b2d0945f26f395790310e0768b1ab9eb670db2753f5b8806"
+      }
+    ],
+    "findings": [
+      "实际干净图可见画面右侧手臂的肘位和前臂轮廓变化，躯干、另一侧手臂及支撑保持。",
+      "温和缩短数值通过，但未建立角色可接受的宽度、接缝及连续动作范围，不能批准为正式透视动作。",
+      "强缩短保留固定手目标后仍有 4.3909 世界单位误差；截图核验通过不抵消求解失败。",
+      "参考准备帧手臂被袖口遮挡，身体轮廓与关节误差圆未知；未批准匹配，更未恢复或制作整段参考动画。"
+    ],
+    "formalApproval": false
+  },
+  "limitations": [
+    "本次是三个静态状态，不是连续动作、深度重建或角色范围校准。",
+    "Canvas 三角网格接缝的视觉差异仍独立保留；对照图使用实际 player PNG。",
+    "新负载的两次完整调整调用为约 341/278ms，未满足原 patch 至图 120ms 预算，不统计为 P95。",
+    "首轮原工作区对照恢复了旧 journal，baseline 含透视缩放；该轮不能用作无缩放 A/B。"
+  ],
+  "excludedRuns": [
+    {
+      "path": "docs/plans/host-perspective-trial-2026-10-25T07-40-02-775Z.json",
+      "reason": "旧 journal 恢复污染 baseline；原始记录保留。"
+    },
+    {
+      "path": "docs/plans/host-perspective-trial-2026-10-25T07-41-35-175Z.json",
+      "reason": "全新工作区机制复核有效，但只有强缩短一个 player 截图；以本次三张 player 为正式对照。"
+    }
+  ],
+  "productionEnabled": false,
+  "editorImport": "unverified"
+}

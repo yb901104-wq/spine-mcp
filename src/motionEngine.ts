@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { applyPoseSequence, readSpineDocument, resolveWorkspacePath, type PoseKeyframeInput, type ToolContext, type WriteOptions } from "./spineJson.js";
+import { validatePerspective, type PerspectiveInput } from './perspective.js';
 
 export interface BoneMapping {
   body: string;
@@ -30,7 +31,7 @@ export interface MotionDefinition {
   parameters?: { bodyBob?: number; sway?: number; armSwing?: number; stepAngle?: number };
   coordinateSystem?: "normalizedSkeleton";
   poseWorkflow?: { standardPosePath: string; keyPoses: Array<{posePath:string; time:number; stageId:string}> };
-  frames?: Array<{ presentation?: {attachments?: Record<string,string|null>;drawOrder?: string[]}; action?: {driver: string | null}; bendDirections?: Partial<Record<"leftLeg"|"rightLeg"|"leftArm"|"rightArm", 1|-1>>; time: number; body: { x: number; y: number; rotate: number }; head?: number; channels?: Record<string, { rotate: number; x: number; y: number }>; targets: Partial<Record<"leftFoot" | "rightFoot" | "leftHand" | "rightHand", { x: number; y: number; angle?: number; contact?: boolean }>> }>;
+  frames?: Array<{ perspective?: PerspectiveInput; presentation?: {attachments?: Record<string,string|null>;drawOrder?: string[]}; action?: {driver: string | null}; bendDirections?: Partial<Record<"leftLeg"|"rightLeg"|"leftArm"|"rightArm", 1|-1>>; time: number; body: { x: number; y: number; rotate: number }; head?: number; channels?: Record<string, { rotate: number; x: number; y: number }>; targets: Partial<Record<"leftFoot" | "rightFoot" | "leftHand" | "rightHand", { x: number; y: number; angle?: number; contact?: boolean }>> }>;
   groundY?: number;
 }
 export interface MotionBuildOptions extends WriteOptions { filePath: string; mappingPath: string; motionPath?: string; animation: string; duration?: number; overwrite?: boolean; atlasPath?: string; reviewToken?: string; rotationTolerance?: number; translationTolerance?: number; footContactTolerance?: number; handTolerance?: number; vertexTolerance?: number; preview?: boolean; diagnosticPreview?: boolean; }
@@ -105,6 +106,7 @@ export function validateMotion(value: MotionDefinition) {
     if (value.coordinateSystem !== "normalizedSkeleton" || !value.frames?.length || value.frames.length < 2) throw new Error("v2 motion 必须包含 normalizedSkeleton 坐标系和至少两个 frames。");
     let previous = -1;
     for (const f of value.frames) {
+      if(f.perspective!==undefined)validatePerspective(f.perspective);
       if (!Number.isFinite(f.time) || f.time <= previous || f.time < 0 || f.time > value.duration || !f.body || !Object.values(f.body).every(Number.isFinite)) throw new Error("motion frame 时间或 body 无效。");
       previous = f.time;
       for (const [role, target] of Object.entries(f.targets)) {

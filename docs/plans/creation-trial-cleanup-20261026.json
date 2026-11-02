@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-26T03:43:28.116Z",
+  "workspaceRoot": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-trials/2026-10-26T03-41-20-180Z",
+  "reason": "验收驱动曾使用 Windows SIGTERM，原始报告保留 writerReleased:false；已确认旧 PID 不存在，按既有恢复流程清理残留锁。",
+  "recovered": true,
+  "previousPid": 63192,
+  "previousGeneration": 1,
+  "writerReleased": true
+}

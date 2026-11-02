@@ -1,0 +1,157 @@
+{
+  "at": "2026-10-23T14:37:46.053Z",
+  "stage": "C2-4a",
+  "sourceVersion": "0.2.0",
+  "scope": "隔离 C2 attached 中四个既有姿态工具映射 Host 当前内存补丁；独立 Host commit 保存草稿；不含参考/高层资产创建或动画提交。",
+  "previousStage": "host-c2-playback-20261023.json",
+  "developmentCandidateHash": "66fff77b980d5c6f5bc51698f98ea29751f1515747cac3cd0d79bb6b64c8f671",
+  "codeHashes": {
+    "src/hostPoseCommands.ts": "d978b77e2271efda80ae149f22fb4fe380dd2485bccaa5583cb02d5fc2f93345",
+    "src/hostClient.ts": "295b64e1ccb6747227ffb48cc13026696dfee3cb9f2fba29303b3cf94730de3f",
+    "src/hostEditorStore.ts": "ae42fc5dbca738fb3a7771b25cb24334ff45061fa58d6eaff95851fc847efb0a",
+    "src/animationCommands.ts": "d7f8e83b94b69ab5eb468eb56d3ff108032fc566ca71dc65654b2d30ae5338ca",
+    "src/server.ts": "778c24d54437b07b700b5b20171fa4e56d4a1e2026dff1571c86a0f198eef273",
+    "src/hostAnimationEvaluator.ts": "5e478cb2de4a82f125becfacd7cf43d48d5df4070b6a7e1a55d7fe58853d6866",
+    "test/hostPoseCommands.test.ts": "7340ed851b643b6cfc48017eb67520629cba4173868a95b6dd4efd45189f0ac6",
+    "scripts/acceptance-winforms-host.ts": "64050aaabbbdfd19a70c8e96782e08b0c649593b3a3d7cb5c726fcc09150fffd",
+    "preview/host.html": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 180,
+    "pass": 180,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 29495.0702,
+    "outputHash": "893563dc7fea13be4ce31ebb35996d808c10c09586e31a7aea293587beb98e02"
+  },
+  "focused": {
+    "file": "test/hostPoseCommands.test.ts",
+    "tests": 5,
+    "pass": 5,
+    "coverage": "真实 stdio schema/四入口、dryRun、当前内存累积/PNG、全批拒绝、完整版本/路径/输出语义、detached/C1 不扩权、取消/竞态与 journal 重开、独立授权备份保存，以及 poseWorkflow 失败阻止发布。"
+  },
+  "tools": [
+    "spine_set_pose_target",
+    "spine_set_pose_channel",
+    "spine_batch_pose_ops",
+    "spine_adjust_pose"
+  ],
+  "execution": {
+    "attached": "完整 expectedRevision 与当前 posePath；无 outputPosePath；只改内存，保存另用 spine_host_commit。",
+    "detached": "必须 outputPosePath，新修订；不接受 expectedRevision，不能静默回退旧磁盘。",
+    "fixedConditionsUnchanged": true,
+    "atomicBatch": true,
+    "defaultDryRun": true,
+    "automaticPin": false,
+    "automaticSave": false
+  },
+  "gateRepair": "poseGate 返回失败对象，观察入口原先只 await 未检查；现在必须 gate.ok 才继续，失败拒绝发布，门限和审批条件不变。",
+  "cancellation": "发送编辑前和连接探测后检查取消；编辑已确认后取消计算保留真实新版本和 journal，不宣称回滚。",
+  "native": {
+    "file": "host-winforms-2026-10-23T14-29-41-053Z.json",
+    "hash": "a69c8c6fca29258bb324e39df3c91a648835e4fb6eee03e59d0e96751ebd972a",
+    "passed": true,
+    "checks": 27,
+    "commandRevisions": [
+      {
+        "tool": "spine_adjust_pose",
+        "revision": 1
+      },
+      {
+        "tool": "spine_set_pose_channel",
+        "revision": 2
+      },
+      {
+        "tool": "spine_set_pose_target",
+        "revision": 3
+      },
+      {
+        "tool": "spine_batch_pose_ops",
+        "revision": 4
+      }
+    ],
+    "testWriterReleased": true,
+    "inputFilesVerified": 5,
+    "allInputsUnchanged": true,
+    "reconnectPixelsIdentical": true,
+    "captures": [
+      {
+        "stage": "initial",
+        "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-29-41-053Z\\initial-player.png",
+        "pngHash": "f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42",
+        "manifestHash": "ae5a11db2c6cc37b98a7906b99fa989d7469217d64134772b388d3709c90f3fa",
+        "captureValidity": "verified"
+      },
+      {
+        "stage": "restored",
+        "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-29-41-053Z\\restored-player.png",
+        "pngHash": "f19779103dc6242568d45c36ad4b2e06107e55eaa21d6151c593e757a4884f42",
+        "manifestHash": "ee4af2794980448ed1386ba0af0dd66fd58e0594ec796fdb3145c14f1e8cfb9b",
+        "captureValidity": "verified"
+      }
+    ],
+    "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-29-41-053Z\\host-workspace.png",
+    "diagnosticScreenshotViewed": true,
+    "numeric": {
+      "ok": false,
+      "issues": [
+        "rightFoot 目标误差 0.06584602889642982",
+        "存在不可达手脚目标。"
+      ]
+    },
+    "diagnosticOnly": true,
+    "realArtApproved": false,
+    "stabilityAccepted": false
+  },
+  "failures": [
+    {
+      "file": "host-winforms-2026-10-23T14-26-07-065Z.json",
+      "hash": "83865e81cdc1ffdb2c3910a2e7171deaf8f00f336e8f2c1499ec0c2f3cb49b65",
+      "error": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "file": "host-winforms-2026-10-23T14-27-09-855Z.json",
+      "hash": "397e9d01c2c45d94d6367a8f5eed9f3cf5a619bcef027e3d1de59dfdfa1bde5b",
+      "error": "桌面未到达截图检查点 restored"
+    }
+  ],
+  "priorSuccessfulNative": "host-winforms-2026-10-23T14-27-57-150Z.json",
+  "validationNotes": [
+    "早期自检误将数值必须通过作为诊断呈现前提；保留失败记录并改为记录原失败状态，不调门限。",
+    "一次未到达 restored 检查点，原生退出原因未取得；记录保留，之后两次通过不能代替稳定性验收。脚本已增加失败时保留原生报告。",
+    "poseWorkflow 反例夹具前两次未通过工程阶段/序列绑定，因此改用绑定合法但未批准标准站姿、空关键阶段的失败输入，验证 gate.ok 拒绝。"
+  ],
+  "publicToolCount": 101,
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "publicWriteEnabled": false,
+  "wholeC24Completed": false,
+  "wholeC2Accepted": false,
+  "realArtVisualApproved": false,
+  "editorImportPassed": false,
+  "c1Observation": {
+    "verification": "host-observation-frozen-verification-2026-10-23T14-34-34-282Z.json",
+    "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+    "runningAtVerification": true,
+    "currentRunSamples": 116,
+    "totalSamples": 153,
+    "inputFilesVerified": 32,
+    "writerAbsent": true,
+    "knownInterruptedSessions": 1,
+    "interruptedTimeCredited": false,
+    "twoWeekWindowSatisfied": false
+  },
+  "remaining": [
+    "C2-4b 标准/关键姿态创建、参考适配/修正及 motion 生成的附着资产流程。",
+    "C2-4c 4.1.24 动画候选审查、精确授权/备份/恢复和提交，以及完整动画/第二真实角色/独立 Spine 编辑器导入。",
+    "真实 C2 美术与工作负载性能，桌面曾发生的未知恢复退出原因。",
+    "C1 原候选性能逐轮波动、真实两周与使用覆盖、已知退出原因及人工启用评审。"
+  ],
+  "note": "机械与 player 可信度证据不代表美术或动画验收。失败诊断没有动画提交令牌，排除 exp/xiaoren，原 C1 固定安装未改动，旧便携包未更新。"
+}

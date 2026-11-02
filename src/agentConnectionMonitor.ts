@@ -10,8 +10,8 @@ export class AgentConnectionMonitor {
   private lastSeenAt:string|null=null;private status='connecting';private error:string|null=null;
   private writes:Promise<void>=Promise.resolve();
   constructor(private ping:()=>Promise<unknown>,private agentName:string,private clientType:AgentClientType,private intervalMs=10000){}
-  async bind(context:ToolContext={}){const root=path.resolve(context.workspaceRoot??getWorkspaceRoot(context.projectId));this.contexts.set(root,{...context,workspaceRoot:root});await this.persist();}
-  async identify(clientType:AgentClientType,context:ToolContext={}){this.clientType=clientType;await this.bind(context);}
+  async bind(context:ToolContext={}){const root=path.resolve(context.workspaceRoot??getWorkspaceRoot(context.projectId));const known=this.contexts.get(root);if(known&&known.projectId===context.projectId)return;this.contexts.set(root,{...context,workspaceRoot:root});await this.persist();}
+  async identify(clientType:AgentClientType,context:ToolContext={}){const changed=this.clientType!==clientType;this.clientType=clientType;await this.bind(context);if(changed)await this.persist();}
   async start(context:ToolContext={}){await this.bind(context);await this.check();if(!this.closed){this.timer=setInterval(()=>void this.check().catch(()=>{}),this.intervalMs);this.timer.unref();}}
   check(){if(this.running)return this.running;this.running=this.checkOnce().finally(()=>{this.running=undefined;});return this.running;}
   private async checkOnce(){if(this.closed)return;try{await this.ping();if(this.closed)return;this.lastSeenAt=new Date().toISOString();this.status='connected';this.error=null;}catch(e){if(this.closed)return;this.status='unresponsive';this.error=String(e);}await this.persist();}

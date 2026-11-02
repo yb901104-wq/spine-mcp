@@ -1,0 +1,667 @@
+{
+  "startedAt": "2026-10-24T14:44:37.286Z",
+  "desktopEvidence": "docs/plans/host-winforms-2026-10-23T19-46-36-278Z.json",
+  "workspace": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\workspace",
+  "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 MCP stdio 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；候选耗时包含 stdio；不含真实浏览器呈现耗时，不新增动作批准或源写入，不等于完整新动作交付。 本轮候选通过独立编译版 MCP stdio 子进程计算，Host 与求解分进程；测试 Writer 仅用于附着路由，不提交源文件。state/frame 仍按 HostClient 实测，不含其 stdio 编解码。",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "warmups": 2,
+  "sampleCount": 30,
+  "size": 480,
+  "samples": [
+    {
+      "candidateClientMs": 755.0855000000001,
+      "stateClientMs": 8.18079999999918,
+      "frameClientMs": 21.791000000000167,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 763.4456,
+      "stateClientMs": 13.212199999999939,
+      "frameClientMs": 21.139900000000125,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 893.0110999999997,
+      "stateClientMs": 14.059699999999793,
+      "frameClientMs": 23.467599999999948,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 904.5039999999999,
+      "stateClientMs": 7.944499999999607,
+      "frameClientMs": 29.110500000000684,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 784.4938000000011,
+      "stateClientMs": 14.37119999999959,
+      "frameClientMs": 20.98409999999967,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 900.8311000000012,
+      "stateClientMs": 8.750500000000102,
+      "frameClientMs": 21.424699999999575,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 778.1993999999995,
+      "stateClientMs": 7.91649999999936,
+      "frameClientMs": 20.06130000000121,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 721.6756999999998,
+      "stateClientMs": 13.985399999999572,
+      "frameClientMs": 20.587499999999636,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 858.4981000000007,
+      "stateClientMs": 8.874100000000908,
+      "frameClientMs": 22.700399999999718,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 755.9692000000014,
+      "stateClientMs": 8.574400000001333,
+      "frameClientMs": 32.243899999999485,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 791.7409000000007,
+      "stateClientMs": 14.728499999999258,
+      "frameClientMs": 25.195200000000114,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 847.3798999999999,
+      "stateClientMs": 14.827900000000227,
+      "frameClientMs": 22.444399999998495,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 729.125,
+      "stateClientMs": 8.405300000002171,
+      "frameClientMs": 31.491699999998673,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 756.1072999999997,
+      "stateClientMs": 9.322699999996985,
+      "frameClientMs": 24.51350000000093,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 836.9000000000015,
+      "stateClientMs": 10.070400000000518,
+      "frameClientMs": 26.71690000000308,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 862.3401999999987,
+      "stateClientMs": 7.876799999998184,
+      "frameClientMs": 24.612499999999272,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 747.8430000000008,
+      "stateClientMs": 15.42580000000089,
+      "frameClientMs": 21.277000000001863,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 804.1892000000007,
+      "stateClientMs": 12.485599999999977,
+      "frameClientMs": 32.24140000000261,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 778.8666999999987,
+      "stateClientMs": 7.590700000000652,
+      "frameClientMs": 19.983400000000984,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 708.6605000000018,
+      "stateClientMs": 13.976000000002387,
+      "frameClientMs": 20.54320000000007,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 728.1804000000011,
+      "stateClientMs": 7.921099999999569,
+      "frameClientMs": 20.862199999999575,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 768.6837000000014,
+      "stateClientMs": 7.237399999998161,
+      "frameClientMs": 34.261899999997695,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 711.3086000000003,
+      "stateClientMs": 14.352699999999459,
+      "frameClientMs": 21.214799999997922,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 915.6283000000003,
+      "stateClientMs": 12.530500000000757,
+      "frameClientMs": 22.640599999998813,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 705.6553000000022,
+      "stateClientMs": 11.460100000000239,
+      "frameClientMs": 19.703300000001036,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 728.8035000000018,
+      "stateClientMs": 12.972700000002078,
+      "frameClientMs": 22.34570000000167,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 861.1937999999973,
+      "stateClientMs": 22.16439999999784,
+      "frameClientMs": 27.849899999997433,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 785.5460000000021,
+      "stateClientMs": 23.564399999999296,
+      "frameClientMs": 38.383200000000215,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 771.4558999999972,
+      "stateClientMs": 7.669499999999971,
+      "frameClientMs": 20.245899999998073,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    },
+    {
+      "candidateClientMs": 742.6202999999987,
+      "stateClientMs": 8.157899999998335,
+      "frameClientMs": 19.577799999999115,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/42272188-db35-4659-b4b0-27b771168576/c5d5e0b455199fc91e0df27c4fbd417445c5d2b36ac05c39bcda2b7647a1baa8/reports/00aa58aee5baecc7667636bfaaa59f3eb76da8262f072ca3e5a5232f64993a99.json"
+    }
+  ],
+  "publicWriteEnabled": false,
+  "processSeparation": true,
+  "stateMeasurement": "HostClient 严格 state 完整读取",
+  "testWriterForAttachedRouting": true,
+  "diagnosticTracing": false,
+  "formalPerformanceEvidence": true,
+  "build": {
+    "schema": 1,
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "files": [
+      {
+        "file": "node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.min.js",
+        "hash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+      },
+      {
+        "file": "package.json",
+        "hash": "67f5c9d0d38538c3455a7f625e2d6082c73c4e979b11e5c4925b154f2ad47df9"
+      },
+      {
+        "file": "preview/host.html",
+        "hash": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36"
+      },
+      {
+        "file": "src/actionSemantics.ts",
+        "hash": "e5af027e9529b229cd3e71eac992a66eaf6546ea7af525dfc5d83229bb7254fb"
+      },
+      {
+        "file": "src/agentConfigTools.ts",
+        "hash": "9ee0590f0da673268919cb0bfcd2049c4fc3a116291a5734cb46768f2ef27c28"
+      },
+      {
+        "file": "src/agentConnectionMonitor.ts",
+        "hash": "edf5b4a78351e4f36a7bd7dd7a9686aa967fbb0e969b3943a2b6175d815fa7e9"
+      },
+      {
+        "file": "src/agentTools.ts",
+        "hash": "f2e638f889c8c4dc66114a187ad5fe39a4c8d933614b966d634580773bbd74ee"
+      },
+      {
+        "file": "src/animationCommands.ts",
+        "hash": "785cd3bfb2cb4a3438395c1cd1ef1dba1146a757b85a7986eb71f6bdb34b37be"
+      },
+      {
+        "file": "src/animationKernel.ts",
+        "hash": "bf6ac4106128d6cb14e78d8a677ad3ddbac13fef562d991f4d6bd6181ac56171"
+      },
+      {
+        "file": "src/animationReview.ts",
+        "hash": "d3f8fa6b6a681f4dc05fa3d2e838430891eb633084360f3cd51571ded40fc5c9"
+      },
+      {
+        "file": "src/backupTools.ts",
+        "hash": "0c4c23a123b6b84f7fed308d79fca8fd91646262bc79dcb1461e8452b5765a09"
+      },
+      {
+        "file": "src/captureEvidence.ts",
+        "hash": "ed8311c14a3d7bdc0453c9198c696c985724978ebfc6522cae03303cd0222955"
+      },
+      {
+        "file": "src/domainFingerprints.ts",
+        "hash": "2749d501390dbc04a5a8bdd26e8e6a5957ba99cdcd3eb4e95f3a41cc66fa16cf"
+      },
+      {
+        "file": "src/goldenValidation.ts",
+        "hash": "cf7960e5c7db100c4f88edb840104983123645d74040e6a80a087a089ae89d52"
+      },
+      {
+        "file": "src/hostAnimationBundle.ts",
+        "hash": "12c87d75923208b1dde822ad56d2788a29cfa6f5eb548f697d78eae8cdcb96d2"
+      },
+      {
+        "file": "src/hostAnimationCandidate.ts",
+        "hash": "b3a931889875bb52fb9fa2ed1d83342e24331e91c5f8c99021cca0b221640a6d"
+      },
+      {
+        "file": "src/hostAnimationCommit.ts",
+        "hash": "086aa854455f66b136d295a4b8bf84ef36cc9ce0807536e2eb87766f036a85c3"
+      },
+      {
+        "file": "src/hostAnimationEvaluator.ts",
+        "hash": "225c2792c77d97e7f359ef3d20e3665af819f3e5c325f2f183d3f8452e944f5e"
+      },
+      {
+        "file": "src/hostAnimationMapping.ts",
+        "hash": "b88c6be65722608ebeedf930d4a04277d753f17a9d3fb078e2bce85ba0d045e9"
+      },
+      {
+        "file": "src/hostAnimationReview.ts",
+        "hash": "441ceefb1110e4a0f8b874d84b2ac40a6b130799b71c6049c0eae0c63129730b"
+      },
+      {
+        "file": "src/hostAnimationSession.ts",
+        "hash": "d3f674b869cc6eb696c0514debdf1ca0f77d8af3f36cfcc5eef15d7b7c481d0e"
+      },
+      {
+        "file": "src/hostAssetBinding.ts",
+        "hash": "321e99752300f866112eab8d6339595409f895f39ea2ec055a86aaf037e4936d"
+      },
+      {
+        "file": "src/hostAssetCommands.ts",
+        "hash": "1ac9b264254bd3ec788f5429d99cc828d2c9ea4a02a65bdcdb703a03b8f1cc64"
+      },
+      {
+        "file": "src/hostCapture.ts",
+        "hash": "bb8f2b1240d5d026117d1f6e2c16a9209327ed075464c01153bcecb36cc765ab"
+      },
+      {
+        "file": "src/hostClient.ts",
+        "hash": "1fdffbdbc8329a85b8f7eb95346a2001265eabdd81ee260d9523c4391de4b544"
+      },
+      {
+        "file": "src/hostContracts.ts",
+        "hash": "95e44c46fc5cd212a7a61f1d6a16e086a67a7beff3ec97f755405e8f61a0e545"
+      },
+      {
+        "file": "src/hostDocumentStore.ts",
+        "hash": "53911ea3731b1b52cbd78b3b7c9811e5efc82584857b86ee7ec327fd66c6c53b"
+      },
+      {
+        "file": "src/hostEditorStore.ts",
+        "hash": "ae0ef2d52cd2835b2d177f41733feb5e5a2c266ad961d30e81b893a1e1f99297"
+      },
+      {
+        "file": "src/hostEvaluationTasks.ts",
+        "hash": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963"
+      },
+      {
+        "file": "src/hostEvaluator.ts",
+        "hash": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121"
+      },
+      {
+        "file": "src/hostFileProtection.ts",
+        "hash": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc"
+      },
+      {
+        "file": "src/hostJournal.ts",
+        "hash": "6cdf2be0156b70250b14214508e2d9274af81b3fe5435a280e0b365961500d0e"
+      },
+      {
+        "file": "src/hostLifecycle.ts",
+        "hash": "f189706e87b562a64828f3899079fe203c337fadf67216f916e3afd182956595"
+      },
+      {
+        "file": "src/hostObservation.ts",
+        "hash": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8"
+      },
+      {
+        "file": "src/hostObservationCatalog.ts",
+        "hash": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b"
+      },
+      {
+        "file": "src/hostObservationCli.ts",
+        "hash": "a8de834d3880b9c1b88bc43d358486a87682dba189688deb67d2cbd40bbfdc29"
+      },
+      {
+        "file": "src/hostPlayback.ts",
+        "hash": "9daf344d8aebf810d3a4ca60dd4eada9e86a216f7682a1a9dc09222a81cac622"
+      },
+      {
+        "file": "src/hostPose.ts",
+        "hash": "f4eae59eb06619567df8770956013e2fdd27ac8564effd0449c0228f40eae656"
+      },
+      {
+        "file": "src/hostPoseCommands.ts",
+        "hash": "d978b77e2271efda80ae149f22fb4fe380dd2485bccaa5583cb02d5fc2f93345"
+      },
+      {
+        "file": "src/hostPosePatch.ts",
+        "hash": "2e9e601d561c5506bc361d77245140c4e77439e7e4ebbe296a66681e61d0d064"
+      },
+      {
+        "file": "src/hostPoseReview.ts",
+        "hash": "1960c469a54a7fd8577737df03f7289457e046d3159624de6b54d04e39353f08"
+      },
+      {
+        "file": "src/hostReadiness.ts",
+        "hash": "830b6589438ee3f5c843cc559ab2b73d2716a0d3d1daeaf9f2f767ef2f17dcc0"
+      },
+      {
+        "file": "src/hostReleaseEvidence.ts",
+        "hash": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13"
+      },
+      {
+        "file": "src/hostRollout.ts",
+        "hash": "1e6d09503fb963d4a4f562456c985c53af3abbbf8a75316a4bbff1e5969981ba"
+      },
+      {
+        "file": "src/hostServer.ts",
+        "hash": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd"
+      },
+      {
+        "file": "src/hostTools.ts",
+        "hash": "eb44d7bede2d04925d550b48665b07d87757f3dd82a4c0bba9fbe2ed5d16d43c"
+      },
+      {
+        "file": "src/imageModules.d.ts",
+        "hash": "eedf14aa3e7334d492dacd9ef62f4c44d559a73f7073e758d0eade458fda8b08"
+      },
+      {
+        "file": "src/jobTools.ts",
+        "hash": "8d10c0a14668e3920bfc97870aed311c93663d1286279287fd6e3f4807d2397c"
+      },
+      {
+        "file": "src/mappingTools.ts",
+        "hash": "1a7589d8f29381c754ad89f43afc4ab24bff22c8f8c43ab15e2cdf5434812951"
+      },
+      {
+        "file": "src/motionAdjustmentTools.ts",
+        "hash": "bc352a46d691b9b2951f16052ab3ee631ae719e82fc9a216b6d74ac79f405cef"
+      },
+      {
+        "file": "src/motionEngine.ts",
+        "hash": "fbcbfd1c84f774689b8f294b9c5e1bfae0e004ebb300da5abe1ac7b7cbae6644"
+      },
+      {
+        "file": "src/motionMath.ts",
+        "hash": "5a866afc283d6888b3cbf63bc727531f4444402d0d19881a2ea479d0aa3f0249"
+      },
+      {
+        "file": "src/motionRuntime.ts",
+        "hash": "abb5cff49222ef53ca34f51fd17fd59a1548b5bbe6b8e61cf3054fdf23c28c17"
+      },
+      {
+        "file": "src/poseDigest.ts",
+        "hash": "e785b758d413a9f020d5935949cea584c4738ead5c8c83f0d2ccea5e95aa217d"
+      },
+      {
+        "file": "src/poseGraph.ts",
+        "hash": "504dd08477847d50fc04680cafa6e1de05dddbb6f8dde4e0a62bd13873b7336d"
+      },
+      {
+        "file": "src/poseOps.ts",
+        "hash": "ec48dc3a558bb36e9ae3a852c433ae32a7aa57d372ed01d187b558d4dc1b0d10"
+      },
+      {
+        "file": "src/posePresentation.ts",
+        "hash": "d3f8049a30a580cda9cd5b54ba9c36d3bbdf3177b5e6dc02b5c9d352c79af3b4"
+      },
+      {
+        "file": "src/poseRefinementMath.ts",
+        "hash": "166090b4d2556ab1d3756cd5ec01d324d52f4253ffad653f5ef485dfd36e0467"
+      },
+      {
+        "file": "src/poseRefinementTasks.ts",
+        "hash": "b3cf8e476f754e2f7a519774b5150bcdc8c7bf2efbc2429b03126a1e5318b8b1"
+      },
+      {
+        "file": "src/poseSchemas.ts",
+        "hash": "55473d16acbdee69ce0b180a6805469ffc8f4ad070c4b810aab0a85274afcb48"
+      },
+      {
+        "file": "src/poseSequence.ts",
+        "hash": "e20b8e5b9730fdf39bf9593546c491b251d2c367f1180ffe841f53b5a319edaa"
+      },
+      {
+        "file": "src/poseWorkflow.ts",
+        "hash": "1753e2e20f18e36e1e97834da038b5fbd81662b3bf8ad97a57b510912061689b"
+      },
+      {
+        "file": "src/previewAlpha.ts",
+        "hash": "63ca34c9ca7a4be0946feb28ff594ebb2fcee55e2506021cce3d80c3851797e6"
+      },
+      {
+        "file": "src/previewRenderTools.ts",
+        "hash": "f945d9fdfd52f9888783b673d10040f0883d5e7ab85b9a7e76db47ecc75deaa7"
+      },
+      {
+        "file": "src/previewServer.ts",
+        "hash": "27b4381a11135bf4d5c03bb9ca0e3c1198819fc1d3d011fd85d78e27ab362afd"
+      },
+      {
+        "file": "src/previewTools.ts",
+        "hash": "0dbe00235009149109f84e27bfc22155bf480ee6ae44bb3aab02cfe4115a3a3e"
+      },
+      {
+        "file": "src/projectModel.ts",
+        "hash": "9a4fc04459bef493d97bceb5a6b95df70517f4812f604a199dc876d6cc47784a"
+      },
+      {
+        "file": "src/projectSchema.ts",
+        "hash": "f1afe530e29c31e551ef71ce3da83204e45a8d8a04e2383c84be7b65f0987c9c"
+      },
+      {
+        "file": "src/rasterRenderer.ts",
+        "hash": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d"
+      },
+      {
+        "file": "src/referencePose.ts",
+        "hash": "92c7fc5d8f919ef0d7636252c0243ba310e722281afe6a8c7542517aa18d7006"
+      },
+      {
+        "file": "src/referencePoseRefinement.ts",
+        "hash": "76b2d90c1b925f2914f7e337d43271f68647b6a4d044ecefebf6524214c0900a"
+      },
+      {
+        "file": "src/referenceRetarget.ts",
+        "hash": "00b2493ecdb2376fdfbee7ced67cb8f1fc81ba878c825b14b2c21be77877e7fa"
+      },
+      {
+        "file": "src/referenceRetargetKernel.ts",
+        "hash": "010544696fe0926a29706c063222f7771f6a8d3e934194d2bbcaaf7ad8dda1e4"
+      },
+      {
+        "file": "src/referenceTools.ts",
+        "hash": "fcd0b3a936e875d5b382ca0d487493498327c9c6dd91387ee9a08da5d58cf094"
+      },
+      {
+        "file": "src/renderSnapshot.ts",
+        "hash": "c15e359face0a580e01d6d864198365bd9b65ae5b08acebdd74098cda378c3b9"
+      },
+      {
+        "file": "src/resources.ts",
+        "hash": "d08032d86536d9e0c68a5e02d12195638a030d0ebdbed4023fa958bf1281d18e"
+      },
+      {
+        "file": "src/retargetEngine.ts",
+        "hash": "2c0f6db666b3e86d1a39d79713550abb89e8303ee2b1e405d3b118f1bc834c9f"
+      },
+      {
+        "file": "src/runtimeCache.ts",
+        "hash": "1e63e89dd04ec9f936644d4a9db81c4a2409eb0ad2aa272e0618eac1a0c49f60"
+      },
+      {
+        "file": "src/runtimeCurveFit.ts",
+        "hash": "20003772acd5b56ea8a42c18cf22adca00ce6230bf141f5a108d7a9450c709fe"
+      },
+      {
+        "file": "src/server.ts",
+        "hash": "91e209762b0b0e7ed5a36f81c776abc9860fed255328ddc2403932fcf297fa97"
+      },
+      {
+        "file": "src/sessionTools.ts",
+        "hash": "3fc54a1cd89a960cd25ac48cec26ff17bdd3417ce255ebf5eb6b118ac6b188d4"
+      },
+      {
+        "file": "src/spineJson.ts",
+        "hash": "b57ba79fc213e29c54e0a35caeed52ccf6bac1b9b73773605d4a01175bc649ab"
+      },
+      {
+        "file": "src/strictFileChecks.ts",
+        "hash": "2d80096e90bace7ffdf394a98760e7c96e3601b6868d4316518c728622133f02"
+      },
+      {
+        "file": "src/taskControl.ts",
+        "hash": "5561d01d8ee9b7f109f74331b2a82c11044eadc2cc55d6349144f5a887923b25"
+      },
+      {
+        "file": "src/toolError.ts",
+        "hash": "5fb2cef8ef903d280fd5b6cf086cb281ef58d331382899bda157c6f87834a663"
+      },
+      {
+        "file": "src/visualRig.ts",
+        "hash": "57ce51b47d0fb28c6f93f04f238d3b7a8970d080899f9cf560352cc03f07d0cf"
+      },
+      {
+        "file": "src/workspaceTools.ts",
+        "hash": "0f2c498e10a95a3a5db688adc7157f208742e0c82eb542da1177f74d2809e072"
+      },
+      {
+        "file": "src/workspaceTree.ts",
+        "hash": "ac2b20c8961fc7fd064029300e9e724246a0475243beb0e6dd4da42694500752"
+      },
+      {
+        "file": "src/writerOwnership.ts",
+        "hash": "20f7a544ebd88e17b99e78ef5429596d78d7d9cf7ce0671bd34b624be90b3097"
+      }
+    ],
+    "hash": "a728dcd9ca742288b985fb122709c8e0d3a73bc4eba3acae6833ec81e672fd32"
+  },
+  "mcpExecutableHash": "b265f74a39908de85556a0c72811c382946cc8e8d8eb12fdc7011e1ad7b487ea",
+  "warmupSamples": [
+    {
+      "candidateClientMs": 1034.9369,
+      "stateClientMs": 10.5304000000001,
+      "frameClientMs": 23.73570000000018
+    },
+    {
+      "candidateClientMs": 871.5610000000001,
+      "stateClientMs": 8.453199999999924,
+      "frameClientMs": 23.584100000000035
+    }
+  ],
+  "allInputsUnchanged": true,
+  "phases": {
+    "candidateClientMs": {
+      "p50": 771.4558999999972,
+      "p95": 904.5039999999999,
+      "maximum": 915.6283000000003
+    },
+    "stateClientMs": {
+      "p50": 10.070400000000518,
+      "p95": 22.16439999999784,
+      "maximum": 23.564399999999296
+    },
+    "frameClientMs": {
+      "p50": 22.34570000000167,
+      "p95": 34.261899999997695,
+      "maximum": 38.383200000000215
+    }
+  },
+  "budgets": {
+    "stateClientMs": 20,
+    "frameClientMs": 50
+  },
+  "budgetsPassed": false,
+  "mechanicsPassed": true,
+  "finishedAt": "2026-10-24T14:45:09.108Z"
+}

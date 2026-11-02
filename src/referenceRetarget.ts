@@ -9,7 +9,7 @@ import { requireReferencePose, referenceFingerprint } from './referencePose.js';
 import { requireVisualRig, readVisualNodes, visualRigFingerprint, visualSummary } from './visualRig.js';
 import { compareGraphs, limbNodes, normalizedGraph, finitePoint, direction, distance, validateCorrespondence, policyFingerprint,torsoAxis,comparisonFingerprint,normalizeImagePoints,angleError } from './poseGraph.js';
 import { hashObject, saveJson, rigHash } from './mappingTools.js';
-import { readJson, poseFingerprint, solvePoseData, createPoseDraft, requireReviewedPose, solvePose } from './poseWorkflow.js';
+import { readJson, poseFingerprint, solvePoseData, requireReviewedPoseData, solvePose, type PoseDataReader } from './poseWorkflow.js';
 import { readActionState } from './actionSemantics.js';
 import {poseIssuesFromError} from './poseSequence.js';
 
@@ -51,8 +51,8 @@ export async function requirePoseComparison(p:any,c:ToolContext){
  });
 }
 export async function retargetReferencePose(a:any,c:ToolContext={}){
+ if(a.dryRun!==false)return retargetReferencePoseData(a,c);
  if(!a.sequencePath)return retargetReferencePoseSeed(a,c);
- if(a.dryRun!==false){const seed=await retargetReferencePoseSeed({...a,detailed:true},c);try{const sequence=await (await import('./poseSequence.js')).sequenceForPose(seed.pose,c),r=await requireReferencePose(a.referencePosePath,c),v=await requireVisualRig(a.visualRigPath,c),old={...seed.comparison,poseFingerprint:poseFingerprint(seed.pose),referenceFingerprint:referenceFingerprint(r),visualRigFingerprint:visualRigFingerprint(v.rig),sequenceFingerprint:sequence.fingerprint,sampleFingerprint:null,policyFingerprint};const mod=await import('./referencePoseRefinement.js'),result=await mod.refinePoseData(seed.pose,old,c);return {...mod.refinementSummary(result,a.detailed),dryRun:true,posePath:a.posePath,seedConflicts:seed.conflicts,...'frame' in result?{pose:a.detailed?{...seed.pose,frame:result.frame,solution:result.solution,status:result.ok?'solved':'failed'}:{id:seed.pose.id,status:result.ok?'solved':'failed',frame:result.frame}}:{pose:seed.pose}};}catch(e){return {...seed,ok:false,issues:poseIssuesFromError(e,a.stageId)};}}
  try{await readFile(resolveWorkspacePath(a.posePath,c));throw new Error('姿态已存在，请使用新修订路径。');}catch(e:any){if(e.code!=='ENOENT')throw e;}
  const seedPath=a.posePath.replace(/\.json$/,'.seed.json'),seed=await retargetReferencePoseSeed({...a,posePath:seedPath},c);
  try{
@@ -61,16 +61,31 @@ export async function retargetReferencePose(a:any,c:ToolContext={}){
   return {...refinement,seedPath,seedReportPath:seed.reportPath,seedConflicts:seed.conflicts,pose:{status:refinement.ok?'solved':'failed',frame:refinement.frame}};
  }catch(e){return {...seed,ok:false,requestedPosePath:a.posePath,issues:poseIssuesFromError(e,a.stageId),message:'身份或能力检查阻止联合修正；保留初始诊断候选。'};}
 }
-export async function prepareReferenceRetargetInputs(a:any,c:ToolContext){
+/** 明确输入标准姿态的只读计算入口；dryRun:false 也不会保存 seed/pose/report。 */
+export async function retargetReferencePoseData(input:any,c:ToolContext={},reader:PoseDataReader=readJson){
+ const a={...structuredClone(input),dryRun:true};
+ return withStrict(async()=>{
+  if(!a.sequencePath)return retargetReferencePoseSeed(a,c,reader);
+  const seed=await retargetReferencePoseSeed({...a,detailed:true},c,reader);
+  try{
+   const sequence=await (await import('./poseSequence.js')).sequenceForPose(seed.pose,c),r=await requireReferencePose(a.referencePosePath,c),v=await requireVisualRig(a.visualRigPath,c),old={...seed.comparison,poseFingerprint:poseFingerprint(seed.pose),referenceFingerprint:referenceFingerprint(r),visualRigFingerprint:visualRigFingerprint(v.rig),sequenceFingerprint:sequence.fingerprint,sampleFingerprint:null,policyFingerprint};
+   const mod=await import('./referencePoseRefinement.js'),result=await mod.refinePoseData(seed.pose,old,c);
+   return {...mod.refinementSummary(result,a.detailed),dryRun:true,posePath:a.posePath,seedConflicts:seed.conflicts,...'frame' in result?{pose:a.detailed?{...seed.pose,frame:result.frame,solution:result.solution,status:result.ok?'solved':'failed'}:{id:seed.pose.id,status:result.ok?'solved':'failed',frame:result.frame}}:{pose:seed.pose}};
+  }catch(e){return {...seed,ok:false,issues:poseIssuesFromError(e,a.stageId)};}
+ });
+}
+export async function prepareReferenceRetargetInputs(a:any,c:ToolContext,reader:PoseDataReader=readJson){
  validateCorrespondence(a.correspondence);
- const reference=await requireReferencePose(a.referencePosePath,c),visual=await requireVisualRig(a.visualRigPath,c),base=await requireReviewedPose(a.standardPosePath,c);
+ resolveWorkspacePath(a.standardPosePath,c);
+ const reference=await requireReferencePose(a.referencePosePath,c),visual=await requireVisualRig(a.visualRigPath,c),base=await requireReviewedPoseData(await reader(a.standardPosePath,c),c,a.standardPosePath);
+ if(base.kind!=='standing')throw new Error('参考适配需已确认标准站姿，不能以动作姿态替代。');
  if(base.sourceFingerprint!==visual.fingerprint)throw new Error('标准站姿与视觉绑定不匹配。');
  const {source}=await preparePoseSource(base,c);return{reference,visual,base,source};
 }
-async function retargetReferencePoseSeed(a:any,c:ToolContext={}){
+async function retargetReferencePoseSeed(a:any,c:ToolContext={},reader:PoseDataReader=readJson){
  if(a.sequencePath){const sequence=await readJson(a.sequencePath,c);if(a.correspondence&&hashObject(a.correspondence)!==hashObject(sequence.correspondence))throw new Error('调用对应与动作级身份冲突。');a={...a,correspondence:sequence.correspondence};}
  if(a.dryRun===false){try{await readFile(resolveWorkspacePath(a.posePath,c));throw new Error('姿态已存在；请使用新修订路径，不覆盖现有审查。');}catch(e:any){if(e.code!=='ENOENT')throw e;}}
- const prepared=await prepareReferenceRetargetInputs(a,c),{draft,solved,actual,comparison,changes,contactResiduals,conflicts,expected}=retargetReferencePoseKernel({...a,id:a.id??randomUUID()},prepared);
+ const prepared=await prepareReferenceRetargetInputs(a,c,reader),{draft,solved,actual,comparison,changes,contactResiduals,conflicts,expected}=retargetReferencePoseKernel({...a,id:a.id??randomUUID()},prepared);
  try{await (await import('./poseSequence.js')).sequenceForPose(draft.pose,c);}catch(e){conflicts.push(String(e));}
  const ok=!conflicts.length,reportPath=a.reportPath??a.posePath.replace(/\.json$/,'.adaptation.json');
  if(a.dryRun===false){await saveJson(a.posePath,draft.pose,c);await solvePose({posePath:a.posePath,dryRun:false},c);const cmp=await comparePoseGraphs({posePath:a.posePath,dryRun:false},c);const p=await readJson(a.posePath,c);p.comparisonPath=cmp.reportPath;await saveJson(a.posePath,p,c);await saveJson(reportPath,{ok,conflicts,changes,expected,actual,comparison},c);}

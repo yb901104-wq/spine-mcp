@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "root": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z",
+  "referencePosePath": "trial/perspective-2026-10-25T07-44-44-456Z/reference-parts.reference.json",
+  "referenceHash": "68d43bb9078ff82293e8af686d8cf20758a8039594489eacb2df99a7f717640d",
+  "reportPath": "trial/reference-fallback-2026-10-25T10-17-06-223Z.json",
+  "mcpCalls": 1,
+  "durationMs": 19.146900000000073,
+  "result": {
+    "version": 2,
+    "ok": true,
+    "status": "analyzed",
+    "parts": [
+      {
+        "id": "leftArm.0",
+        "nodes": [
+          "leftShoulder",
+          "leftElbow"
+        ],
+        "status": "estimated",
+        "method": "twoPoint",
+        "usable": true,
+        "directionDegrees": 45,
+        "reliability": "estimated",
+        "uncertaintyKnown": false,
+        "reasons": [
+          "端点未知、缺少显式误差圆或误差圆重叠，方向不可辨识。",
+          "未确认刚性身体切片，服装/未知轮廓不能充当身体主轴。",
+          "轮廓主轴退化、缺失采样误差或对误差过于敏感。"
+        ],
+        "length": 25.455844122715714,
+        "pointDegrees": 45,
+        "pointHalfAngle": null,
+        "axis": null,
+        "disagreement": null,
+        "basis": "准备帧左上臂主体被衣袖遮挡，未取得可确认的身体刚性轮廓，也未测得肩肘误差圆。"
+      },
+      {
+        "id": "leftArm.1",
+        "nodes": [
+          "leftElbow",
+          "leftWrist"
+        ],
+        "status": "estimated",
+        "method": "twoPoint",
+        "usable": true,
+        "directionDegrees": -18.43494882292201,
+        "reliability": "estimated",
+        "uncertaintyKnown": false,
+        "reasons": [
+          "端点未知、缺少显式误差圆或误差圆重叠，方向不可辨识。",
+          "未确认刚性身体切片，服装/未知轮廓不能充当身体主轴。",
+          "轮廓主轴退化、缺失采样误差或对误差过于敏感。"
+        ],
+        "length": 12.649110640673518,
+        "pointDegrees": -18.43494882292201,
+        "pointHalfAngle": null,
+        "axis": null,
+        "disagreement": null,
+        "basis": "准备帧左前臂与袖口及手部交叠，不能将衣袖外缘冒认为身体轮廓，误差半径未知。"
+      }
+    ],
+    "note": "优先可靠刚性轮廓与误差圆；增强观测不可用时回退到两个既有节点的连线，标记 estimated。ok 表示有可用观测，不是动作批准；未知坐标不编造，可靠证据相互冲突仍需复核。",
+    "referencePosePath": "trial/perspective-2026-10-25T07-44-44-456Z/reference-parts.reference.json",
+    "referenceFingerprint": "ac7a2ecd87a142aeb5b0e1908e51d8a857a1b39f12f0068f3c43801a7380dabb",
+    "diagnosticOnly": true,
+    "readyToCommit": false,
+    "dryRun": false
+  },
+  "referenceUnchanged": true,
+  "sourceInputsUnchanged": true,
+  "referenceApproved": false,
+  "animationProduced": false,
+  "note": "缺轮廓不再阻断：两个既有遮挡估计点给出近似方向；未编造误差圆、未批准匹配或制作整段动画。"
+}

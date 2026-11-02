@@ -1,0 +1,425 @@
+{
+  "startedAt": "2026-10-24T15:28:31.740Z",
+  "scope": "真实 npc1 现有 idle 只读预览；已验收无参考站姿的头部/右手临时内存编辑、撤销与重做。隔离研发 profile，不提交角色源、不新增动作批准，不作为编辑器导入或完整 C2 验收。",
+  "sourceWorkspace": "D:/AI_cc/spine test/host-acceptance/2026-10-22T02-18-08-219Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\temporary-trials\\2026-10-24T15-28-31-740Z",
+  "workspace": "D:\\AI_cc\\spine test\\temporary-trials\\2026-10-24T15-28-31-740Z\\workspace",
+  "calls": [
+    {
+      "tool": "spine_create_project",
+      "record": "1-spine_create_project.json",
+      "isError": false
+    },
+    {
+      "tool": "spine_host_open",
+      "record": "2-spine_host_open.json",
+      "isError": true
+    }
+  ],
+  "inputHashes": {
+    "目标/npc1.atlas": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "目标/npc1.json": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83",
+    "目标/npc1.png": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251",
+    "poses/standing-hand-angle.json": "5ea161b768155b03c11a19aeb2159ddb019d01276315f115f15771d6bc71199f",
+    "previews/pose-workflow-20261009/npc1.mapping.calibration.json": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc",
+    "previews/pose-workflow-20261009/npc1.mapping.json": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-clean.png": "79b2233b178d14cdba4b3e5861937191e41dd0c5f17fdba2dbcef38b29343521",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-diagnostic.png": "7b535f771792bb33c1cbb5495c0edde648fb1a51fc12c6a95d61908efbd001c9",
+    "previews/pose-workflow-20261009/standing-comparison/pose-comparison.json": "ac461d7a4f2955b384735511a7bf8db10637417bbba4565e811d33f90c6a5ac2",
+    "previews/pose-workflow-20261009/standing.pose.json": "6868836cf798e32cbfe173c6047cb203a3b6c1a506b37011539de8515c9cdf03",
+    "output/calls/1-spine_create_project.json": "78ef591772a62e91a7bae7cabfbb4f2605f39adacd9e590801dd5dd7e64f765c",
+    "output/calls/10-spine_host_patch.json": "7788011663c33fbeb944d63829b77fbacf0683720c1d843097aa0b2e04deace5",
+    "output/calls/11-spine_host_undo.json": "0c34feb2e6598ddcfd71598921c819f82cabbb88ac9eaf6f56a248e64df04cfd",
+    "output/calls/12-spine_preview_state.json": "58f3c822f89ff94a4e0b91e93663f882dc0d815eefa2584272b48aaf187f156b",
+    "output/calls/13-spine_preview_capture.json": "29083e93ea9ecf750e7d3aa16b76aa17955088d3aa536515b76fc9ebe9a911fc",
+    "output/calls/14-spine_review_pose.json": "9dde273aa6d0a394d71a680e3358e66d2fdd522f979bdc0a02efbc5a0eb62ae2",
+    "output/calls/15-spine_review_pose.json": "cd8ec2a69c99b903a045d5685c8b2480c45e960b05cfc71701fa7dd20abaf50e",
+    "output/calls/16-spine_host_commit.json": "53aacbfa6dd8b7bd22394b682682c5fc7fd5c97278acebe6556f808c2845af7e",
+    "output/calls/17-spine_host_commit.json": "0a57fc4da1f132be6a86f3d144f463f4a37e950524a0bfa85123ae50996ce2ee",
+    "output/calls/18-spine_host_open.json": "bb72ee225528d0ce872b90e6af23f0ce83115dc1c9b64250f8667646cef360dc",
+    "output/calls/2-spine_host_open.json": "51ab9598cdc676fc9f7f76427c973597c016710ba3a3582bf8e75642694e34fe",
+    "output/calls/3-spine_host_pin.json": "6a9738dafb7ec86674937d171d73e8ac9aa08eddfdc11bbbb8df00e9da321565",
+    "output/calls/4-spine_recheck_pose.json": "9ca98af3fa014ec0393fab9bd69457b959d94ecc225068f2b4d7573fef599c86",
+    "output/calls/5-spine_preview_capture.json": "71936ecbba18d6c57ac0357253ed3a6c6b941f03e9c79a9e59b31bf65d20b158",
+    "output/calls/6-spine_preview_state.json": "c86358956fd18c095c1690ad3eb54dd9c6b6746eaca36fd400eb57265c32f51c",
+    "output/calls/7-spine_host_patch.json": "f3005daf0d84251a4907eb6721ec6486122ea1f2bad83f82e6faf6d39f3fd82a",
+    "output/calls/8-spine_preview_state.json": "3a5787849ff5e6d05314a038ed2476669e0f0d120fcd8b7697874b2167dc53fd",
+    "output/calls/9-spine_host_patch.json": "c28d25280a375c2aaafffed93c03f71e49bf382a94a4d123238bbec029b9c5e2",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/0a427c7a-593d-41d7-98c2-969abcf414a9/85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f.png": "85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/0a427c7a-593d-41d7-98c2-969abcf414a9/85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f.png.manifest.json": "6c670a9efef747346da17cc3f4d57f5e9797f811f0d9e9060325835ba2de2189",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png.manifest.json": "3f4de9b85e33fc6586bb52a2880ad77154fbe9ab77a41718470dabf699815370"
+  },
+  "publicWriteEnabled": false,
+  "sourceCommit": false,
+  "newAnimationApproved": false,
+  "editorImport": "notRun",
+  "originalManifestHash": "32c80b46feac8aec55185d408f3d4e722e01cec9c3b4039daf999d4b0ac6f0c0",
+  "build": {
+    "schema": 1,
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "files": [
+      {
+        "file": "dist/actionSemantics.js",
+        "hash": "565ace33b3f349c04d6eb9d55f1ace9c71a25e6a939838d7c40ad344d5655a91"
+      },
+      {
+        "file": "dist/agentConfigTools.js",
+        "hash": "d421dcc889c613a29e6d4cf48d511402104dedb5f0e2af1bf419cab3ff88dc05"
+      },
+      {
+        "file": "dist/agentConnectionMonitor.js",
+        "hash": "e4e588bb51f664440a1901c963092315509b294a8725eab56b084e01093769f9"
+      },
+      {
+        "file": "dist/agentTools.js",
+        "hash": "addd00b7713cb06052eb0ee691db6d3a21b11e131ece8477ff882c4f30b6bfac"
+      },
+      {
+        "file": "dist/animationCommands.js",
+        "hash": "1bf08aa1c7d7f14c1d800822e708cdcba29eac57b75bbfe44ddee1515423c8b3"
+      },
+      {
+        "file": "dist/animationKernel.js",
+        "hash": "bafe15eaf633eb7d57db1044b28f892c238d8c78bae395901a64c3ec7dd4acaa"
+      },
+      {
+        "file": "dist/animationReview.js",
+        "hash": "fc5e31fdc12f10846cae629bdceac9f1d64eb869491d130c25e20155d9293073"
+      },
+      {
+        "file": "dist/backupTools.js",
+        "hash": "8a70b4567afb6e52693b2f983a549f5c4cec93ebdceca32ae6a99537297f05d7"
+      },
+      {
+        "file": "dist/captureEvidence.js",
+        "hash": "a93c26a0a17844273bef884cd5cca1aa377647321e6a7415893c232bac41bc54"
+      },
+      {
+        "file": "dist/domainFingerprints.js",
+        "hash": "245bbd9197d01eb7ad91894a318e20873a1bef1ea9f40374dcd106af7f28468a"
+      },
+      {
+        "file": "dist/goldenValidation.js",
+        "hash": "287ca6de85bc017cdba7463fc04db142a99b6f7e977579a883103e02cc2f2581"
+      },
+      {
+        "file": "dist/hostAnimationBundle.js",
+        "hash": "fadd49e10dbb0a26e3a90ed7d67f3d4905a0b58fa3b1dc747706d7a6ddce1f23"
+      },
+      {
+        "file": "dist/hostAnimationCandidate.js",
+        "hash": "e99567deb00a995fc0b8f3b10d97afcf2a562cf959ecafccbba2926aef714ef2"
+      },
+      {
+        "file": "dist/hostAnimationCommit.js",
+        "hash": "a24f97e73132b622c5b1e7d103d129001dfc1a5a1ac9c26ffc2d813495f0f4aa"
+      },
+      {
+        "file": "dist/hostAnimationEvaluator.js",
+        "hash": "efaf5a034d5835e7ef09c6f8a345c768da0ef97fd7765378f840365541de3b37"
+      },
+      {
+        "file": "dist/hostAnimationMapping.js",
+        "hash": "5c195c6738b3f58676bb03b98b55dcd206ff024067326638d3278c8806751d3c"
+      },
+      {
+        "file": "dist/hostAnimationReview.js",
+        "hash": "858c05ca4537bb18b87e52b33fdbbe79f24b1cb7aed082ba1f9312a64fe2fa86"
+      },
+      {
+        "file": "dist/hostAnimationSession.js",
+        "hash": "073917d8a1a85854a96dec624bf7984c6f9a5565a2df14c01822f06c227eb49d"
+      },
+      {
+        "file": "dist/hostAssetBinding.js",
+        "hash": "fd9d6c81bacc2ce92beee854f6ca5132c01de30bbc84fb71d41732b37aab0736"
+      },
+      {
+        "file": "dist/hostAssetCommands.js",
+        "hash": "996e2a307e0500935cb8fac15397d7e0ad175777c755bc6ce4fb71a84381900c"
+      },
+      {
+        "file": "dist/hostCapture.js",
+        "hash": "ad90b1548e905e76ab782eaf864bb9efd08e3619a3a2869a27951ebef1c42426"
+      },
+      {
+        "file": "dist/hostClient.js",
+        "hash": "4fd8e171ae917cf2f933fca961680e75d090e9910573d88bee0b726b45e84281"
+      },
+      {
+        "file": "dist/hostContracts.js",
+        "hash": "43bcc20b00936bd0cdb4bf7ccd3b42096c2378ba79cd85b4ec5cbd2af69a1fcc"
+      },
+      {
+        "file": "dist/hostDocumentStore.js",
+        "hash": "904a2f7f023b9e88fda7144168f40f041bdd4b1e34865a6786192005353b2a16"
+      },
+      {
+        "file": "dist/hostEditorStore.js",
+        "hash": "cd34d954d4b18bc68f5d1cc86cccdc501abc0625761204358eefb0ad4e0cdb1f"
+      },
+      {
+        "file": "dist/hostEvaluationTasks.js",
+        "hash": "0f30a5ad2cf0c360368c19b101e9917466bb2787eb0c6e72560a8f76bffb6a2d"
+      },
+      {
+        "file": "dist/hostEvaluator.js",
+        "hash": "5d55780c7c767e3d58ee28a748ed3f4f4fd46a7954da2167d568b881b329de47"
+      },
+      {
+        "file": "dist/hostFileProtection.js",
+        "hash": "5077fe6593ebb49c7411b9e5b7fef1a5775c4c445e860d9497136418d29e8399"
+      },
+      {
+        "file": "dist/hostJournal.js",
+        "hash": "2504abb3683fdb2c1febfe2bb980a586a8dcf6a64f21738f017f3fa3cca68ec7"
+      },
+      {
+        "file": "dist/hostLifecycle.js",
+        "hash": "14fe93c9e94912f625cda7a74de6028c04d963b14b9676028c9c08861011110c"
+      },
+      {
+        "file": "dist/hostObservation.js",
+        "hash": "f09ca93f26d69e2bd39057bf8c657e9ac565bcd2185023bb0c3fa3f86b2770ef"
+      },
+      {
+        "file": "dist/hostObservationCatalog.js",
+        "hash": "3772a05657a16db87150b063487e4977eaaa59f433401312e0e51f485c7003b5"
+      },
+      {
+        "file": "dist/hostObservationCli.js",
+        "hash": "83e631920cbade41065234a91c4173cf70e7b4148bad39035e3870e161c1fa32"
+      },
+      {
+        "file": "dist/hostPlayback.js",
+        "hash": "194600be6c73799697379458c35ddcf813b32c300bd99f686b24cad1773db2a4"
+      },
+      {
+        "file": "dist/hostPose.js",
+        "hash": "760b075cd93f057464b22e7fd680b6c20a3b53782aba2b8e7eed6d411f7b4aaf"
+      },
+      {
+        "file": "dist/hostPoseCommands.js",
+        "hash": "f8da8a9dfeacb8203bd7b2eaa3c3f79b35f899dcc026c7062df377c8cf3a064b"
+      },
+      {
+        "file": "dist/hostPosePatch.js",
+        "hash": "6cec8a9840df81601eed42f0e736cbc56d8079db062fb2e70db2d7c97a6f2cda"
+      },
+      {
+        "file": "dist/hostPoseReview.js",
+        "hash": "20f524565cb94b7db5f52852fc53e4904868ac8198b3e7b085624877a37d846d"
+      },
+      {
+        "file": "dist/hostReadiness.js",
+        "hash": "6aad7e444ab6a32ebc7dc281673e65f54f492712f573353530c03a549549e5f2"
+      },
+      {
+        "file": "dist/hostReleaseEvidence.js",
+        "hash": "6ca7dec13b481e8b1dc7a68aa808f564132119405619b2f559cb5bd3dc8e15d2"
+      },
+      {
+        "file": "dist/hostRollout.js",
+        "hash": "f605467bfb3c784b3b668dc50a2eadec56a488befbd213b183f2d21ba281cfd3"
+      },
+      {
+        "file": "dist/hostServer.js",
+        "hash": "2d4d7c124bfeb187367d6d7cf796c299cac981d7447d2e9c2080bb421a05c9ed"
+      },
+      {
+        "file": "dist/hostTools.js",
+        "hash": "ea53acc18c5fe67e3806c0757f3dea50892eb270624ac3ed6c76a26b0e6dd142"
+      },
+      {
+        "file": "dist/jobTools.js",
+        "hash": "37571d91c9d5152a92e4627d645b8c4c705ee30d67372c83772522204f390c1f"
+      },
+      {
+        "file": "dist/mappingTools.js",
+        "hash": "7b2e918ba718235a02e02f3b3899f8e0833eda5e1742aea6bd843f0ec5955cf0"
+      },
+      {
+        "file": "dist/motionAdjustmentTools.js",
+        "hash": "4f070eca105fa5745aea14aebe45f686bc66615b04602f20d99f1938dc086ad2"
+      },
+      {
+        "file": "dist/motionEngine.js",
+        "hash": "8ae4fb9f0cf5932ebc6bc820ec2778a898aa531cc773512a7a3df7b107e94f0f"
+      },
+      {
+        "file": "dist/motionMath.js",
+        "hash": "958c455f08eb703ed56b01d8a5fd2af77371c8cf48bb609580f4298cb271399f"
+      },
+      {
+        "file": "dist/motionRuntime.js",
+        "hash": "d91a768d204718f4693db5fbfd48d108480a62a4af3494d0036c98bfe5efb5e6"
+      },
+      {
+        "file": "dist/poseDigest.js",
+        "hash": "c714c622f2d91289e7b610cf51d4a110b27b3457d0ba8bcd5f1b276f1236f7f8"
+      },
+      {
+        "file": "dist/poseGraph.js",
+        "hash": "a5b6419e52e864a9fb1e7a8ca8f93a23b3c6f950df88c852c2e90fee5859877d"
+      },
+      {
+        "file": "dist/poseOps.js",
+        "hash": "320774ef78f3ff561dd58bdf9651b8240b1c71628d839be3979c499028293855"
+      },
+      {
+        "file": "dist/posePresentation.js",
+        "hash": "45bbc835cf9d33c7255548ae671b5c63a37a0ac76b119331cc2ddf45a7158f21"
+      },
+      {
+        "file": "dist/poseRefinementMath.js",
+        "hash": "ec7d0d22502c44b05f931805695fa048352cda8e4a9daf348ac12e07ef0422e4"
+      },
+      {
+        "file": "dist/poseRefinementTasks.js",
+        "hash": "41a04b36b5955c927b3c00f905e7a5be68a5bc7146a3827cdf0485478d939c10"
+      },
+      {
+        "file": "dist/poseSchemas.js",
+        "hash": "247ea7d7f8ea77937e19a954755a2be63bdb03b4b6c283a1a2146454c8a9edf6"
+      },
+      {
+        "file": "dist/poseSequence.js",
+        "hash": "c2df718e7a7a14ec766e3668b891422e13132a41bc2b243eba6a0eddfbd21ee1"
+      },
+      {
+        "file": "dist/poseWorkflow.js",
+        "hash": "36eb2d9792ac52e0020be34754a60c5863badb66723f5a8c88686ba8f8db80e5"
+      },
+      {
+        "file": "dist/previewAlpha.js",
+        "hash": "ae506886a76a03c287509b1d4dc7623e33ee3e5c39d6f252234e6e891766422b"
+      },
+      {
+        "file": "dist/previewRenderTools.js",
+        "hash": "ffd2a91689ffc0f5e8abcedfed66b6418453566d663eaebd0a924a637b6c4d70"
+      },
+      {
+        "file": "dist/previewServer.js",
+        "hash": "e54c7f9742ae295932b07986f0c2b4f3c99eaf983e8fd53c13ba7720770e5ecb"
+      },
+      {
+        "file": "dist/previewTools.js",
+        "hash": "190737978d57c3a6fa891e1eeaedd490844fe8e6c9fd970a378821a33b8b70b6"
+      },
+      {
+        "file": "dist/projectModel.js",
+        "hash": "d9dad70e9e34c1581e9442853f9fab68b55735c8fa6aa18e57070bb238e51951"
+      },
+      {
+        "file": "dist/projectSchema.js",
+        "hash": "4155094b780d1a0fb489387ee3d7585ea2fb1c14e7744cb2eaa6919af7d84e66"
+      },
+      {
+        "file": "dist/rasterRenderer.js",
+        "hash": "b1a820a2f39a76491d1ea130b5d9260b18fa24adaee2bc9188ff23b734620d0b"
+      },
+      {
+        "file": "dist/referencePose.js",
+        "hash": "a6567d200968236477527063d83d64a03e32c2e2d9075e9a2677e5c029addc1d"
+      },
+      {
+        "file": "dist/referencePoseRefinement.js",
+        "hash": "98ae3d6e3903ae79ae7e1f81814eb4c6708f4dc189d7ed842b9f224dc3cde582"
+      },
+      {
+        "file": "dist/referenceRetarget.js",
+        "hash": "9ed94b0908414926a1ee516a1dfb6f679156edac42994d38a54872eb0efb0505"
+      },
+      {
+        "file": "dist/referenceRetargetKernel.js",
+        "hash": "fbaa9c21599ef5a248b86253b979da3a6c32bddf801340a98c787098a532036f"
+      },
+      {
+        "file": "dist/referenceTools.js",
+        "hash": "f47b39a0b97bc06239db064671ae1c3166bf83ab402cc070925f8af1cd0341ec"
+      },
+      {
+        "file": "dist/renderSnapshot.js",
+        "hash": "2efe4cfb16a1072fe60bea184644d7e69429fcd3c8ef73a2fd36f190974d88d0"
+      },
+      {
+        "file": "dist/resources.js",
+        "hash": "b48c68f53b8c9e2a9d3ba6c24b25fb5b4dbffe96cad801983f169698b8793434"
+      },
+      {
+        "file": "dist/retargetEngine.js",
+        "hash": "ba540de14473a1e80b55f48cb085ef0de50742398c3dcf64fa0084135a6b696a"
+      },
+      {
+        "file": "dist/runtimeCache.js",
+        "hash": "5c226d3ea533bf9169f50041712f534cfd5d0f2e983b0c6df93156ec7d112464"
+      },
+      {
+        "file": "dist/runtimeCurveFit.js",
+        "hash": "890e7c240ba85ccdc0d23482f34e1d2c42802ad191b9778aaa7b1d51efb72611"
+      },
+      {
+        "file": "dist/server.js",
+        "hash": "b265f74a39908de85556a0c72811c382946cc8e8d8eb12fdc7011e1ad7b487ea"
+      },
+      {
+        "file": "dist/sessionTools.js",
+        "hash": "b06ede00d9eee6da10c146065fc99929f10a2efc223458c8a9f70150835a2327"
+      },
+      {
+        "file": "dist/spineJson.js",
+        "hash": "091a48fb5551af53828ea3af3effdb5b4f575150e7da693878ae0704e33da9b2"
+      },
+      {
+        "file": "dist/strictFileChecks.js",
+        "hash": "e6d5c2d47cdb96eda0b54b45163068cc09ee64b513160f66d5233fc44913fecb"
+      },
+      {
+        "file": "dist/taskControl.js",
+        "hash": "658f6078fc0073ee3f3ac19f7797ec7e71971f1904d780b408272c9f756e1852"
+      },
+      {
+        "file": "dist/toolError.js",
+        "hash": "8a03d07193b53497841e24ad63b7d5370699eb8273af64566db895c82f9a75ce"
+      },
+      {
+        "file": "dist/visualRig.js",
+        "hash": "3c0c0b1a6e1fa22aba3d41b0d0a786d11d492f1d3184490add31f36b89e3bad5"
+      },
+      {
+        "file": "dist/workspaceTools.js",
+        "hash": "365d0e1bf5acc900e73e39789b64666fb9ba7ef1ca8d252c1d0ce9cfe8d9ea1a"
+      },
+      {
+        "file": "dist/workspaceTree.js",
+        "hash": "a959986dd6b982d2c0d956137d5361e5dab8153043fee2a9d32018584172d6c6"
+      },
+      {
+        "file": "dist/writerOwnership.js",
+        "hash": "22c21e13e0e1429247bca83de97d3c30d3be29bfa81af680784bc5844ed6539c"
+      },
+      {
+        "file": "node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.min.js",
+        "hash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+      },
+      {
+        "file": "package.json",
+        "hash": "67f5c9d0d38538c3455a7f625e2d6082c73c4e979b11e5c4925b154f2ad47df9"
+      },
+      {
+        "file": "preview/host.html",
+        "hash": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36"
+      }
+    ],
+    "hash": "237d5454b976fccbc33c062cc305e4fc611673e9c5ed5f36c35845c55fb0a488"
+  },
+  "error": "Error: spine_host_open: {\"ok\":false,\"code\":\"PROJECT_BINDING_CONFLICT\",\"message\":\"文档未在根 manifest 或已确认提交记录中登记。\",\"detail\":null,\"error\":{\"code\":\"PROJECT_BINDING_CONFLICT\",\"category\":\"validation\",\"message\":\"文档未在根 manifest 或已确认提交记录中登记。\",\"detail\":null,\"remediation\":null,\"tool\":\"spine_host_open\"}}\n    at call (file:///D:/AI_cc/spine-mcp/.codex-temp/try-npc1-host.mjs:39:28)\n    at async file:///D:/AI_cc/spine-mcp/.codex-temp/try-npc1-host.mjs:66:13",
+  "mechanicsPassed": false
+}

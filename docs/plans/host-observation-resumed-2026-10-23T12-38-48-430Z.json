@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-23T12:38:48.430Z",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "frozenInstall": "D:/AI_cc/spine test/host-observation-builds/c1-2026-10-23T10-22-13-507Z",
+  "pid": 51012,
+  "endpoint": "http://127.0.0.1:39895",
+  "observation": {
+    "running": true,
+    "runId": "8e0a98ea-1000-49e0-bf42-ff4c747fa043",
+    "file": ".spine-mcp/observation/runs/8e0a98ea-1000-49e0-bf42-ff4c747fa043.jsonl",
+    "samples": 1,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "writeMode": "observer",
+  "publicWriteEnabled": false,
+  "previousUncleanRunPreserved": true,
+  "launch": "Windows Start-Process -WindowStyle Hidden",
+  "note": "中断不补时；原会话无正常结束，原因未知，须纳入长期观察评审。"
+}

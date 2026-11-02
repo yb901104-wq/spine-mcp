@@ -1,0 +1,1838 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T14:41:59.428Z",
+  "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "reportPath": "docs/plans/creation-completion-trial-2026-10-26T14-41-59-426Z.json",
+  "bodyOnly": true,
+  "formalAnimationDelivered": false,
+  "editorImport": "notRun",
+  "secondCharacter": "notAvailable",
+  "publicWriteEnabled": false,
+  "calls": [
+    {
+      "tool": "spine_register_workspace",
+      "durationMs": 12.53489999999988,
+      "textBytes": 392,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 796.3755999999998,
+      "textBytes": 984,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 491.21579999999994,
+      "textBytes": 484247,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "a0dbf90b-9899-4758-8b53-68eb8c996513",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 39.82269999999971,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "a0dbf90b-9899-4758-8b53-68eb8c996513",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_inspect_character_preparation",
+      "durationMs": 96.27649999999994,
+      "textBytes": 14720,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "a0dbf90b-9899-4758-8b53-68eb8c996513",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_calibrate_arm_perspective",
+      "durationMs": 546.6122999999998,
+      "textBytes": 8127,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 376.6356999999998,
+      "textBytes": 46847,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "38fdda65-5be7-41a1-aab3-2df063d64a02",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 32.0648999999994,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "38fdda65-5be7-41a1-aab3-2df063d64a02",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_build_motion_from_poses",
+      "durationMs": 274.2338,
+      "textBytes": 593,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "38fdda65-5be7-41a1-aab3-2df063d64a02",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_commit",
+      "durationMs": 369.6821,
+      "textBytes": 832,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+        "openEpoch": "38fdda65-5be7-41a1-aab3-2df063d64a02",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 638.5000999999993,
+      "textBytes": 46067,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf",
+        "openEpoch": "50467370-522c-4a2f-826c-fb0fce9af30f",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_pin",
+      "durationMs": 32.36540000000059,
+      "textBytes": 359,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf",
+        "openEpoch": "50467370-522c-4a2f-826c-fb0fce9af30f",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_edit_motion_interval",
+      "durationMs": 913.6310000000003,
+      "textBytes": 24504,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf",
+        "openEpoch": "50467370-522c-4a2f-826c-fb0fce9af30f",
+        "revision": 1
+      }
+    },
+    {
+      "tool": "spine_host_undo",
+      "durationMs": 444.8177999999998,
+      "textBytes": 30320,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf",
+        "openEpoch": "50467370-522c-4a2f-826c-fb0fce9af30f",
+        "revision": 2
+      }
+    },
+    {
+      "tool": "spine_host_redo",
+      "durationMs": 514.5944999999992,
+      "textBytes": 30319,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf",
+        "openEpoch": "50467370-522c-4a2f-826c-fb0fce9af30f",
+        "revision": 3
+      }
+    },
+    {
+      "tool": "spine_host_commit",
+      "durationMs": 151.28890000000047,
+      "textBytes": 837,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+        "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_host_open",
+      "durationMs": 518.9762999999994,
+      "textBytes": 46072,
+      "images": 1,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+        "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+        "revision": 0
+      }
+    },
+    {
+      "tool": "spine_get_creation_task",
+      "durationMs": 130.29609999999957,
+      "textBytes": 37160,
+      "images": 0,
+      "error": false,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+        "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+        "revision": 0
+      }
+    }
+  ],
+  "engineeringOnly": true,
+  "task": {
+    "taskId": "198fde70-8f39-48ec-8757-72dec7074b96",
+    "projectId": "creation-016b1e77-8150-4841-b879-20ddaa04f09b",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T14-41-59-426Z",
+    "inputsFingerprint": "b96433e7a42c1bb9e1092d39b712e701eca1fcc604461557ede2cff97e54aefa"
+  },
+  "tools": {
+    "count": 115,
+    "definitions": [
+      {
+        "name": "spine_edit_motion_interval",
+        "description": "隔离 C2 按闭区间编辑 v2 motion；边界必须已有且保持不变，区间外不移动。内部帧只改已声明参数，关键姿态只能替换已批准修订或调整时间；冲突拒绝。默认 dryRun，实际修改自动重算出图，可撤销，保存使用 spine_host_commit。",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "type": "string"
+            },
+            "expectedRevision": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "sessionId": {
+                  "type": "string"
+                },
+                "documentId": {
+                  "type": "string"
+                },
+                "openEpoch": {
+                  "type": "string"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "sessionId",
+                "documentId",
+                "openEpoch",
+                "revision"
+              ]
+            },
+            "start": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "frames": {
+              "type": "array",
+              "maxItems": 200,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "time": {
+                    "type": "number"
+                  },
+                  "body": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "rotate": {
+                        "type": "number",
+                        "minimum": -180,
+                        "exclusiveMaximum": 180
+                      }
+                    }
+                  },
+                  "head": {
+                    "type": "number",
+                    "minimum": -180,
+                    "exclusiveMaximum": 180
+                  },
+                  "channels": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "maxProperties": 100,
+                    "additionalProperties": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "minProperties": 1,
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        },
+                        "rotate": {
+                          "type": "number",
+                          "minimum": -180,
+                          "exclusiveMaximum": 180
+                        }
+                      }
+                    }
+                  },
+                  "targets": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                      "leftHand": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "angle": {
+                            "type": "number",
+                            "minimum": -180,
+                            "exclusiveMaximum": 180
+                          }
+                        }
+                      },
+                      "rightHand": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "angle": {
+                            "type": "number",
+                            "minimum": -180,
+                            "exclusiveMaximum": 180
+                          }
+                        }
+                      },
+                      "leftFoot": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "angle": {
+                            "type": "number",
+                            "minimum": -180,
+                            "exclusiveMaximum": 180
+                          }
+                        }
+                      },
+                      "rightFoot": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "angle": {
+                            "type": "number",
+                            "minimum": -180,
+                            "exclusiveMaximum": 180
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "time"
+                ],
+                "anyOf": [
+                  {
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "head"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "channels"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "targets"
+                    ]
+                  }
+                ]
+              }
+            },
+            "keyPoses": {
+              "type": "array",
+              "maxItems": 200,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "stageId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "posePath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "time": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "stageId"
+                ],
+                "anyOf": [
+                  {
+                    "required": [
+                      "posePath"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "time"
+                    ]
+                  }
+                ]
+              }
+            },
+            "dryRun": {
+              "type": "boolean",
+              "default": true
+            },
+            "responseDetail": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ],
+              "default": "summary",
+              "description": "Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。"
+            }
+          },
+          "required": [
+            "expectedRevision",
+            "start",
+            "end"
+          ],
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "required": [
+                "frames"
+              ]
+            },
+            {
+              "required": [
+                "keyPoses"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "spine_calibrate_arm_perspective",
+        "description": "生成独立单臂世界投影校准与干净样本图；需已批准基准姿态和 visualRig。upper/lower 为世界段长比，局部 scale 由 runtime 求解。3–25 个明确样本（含 1/1 基准），宽度未校准保持 1。默认 dryRun，不批准、不改 Spine JSON。正式使用前逐个取得真实 player 图并独立审查。",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "type": "string"
+            },
+            "calibrationPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dryRun": {
+              "type": "boolean",
+              "default": true
+            },
+            "posePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bendDirection": {
+              "enum": [
+                -1,
+                1
+              ],
+              "description": "新校准固定的解剖弯曲分支；局部修正不能改变。省略沿用已确认基准。"
+            },
+            "limb": {
+              "enum": [
+                "leftArm",
+                "rightArm"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "samples": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 25,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "upper": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "lower": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "widthUpper": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 2
+                  },
+                  "widthLower": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 2
+                  },
+                  "target": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "angle": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "angle"
+                    ]
+                  },
+                  "body": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "rotate": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "rotate"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "upper",
+                  "lower",
+                  "target"
+                ]
+              }
+            },
+            "responseDetail": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ],
+              "default": "summary",
+              "description": "Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。"
+            }
+          },
+          "required": [
+            "posePath",
+            "calibrationPath",
+            "limb",
+            "basis",
+            "samples"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "spine_review_arm_perspective",
+        "description": "独立审查单臂校准：逐个核验真实 player 样本、切片连接、末端方向、连续性、范围及深度依据。旧诊断批准不迁移；默认 dryRun，批准记录新建且绑定校准字节。未通过仍禁止正式透视。",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "type": "string"
+            },
+            "calibrationPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dryRun": {
+              "type": "boolean",
+              "default": true
+            },
+            "calibrationHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "decision": {
+              "enum": [
+                "approved",
+                "rejected"
+              ]
+            },
+            "reviewedBy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "samples": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 25,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sampleId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "manifestPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "sampleId",
+                  "manifestPath"
+                ]
+              }
+            },
+            "checkResults": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "sliceConnections": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "unverifiable"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "reason"
+                  ]
+                },
+                "endDirection": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "unverifiable"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "reason"
+                  ]
+                },
+                "continuity": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "unverifiable"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "reason"
+                  ]
+                },
+                "range": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "unverifiable"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "reason"
+                  ]
+                },
+                "depthEvidence": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "unverifiable"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "reason"
+                  ]
+                }
+              }
+            },
+            "responseDetail": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ],
+              "default": "summary",
+              "description": "Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。"
+            }
+          },
+          "required": [
+            "calibrationPath",
+            "calibrationHash",
+            "decision",
+            "reviewedBy",
+            "reason",
+            "samples",
+            "checkResults"
+          ],
+          "additionalProperties": false
+        }
+      }
+    ]
+  },
+  "launch": {
+    "type": "creation-host-ready",
+    "endpoint": "http://127.0.0.1:36873",
+    "projectId": "creation-016b1e77-8150-4841-b879-20ddaa04f09b",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T14-41-59-426Z",
+    "profile": "c2-pose",
+    "publicWriteEnabled": false
+  },
+  "preparation": {
+    "characterId": "npc1",
+    "version": {
+      "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+      "documentId": "5ed92618b2df44e80ca4861f218af8bd0cb3b9508f171af46f6e3a2ff59080a3",
+      "openEpoch": "a0dbf90b-9899-4758-8b53-68eb8c996513",
+      "revision": 0
+    },
+    "sourceFingerprint": "84363ddcf80a3048f78fd3870f80bba279b95549a6828fd308a445b8936a6c76",
+    "mappingStatus": "confirmed",
+    "calibration": {
+      "scale": 47.736149493599534,
+      "lengths": {
+        "leftLeg": [
+          27.140000781696795,
+          24.47138163892644
+        ],
+        "rightLeg": [
+          22.589778495422177,
+          21.271138071153654
+        ],
+        "leftArm": [
+          29.04055792281354,
+          17.512744005196218
+        ],
+        "rightArm": [
+          27.530524861863864,
+          23.000784649311054
+        ]
+      },
+      "origin": [
+        0,
+        0
+      ]
+    },
+    "mappingReportHash": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc",
+    "visualRig": {
+      "reviewed": true,
+      "issue": null,
+      "nodes": {
+        "leftShoulder": {
+          "type": "boneLocal",
+          "bone": "zs1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftElbow": {
+          "type": "boneLocal",
+          "bone": "zs2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftWrist": {
+          "type": "boneLocal",
+          "bone": "zs3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "leftHip": {
+          "type": "boneLocal",
+          "bone": "zt1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "leftKnee": {
+          "type": "boneLocal",
+          "bone": "zt2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "leftAnkle": {
+          "type": "boneLocal",
+          "bone": "zt3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightShoulder": {
+          "type": "boneLocal",
+          "bone": "ys1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightElbow": {
+          "type": "boneLocal",
+          "bone": "ys2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightWrist": {
+          "type": "boneLocal",
+          "bone": "ys3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "rightHip": {
+          "type": "boneLocal",
+          "bone": "yt1",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "rightKnee": {
+          "type": "boneLocal",
+          "bone": "yt2",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.55
+        },
+        "rightAnkle": {
+          "type": "boneLocal",
+          "bone": "yt3",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "body": {
+          "type": "boneLocal",
+          "bone": "bone2",
+          "point": [
+            0.2700029161853355,
+            11.67000000000003
+          ],
+          "calibrated": true,
+          "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "head": {
+          "type": "boneLocal",
+          "bone": "tou",
+          "point": [
+            32.16751571248424,
+            -2.767297098290246
+          ],
+          "calibrated": true,
+          "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+          "confidence": 0.8
+        },
+        "face": {
+          "type": "boneLocal",
+          "bone": "zui",
+          "point": [
+            0,
+            0
+          ],
+          "calibrated": true,
+          "confidence": 0.7,
+          "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。"
+        }
+      },
+      "segments": {
+        "leftArm.0": {
+          "nodes": [
+            "leftShoulder",
+            "leftElbow"
+          ],
+          "bones": [
+            "zs1"
+          ],
+          "attachments": [
+            {
+              "slot": "zs1",
+              "attachment": "zs1"
+            }
+          ]
+        },
+        "leftArm.1": {
+          "nodes": [
+            "leftElbow",
+            "leftWrist"
+          ],
+          "bones": [
+            "zs2"
+          ],
+          "attachments": [
+            {
+              "slot": "zs2",
+              "attachment": "zs2"
+            }
+          ]
+        },
+        "leftLeg.0": {
+          "nodes": [
+            "leftHip",
+            "leftKnee"
+          ],
+          "bones": [
+            "zt1"
+          ],
+          "attachments": [
+            {
+              "slot": "zt1",
+              "attachment": "zt1"
+            }
+          ]
+        },
+        "leftLeg.1": {
+          "nodes": [
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "bones": [
+            "zt2"
+          ],
+          "attachments": [
+            {
+              "slot": "zt1",
+              "attachment": "zt1"
+            }
+          ]
+        },
+        "rightArm.0": {
+          "nodes": [
+            "rightShoulder",
+            "rightElbow"
+          ],
+          "bones": [
+            "ys1"
+          ],
+          "attachments": [
+            {
+              "slot": "ys1",
+              "attachment": "ys1"
+            }
+          ]
+        },
+        "rightArm.1": {
+          "nodes": [
+            "rightElbow",
+            "rightWrist"
+          ],
+          "bones": [
+            "ys2"
+          ],
+          "attachments": [
+            {
+              "slot": "ys2",
+              "attachment": "ys2"
+            }
+          ]
+        },
+        "rightLeg.0": {
+          "nodes": [
+            "rightHip",
+            "rightKnee"
+          ],
+          "bones": [
+            "yt1"
+          ],
+          "attachments": [
+            {
+              "slot": "yt1",
+              "attachment": "yt1"
+            }
+          ]
+        },
+        "rightLeg.1": {
+          "nodes": [
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "bones": [
+            "yt2"
+          ],
+          "attachments": [
+            {
+              "slot": "yt1",
+              "attachment": "yt1"
+            }
+          ]
+        }
+      },
+      "views": [
+        {
+          "basis": "已检查 npc1.png 与切片分解：st 为正面斜视连衣裙、tou配面部/前发；当前资源没有已校准侧背躯干替换。",
+          "bodySlots": [
+            "st"
+          ],
+          "bodyView": "frontThreeQuarter",
+          "attachments": {
+            "st": "st",
+            "tf1": "tf1",
+            "tou": "tou",
+            "yj2": "yj2",
+            "yj1": "yj1"
+          }
+        }
+      ]
+    },
+    "inheritance": [
+      {
+        "name": "root",
+        "parent": null,
+        "transform": "normal"
+      },
+      {
+        "name": "zong",
+        "parent": "root",
+        "transform": "normal"
+      },
+      {
+        "name": "bone2",
+        "parent": "zong",
+        "transform": "normal"
+      },
+      {
+        "name": "bone3",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone4",
+        "parent": "bone3",
+        "transform": "normal"
+      },
+      {
+        "name": "tou",
+        "parent": "bone4",
+        "transform": "normal"
+      },
+      {
+        "name": "yj2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "yj1",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "mm2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "mm1",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "zui",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "ys1",
+        "parent": "bone4",
+        "transform": "noRotationOrReflection"
+      },
+      {
+        "name": "ys2",
+        "parent": "ys1",
+        "transform": "normal"
+      },
+      {
+        "name": "ys3",
+        "parent": "ys2",
+        "transform": "normal"
+      },
+      {
+        "name": "zs1",
+        "parent": "bone4",
+        "transform": "noRotationOrReflection"
+      },
+      {
+        "name": "zs2",
+        "parent": "zs1",
+        "transform": "normal"
+      },
+      {
+        "name": "zs3",
+        "parent": "zs2",
+        "transform": "normal"
+      },
+      {
+        "name": "yt1",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "yt2",
+        "parent": "yt1",
+        "transform": "normal"
+      },
+      {
+        "name": "yt3",
+        "parent": "yt2",
+        "transform": "normal"
+      },
+      {
+        "name": "zt1",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "zt2",
+        "parent": "zt1",
+        "transform": "normal"
+      },
+      {
+        "name": "zt3",
+        "parent": "zt2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou2",
+        "parent": "tou",
+        "transform": "normal"
+      },
+      {
+        "name": "tou3",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou4",
+        "parent": "tou3",
+        "transform": "normal"
+      },
+      {
+        "name": "tou5",
+        "parent": "tou4",
+        "transform": "normal"
+      },
+      {
+        "name": "tou6",
+        "parent": "tou5",
+        "transform": "normal"
+      },
+      {
+        "name": "tou7",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou8",
+        "parent": "tou7",
+        "transform": "normal"
+      },
+      {
+        "name": "tou9",
+        "parent": "tou8",
+        "transform": "normal"
+      },
+      {
+        "name": "tou10",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou11",
+        "parent": "tou10",
+        "transform": "normal"
+      },
+      {
+        "name": "tou12",
+        "parent": "tou11",
+        "transform": "normal"
+      },
+      {
+        "name": "tou13",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou14",
+        "parent": "tou13",
+        "transform": "normal"
+      },
+      {
+        "name": "tou15",
+        "parent": "tou14",
+        "transform": "normal"
+      },
+      {
+        "name": "tou16",
+        "parent": "tou15",
+        "transform": "normal"
+      },
+      {
+        "name": "tou17",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou18",
+        "parent": "tou17",
+        "transform": "normal"
+      },
+      {
+        "name": "tou19",
+        "parent": "tou18",
+        "transform": "normal"
+      },
+      {
+        "name": "tou20",
+        "parent": "tou19",
+        "transform": "normal"
+      },
+      {
+        "name": "tou21",
+        "parent": "tou2",
+        "transform": "normal"
+      },
+      {
+        "name": "tou22",
+        "parent": "tou21",
+        "transform": "normal"
+      },
+      {
+        "name": "tou23",
+        "parent": "tou22",
+        "transform": "normal"
+      },
+      {
+        "name": "bone5",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone6",
+        "parent": "bone5",
+        "transform": "normal"
+      },
+      {
+        "name": "bone7",
+        "parent": "bone6",
+        "transform": "normal"
+      },
+      {
+        "name": "bone8",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone9",
+        "parent": "bone8",
+        "transform": "normal"
+      },
+      {
+        "name": "bone10",
+        "parent": "bone2",
+        "transform": "normal"
+      },
+      {
+        "name": "bone11",
+        "parent": "bone10",
+        "transform": "normal"
+      },
+      {
+        "name": "bd1",
+        "parent": "bone4",
+        "transform": "normal"
+      }
+    ],
+    "constraints": {
+      "ik": [],
+      "transform": [],
+      "path": []
+    },
+    "missing": [],
+    "approved": false,
+    "note": "只汇总已核实绑定；该报告本身不批准角色、视角或动作范围。",
+    "_images": []
+  },
+  "application": {
+    "name": "spine-json-mcp",
+    "version": "0.2.0",
+    "kind": "compiled",
+    "buildFingerprint": "93c3f6e26804c348bba99127b801fa56fcd036c44ee435a12d15582141ac7b8d",
+    "moduleCount": 99,
+    "profile": "c2-pose",
+    "trial": {
+      "isolated": true,
+      "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+      "recovery": [],
+      "resume": false
+    }
+  },
+  "calibration": {
+    "ok": true,
+    "dryRun": false,
+    "calibrationPath": "trial/left-arm-world.calibration.json",
+    "calibrationHash": "ccf581fe3751f8dd86b44051630015bf49c71a1fac80eb9e0424a77c82b67c5b",
+    "samples": [
+      {
+        "id": "projection-0",
+        "input": {
+          "upper": 1,
+          "lower": 1,
+          "widthUpper": 1,
+          "widthLower": 1,
+          "basis": ""
+        },
+        "frame": {
+          "body": {
+            "x": 0,
+            "y": 0.67,
+            "rotate": 0
+          },
+          "targets": {
+            "leftHand": {
+              "x": 0.45,
+              "y": 1.5,
+              "angle": -80
+            }
+          }
+        },
+        "numeric": {
+          "mode": "calibration",
+          "diagnosticOnly": true,
+          "experimental": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 1,
+          "lower": 1,
+          "calibrationHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ok": true,
+          "error": 0.00024075587878847495,
+          "angleError": 0.000004803041065315483,
+          "projectionError": 0.000009874047232738548,
+          "branchOk": true,
+          "iterations": 16,
+          "reason": "converged",
+          "residual": [
+            -0.0000016444344773706389,
+            0.000004775199570828057,
+            0.0000046798537846320474,
+            0.0000036224467466484518
+          ],
+          "actualLengths": [
+            29.040781315886626,
+            17.512916718855493
+          ],
+          "actualRatios": [
+            1.0000076926276869,
+            1.0000098740472327
+          ],
+          "localScales": [
+            1.000007695007952,
+            1.000009416935518
+          ],
+          "worldWidths": [
+            0.999999999787189,
+            1.0000073041853563
+          ],
+          "endNorm": [
+            1.000000007398895,
+            0.9999999926011033
+          ],
+          "note": "世界投影由 runtime 求解与回读；缩短不推断前后。正式使用仍需当前参考、实际切片、连续性和姿态审查。"
+        },
+        "imagePath": "trial/left-arm-world.calibration.json.samples/0.png"
+      },
+      {
+        "id": "projection-1",
+        "input": {
+          "upper": 0.85,
+          "lower": 0.85,
+          "widthUpper": 1,
+          "widthLower": 1,
+          "basis": ""
+        },
+        "frame": {
+          "body": {
+            "x": 0,
+            "y": 0.67,
+            "rotate": 0
+          },
+          "targets": {
+            "leftHand": {
+              "x": 0.40049825371686937,
+              "y": 1.6066996376553027,
+              "angle": -80
+            }
+          }
+        },
+        "numeric": {
+          "mode": "calibration",
+          "diagnosticOnly": true,
+          "experimental": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 0.85,
+          "lower": 0.85,
+          "calibrationHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ok": true,
+          "error": 0.00025003712078894405,
+          "angleError": 0.000004787464604305569,
+          "projectionError": 0.000010091725365368731,
+          "branchOk": true,
+          "iterations": 17,
+          "reason": "converged",
+          "residual": [
+            0.0000018303190447198695,
+            -0.00000490222930789176,
+            -0.000004970830473036646,
+            -0.000003702305332002275
+          ],
+          "actualLengths": [
+            24.68423694172718,
+            14.885655493815861
+          ],
+          "actualRatios": [
+            0.8499918290720437,
+            0.8499899082746346
+          ],
+          "localScales": [
+            0.849985559005472,
+            0.8592852975748544
+          ],
+          "worldWidths": [
+            0.9999999997925597,
+            0.8608934145170256
+          ],
+          "endNorm": [
+            1.000000007398895,
+            0.9999999926011034
+          ],
+          "note": "世界投影由 runtime 求解与回读；缩短不推断前后。正式使用仍需当前参考、实际切片、连续性和姿态审查。"
+        },
+        "imagePath": "trial/left-arm-world.calibration.json.samples/1.png"
+      },
+      {
+        "id": "projection-2",
+        "input": {
+          "upper": 0.7,
+          "lower": 0.7,
+          "widthUpper": 1,
+          "widthLower": 1,
+          "basis": ""
+        },
+        "frame": {
+          "body": {
+            "x": 0,
+            "y": 0.67,
+            "rotate": 0
+          },
+          "targets": {
+            "leftHand": {
+              "x": 0.35099650743373884,
+              "y": 1.7133992753106053,
+              "angle": -80
+            }
+          }
+        },
+        "numeric": {
+          "mode": "calibration",
+          "diagnosticOnly": true,
+          "experimental": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 0.7,
+          "lower": 0.7,
+          "calibrationHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ok": true,
+          "error": 0.00012442262667019673,
+          "angleError": 0.000004761042646350688,
+          "projectionError": 0.000004895526214299117,
+          "branchOk": true,
+          "iterations": 20,
+          "reason": "converged",
+          "residual": [
+            -9.612698390671979e-7,
+            0.0000024253204328500093,
+            0.000002502041842974503,
+            0.000001795999410579042
+          ],
+          "actualLengths": [
+            20.32850998022419,
+            12.259006392133589
+          ],
+          "actualRatios": [
+            0.7000041127943826,
+            0.7000048955262143
+          ],
+          "localScales": [
+            0.6999901186333796,
+            0.7202892158983463
+          ],
+          "worldWidths": [
+            0.999999999800601,
+            0.73362738642473
+          ],
+          "endNorm": [
+            1.000000007398895,
+            0.9999999926011033
+          ],
+          "note": "世界投影由 runtime 求解与回读；缩短不推断前后。正式使用仍需当前参考、实际切片、连续性和姿态审查。"
+        },
+        "imagePath": "trial/left-arm-world.calibration.json.samples/2.png"
+      },
+      {
+        "id": "projection-3",
+        "input": {
+          "upper": 0.55,
+          "lower": 0.55,
+          "widthUpper": 1,
+          "widthLower": 1,
+          "basis": ""
+        },
+        "frame": {
+          "body": {
+            "x": 0,
+            "y": 0.67,
+            "rotate": 0
+          },
+          "targets": {
+            "leftHand": {
+              "x": 0.3014947611506083,
+              "y": 1.820098912965908,
+              "angle": -80
+            }
+          }
+        },
+        "numeric": {
+          "mode": "calibration",
+          "diagnosticOnly": true,
+          "experimental": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 0.55,
+          "lower": 0.55,
+          "calibrationHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ok": true,
+          "error": 0.00018341792410023848,
+          "angleError": 0.000004712108989224362,
+          "projectionError": 0.000007075239897957886,
+          "branchOk": true,
+          "iterations": 25,
+          "reason": "converged",
+          "residual": [
+            -0.0000014778188497927779,
+            0.000003548261104614867,
+            0.000003719354475105781,
+            0.00000259566104430861
+          ],
+          "actualLengths": [
+            15.97248440238896,
+            9.632132995321474
+          ],
+          "actualRatios": [
+            0.5500061137827226,
+            0.550007075239898
+          ],
+          "localScales": [
+            0.5499817533707921,
+            0.5840601447512792
+          ],
+          "worldWidths": [
+            0.9999999998128617,
+            0.6332841817892567
+          ],
+          "endNorm": [
+            1.000000007398895,
+            0.9999999926011033
+          ],
+          "note": "世界投影由 runtime 求解与回读；缩短不推断前后。正式使用仍需当前参考、实际切片、连续性和姿态审查。"
+        },
+        "imagePath": "trial/left-arm-world.calibration.json.samples/3.png"
+      }
+    ],
+    "sheetPath": "trial/left-arm-world.calibration.json.samples/sheet.png",
+    "approved": false,
+    "nextAction": {
+      "tool": "spine_review_arm_perspective",
+      "instruction": "逐个加载 calibration 样本并取得真实 player 截图，再独立核对切片连接、末端方向和连续范围；生成样本不产生正式批准。"
+    },
+    "_images": []
+  },
+  "sampleCaptures": [],
+  "visual": {
+    "decision": "notRun",
+    "reason": "真实页面自动权限审核超时；本次只验证工程数值，不以 Canvas 图或模拟页面代替真实验收。"
+  },
+  "intervalImages": [
+    {
+      "path": "output/reports/creation-2026-10-26T14-41-59-426Z/interval-middle-0.png",
+      "hash": "c417e392f837584d65cfa5cc2c9f19c42cb3e949c5f76c4faf4d411e09f7ccdf"
+    }
+  ],
+  "interval": {
+    "saved": {
+      "ok": true,
+      "dryRun": false,
+      "committed": true,
+      "switched": true,
+      "version": {
+        "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+        "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+        "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+        "revision": 0
+      },
+      "requestId": "interval-v2-2026-10-26T14-41-59-426Z",
+      "outputPath": "trial/interval-check-v2.motion.json",
+      "backupPath": ".spine-mcp/backups/1a3bc37e01cf200ea7065354f4e5ab6e720d1444802fa62a2e736586a370d5bf/1793025726960-bb1665a1-76f1-43ec-80f2-753c4eb8e234.json",
+      "hashBefore": "066db623d3406a58f8bc09b0916a83a63b8aa563e288f1dbe642c5af0c8a2604",
+      "hashAfter": "fe3f9206899d0955a531261b1d52698ea8d2b5ffbe47e3e02c65bb8c73a46bf5",
+      "candidateHash": "fe3f9206899d0955a531261b1d52698ea8d2b5ffbe47e3e02c65bb8c73a46bf5",
+      "_images": []
+    },
+    "reopenedVersion": {
+      "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+      "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+      "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+      "revision": 0
+    }
+  },
+  "playbackProtocol": {
+    "passed": true,
+    "candidateHash": "a6e3a023836caf0bce863cd64bfbe6e1e72f2cf949a5d47338a812fce94a6079",
+    "version": {
+      "sessionId": "372a98ea-9a9c-4802-8256-dfde90d01fd6",
+      "documentId": "3198d4f45680bfc1286fd2c0f12644d44046dd882e14156ee1e86c8a314cc059",
+      "openEpoch": "36e4a7ea-e931-4e6a-a1e8-f14a563352c1",
+      "revision": 0
+    },
+    "evidenceEligible": false,
+    "visual": "notRun"
+  },
+  "inputsUnchanged": true,
+  "passed": true,
+  "hostStopped": true,
+  "writerReleased": false
+}

@@ -79,6 +79,7 @@ export class HostRollout {
     scope: this.active?.scope ?? null, approvalHash: this.active?.approvalHash ?? null, code: this.code, message: this.reason }; }
   async enableFromApproval(file: string) {
     try {
+      if (this.store.editProfile !== 'c1') throw new HostError('ROLLOUT_SCOPE_MISMATCH', 'C1 人工审批不能启用 C2 研发 profile。', 409);
       const approval = await validateRolloutApproval(file, this.context), authority = await ObservationAuthority.load(this.context, this.protect);
       await writeEvidenceFile(newEvidencePath('reviews'), authority.seal({ kind: 'host-rollout-audit', action: 'enable-requested', approvalHash: approval.approvalHash, at: Date.now() }), this.context);
       await this.store.enableWriting(); this.active = approval;

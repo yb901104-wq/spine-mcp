@@ -1,0 +1,350 @@
+{
+  "scope": "实际编译版 MCP tools/list；仅保存本批新改声明，名称列表供数量核对。",
+  "toolCount": 112,
+  "names": [
+    "spine_agent_ping",
+    "spine_agent_get_connection_status",
+    "spine_get_document_summary",
+    "spine_inspect_character",
+    "spine_validate_mapping",
+    "spine_create_mapping_draft",
+    "spine_calibrate_mapping",
+    "spine_confirm_mapping",
+    "spine_validate_motion",
+    "spine_retarget_motion",
+    "spine_extract_motion",
+    "spine_validate_motion_result",
+    "spine_fit_animation_curves",
+    "spine_batch_retarget",
+    "spine_get_official_spec_summary",
+    "spine_get_skeleton_hierarchy",
+    "spine_get_slots",
+    "spine_get_skins",
+    "spine_get_animations",
+    "spine_get_animation_timelines",
+    "spine_get_animation_sheet",
+    "spine_create_animation",
+    "spine_clone_animation",
+    "spine_delete_animation",
+    "spine_set_bone_keyframe",
+    "spine_set_slot_attachment_keyframe",
+    "spine_set_draw_order_keyframe",
+    "spine_shift_keyframes",
+    "spine_scale_keyframe_times",
+    "spine_delete_keyframe_range",
+    "spine_copy_keyframe_range",
+    "spine_apply_pose_keyframes",
+    "spine_apply_pose_sequence",
+    "spine_offset_bone_timeline_values",
+    "spine_make_loop",
+    "spine_remove_keyframe",
+    "spine_validate_json",
+    "spine_preview_get_config",
+    "spine_preview_check_assets",
+    "spine_preview_get_url",
+    "spine_runtime_validate",
+    "spine_run_validation_pipeline",
+    "spine_list_backups",
+    "spine_restore_backup",
+    "spine_preview_set_session",
+    "spine_preview_get_session",
+    "spine_preview_clear_session",
+    "spine_render_animation_frames",
+    "spine_render_contact_sheet",
+    "spine_render_animation_gif",
+    "spine_create_preview_manifest",
+    "spine_compare_animation_previews",
+    "spine_list_workspaces",
+    "spine_register_workspace",
+    "spine_get_workspace_info",
+    "spine_select_workspace",
+    "spine_create_project",
+    "spine_calibrate_visual_rig",
+    "spine_review_visual_rig",
+    "spine_validate_pose_sequence",
+    "spine_refine_reference_pose",
+    "spine_retarget_reference_pose",
+    "spine_compare_pose_graphs",
+    "spine_create_reference_pose",
+    "spine_render_reference_pose_sheet",
+    "spine_review_reference_pose",
+    "spine_upgrade_reference_pose",
+    "spine_get_pose_state",
+    "spine_recheck_pose",
+    "spine_explain_pose",
+    "spine_set_pose_target",
+    "spine_set_pose_channel",
+    "spine_batch_pose_ops",
+    "spine_create_pose_draft",
+    "spine_solve_pose",
+    "spine_adjust_pose",
+    "spine_render_pose_comparison",
+    "spine_review_pose",
+    "spine_build_motion_from_poses",
+    "spine_review_animation",
+    "spine_render_animation_comparison",
+    "spine_analyze_reference_parts",
+    "spine_set_curve",
+    "spine_get_preview_report",
+    "spine_analyze_reference_gif",
+    "spine_extract_reference_keyframes",
+    "spine_set_foot_target",
+    "spine_lock_foot_contact",
+    "spine_set_hand_target",
+    "spine_adjust_body_motion",
+    "spine_adjust_step_length",
+    "spine_adjust_arm_swing",
+    "spine_resume_diagnostic_pose",
+    "spine_host_open",
+    "spine_preview_state",
+    "spine_preview_frame",
+    "spine_preview_capture",
+    "spine_host_pin",
+    "spine_host_patch",
+    "spine_host_commit",
+    "spine_host_undo",
+    "spine_host_redo",
+    "spine_start_creation_task",
+    "spine_get_creation_task",
+    "spine_select_creation_stage",
+    "spine_create_pose_sequence",
+    "spine_get_tool_catalog",
+    "spine_set_tool_groups",
+    "spine_inspect_character_preparation",
+    "spine_precheck_pose",
+    "spine_adjust_pose_intent",
+    "spine_get_workspace_tree"
+  ],
+  "definitions": [
+    {
+      "name": "spine_retarget_reference_pose",
+      "description": "按已审查参考及动作级身份适配。隔离 C2 attached 需完整 expectedRevision；成功时暂存新资产。失败默认报告，显式 diagnosticMode:newStage 可预演/打开独立内存阶段，源绑定不变；未知必要点只保留部分诊断。失败无保存授权，仍需独立视觉审查。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "工作区解析优先级：显式 projectId > 用户当前选择 > 客户端 roots > SPINE_MCP_WORKSPACE > cwd；roots 通知不覆盖用户选择。"
+          },
+          "expectedRevision": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sessionId": {
+                "type": "string"
+              },
+              "documentId": {
+                "type": "string"
+              },
+              "openEpoch": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "sessionId",
+              "documentId",
+              "openEpoch",
+              "revision"
+            ]
+          },
+          "referencePosePath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "visualRigPath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "standardPosePath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "posePath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "sequencePath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "stageId": {
+            "type": "string"
+          },
+          "correspondence": {
+            "type": "object",
+            "description": "目标 left/right 对应参考 left/right；basis、anatomicalIdentity、projectedOrder 必须明确。"
+          },
+          "facing": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right"
+            ]
+          },
+          "time": {
+            "type": "number",
+            "minimum": 0
+          },
+          "id": {
+            "type": "string"
+          },
+          "weapon": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "angle": {
+                    "type": "number"
+                  },
+                  "grips": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "left": {
+                        "type": "number"
+                      },
+                      "right": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "left",
+                      "right"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "angle",
+                  "grips"
+                ]
+              }
+            ]
+          },
+          "headFromReference": {
+            "type": "boolean",
+            "default": false,
+            "description": "仅在已确认面部锚点可用时从参考适配头部方向。"
+          },
+          "weaponFromReference": {
+            "type": "boolean",
+            "default": false,
+            "description": "按已确认参考握轴生成假想杆；不替代实际握持审查。"
+          },
+          "diagnosticMode": {
+            "type": "string",
+            "enum": [
+              "report",
+              "newStage"
+            ],
+            "default": "report",
+            "description": "newStage 仅限隔离 C2 attached：参考失败时预演或显式打开独立内存阶段，不改变原文档绑定；默认 report 保持原诊断行为。"
+          },
+          "reportPath": {
+            "type": "string",
+            "description": "工作区根目录内的 Spine JSON 文件路径。"
+          },
+          "detailed": {
+            "type": "boolean",
+            "default": false,
+            "description": "默认返回节点和切片摘要，完整顶点/权重保存在报告中。"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "default": true
+          },
+          "responseDetail": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。"
+          }
+        },
+        "required": [
+          "referencePosePath",
+          "visualRigPath",
+          "standardPosePath",
+          "posePath"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "spine_resume_diagnostic_pose",
+      "description": "显式恢复独立诊断草稿；默认 dryRun 先列来源、哈希和差异。仅隔离 C2 Host，已有活动文档时必须完整版本。实际恢复采用新 openEpoch，清除旧求解、截图准入、pin 和批准；失败仍不能保存为正式资产。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "diagnosticId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "expectedRevision": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sessionId": {
+                "type": "string"
+              },
+              "documentId": {
+                "type": "string"
+              },
+              "openEpoch": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "sessionId",
+              "documentId",
+              "openEpoch",
+              "revision"
+            ]
+          },
+          "dryRun": {
+            "type": "boolean",
+            "default": true,
+            "description": "默认只预演；false 才改变内存/历史或请求真实提交。"
+          },
+          "responseDetail": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。"
+          }
+        },
+        "required": [
+          "diagnosticId"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

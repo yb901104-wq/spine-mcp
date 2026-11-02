@@ -1,0 +1,8 @@
+{
+  "startedAt": "2026-10-23T19:27:44.209Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-27-44-206Z",
+  "scope": "实际 WinForms/WebView2、只读 Host、合成 region 夹具；不是真实美术动作或 MCP 审查截图验收。",
+  "error": "已有写入者或锁状态不明；不得因超时、TTL 或端口离线接管。",
+  "passed": false,
+  "finishedAt": "2026-10-23T19:27:46.090Z"
+}

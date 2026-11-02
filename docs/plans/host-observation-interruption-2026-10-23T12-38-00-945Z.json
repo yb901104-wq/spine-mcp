@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-23T12:38:00.945Z",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "frozenInstall": "D:/AI_cc/spine test/host-observation-builds/c1-2026-10-23T10-22-13-507Z",
+  "pid": 47648,
+  "instanceId": "9c2cde17-01ee-4b1a-914e-00321ce834f0",
+  "processConfirmedDead": true,
+  "writerAbsent": true,
+  "lastSampleAt": "2026-10-23T10:33:21.185Z",
+  "lastSampleCandidateMatches": true,
+  "lastSampleBindingMatches": true,
+  "lastSampleFalsePositive": false,
+  "cleanStop": false,
+  "cause": "unknown",
+  "preservedRun": ".spine-mcp/observation/runs/a535b951-8975-4dbf-af2a-26f1c8e4603e.jsonl",
+  "action": "只退役已确认死亡且实例匹配的发现/控制文件；原日志/索引未改，中断不补时。"
+}

@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-23T12:39:50.353Z",
+  "stage": "C2-1 / C2-2",
+  "sourceVersion": "0.2.0",
+  "scope": "隔离 c2-pose profile：身体/头部/声明通道/手脚目标原子批次及既有附件/完整 drawOrder；不含角色动画提交。",
+  "developmentCandidateHash": "329f006b21700f25da51c6a794a094c1f952785a4d1e91bf23d6325024ae89d8",
+  "codeHashes": {
+    "src/hostPosePatch.ts": "2e9e601d561c5506bc361d77245140c4e77439e7e4ebbe296a66681e61d0d064",
+    "src/hostEditorStore.ts": "95872025ee6b914b3718b9ed99c7b23bc35ea3bd7d37506123516616f84fd6a3",
+    "src/hostDocumentStore.ts": "d2a7a1c47dfe06011f7dbc4630a8c3f0ae770b19c2d639ea6f99d4229e379eb5",
+    "src/hostReadiness.ts": "ee8af36052b9b855baf978601c8cc396210de9190e5df80dde943c7e85dd9de8",
+    "src/hostServer.ts": "81029b7a13ba633955b1ab39787f3f8fd337a589a706c820619a6db1ce18194e",
+    "src/hostTools.ts": "60a6e53b50ac20b0a87b72d02bfae28e922431e0b96da3aa725bfdd2abb4f0d1",
+    "src/hostRollout.ts": "1e6d09503fb963d4a4f562456c985c53af3abbbf8a75316a4bbff1e5969981ba",
+    "src/posePresentation.ts": "d3f8049a30a580cda9cd5b54ba9c36d3bbdf3177b5e6dc02b5c9d352c79af3b4",
+    "src/hostEvaluator.ts": "de90023f339bc12f14797a54037b9256ff405118d2c860467d8aff3413c9f063",
+    "test/hostC2Pose.test.ts": "938566a19c7aecdc967a6f14430447009144283d4d693fa75cf0a992b15e194c",
+    "test/hostC2Presentation.test.ts": "0abcc949863e7773b78f8c90c89ccef38895c608c5d8fba4695110759be5ae6b"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 169,
+    "pass": 169,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 28865.0737
+  },
+  "focused": {
+    "tests": 9,
+    "pass": 9,
+    "files": [
+      "test/hostC2Pose.test.ts",
+      "test/hostC2Presentation.test.ts"
+    ]
+  },
+  "checks": [
+    "默认 dryRun 内存/栈/revision/journal/资产不变",
+    "全批失败无部分应用，重复路径/非法字段/非有限数/绑定与支撑改变拒绝",
+    "实际 MCP stdio 101 工具、扩展 schema 和参数/呈现混合批次、PNG 回传",
+    "新通道补齐完整 x/y/rotate，runtime 回读 body/通道与 head 增量",
+    "附件/隐藏/层序与官方 runtime/live 实际回读一致，最大误差 <=1e-4",
+    "所选皮肤与 default 回退、规范转义插槽名、非全集/重复层序/缺失附件拒绝",
+    "整批 undo/redo、journal 恢复、C1 拒绝 C2 扩展历史",
+    "备份/新草稿/幂等/重开，源 JSON/setup/skins/atlas/PNG 不变",
+    "C1 审批不能授予 C2，HTTP 无 profile 切换入口"
+  ],
+  "buildRepairs": [
+    "补齐新增构造函数的 ToolContext 类型导入",
+    "呈现 schema 改用同源构造函数避免 TypeScript 联合对象推断出 undefined 字段；未放宽 runtime schema"
+  ],
+  "publicToolCount": 101,
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "developmentEntry": "仅程序内隔离构造；无生产命令行/HTTP 切换入口",
+  "publicWriteEnabled": false,
+  "wholeC2Accepted": false,
+  "realArtVisualApproved": false,
+  "realPlayerArtEvidenceCollected": false,
+  "editorImportPassed": false,
+  "c1Observation": {
+    "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+    "frozen": "host-observation-frozen-2026-10-23T10-22-21-057Z.json",
+    "interrupted": "host-observation-interruption-2026-10-23T12-38-00-945Z.json",
+    "resumed": "host-observation-resumed-2026-10-23T12-38-48-430Z.json",
+    "verification": "host-observation-frozen-verification-2026-10-23T12-38-49-036Z.json",
+    "unexpectedExitCause": "unknown",
+    "interruptedTimeCredited": false,
+    "publicWriteEnabled": false
+  },
+  "remaining": [
+    "C2-3 motion/skeleton 的 animation/time、当前派生、frame/capture 和跨文档恢复",
+    "C2-4 高级创作附着适配与动画提交、完整动画/第二真实角色/编辑器导入",
+    "真实 C2 美术视觉/player 验收和实际工作负载性能",
+    "C1 原候选编辑性能逐轮波动、真实两周稳定观察及未知进程退出原因核验、人工启用评审"
+  ],
+  "note": "9 项新增测试为机械/协议夹具，不代表真实美术验收。C1 固定版与当前 C2 开发候选严格分开，不继承审批或长期观察通过结论。"
+}

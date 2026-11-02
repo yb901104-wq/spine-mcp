@@ -1,5 +1,45 @@
 # 官方 JSON 规范审查
 
+
+末端补偿可能需要局部 scale 大于 1，以维持同一世界手部尺寸；仅当前校准的三段臂链内部回放范围可接受，数值仍核验世界段长比、末端方向及投影误差，不能当成世界放大或新视角。未校准诊断和其它骨骼不扩权。motion 根清单校验与资产登记统一：已声明 stageId 必须精确匹配；未绑定参考阶段的普通站姿可作为多个 motion 位置，不能虚构参考阶段绑定。
+## 2026-10-26：投影校准与 motion 修订
+
+校准和审查记录是独立元数据，不是 Spine 导出；MCP 仍只允许 4.1.24 动画时间线写入。正式单臂求解的纵向/横向及末端补偿只导出受控 bones.scale 时间线，不修改 setup、mapping、skins、mesh/deform 或 constraints。upper/lower 是 runtime 实际世界投影，不能把局部 scale 当作世界比例。姿态 player 回放必须回读同一骨骼矩阵及切片顶点。
+
+motion 区间修订保留标准与关键姿态来源，重新执行共享 poseGate；正式生成仍复用现有官方规范、白名单、结构引用、完整 runtime 拟合和视觉/导入流程。新增 scale 采样同样经过原曲线生成/规范审查，末帧不能带 curve，不能凭自然语言添加任意控制点。尚未通过真实校准审查或初始准备姿态的候选不能据此制作正式原参考完整动画。
+
+2026-10-27：受限 `arm_projection_trial` 精确候选 `cca0418d67a6e93cec604af68714233186cc19bc37adabb3f7fc26c0d5c622e4` 经本机官方 4.1.24 导入并保存为非空 `.spine`，输入哈希未变；证据见专项汇总。它使用新批准的固定范围，不代表原 GIF 或编辑器画面/贴图通过。黄金帧重新登记只绑定当前回放代码，原 PNG、捕获及资源不改，不改变官方导出规则。
+
+2026-10-26 独立诊断续建：内存姿态及恢复 journal 均不是 Spine 导出资产；原 setup/骨架/皮肤/约束和源 JSON 不改。通过门禁另存姿态时，提交索引记录精确新绑定与受管来源、保留诊断基线备份；正式 Spine 动画仍走原单动画规范审查。参考弯曲分支计算抽为同源函数供初始化校验复用，公式/阈值不变；局部修正及恢复不修改该分支。
+
+2026-10-26 参考准备续建：`spine_create_pose_sequence` 写的是动作级参考元数据，不是 Spine 导出 JSON；不修改 timeline schema、curve 规则或官方版本边界。校验与原 `spine_validate_pose_sequence` 共享同一入口，引用节点/身份/支撑/视角必须通过。新序列仅在全新隔离清单登记，不允许借此修改角色 setup、约束、皮肤或源动画；正式动画写入继续走原规范、diff、备份和唯一 Writer 门禁。
+
+## 2026-10-26 独立编辑器验证与比较策略
+
+本轮新增创作任务/元数据和受控姿态入口，没有扩大 Spine 4.1.24 的可写时间线、setup/constraints/events 边界或 curve 规则。比较策略 v4 属于参考观测语义：腕位、站距、握距统一躯干归一，阈值数值不放宽；旧策略文件/证据保留，旧比较批准须重验，不称作官方 JSON 格式变更。
+
+`scripts/verify-spine-editor-import.mjs` 独立读取 MCP 生成的候选，先核对 SHA-256、4.1.24 版本及原结构/官方 JSON 审查，再调用本机已缓存的官方 4.1.24，将其导入新产物目录的 `.spine`。已有输出拒绝覆盖，输入 JSON 不改，许可身份不进入报告。依据 [官方 CLI Import](https://esotericsoftware.com/spine-command-line-interface#Import)，导入创建编辑器工程；成功只证明本次精确候选的解析/保存，不代替贴图显示、动作视觉或原 GIF 完整动画。失败仍先恢复最近确认可用输入再重新制作，不在错误 JSON 上修补。
+
+2026-10-25 透视诊断沿用已有 Spine 4.1.24 `animations/*/bones/*/scale` 白名单，没有新增 setup/网格/约束写入。高层单臂输入输出 setup 相对的 x/y 倍率，Host 静态 live 写入两帧相同 scale，不生成 curve 数组，仍经官方 schema、结构引用及完整 runtime 回读；诊断结果不能提交源动画。4.1 官方 runtime 的 [ScaleTimeline](https://github.com/EsotericSoftware/spine-runtimes/blob/4.1/spine-ts/spine-core/src/Animation.ts) 按 setup scale 相乘，与回放保持同义。非等比父缩放的 IK 限制参见 [官方 IK 说明](https://en.esotericsoftware.com/spine-ik-constraints)，当前是自有 runtime 拟合，不修改官方 IK constraints。[范围与实测](身体部件观测与透视缩放-20261025.md)。
+
+2026-10-24 state/取帧性能优化仅改变严格只读 I/O 编排和已核验 runtime 的计算复用，不新增可写 timeline、版本适配或 curve 规则。一次查询固定真实根、逐目标核验身份，提交仍逐阶段重新核验，不能使用 state 批次充当写入门禁。完整 203 项回归保留官方 JSON、单动画白名单、末帧 curve 与只读结构反例；实际 player 优化前后像素一致不代表 Spine 编辑器导入。
+
+2026-10-24 C2-4c：完整拟合抽为共用 `prepareSemanticAnimationData`，detached 与隔离 Host 的 MCP 计算同源。候选审查 `auditGeneratedAnimationCandidate` 严格要求源 4.1.24、显式覆盖、仅目标动画变更，复用原 diff 白名单、官方规范及结构引用校验；setup、其它动画、末帧 curve 和原型保留名称等反例拒绝。未新增可写 schema、版本绕过或宽松误差门限。runtime 除原至少 337 个均匀样本外还检查每个显式关键时刻，极短帧不能逃过手/脚/顶点误差检查；继续复核实际关键时间参考关系。现有拟合器的精确导出曲线沿用原算法，不允许 Agent 自由写 curve 数组。
+
+整动画覆盖也必须保留 V1 只读的 events/deform/约束及未开放 timeline，不能借整动画替换顺带删除；单动画只读残留不一致直接拒绝。源提交只发布上述精确候选，当前 player、完整动画视觉、数值/runtime 及 Spine 编辑器导入分别报告。mapping 校准原字节不修改；Host 后续认可带已确认 journal、严格来源备份及固定 mapping/报告哈希的单动画来源链，普通校准规则仍严格。构建与 198 项回归通过不代表编辑器导入；尚无本批真实 Spine 导入结论。下列旧批次范围按日期保留。
+
+2026-10-24 C2-4b 保存独立 pose/motion 领域资产并登记跨类型来源，不增加 Spine 源 JSON、timeline 或 curve 可写范围。skeleton asset pin 只允许创建另一文件，源 patch/动画提交仍拒绝；motion 资产不代表 Spine 动画写入。参考候选重验数值及实际视觉节点关系，失败不授权，成功 draft 仍需独立视觉审查。motion 观察和未来 C2-4c 导出继续执行原结构/官方规范/runtime 门禁，4.1.24 边界及最后一帧 curve 规则保持。
+
+C2-4b 计算基础（2026-10-23）未增加 timeline/curve 可写 schema、版本适配或官方依据。变化在姿态/motion 领域前置审查：生成与复核共用完整阶段、standing 标准、角色/地面与 action 标准绑定，防止只修改动作级记录便绕过原姿态批准；内存输入同样重新验证。既有 Host motion 观察仍检查 poseGate.ok 后才生成候选，并保留结构、官方规范及 runtime 门禁。内部 Data 入口无资产写入和授权能力，4.1.24 写入边界保持。
+
+C2-4a 的 target/channel/batch/adjust 仅映射到原 Host pose 参数/呈现补丁，候选仍由 MCP 按原结构、官方规范与 runtime 回读门禁生成。没有新增可写 timeline、curve 或源 setup/skins 修改，也不签发动画提交令牌。detached 的原输出路径/版本写入规则保留；motion poseWorkflow 的失败返回现显式拒绝，防止未通过姿态审查被当作候选生成前置条件已满足。规范门限和 4.1.24 写入边界不变。
+
+## 2026-10-23 C2 隔离 pose 呈现入口
+
+C2-3 新增只读 motion/skeleton 观察候选：MCP 将当前 skeleton 快照或 v2 motion 的既有 dense 线性导出写入 live，不改源文件；不凭空生成 curve 数组，不扩大 4.1.24 动画时间线写入范围。生成后完整经过结构/官方规范检查，再由匹配 4.1 runtime 采样；Host 发布及 player 截图分别核对骨骼、顶点、附件与层序。非 4.1 只读结构，不加载不匹配 runtime。当前 previewOnly 是采样观察，不能代替完整动画审查、编辑器导入或动画提交授权；poseWorkflow 的原门禁保留。
+
+新增的 `setSlotAttachment`/`setDrawOrder` 只写 pose 参数，不修改 skeleton setup、skins、atlas 或纹理，也未开放角色动画提交。呈现候选复用现有 `presentationTimelines` 生成 `.spine-mcp/live/` 动画，仍经过完整结构/官方规范审查和官方 4.1 runtime 回读，对照骨骼、可见顶点、实际附件及完整 drawOrder。当前皮肤/default 回退引用、null 隐藏、插槽全集唯一排列在内存批次阶段先验证；不扩展可写 timeline 或改变 curve、最后一帧等敏感规则。合成机械通过不代表真实美术或编辑器导入验收。入口 schema 与阶段范围见 [主工单 §5.7.1](plans/host-evolution.md#571-c2-研发增量2026-10-23用户指示开始)。
+
 ## 2026-10-21 Host 只读导出适配
 
 Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后，只在 `.spine-mcp/live/` 生成不可变 player 候选；发布前复用现有结构与官方规范审查，并用官方 runtime 比较骨骼世界变换、附件、完整 drawOrder 与可见顶点，最大误差上限仍为 1e-4。live 文件不是可提交源资产，也不能借此修改 setup。规范字段、曲线敏感规则和 4.1.24 写入边界未放宽。C2 动画提交尚未接入。

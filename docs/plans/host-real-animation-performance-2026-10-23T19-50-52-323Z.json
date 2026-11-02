@@ -1,0 +1,2680 @@
+{
+  "startedAt": "2026-10-23T19:50:52.323Z",
+  "desktopEvidence": "docs/plans/host-winforms-2026-10-23T19-46-36-278Z.json",
+  "workspace": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\workspace",
+  "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 HostClient 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；不含 stdio/真实浏览器耗时，不新增动作批准或源写入，不等于完整新动作交付。",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "warmups": 2,
+  "sampleCount": 30,
+  "size": 480,
+  "samples": [
+    {
+      "candidateClientMs": 872.3568999999998,
+      "stateClientMs": 17.24599999999964,
+      "frameClientMs": 23.842499999999745,
+      "stateStart": 3837.4929,
+      "stateEnd": 3854.7389,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 3838.0446,
+          "duration": 0.22369998693466187
+        },
+        {
+          "startTime": 3844.242,
+          "duration": 2.5527999997138977
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 752.4885000000004,
+      "stateClientMs": 12.874800000000505,
+      "frameClientMs": 21.556800000000294,
+      "stateStart": 4763.5043,
+      "stateEnd": 4776.3791,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 4764.0893,
+          "duration": 0.21040001511573792
+        },
+        {
+          "startTime": 4769.2709,
+          "duration": 1.4919999837875366
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 769.8958999999995,
+      "stateClientMs": 26.944099999999708,
+      "frameClientMs": 38.35919999999987,
+      "stateStart": 5701.4413,
+      "stateEnd": 5728.3854,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 5706.024,
+          "duration": 4.72979998588562
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 780.9852000000001,
+      "stateClientMs": 16.58939999999984,
+      "frameClientMs": 23.676300000000083,
+      "stateStart": 6680.4838,
+      "stateEnd": 6697.0732,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 6681.1106,
+          "duration": 0.2581000030040741
+        },
+        {
+          "startTime": 6687.399,
+          "duration": 2.7909999787807465
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 773.7151000000003,
+      "stateClientMs": 31.90190000000075,
+      "frameClientMs": 34.194399999999405,
+      "stateStart": 7622.2143,
+      "stateEnd": 7654.1162,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 7630.5987,
+          "duration": 0.4706999957561493
+        },
+        {
+          "startTime": 7638.8529,
+          "duration": 4.835999995470047
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 909.1731999999993,
+      "stateClientMs": 14.796199999998862,
+      "frameClientMs": 22.080199999998513,
+      "stateStart": 8724.4284,
+      "stateEnd": 8739.2246,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 8724.9702,
+          "duration": 0.24560001492500305
+        },
+        {
+          "startTime": 8730.9062,
+          "duration": 2.61939999461174
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 728.6160999999993,
+      "stateClientMs": 8.396899999999732,
+      "frameClientMs": 20.96140000000014,
+      "stateStart": 9610.7053,
+      "stateEnd": 9619.1022,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 808.6705000000002,
+      "stateClientMs": 44.630199999999604,
+      "frameClientMs": 37.85139999999956,
+      "stateStart": 10582.2993,
+      "stateEnd": 10626.9295,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 10583.1502,
+          "duration": 21.34189999103546
+        },
+        {
+          "startTime": 10604.9263,
+          "duration": 5.097399979829788
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 834.6970999999994,
+      "stateClientMs": 8.71429999999964,
+      "frameClientMs": 26.112100000000282,
+      "stateStart": 11632.6801,
+      "stateEnd": 11641.3944,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 731.6988000000001,
+      "stateClientMs": 16.521600000000035,
+      "frameClientMs": 21.6257999999998,
+      "stateStart": 12525.6893,
+      "stateEnd": 12542.2109,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 12528.196,
+          "duration": 0.24009999632835388
+        },
+        {
+          "startTime": 12532.8445,
+          "duration": 3.4632999897003174
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 716.8829000000005,
+      "stateClientMs": 10.693600000000515,
+      "frameClientMs": 22.452800000000934,
+      "stateStart": 13415.5849,
+      "stateEnd": 13426.2785,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 13417.321,
+          "duration": 1.607800006866455
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 822.014000000001,
+      "stateClientMs": 8.08389999999963,
+      "frameClientMs": 28.75890000000072,
+      "stateStart": 14395.6512,
+      "stateEnd": 14403.7351,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 787.0294999999987,
+      "stateClientMs": 8.532500000001164,
+      "frameClientMs": 26.38010000000031,
+      "stateStart": 15340.9641,
+      "stateEnd": 15349.4966,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 883.4465000000018,
+      "stateClientMs": 8.671000000002095,
+      "frameClientMs": 26.721599999997125,
+      "stateStart": 16389.0552,
+      "stateEnd": 16397.7262,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 734.1959000000024,
+      "stateClientMs": 13.71429999999964,
+      "frameClientMs": 24.8566000000028,
+      "stateStart": 17287.1067,
+      "stateEnd": 17300.821,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 17287.6542,
+          "duration": 0.20159998536109924
+        },
+        {
+          "startTime": 17292.9884,
+          "duration": 1.7303999960422516
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 750.3539999999994,
+      "stateClientMs": 8.439299999998184,
+      "frameClientMs": 25.201499999999214,
+      "stateStart": 18201.2086,
+      "stateEnd": 18209.6479,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 840.1399999999994,
+      "stateClientMs": 13.933899999999994,
+      "frameClientMs": 23.613600000000588,
+      "stateStart": 19210.1356,
+      "stateEnd": 19224.0695,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 19211.9665,
+          "duration": 0.280599981546402
+        },
+        {
+          "startTime": 19217.9575,
+          "duration": 2.6940999925136566
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 767.5922000000028,
+      "stateClientMs": 8.577699999998003,
+      "frameClientMs": 21.206599999997707,
+      "stateStart": 20138.4588,
+      "stateEnd": 20147.0365,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 879.9038,
+      "stateClientMs": 8.54279999999926,
+      "frameClientMs": 21.48989999999685,
+      "stateStart": 21172.8066,
+      "stateEnd": 21181.3494,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 748.266599999999,
+      "stateClientMs": 13.009900000000926,
+      "frameClientMs": 21.40900000000329,
+      "stateStart": 22071.9074,
+      "stateEnd": 22084.9173,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 22072.4449,
+          "duration": 0.20489999651908875
+        },
+        {
+          "startTime": 22078.1916,
+          "duration": 1.6064999997615814
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 714.5591999999997,
+      "stateClientMs": 14.36250000000291,
+      "frameClientMs": 22.175899999998364,
+      "stateStart": 22944.1239,
+      "stateEnd": 22958.4864,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 22945.8295,
+          "duration": 0.2303999960422516
+        },
+        {
+          "startTime": 22951.2311,
+          "duration": 3.2952000200748444
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 744.2114000000001,
+      "stateClientMs": 14.929799999998068,
+      "frameClientMs": 22.000299999999697,
+      "stateStart": 23853.7089,
+      "stateEnd": 23868.6387,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 23854.2476,
+          "duration": 0.21969997882843018
+        },
+        {
+          "startTime": 23860.01,
+          "duration": 3.0947999954223633
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 846.9811000000009,
+      "stateClientMs": 10.014299999998912,
+      "frameClientMs": 25.171699999998964,
+      "stateStart": 24864.252,
+      "stateEnd": 24874.2663,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 852.5695999999989,
+      "stateClientMs": 8.806499999998778,
+      "frameClientMs": 23.066500000000815,
+      "stateStart": 25882.6914,
+      "stateEnd": 25891.4979,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 728.0953999999983,
+      "stateClientMs": 8.622200000001612,
+      "frameClientMs": 27.316200000001118,
+      "stateStart": 26773.0964,
+      "stateEnd": 26781.7186,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 925.8417999999983,
+      "stateClientMs": 9.737699999997858,
+      "frameClientMs": 31.0653999999995,
+      "stateStart": 27862.6954,
+      "stateEnd": 27872.4331,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 734.3256000000001,
+      "stateClientMs": 13.735900000003312,
+      "frameClientMs": 21.627199999998993,
+      "stateStart": 28763.3323,
+      "stateEnd": 28777.0682,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 28764.0677,
+          "duration": 0.26820001006126404
+        },
+        {
+          "startTime": 28769.4988,
+          "duration": 2.416700005531311
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 706.9923999999992,
+      "stateClientMs": 12.063799999999901,
+      "frameClientMs": 20.943699999999808,
+      "stateStart": 29639.6861,
+      "stateEnd": 29651.7499,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 29642.7477,
+          "duration": 0.37400001287460327
+        },
+        {
+          "startTime": 29649.2322,
+          "duration": 1.5376000106334686
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 816.629200000003,
+      "stateClientMs": 8.557300000000396,
+      "frameClientMs": 20.824899999999616,
+      "stateStart": 30609.8459,
+      "stateEnd": 30618.4032,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 798.7042000000001,
+      "stateClientMs": 15.503000000000611,
+      "frameClientMs": 23.831099999999424,
+      "stateStart": 31572.7888,
+      "stateEnd": 31588.2918,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/74c8fae3-36a4-429d-88f8-bc4f4de878d5/b22a1bf56beb42040dcdc3bd3c510b6bbcd1f68443d629872e85b647e29d292d/reports/e02d602426008eed7dd65d02df4222436975d49875ce1a20a7420b6b78776ca9.json",
+      "overlappingGc": [
+        {
+          "startTime": 31574.5593,
+          "duration": 0.22339999675750732
+        },
+        {
+          "startTime": 31581.4276,
+          "duration": 2.8391000032424927
+        }
+      ]
+    }
+  ],
+  "publicWriteEnabled": false,
+  "diagnosticTracing": true,
+  "formalPerformanceEvidence": false,
+  "build": {
+    "schema": 1,
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "files": [
+      {
+        "file": "node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.min.js",
+        "hash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+      },
+      {
+        "file": "package.json",
+        "hash": "67f5c9d0d38538c3455a7f625e2d6082c73c4e979b11e5c4925b154f2ad47df9"
+      },
+      {
+        "file": "preview/host.html",
+        "hash": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36"
+      },
+      {
+        "file": "src/actionSemantics.ts",
+        "hash": "e5af027e9529b229cd3e71eac992a66eaf6546ea7af525dfc5d83229bb7254fb"
+      },
+      {
+        "file": "src/agentConfigTools.ts",
+        "hash": "9ee0590f0da673268919cb0bfcd2049c4fc3a116291a5734cb46768f2ef27c28"
+      },
+      {
+        "file": "src/agentConnectionMonitor.ts",
+        "hash": "edf5b4a78351e4f36a7bd7dd7a9686aa967fbb0e969b3943a2b6175d815fa7e9"
+      },
+      {
+        "file": "src/agentTools.ts",
+        "hash": "f2e638f889c8c4dc66114a187ad5fe39a4c8d933614b966d634580773bbd74ee"
+      },
+      {
+        "file": "src/animationCommands.ts",
+        "hash": "785cd3bfb2cb4a3438395c1cd1ef1dba1146a757b85a7986eb71f6bdb34b37be"
+      },
+      {
+        "file": "src/animationKernel.ts",
+        "hash": "bf6ac4106128d6cb14e78d8a677ad3ddbac13fef562d991f4d6bd6181ac56171"
+      },
+      {
+        "file": "src/animationReview.ts",
+        "hash": "d3f8fa6b6a681f4dc05fa3d2e838430891eb633084360f3cd51571ded40fc5c9"
+      },
+      {
+        "file": "src/backupTools.ts",
+        "hash": "0c4c23a123b6b84f7fed308d79fca8fd91646262bc79dcb1461e8452b5765a09"
+      },
+      {
+        "file": "src/captureEvidence.ts",
+        "hash": "ed8311c14a3d7bdc0453c9198c696c985724978ebfc6522cae03303cd0222955"
+      },
+      {
+        "file": "src/domainFingerprints.ts",
+        "hash": "2749d501390dbc04a5a8bdd26e8e6a5957ba99cdcd3eb4e95f3a41cc66fa16cf"
+      },
+      {
+        "file": "src/goldenValidation.ts",
+        "hash": "cf7960e5c7db100c4f88edb840104983123645d74040e6a80a087a089ae89d52"
+      },
+      {
+        "file": "src/hostAnimationBundle.ts",
+        "hash": "12c87d75923208b1dde822ad56d2788a29cfa6f5eb548f697d78eae8cdcb96d2"
+      },
+      {
+        "file": "src/hostAnimationCandidate.ts",
+        "hash": "b3a931889875bb52fb9fa2ed1d83342e24331e91c5f8c99021cca0b221640a6d"
+      },
+      {
+        "file": "src/hostAnimationCommit.ts",
+        "hash": "086aa854455f66b136d295a4b8bf84ef36cc9ce0807536e2eb87766f036a85c3"
+      },
+      {
+        "file": "src/hostAnimationEvaluator.ts",
+        "hash": "225c2792c77d97e7f359ef3d20e3665af819f3e5c325f2f183d3f8452e944f5e"
+      },
+      {
+        "file": "src/hostAnimationMapping.ts",
+        "hash": "b88c6be65722608ebeedf930d4a04277d753f17a9d3fb078e2bce85ba0d045e9"
+      },
+      {
+        "file": "src/hostAnimationReview.ts",
+        "hash": "441ceefb1110e4a0f8b874d84b2ac40a6b130799b71c6049c0eae0c63129730b"
+      },
+      {
+        "file": "src/hostAnimationSession.ts",
+        "hash": "01ab6c97698f0f26f52a7f803a011cbf0f391490c34aac794f20a880c16b19f3"
+      },
+      {
+        "file": "src/hostAssetBinding.ts",
+        "hash": "321e99752300f866112eab8d6339595409f895f39ea2ec055a86aaf037e4936d"
+      },
+      {
+        "file": "src/hostAssetCommands.ts",
+        "hash": "1ac9b264254bd3ec788f5429d99cc828d2c9ea4a02a65bdcdb703a03b8f1cc64"
+      },
+      {
+        "file": "src/hostCapture.ts",
+        "hash": "bb8f2b1240d5d026117d1f6e2c16a9209327ed075464c01153bcecb36cc765ab"
+      },
+      {
+        "file": "src/hostClient.ts",
+        "hash": "8d50f110511d05708dfb4baa1cb386546b538ce6f4c299eb81d30f3c9a378031"
+      },
+      {
+        "file": "src/hostContracts.ts",
+        "hash": "95e44c46fc5cd212a7a61f1d6a16e086a67a7beff3ec97f755405e8f61a0e545"
+      },
+      {
+        "file": "src/hostDocumentStore.ts",
+        "hash": "77e2438867c3d602c480b90e5eb01b2e0cad267c4537cc63e251da95927dfd0e"
+      },
+      {
+        "file": "src/hostEditorStore.ts",
+        "hash": "7d13d934affcb359654527a9f17eb249ec44535dd1eb7693ad611af6c2f9ebba"
+      },
+      {
+        "file": "src/hostEvaluationTasks.ts",
+        "hash": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963"
+      },
+      {
+        "file": "src/hostEvaluator.ts",
+        "hash": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121"
+      },
+      {
+        "file": "src/hostFileProtection.ts",
+        "hash": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc"
+      },
+      {
+        "file": "src/hostJournal.ts",
+        "hash": "6cdf2be0156b70250b14214508e2d9274af81b3fe5435a280e0b365961500d0e"
+      },
+      {
+        "file": "src/hostLifecycle.ts",
+        "hash": "f189706e87b562a64828f3899079fe203c337fadf67216f916e3afd182956595"
+      },
+      {
+        "file": "src/hostObservation.ts",
+        "hash": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8"
+      },
+      {
+        "file": "src/hostObservationCatalog.ts",
+        "hash": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b"
+      },
+      {
+        "file": "src/hostObservationCli.ts",
+        "hash": "a8de834d3880b9c1b88bc43d358486a87682dba189688deb67d2cbd40bbfdc29"
+      },
+      {
+        "file": "src/hostPlayback.ts",
+        "hash": "9daf344d8aebf810d3a4ca60dd4eada9e86a216f7682a1a9dc09222a81cac622"
+      },
+      {
+        "file": "src/hostPose.ts",
+        "hash": "f4eae59eb06619567df8770956013e2fdd27ac8564effd0449c0228f40eae656"
+      },
+      {
+        "file": "src/hostPoseCommands.ts",
+        "hash": "d978b77e2271efda80ae149f22fb4fe380dd2485bccaa5583cb02d5fc2f93345"
+      },
+      {
+        "file": "src/hostPosePatch.ts",
+        "hash": "2e9e601d561c5506bc361d77245140c4e77439e7e4ebbe296a66681e61d0d064"
+      },
+      {
+        "file": "src/hostPoseReview.ts",
+        "hash": "1960c469a54a7fd8577737df03f7289457e046d3159624de6b54d04e39353f08"
+      },
+      {
+        "file": "src/hostReadiness.ts",
+        "hash": "830b6589438ee3f5c843cc559ab2b73d2716a0d3d1daeaf9f2f767ef2f17dcc0"
+      },
+      {
+        "file": "src/hostReleaseEvidence.ts",
+        "hash": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13"
+      },
+      {
+        "file": "src/hostRollout.ts",
+        "hash": "1e6d09503fb963d4a4f562456c985c53af3abbbf8a75316a4bbff1e5969981ba"
+      },
+      {
+        "file": "src/hostServer.ts",
+        "hash": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd"
+      },
+      {
+        "file": "src/hostTools.ts",
+        "hash": "eb44d7bede2d04925d550b48665b07d87757f3dd82a4c0bba9fbe2ed5d16d43c"
+      },
+      {
+        "file": "src/imageModules.d.ts",
+        "hash": "eedf14aa3e7334d492dacd9ef62f4c44d559a73f7073e758d0eade458fda8b08"
+      },
+      {
+        "file": "src/jobTools.ts",
+        "hash": "8d10c0a14668e3920bfc97870aed311c93663d1286279287fd6e3f4807d2397c"
+      },
+      {
+        "file": "src/mappingTools.ts",
+        "hash": "1a7589d8f29381c754ad89f43afc4ab24bff22c8f8c43ab15e2cdf5434812951"
+      },
+      {
+        "file": "src/motionAdjustmentTools.ts",
+        "hash": "bc352a46d691b9b2951f16052ab3ee631ae719e82fc9a216b6d74ac79f405cef"
+      },
+      {
+        "file": "src/motionEngine.ts",
+        "hash": "fbcbfd1c84f774689b8f294b9c5e1bfae0e004ebb300da5abe1ac7b7cbae6644"
+      },
+      {
+        "file": "src/motionMath.ts",
+        "hash": "5a866afc283d6888b3cbf63bc727531f4444402d0d19881a2ea479d0aa3f0249"
+      },
+      {
+        "file": "src/motionRuntime.ts",
+        "hash": "abb5cff49222ef53ca34f51fd17fd59a1548b5bbe6b8e61cf3054fdf23c28c17"
+      },
+      {
+        "file": "src/poseDigest.ts",
+        "hash": "e785b758d413a9f020d5935949cea584c4738ead5c8c83f0d2ccea5e95aa217d"
+      },
+      {
+        "file": "src/poseGraph.ts",
+        "hash": "504dd08477847d50fc04680cafa6e1de05dddbb6f8dde4e0a62bd13873b7336d"
+      },
+      {
+        "file": "src/poseOps.ts",
+        "hash": "ec48dc3a558bb36e9ae3a852c433ae32a7aa57d372ed01d187b558d4dc1b0d10"
+      },
+      {
+        "file": "src/posePresentation.ts",
+        "hash": "d3f8049a30a580cda9cd5b54ba9c36d3bbdf3177b5e6dc02b5c9d352c79af3b4"
+      },
+      {
+        "file": "src/poseRefinementMath.ts",
+        "hash": "166090b4d2556ab1d3756cd5ec01d324d52f4253ffad653f5ef485dfd36e0467"
+      },
+      {
+        "file": "src/poseRefinementTasks.ts",
+        "hash": "b3cf8e476f754e2f7a519774b5150bcdc8c7bf2efbc2429b03126a1e5318b8b1"
+      },
+      {
+        "file": "src/poseSchemas.ts",
+        "hash": "55473d16acbdee69ce0b180a6805469ffc8f4ad070c4b810aab0a85274afcb48"
+      },
+      {
+        "file": "src/poseSequence.ts",
+        "hash": "e20b8e5b9730fdf39bf9593546c491b251d2c367f1180ffe841f53b5a319edaa"
+      },
+      {
+        "file": "src/poseWorkflow.ts",
+        "hash": "1753e2e20f18e36e1e97834da038b5fbd81662b3bf8ad97a57b510912061689b"
+      },
+      {
+        "file": "src/previewAlpha.ts",
+        "hash": "63ca34c9ca7a4be0946feb28ff594ebb2fcee55e2506021cce3d80c3851797e6"
+      },
+      {
+        "file": "src/previewRenderTools.ts",
+        "hash": "f945d9fdfd52f9888783b673d10040f0883d5e7ab85b9a7e76db47ecc75deaa7"
+      },
+      {
+        "file": "src/previewServer.ts",
+        "hash": "27b4381a11135bf4d5c03bb9ca0e3c1198819fc1d3d011fd85d78e27ab362afd"
+      },
+      {
+        "file": "src/previewTools.ts",
+        "hash": "0dbe00235009149109f84e27bfc22155bf480ee6ae44bb3aab02cfe4115a3a3e"
+      },
+      {
+        "file": "src/projectModel.ts",
+        "hash": "9a4fc04459bef493d97bceb5a6b95df70517f4812f604a199dc876d6cc47784a"
+      },
+      {
+        "file": "src/projectSchema.ts",
+        "hash": "f1afe530e29c31e551ef71ce3da83204e45a8d8a04e2383c84be7b65f0987c9c"
+      },
+      {
+        "file": "src/rasterRenderer.ts",
+        "hash": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d"
+      },
+      {
+        "file": "src/referencePose.ts",
+        "hash": "92c7fc5d8f919ef0d7636252c0243ba310e722281afe6a8c7542517aa18d7006"
+      },
+      {
+        "file": "src/referencePoseRefinement.ts",
+        "hash": "76b2d90c1b925f2914f7e337d43271f68647b6a4d044ecefebf6524214c0900a"
+      },
+      {
+        "file": "src/referenceRetarget.ts",
+        "hash": "00b2493ecdb2376fdfbee7ced67cb8f1fc81ba878c825b14b2c21be77877e7fa"
+      },
+      {
+        "file": "src/referenceRetargetKernel.ts",
+        "hash": "010544696fe0926a29706c063222f7771f6a8d3e934194d2bbcaaf7ad8dda1e4"
+      },
+      {
+        "file": "src/referenceTools.ts",
+        "hash": "fcd0b3a936e875d5b382ca0d487493498327c9c6dd91387ee9a08da5d58cf094"
+      },
+      {
+        "file": "src/renderSnapshot.ts",
+        "hash": "c15e359face0a580e01d6d864198365bd9b65ae5b08acebdd74098cda378c3b9"
+      },
+      {
+        "file": "src/resources.ts",
+        "hash": "d08032d86536d9e0c68a5e02d12195638a030d0ebdbed4023fa958bf1281d18e"
+      },
+      {
+        "file": "src/retargetEngine.ts",
+        "hash": "2c0f6db666b3e86d1a39d79713550abb89e8303ee2b1e405d3b118f1bc834c9f"
+      },
+      {
+        "file": "src/runtimeCache.ts",
+        "hash": "1e63e89dd04ec9f936644d4a9db81c4a2409eb0ad2aa272e0618eac1a0c49f60"
+      },
+      {
+        "file": "src/runtimeCurveFit.ts",
+        "hash": "20003772acd5b56ea8a42c18cf22adca00ce6230bf141f5a108d7a9450c709fe"
+      },
+      {
+        "file": "src/server.ts",
+        "hash": "91e209762b0b0e7ed5a36f81c776abc9860fed255328ddc2403932fcf297fa97"
+      },
+      {
+        "file": "src/sessionTools.ts",
+        "hash": "3fc54a1cd89a960cd25ac48cec26ff17bdd3417ce255ebf5eb6b118ac6b188d4"
+      },
+      {
+        "file": "src/spineJson.ts",
+        "hash": "c21cc43527076a6302224234108fcff326a8a416b0bce739a32d56cc89e65a1e"
+      },
+      {
+        "file": "src/strictFileChecks.ts",
+        "hash": "f9674a5d52d1139871bd4a8d4956cf1fa3043985d3ebc3b63b3634290e7f5aea"
+      },
+      {
+        "file": "src/taskControl.ts",
+        "hash": "5561d01d8ee9b7f109f74331b2a82c11044eadc2cc55d6349144f5a887923b25"
+      },
+      {
+        "file": "src/toolError.ts",
+        "hash": "5fb2cef8ef903d280fd5b6cf086cb281ef58d331382899bda157c6f87834a663"
+      },
+      {
+        "file": "src/visualRig.ts",
+        "hash": "57ce51b47d0fb28c6f93f04f238d3b7a8970d080899f9cf560352cc03f07d0cf"
+      },
+      {
+        "file": "src/workspaceTools.ts",
+        "hash": "0f2c498e10a95a3a5db688adc7157f208742e0c82eb542da1177f74d2809e072"
+      },
+      {
+        "file": "src/workspaceTree.ts",
+        "hash": "ac2b20c8961fc7fd064029300e9e724246a0475243beb0e6dd4da42694500752"
+      },
+      {
+        "file": "src/writerOwnership.ts",
+        "hash": "20f7a544ebd88e17b99e78ef5429596d78d7d9cf7ce0671bd34b624be90b3097"
+      }
+    ],
+    "hash": "5f1138a5d3dbdf2c095062d20bc04a4cde0cf00a4bd339970e697ae7f842b671"
+  },
+  "warmupSamples": [
+    {
+      "candidateClientMs": 984.8471000000001,
+      "stateClientMs": 10.80230000000006,
+      "frameClientMs": 23.664200000000164
+    },
+    {
+      "candidateClientMs": 843.1862000000001,
+      "stateClientMs": 10.82510000000002,
+      "frameClientMs": 34.80650000000014
+    }
+  ],
+  "allInputsUnchanged": true,
+  "phases": {
+    "candidateClientMs": {
+      "p50": 773.7151000000003,
+      "p95": 909.1731999999993,
+      "maximum": 925.8417999999983
+    },
+    "stateClientMs": {
+      "p50": 12.063799999999901,
+      "p95": 31.90190000000075,
+      "maximum": 44.630199999999604
+    },
+    "frameClientMs": {
+      "p50": 23.613600000000588,
+      "p95": 37.85139999999956,
+      "maximum": 38.35919999999987
+    }
+  },
+  "budgets": {
+    "stateClientMs": 20,
+    "frameClientMs": 50
+  },
+  "budgetsPassed": false,
+  "mechanicsPassed": true,
+  "gcEvents": [
+    {
+      "startTime": 759.1519,
+      "duration": 2.3505000174045563
+    },
+    {
+      "startTime": 957.1445,
+      "duration": 4.785899996757507
+    },
+    {
+      "startTime": 993.061,
+      "duration": 2.080499976873398
+    },
+    {
+      "startTime": 1003.5183,
+      "duration": 0.6835000216960907
+    },
+    {
+      "startTime": 1011.9051,
+      "duration": 0.5767000019550323
+    },
+    {
+      "startTime": 1026.6588,
+      "duration": 0.6437000036239624
+    },
+    {
+      "startTime": 1035.5132,
+      "duration": 0.4749999940395355
+    },
+    {
+      "startTime": 1043.2116,
+      "duration": 0.17890000343322754
+    },
+    {
+      "startTime": 1049.7431,
+      "duration": 0.19929999113082886
+    },
+    {
+      "startTime": 1056.1235,
+      "duration": 0.14399999380111694
+    },
+    {
+      "startTime": 1062.5913,
+      "duration": 0.17480000853538513
+    },
+    {
+      "startTime": 1092.9197,
+      "duration": 0.8077000081539154
+    },
+    {
+      "startTime": 1113.2652,
+      "duration": 3.6884999871253967
+    },
+    {
+      "startTime": 1141.6994,
+      "duration": 0.5679999887943268
+    },
+    {
+      "startTime": 1228.0619,
+      "duration": 0.28019997477531433
+    },
+    {
+      "startTime": 1233.252,
+      "duration": 2.592600017786026
+    },
+    {
+      "startTime": 1658.1591,
+      "duration": 0.29430001974105835
+    },
+    {
+      "startTime": 1664.1204,
+      "duration": 4.042899996042252
+    },
+    {
+      "startTime": 1773.2789,
+      "duration": 0.227400004863739
+    },
+    {
+      "startTime": 1779.2246,
+      "duration": 2.6019999980926514
+    },
+    {
+      "startTime": 1822.7652,
+      "duration": 0.20099997520446777
+    },
+    {
+      "startTime": 1827.7274,
+      "duration": 1.7001000046730042
+    },
+    {
+      "startTime": 2029.1218,
+      "duration": 2.085299998521805
+    },
+    {
+      "startTime": 2046.3254,
+      "duration": 2.0304000079631805
+    },
+    {
+      "startTime": 2062.5259,
+      "duration": 0.5863000154495239
+    },
+    {
+      "startTime": 2075.0318,
+      "duration": 0.3684000074863434
+    },
+    {
+      "startTime": 2098.6261,
+      "duration": 0.4895000159740448
+    },
+    {
+      "startTime": 2135.4772,
+      "duration": 0.7436000108718872
+    },
+    {
+      "startTime": 2255.6995,
+      "duration": 1.3965000212192535
+    },
+    {
+      "startTime": 2258.8494,
+      "duration": 0.21970000863075256
+    },
+    {
+      "startTime": 2264.3832,
+      "duration": 1.3362999856472015
+    },
+    {
+      "startTime": 2343.1832,
+      "duration": 0.23260000348091125
+    },
+    {
+      "startTime": 2362.6733,
+      "duration": 3.085200011730194
+    },
+    {
+      "startTime": 2569.8623,
+      "duration": 0.2287999987602234
+    },
+    {
+      "startTime": 2575.0086,
+      "duration": 2.637000024318695
+    },
+    {
+      "startTime": 2630.6427,
+      "duration": 0.211899995803833
+    },
+    {
+      "startTime": 2635.177,
+      "duration": 1.8145999908447266
+    },
+    {
+      "startTime": 2776.9598,
+      "duration": 0.22960001230239868
+    },
+    {
+      "startTime": 2782.7316,
+      "duration": 2.2372999787330627
+    },
+    {
+      "startTime": 2823.103,
+      "duration": 0.25619998574256897
+    },
+    {
+      "startTime": 2830.1295,
+      "duration": 1.9178999960422516
+    },
+    {
+      "startTime": 3107.5208,
+      "duration": 2.9879000186920166
+    },
+    {
+      "startTime": 3129.5476,
+      "duration": 1.6076000034809113
+    },
+    {
+      "startTime": 3145.7682,
+      "duration": 0.7445000112056732
+    },
+    {
+      "startTime": 3157.4536,
+      "duration": 0.2125999927520752
+    },
+    {
+      "startTime": 3187.1925,
+      "duration": 0.6710000038146973
+    },
+    {
+      "startTime": 3212.9169,
+      "duration": 0.6588000059127808
+    },
+    {
+      "startTime": 3335.2023,
+      "duration": 2.115799993276596
+    },
+    {
+      "startTime": 3438.7976,
+      "duration": 0.2305000126361847
+    },
+    {
+      "startTime": 3460.3937,
+      "duration": 3.1227000057697296
+    },
+    {
+      "startTime": 3670.6881,
+      "duration": 0.2615000009536743
+    },
+    {
+      "startTime": 3677.0462,
+      "duration": 2.610199987888336
+    },
+    {
+      "startTime": 3729.8802,
+      "duration": 0.20390000939369202
+    },
+    {
+      "startTime": 3734.9516,
+      "duration": 1.5392999947071075
+    },
+    {
+      "startTime": 3838.0446,
+      "duration": 0.22369998693466187
+    },
+    {
+      "startTime": 3844.242,
+      "duration": 2.5527999997138977
+    },
+    {
+      "startTime": 4020.7267,
+      "duration": 0.20320001244544983
+    },
+    {
+      "startTime": 4028.4439,
+      "duration": 2.0139999985694885
+    },
+    {
+      "startTime": 4089.6552,
+      "duration": 1.665699988603592
+    },
+    {
+      "startTime": 4105.2487,
+      "duration": 1.2947999835014343
+    },
+    {
+      "startTime": 4117.6061,
+      "duration": 0.8355000019073486
+    },
+    {
+      "startTime": 4130.3026,
+      "duration": 0.28440001606941223
+    },
+    {
+      "startTime": 4159.0105,
+      "duration": 2.06139999628067
+    },
+    {
+      "startTime": 4161.1964,
+      "duration": 0.21789997816085815
+    },
+    {
+      "startTime": 4169.294,
+      "duration": 1.6057000160217285
+    },
+    {
+      "startTime": 4370.5523,
+      "duration": 2.8048000037670135
+    },
+    {
+      "startTime": 4373.6565,
+      "duration": 0.20080000162124634
+    },
+    {
+      "startTime": 4396.7274,
+      "duration": 1.8375000059604645
+    },
+    {
+      "startTime": 4640.5768,
+      "duration": 0.28139999508857727
+    },
+    {
+      "startTime": 4649.4026,
+      "duration": 2.9455999732017517
+    },
+    {
+      "startTime": 4703.4903,
+      "duration": 0.21480000019073486
+    },
+    {
+      "startTime": 4708.4669,
+      "duration": 2.7612999975681305
+    },
+    {
+      "startTime": 4764.0893,
+      "duration": 0.21040001511573792
+    },
+    {
+      "startTime": 4769.2709,
+      "duration": 1.4919999837875366
+    },
+    {
+      "startTime": 4956.7059,
+      "duration": 0.22369998693466187
+    },
+    {
+      "startTime": 4966.8102,
+      "duration": 2.368699997663498
+    },
+    {
+      "startTime": 5023.6721,
+      "duration": 1.6306000053882599
+    },
+    {
+      "startTime": 5048.2324,
+      "duration": 1.0577999949455261
+    },
+    {
+      "startTime": 5099.7152,
+      "duration": 0.8849999904632568
+    },
+    {
+      "startTime": 5192.8061,
+      "duration": 0.2687000036239624
+    },
+    {
+      "startTime": 5198.3782,
+      "duration": 2.565500020980835
+    },
+    {
+      "startTime": 5322.7697,
+      "duration": 0.22999998927116394
+    },
+    {
+      "startTime": 5328.4816,
+      "duration": 2.7083999812602997
+    },
+    {
+      "startTime": 5510.0431,
+      "duration": 0.23970001935958862
+    },
+    {
+      "startTime": 5515.816,
+      "duration": 1.9612999856472015
+    },
+    {
+      "startTime": 5554.6882,
+      "duration": 0.22280001640319824
+    },
+    {
+      "startTime": 5560.3438,
+      "duration": 1.5672999918460846
+    },
+    {
+      "startTime": 5697.8407,
+      "duration": 0.3508000075817108
+    },
+    {
+      "startTime": 5706.024,
+      "duration": 4.72979998588562
+    },
+    {
+      "startTime": 5910.8957,
+      "duration": 0.2556000053882599
+    },
+    {
+      "startTime": 5919.3239,
+      "duration": 1.9417999982833862
+    },
+    {
+      "startTime": 6000.3678,
+      "duration": 1.814300000667572
+    },
+    {
+      "startTime": 6023.1996,
+      "duration": 1.2008000016212463
+    },
+    {
+      "startTime": 6074.3299,
+      "duration": 0.8966000080108643
+    },
+    {
+      "startTime": 6151.3382,
+      "duration": 0.2508000135421753
+    },
+    {
+      "startTime": 6157.381,
+      "duration": 2.7166999876499176
+    },
+    {
+      "startTime": 6291.6655,
+      "duration": 0.33079999685287476
+    },
+    {
+      "startTime": 6302.2994,
+      "duration": 2.658399999141693
+    },
+    {
+      "startTime": 6552.4088,
+      "duration": 0.23339998722076416
+    },
+    {
+      "startTime": 6558.797,
+      "duration": 3.0999999940395355
+    },
+    {
+      "startTime": 6681.1106,
+      "duration": 0.2581000030040741
+    },
+    {
+      "startTime": 6687.399,
+      "duration": 2.7909999787807465
+    },
+    {
+      "startTime": 6861.7457,
+      "duration": 0.22920000553131104
+    },
+    {
+      "startTime": 6871.1977,
+      "duration": 2.1546000242233276
+    },
+    {
+      "startTime": 6947.7491,
+      "duration": 1.777400016784668
+    },
+    {
+      "startTime": 6982.0572,
+      "duration": 0.9147999882698059
+    },
+    {
+      "startTime": 7035.9979,
+      "duration": 0.8731000125408173
+    },
+    {
+      "startTime": 7134.5068,
+      "duration": 0.2388000190258026
+    },
+    {
+      "startTime": 7139.9232,
+      "duration": 2.8431000113487244
+    },
+    {
+      "startTime": 7252.9785,
+      "duration": 0.21470001339912415
+    },
+    {
+      "startTime": 7265.3086,
+      "duration": 2.458099991083145
+    },
+    {
+      "startTime": 7383.695,
+      "duration": 0.2409999966621399
+    },
+    {
+      "startTime": 7403.5621,
+      "duration": 2.3440000116825104
+    },
+    {
+      "startTime": 7630.5987,
+      "duration": 0.4706999957561493
+    },
+    {
+      "startTime": 7638.8529,
+      "duration": 4.835999995470047
+    },
+    {
+      "startTime": 7940.5792,
+      "duration": 0.4674000144004822
+    },
+    {
+      "startTime": 7964.5226,
+      "duration": 10.183700025081635
+    },
+    {
+      "startTime": 8030.8983,
+      "duration": 4.15039998292923
+    },
+    {
+      "startTime": 8083.5768,
+      "duration": 0.932699978351593
+    },
+    {
+      "startTime": 8245.0065,
+      "duration": 3.2551999986171722
+    },
+    {
+      "startTime": 8251.5968,
+      "duration": 0.383400022983551
+    },
+    {
+      "startTime": 8261.2086,
+      "duration": 2.350800007581711
+    },
+    {
+      "startTime": 8407.8161,
+      "duration": 0.25040000677108765
+    },
+    {
+      "startTime": 8428.0927,
+      "duration": 2.7889000177383423
+    },
+    {
+      "startTime": 8615.5675,
+      "duration": 0.23280000686645508
+    },
+    {
+      "startTime": 8620.9074,
+      "duration": 2.743699997663498
+    },
+    {
+      "startTime": 8724.9702,
+      "duration": 0.24560001492500305
+    },
+    {
+      "startTime": 8730.9062,
+      "duration": 2.61939999461174
+    },
+    {
+      "startTime": 8892.8509,
+      "duration": 0.2665000259876251
+    },
+    {
+      "startTime": 8900.5332,
+      "duration": 1.8704000115394592
+    },
+    {
+      "startTime": 8971.924,
+      "duration": 1.8800000250339508
+    },
+    {
+      "startTime": 8994.4491,
+      "duration": 1.1548999845981598
+    },
+    {
+      "startTime": 9045.7908,
+      "duration": 0.8372000157833099
+    },
+    {
+      "startTime": 9120.7194,
+      "duration": 0.25
+    },
+    {
+      "startTime": 9128.0079,
+      "duration": 3.4934000074863434
+    },
+    {
+      "startTime": 9224.681,
+      "duration": 0.2241000235080719
+    },
+    {
+      "startTime": 9245.6871,
+      "duration": 2.89410001039505
+    },
+    {
+      "startTime": 9595.5827,
+      "duration": 0.25679999589920044
+    },
+    {
+      "startTime": 9600.2588,
+      "duration": 3.6084000170230865
+    },
+    {
+      "startTime": 9640.2094,
+      "duration": 0.20149999856948853
+    },
+    {
+      "startTime": 9644.7629,
+      "duration": 1.5489000082015991
+    },
+    {
+      "startTime": 9858.2085,
+      "duration": 2.2697000205516815
+    },
+    {
+      "startTime": 9864.3121,
+      "duration": 0.24420002102851868
+    },
+    {
+      "startTime": 9871.4709,
+      "duration": 2.224500000476837
+    },
+    {
+      "startTime": 9895.6848,
+      "duration": 0.41179999709129333
+    },
+    {
+      "startTime": 9983.6943,
+      "duration": 1.1265000104904175
+    },
+    {
+      "startTime": 10043.0846,
+      "duration": 0.23330000042915344
+    },
+    {
+      "startTime": 10049.1111,
+      "duration": 2.469999998807907
+    },
+    {
+      "startTime": 10158.4934,
+      "duration": 0.3172999918460846
+    },
+    {
+      "startTime": 10167.7917,
+      "duration": 2.5200999975204468
+    },
+    {
+      "startTime": 10360.6926,
+      "duration": 0.23749998211860657
+    },
+    {
+      "startTime": 10367.4471,
+      "duration": 2.473100006580353
+    },
+    {
+      "startTime": 10583.1502,
+      "duration": 21.34189999103546
+    },
+    {
+      "startTime": 10604.9263,
+      "duration": 5.097399979829788
+    },
+    {
+      "startTime": 10665.0595,
+      "duration": 0.2436000108718872
+    },
+    {
+      "startTime": 10669.5875,
+      "duration": 1.684799998998642
+    },
+    {
+      "startTime": 10822.3656,
+      "duration": 0.20159998536109924
+    },
+    {
+      "startTime": 10827.4685,
+      "duration": 1.7615000009536743
+    },
+    {
+      "startTime": 10888.347,
+      "duration": 1.8619000017642975
+    },
+    {
+      "startTime": 10911.0164,
+      "duration": 1.818699985742569
+    },
+    {
+      "startTime": 10964.128,
+      "duration": 0.7724999785423279
+    },
+    {
+      "startTime": 11045.1253,
+      "duration": 0.24480000138282776
+    },
+    {
+      "startTime": 11051.4066,
+      "duration": 4.125900000333786
+    },
+    {
+      "startTime": 11232.8229,
+      "duration": 1.2408000230789185
+    },
+    {
+      "startTime": 11257.2169,
+      "duration": 4.236599981784821
+    },
+    {
+      "startTime": 11614.0427,
+      "duration": 0.24879997968673706
+    },
+    {
+      "startTime": 11618.9086,
+      "duration": 3.5692000091075897
+    },
+    {
+      "startTime": 11660.2711,
+      "duration": 0.2279999852180481
+    },
+    {
+      "startTime": 11665.1242,
+      "duration": 1.6259999871253967
+    },
+    {
+      "startTime": 11863.4779,
+      "duration": 0.22020000219345093
+    },
+    {
+      "startTime": 11872.4778,
+      "duration": 6.183999985456467
+    },
+    {
+      "startTime": 11904.3406,
+      "duration": 0.537200003862381
+    },
+    {
+      "startTime": 11949.304,
+      "duration": 1.2448999881744385
+    },
+    {
+      "startTime": 12056.1602,
+      "duration": 0.26430001854896545
+    },
+    {
+      "startTime": 12062.2175,
+      "duration": 2.530699998140335
+    },
+    {
+      "startTime": 12224.2749,
+      "duration": 0.234499990940094
+    },
+    {
+      "startTime": 12243.976,
+      "duration": 2.8057999908924103
+    },
+    {
+      "startTime": 12528.196,
+      "duration": 0.24009999632835388
+    },
+    {
+      "startTime": 12532.8445,
+      "duration": 3.4632999897003174
+    },
+    {
+      "startTime": 12704.7938,
+      "duration": 0.20640000700950623
+    },
+    {
+      "startTime": 12710.1106,
+      "duration": 1.936900019645691
+    },
+    {
+      "startTime": 12783.4022,
+      "duration": 1.9285999834537506
+    },
+    {
+      "startTime": 12808.5803,
+      "duration": 1.6303000152111053
+    },
+    {
+      "startTime": 12858.525,
+      "duration": 1.3350000083446503
+    },
+    {
+      "startTime": 12916.8321,
+      "duration": 0.21900001168251038
+    },
+    {
+      "startTime": 12923.3105,
+      "duration": 3.3035000264644623
+    },
+    {
+      "startTime": 12999.1332,
+      "duration": 0.2149999737739563
+    },
+    {
+      "startTime": 13039.7628,
+      "duration": 4.0286000072956085
+    },
+    {
+      "startTime": 13354.534,
+      "duration": 0.2191999852657318
+    },
+    {
+      "startTime": 13359.8326,
+      "duration": 3.695800006389618
+    },
+    {
+      "startTime": 13412.3752,
+      "duration": 0.22659999132156372
+    },
+    {
+      "startTime": 13417.321,
+      "duration": 1.607800006866455
+    },
+    {
+      "startTime": 13447.8653,
+      "duration": 0.19949999451637268
+    },
+    {
+      "startTime": 13452.2079,
+      "duration": 1.4342999756336212
+    },
+    {
+      "startTime": 13653.9944,
+      "duration": 1.927700012922287
+    },
+    {
+      "startTime": 13659.5461,
+      "duration": 0.18589997291564941
+    },
+    {
+      "startTime": 13664.8289,
+      "duration": 1.8246000111103058
+    },
+    {
+      "startTime": 13688.1571,
+      "duration": 0.2822999954223633
+    },
+    {
+      "startTime": 13773.3201,
+      "duration": 1.3806999921798706
+    },
+    {
+      "startTime": 13830.4549,
+      "duration": 0.2709999978542328
+    },
+    {
+      "startTime": 13836.0323,
+      "duration": 2.25110000371933
+    },
+    {
+      "startTime": 13923.1902,
+      "duration": 0.2443999946117401
+    },
+    {
+      "startTime": 13944.3561,
+      "duration": 3.228100001811981
+    },
+    {
+      "startTime": 14380.5349,
+      "duration": 0.22310000658035278
+    },
+    {
+      "startTime": 14385.211,
+      "duration": 4.024300009012222
+    },
+    {
+      "startTime": 14412.2188,
+      "duration": 0.19679999351501465
+    },
+    {
+      "startTime": 14423.0821,
+      "duration": 1.6662000119686127
+    },
+    {
+      "startTime": 14576.7105,
+      "duration": 0.3440000116825104
+    },
+    {
+      "startTime": 14582.2489,
+      "duration": 1.510200023651123
+    },
+    {
+      "startTime": 14654.4726,
+      "duration": 1.6435999870300293
+    },
+    {
+      "startTime": 14677.6785,
+      "duration": 1.0468000173568726
+    },
+    {
+      "startTime": 14731.1349,
+      "duration": 0.8991999924182892
+    },
+    {
+      "startTime": 14840.6746,
+      "duration": 0.27790001034736633
+    },
+    {
+      "startTime": 14847.4188,
+      "duration": 2.5847000181674957
+    },
+    {
+      "startTime": 14941.7728,
+      "duration": 0.32260000705718994
+    },
+    {
+      "startTime": 14965.6929,
+      "duration": 3.377499997615814
+    },
+    {
+      "startTime": 15211.858,
+      "duration": 0.21880000829696655
+    },
+    {
+      "startTime": 15217.2338,
+      "duration": 2.402200013399124
+    },
+    {
+      "startTime": 15329.0385,
+      "duration": 0.21199998259544373
+    },
+    {
+      "startTime": 15334.698,
+      "duration": 2.792600005865097
+    },
+    {
+      "startTime": 15357.07,
+      "duration": 0.20479997992515564
+    },
+    {
+      "startTime": 15369.0316,
+      "duration": 1.9016000032424927
+    },
+    {
+      "startTime": 15573.441,
+      "duration": 0.20069998502731323
+    },
+    {
+      "startTime": 15583.3521,
+      "duration": 5.0530000030994415
+    },
+    {
+      "startTime": 15616.6585,
+      "duration": 0.4404999911785126
+    },
+    {
+      "startTime": 15655.8796,
+      "duration": 0.6468999981880188
+    },
+    {
+      "startTime": 15799.1814,
+      "duration": 2.3217999935150146
+    },
+    {
+      "startTime": 15801.7756,
+      "duration": 0.19900000095367432
+    },
+    {
+      "startTime": 15811.6027,
+      "duration": 1.9200000166893005
+    },
+    {
+      "startTime": 15870.7914,
+      "duration": 0.2913999855518341
+    },
+    {
+      "startTime": 15918.606,
+      "duration": 5.696200013160706
+    },
+    {
+      "startTime": 16374.0459,
+      "duration": 0.25459998846054077
+    },
+    {
+      "startTime": 16379.5158,
+      "duration": 3.747600018978119
+    },
+    {
+      "startTime": 16406.1036,
+      "duration": 0.20820000767707825
+    },
+    {
+      "startTime": 16417.9742,
+      "duration": 1.9939000010490417
+    },
+    {
+      "startTime": 16580.8712,
+      "duration": 0.2159000039100647
+    },
+    {
+      "startTime": 16591.2061,
+      "duration": 2.6857999861240387
+    },
+    {
+      "startTime": 16652.607,
+      "duration": 1.5382000207901
+    },
+    {
+      "startTime": 16676.0924,
+      "duration": 1.3382999897003174
+    },
+    {
+      "startTime": 16729.3278,
+      "duration": 0.7705999910831451
+    },
+    {
+      "startTime": 16828.6007,
+      "duration": 0.22769999504089355
+    },
+    {
+      "startTime": 16834.4412,
+      "duration": 2.6931999921798706
+    },
+    {
+      "startTime": 16949.4039,
+      "duration": 0.23900002241134644
+    },
+    {
+      "startTime": 16954.9858,
+      "duration": 2.851700007915497
+    },
+    {
+      "startTime": 17077.1005,
+      "duration": 0.21629998087882996
+    },
+    {
+      "startTime": 17095.7532,
+      "duration": 2.051100015640259
+    },
+    {
+      "startTime": 17156.089,
+      "duration": 0.20170000195503235
+    },
+    {
+      "startTime": 17162.3265,
+      "duration": 1.5722000002861023
+    },
+    {
+      "startTime": 17231.672,
+      "duration": 0.20559999346733093
+    },
+    {
+      "startTime": 17237.3202,
+      "duration": 2.300900012254715
+    },
+    {
+      "startTime": 17287.6542,
+      "duration": 0.20159998536109924
+    },
+    {
+      "startTime": 17292.9884,
+      "duration": 1.7303999960422516
+    },
+    {
+      "startTime": 17460.6906,
+      "duration": 0.22620001435279846
+    },
+    {
+      "startTime": 17467.7056,
+      "duration": 1.7032000124454498
+    },
+    {
+      "startTime": 17540.3944,
+      "duration": 2.0541000068187714
+    },
+    {
+      "startTime": 17563.8241,
+      "duration": 1.3872999846935272
+    },
+    {
+      "startTime": 17616.2908,
+      "duration": 0.7924000024795532
+    },
+    {
+      "startTime": 17691.6871,
+      "duration": 0.21580001711845398
+    },
+    {
+      "startTime": 17698.0974,
+      "duration": 3.021699994802475
+    },
+    {
+      "startTime": 17745.4022,
+      "duration": 0.23440000414848328
+    },
+    {
+      "startTime": 17753.967,
+      "duration": 3.8573000133037567
+    },
+    {
+      "startTime": 18036.3345,
+      "duration": 0.23080000281333923
+    },
+    {
+      "startTime": 18041.6679,
+      "duration": 3.2824000120162964
+    },
+    {
+      "startTime": 18144.378,
+      "duration": 0.2060999870300293
+    },
+    {
+      "startTime": 18155.6078,
+      "duration": 2.856000006198883
+    },
+    {
+      "startTime": 18216.2389,
+      "duration": 0.20759999752044678
+    },
+    {
+      "startTime": 18221.3744,
+      "duration": 1.433899998664856
+    },
+    {
+      "startTime": 18453.2281,
+      "duration": 2.0865000188350677
+    },
+    {
+      "startTime": 18479.4386,
+      "duration": 1.2247999906539917
+    },
+    {
+      "startTime": 18529.8044,
+      "duration": 0.8016999959945679
+    },
+    {
+      "startTime": 18622.29,
+      "duration": 0.21839997172355652
+    },
+    {
+      "startTime": 18628.1137,
+      "duration": 2.6100000143051147
+    },
+    {
+      "startTime": 18710.5952,
+      "duration": 0.22310000658035278
+    },
+    {
+      "startTime": 18731.8222,
+      "duration": 3.6120000183582306
+    },
+    {
+      "startTime": 19030.5495,
+      "duration": 0.34539997577667236
+    },
+    {
+      "startTime": 19037.7831,
+      "duration": 2.885699987411499
+    },
+    {
+      "startTime": 19102.5885,
+      "duration": 0.21260002255439758
+    },
+    {
+      "startTime": 19108.4302,
+      "duration": 3.0293000042438507
+    },
+    {
+      "startTime": 19211.9665,
+      "duration": 0.280599981546402
+    },
+    {
+      "startTime": 19217.9575,
+      "duration": 2.6940999925136566
+    },
+    {
+      "startTime": 19246.7097,
+      "duration": 0.2004999816417694
+    },
+    {
+      "startTime": 19251.4662,
+      "duration": 1.4905000030994415
+    },
+    {
+      "startTime": 19441.1686,
+      "duration": 0.21930000185966492
+    },
+    {
+      "startTime": 19453.3244,
+      "duration": 5.190499991178513
+    },
+    {
+      "startTime": 19483.7495,
+      "duration": 0.4156999886035919
+    },
+    {
+      "startTime": 19533.3245,
+      "duration": 0.7136000096797943
+    },
+    {
+      "startTime": 19668.8272,
+      "duration": 0.23910000920295715
+    },
+    {
+      "startTime": 19678.0142,
+      "duration": 3.076099991798401
+    },
+    {
+      "startTime": 19766.7782,
+      "duration": 0.22200000286102295
+    },
+    {
+      "startTime": 19772.9919,
+      "duration": 2.409600019454956
+    },
+    {
+      "startTime": 20123.8974,
+      "duration": 0.24609997868537903
+    },
+    {
+      "startTime": 20128.9057,
+      "duration": 3.780100017786026
+    },
+    {
+      "startTime": 20168.4332,
+      "duration": 0.240200012922287
+    },
+    {
+      "startTime": 20173.1059,
+      "duration": 1.6541000008583069
+    },
+    {
+      "startTime": 20362.0668,
+      "duration": 0.20149999856948853
+    },
+    {
+      "startTime": 20370.6474,
+      "duration": 5.49329999089241
+    },
+    {
+      "startTime": 20403.7891,
+      "duration": 0.3990999758243561
+    },
+    {
+      "startTime": 20447.1693,
+      "duration": 1.1045999825000763
+    },
+    {
+      "startTime": 20565.5987,
+      "duration": 0.23739999532699585
+    },
+    {
+      "startTime": 20571.6111,
+      "duration": 2.7651000022888184
+    },
+    {
+      "startTime": 20763.517,
+      "duration": 0.26729997992515564
+    },
+    {
+      "startTime": 20787.175,
+      "duration": 3.8290999829769135
+    },
+    {
+      "startTime": 20978.4574,
+      "duration": 0.5020000040531158
+    },
+    {
+      "startTime": 20991.4956,
+      "duration": 4.267699986696243
+    },
+    {
+      "startTime": 21101.3301,
+      "duration": 0.3278000056743622
+    },
+    {
+      "startTime": 21107.2329,
+      "duration": 2.6449000239372253
+    },
+    {
+      "startTime": 21162.6586,
+      "duration": 0.218500018119812
+    },
+    {
+      "startTime": 21168.1313,
+      "duration": 1.586300015449524
+    },
+    {
+      "startTime": 21377.6204,
+      "duration": 0.2507999837398529
+    },
+    {
+      "startTime": 21383.7404,
+      "duration": 4.2457999885082245
+    },
+    {
+      "startTime": 21432.4368,
+      "duration": 0.8629000186920166
+    },
+    {
+      "startTime": 21454.3589,
+      "duration": 1.0216000080108643
+    },
+    {
+      "startTime": 21518.9035,
+      "duration": 0.8526999950408936
+    },
+    {
+      "startTime": 21602.0693,
+      "duration": 0.2453000247478485
+    },
+    {
+      "startTime": 21607.3957,
+      "duration": 2.6374000012874603
+    },
+    {
+      "startTime": 21695.0142,
+      "duration": 0.2475000023841858
+    },
+    {
+      "startTime": 21714.2197,
+      "duration": 2.6872000098228455
+    },
+    {
+      "startTime": 21929.2567,
+      "duration": 0.23199999332427979
+    },
+    {
+      "startTime": 21934.8586,
+      "duration": 2.333899974822998
+    },
+    {
+      "startTime": 22006.3583,
+      "duration": 0.2102999985218048
+    },
+    {
+      "startTime": 22011.9358,
+      "duration": 2.61599999666214
+    },
+    {
+      "startTime": 22072.4449,
+      "duration": 0.20489999651908875
+    },
+    {
+      "startTime": 22078.1916,
+      "duration": 1.6064999997615814
+    },
+    {
+      "startTime": 22310.1398,
+      "duration": 2.3066999912261963
+    },
+    {
+      "startTime": 22335.9291,
+      "duration": 1.2377000153064728
+    },
+    {
+      "startTime": 22385.8268,
+      "duration": 0.8650999963283539
+    },
+    {
+      "startTime": 22523.1967,
+      "duration": 0.23249998688697815
+    },
+    {
+      "startTime": 22565.33,
+      "duration": 4.777999997138977
+    },
+    {
+      "startTime": 22717.1757,
+      "duration": 0.22619998455047607
+    },
+    {
+      "startTime": 22735.9375,
+      "duration": 2.1993000209331512
+    },
+    {
+      "startTime": 22945.8295,
+      "duration": 0.2303999960422516
+    },
+    {
+      "startTime": 22951.2311,
+      "duration": 3.2952000200748444
+    },
+    {
+      "startTime": 23123.02,
+      "duration": 0.20840001106262207
+    },
+    {
+      "startTime": 23131.4658,
+      "duration": 2.0076999962329865
+    },
+    {
+      "startTime": 23210.2473,
+      "duration": 1.9893999993801117
+    },
+    {
+      "startTime": 23235.3846,
+      "duration": 0.9571000039577484
+    },
+    {
+      "startTime": 23286.505,
+      "duration": 0.8315000236034393
+    },
+    {
+      "startTime": 23377.3235,
+      "duration": 0.23309999704360962
+    },
+    {
+      "startTime": 23383.898,
+      "duration": 3.072400003671646
+    },
+    {
+      "startTime": 23419.7284,
+      "duration": 0.204399973154068
+    },
+    {
+      "startTime": 23428.8145,
+      "duration": 2.529900014400482
+    },
+    {
+      "startTime": 23738.1899,
+      "duration": 0.21230000257492065
+    },
+    {
+      "startTime": 23743.6503,
+      "duration": 3.058300018310547
+    },
+    {
+      "startTime": 23854.2476,
+      "duration": 0.21969997882843018
+    },
+    {
+      "startTime": 23860.01,
+      "duration": 3.0947999954223633
+    },
+    {
+      "startTime": 24018.0697,
+      "duration": 0.2289000153541565
+    },
+    {
+      "startTime": 24023.7074,
+      "duration": 1.563700020313263
+    },
+    {
+      "startTime": 24164.8882,
+      "duration": 3.7631999850273132
+    },
+    {
+      "startTime": 24210.8156,
+      "duration": 2.426699995994568
+    },
+    {
+      "startTime": 24281.1736,
+      "duration": 0.8534999787807465
+    },
+    {
+      "startTime": 24361.1467,
+      "duration": 0.24570000171661377
+    },
+    {
+      "startTime": 24367.1248,
+      "duration": 2.5770000219345093
+    },
+    {
+      "startTime": 24473.1409,
+      "duration": 0.24300000071525574
+    },
+    {
+      "startTime": 24493.277,
+      "duration": 4.262899994850159
+    },
+    {
+      "startTime": 24845.1319,
+      "duration": 0.2635999917984009
+    },
+    {
+      "startTime": 24850.5293,
+      "duration": 3.829600006341934
+    },
+    {
+      "startTime": 24899.6704,
+      "duration": 0.23840001225471497
+    },
+    {
+      "startTime": 24904.1529,
+      "duration": 1.6247000098228455
+    },
+    {
+      "startTime": 25100.7954,
+      "duration": 0.22150000929832458
+    },
+    {
+      "startTime": 25112.5115,
+      "duration": 6.957500010728836
+    },
+    {
+      "startTime": 25148.3374,
+      "duration": 0.5048999786376953
+    },
+    {
+      "startTime": 25189.7501,
+      "duration": 1.7094999849796295
+    },
+    {
+      "startTime": 25447.1395,
+      "duration": 3.4737999737262726
+    },
+    {
+      "startTime": 25450.8956,
+      "duration": 0.20899999141693115
+    },
+    {
+      "startTime": 25457.9497,
+      "duration": 1.6132000088691711
+    },
+    {
+      "startTime": 25773.6152,
+      "duration": 0.21449998021125793
+    },
+    {
+      "startTime": 25779.5829,
+      "duration": 2.91279998421669
+    },
+    {
+      "startTime": 25914.7721,
+      "duration": 0.23849999904632568
+    },
+    {
+      "startTime": 25919.527,
+      "duration": 3.0022000074386597
+    },
+    {
+      "startTime": 26071.5716,
+      "duration": 0.20719999074935913
+    },
+    {
+      "startTime": 26081.2288,
+      "duration": 2.1852000057697296
+    },
+    {
+      "startTime": 26137.3593,
+      "duration": 1.3781999945640564
+    },
+    {
+      "startTime": 26161.4459,
+      "duration": 0.9500000178813934
+    },
+    {
+      "startTime": 26214.77,
+      "duration": 0.8140000104904175
+    },
+    {
+      "startTime": 26392.3088,
+      "duration": 0.2532999813556671
+    },
+    {
+      "startTime": 26413.5621,
+      "duration": 4.299200028181076
+    },
+    {
+      "startTime": 26714.2542,
+      "duration": 0.22519999742507935
+    },
+    {
+      "startTime": 26726.1617,
+      "duration": 4.123699992895126
+    },
+    {
+      "startTime": 26782.1604,
+      "duration": 0.20509999990463257
+    },
+    {
+      "startTime": 26787.4942,
+      "duration": 1.5166999995708466
+    },
+    {
+      "startTime": 27018.2736,
+      "duration": 2.2114999890327454
+    },
+    {
+      "startTime": 27053.5447,
+      "duration": 1.7733000218868256
+    },
+    {
+      "startTime": 27138.0508,
+      "duration": 0.8694000244140625
+    },
+    {
+      "startTime": 27266.3832,
+      "duration": 0.2418999969959259
+    },
+    {
+      "startTime": 27275.0435,
+      "duration": 5.029000014066696
+    },
+    {
+      "startTime": 27344.5814,
+      "duration": 0.42430001497268677
+    },
+    {
+      "startTime": 27391.6305,
+      "duration": 6.477200001478195
+    },
+    {
+      "startTime": 27846.4609,
+      "duration": 0.2703000009059906
+    },
+    {
+      "startTime": 27851.7939,
+      "duration": 4.043599992990494
+    },
+    {
+      "startTime": 27882.6025,
+      "duration": 0.21979999542236328
+    },
+    {
+      "startTime": 27895.9361,
+      "duration": 2.3756000101566315
+    },
+    {
+      "startTime": 28045.3499,
+      "duration": 0.20719999074935913
+    },
+    {
+      "startTime": 28050.5167,
+      "duration": 1.8246000111103058
+    },
+    {
+      "startTime": 28117.692,
+      "duration": 1.4713999927043915
+    },
+    {
+      "startTime": 28139.7933,
+      "duration": 0.8709000051021576
+    },
+    {
+      "startTime": 28191.6069,
+      "duration": 1.0230000019073486
+    },
+    {
+      "startTime": 28290.2139,
+      "duration": 0.22450000047683716
+    },
+    {
+      "startTime": 28296.1124,
+      "duration": 2.789000004529953
+    },
+    {
+      "startTime": 28449.6921,
+      "duration": 0.22369998693466187
+    },
+    {
+      "startTime": 28470.9712,
+      "duration": 2.987399995326996
+    },
+    {
+      "startTime": 28606.5248,
+      "duration": 0.2134999930858612
+    },
+    {
+      "startTime": 28612.6708,
+      "duration": 1.8880000114440918
+    },
+    {
+      "startTime": 28667.7942,
+      "duration": 0.20329999923706055
+    },
+    {
+      "startTime": 28673.1683,
+      "duration": 1.7380000054836273
+    },
+    {
+      "startTime": 28764.0677,
+      "duration": 0.26820001006126404
+    },
+    {
+      "startTime": 28769.4988,
+      "duration": 2.416700005531311
+    },
+    {
+      "startTime": 29013.0796,
+      "duration": 2.5740000009536743
+    },
+    {
+      "startTime": 29038.5856,
+      "duration": 1.1455999910831451
+    },
+    {
+      "startTime": 29088.0421,
+      "duration": 0.7962999939918518
+    },
+    {
+      "startTime": 29491.3472,
+      "duration": 0.24639999866485596
+    },
+    {
+      "startTime": 29496.8216,
+      "duration": 4.359099984169006
+    },
+    {
+      "startTime": 29535.3147,
+      "duration": 0.20719999074935913
+    },
+    {
+      "startTime": 29540.3838,
+      "duration": 1.6960999965667725
+    },
+    {
+      "startTime": 29585.3908,
+      "duration": 0.1996000111103058
+    },
+    {
+      "startTime": 29590.8274,
+      "duration": 2.2795000076293945
+    },
+    {
+      "startTime": 29642.7477,
+      "duration": 0.37400001287460327
+    },
+    {
+      "startTime": 29649.2322,
+      "duration": 1.5376000106334686
+    },
+    {
+      "startTime": 29801.6787,
+      "duration": 0.20990002155303955
+    },
+    {
+      "startTime": 29808.4481,
+      "duration": 2.36599999666214
+    },
+    {
+      "startTime": 29883.1722,
+      "duration": 2.1908000111579895
+    },
+    {
+      "startTime": 29906.1816,
+      "duration": 1.3205000162124634
+    },
+    {
+      "startTime": 29957.2085,
+      "duration": 0.8189000189304352
+    },
+    {
+      "startTime": 30032.3669,
+      "duration": 0.2363000214099884
+    },
+    {
+      "startTime": 30038.4587,
+      "duration": 3.0676000118255615
+    },
+    {
+      "startTime": 30164.4919,
+      "duration": 0.2183000147342682
+    },
+    {
+      "startTime": 30173.9019,
+      "duration": 2.787400007247925
+    },
+    {
+      "startTime": 30483.8392,
+      "duration": 0.22499999403953552
+    },
+    {
+      "startTime": 30495.8798,
+      "duration": 3.888399988412857
+    },
+    {
+      "startTime": 30598.8018,
+      "duration": 0.21309998631477356
+    },
+    {
+      "startTime": 30604.8901,
+      "duration": 2.4686000049114227
+    },
+    {
+      "startTime": 30781.6911,
+      "duration": 0.20880001783370972
+    },
+    {
+      "startTime": 30787.4926,
+      "duration": 1.9597000181674957
+    },
+    {
+      "startTime": 30868.7045,
+      "duration": 2.17739999294281
+    },
+    {
+      "startTime": 30907.7704,
+      "duration": 1.748799979686737
+    },
+    {
+      "startTime": 30968.9001,
+      "duration": 0.9805999994277954
+    },
+    {
+      "startTime": 31049.7291,
+      "duration": 0.24199998378753662
+    },
+    {
+      "startTime": 31056.2319,
+      "duration": 2.7032999992370605
+    },
+    {
+      "startTime": 31100.221,
+      "duration": 0.20989999175071716
+    },
+    {
+      "startTime": 31112.1565,
+      "duration": 6.984699994325638
+    },
+    {
+      "startTime": 31431.6563,
+      "duration": 0.24329999089241028
+    },
+    {
+      "startTime": 31438.9372,
+      "duration": 3.0783999860286713
+    },
+    {
+      "startTime": 31574.5593,
+      "duration": 0.22339999675750732
+    },
+    {
+      "startTime": 31581.4276,
+      "duration": 2.8391000032424927
+    },
+    {
+      "startTime": 31612.3576,
+      "duration": 0.22769999504089355
+    },
+    {
+      "startTime": 31617.0557,
+      "duration": 1.7657000124454498
+    }
+  ],
+  "finishedAt": "2026-10-23T19:51:23.537Z"
+}

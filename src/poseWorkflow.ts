@@ -1,3 +1,4 @@
+import { readArmCalibration, assertCalibrationFrame } from './armCalibration.js';
 import {withStrict} from './runtimeCache.js';
 import {poseFingerprint} from './domainFingerprints.js';
 export {poseFingerprint} from './domainFingerprints.js';
@@ -11,6 +12,7 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { readSpineDocument, resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { assertFormalPerspectiveAbsent } from './perspective.js';
 import { readCharacterMapping, validateMotion, type MotionDefinition } from './motionEngine.js';
 import { hashObject, rigHash, mappingFingerprint, saveJson } from './mappingTools.js';
 import { loadMotionRuntime, worldVertices } from './motionRuntime.js';
@@ -28,18 +30,35 @@ export async function characterFingerprint(filePath:string,mappingPath:string,c:
   if(mapping.status!=='confirmed'||mapping.rigHash!==rigHash(doc.json))throw new Error('姿态需要已确认且角色结构匹配的 mapping。');
   const rt=await loadMotionRuntime(doc.json,mapping.atlasPath!,c),assets=[];
   for(const page of rt.atlas.pages)assets.push(await fileHash(path.join(path.dirname(mapping.atlasPath!),page.name),c));
-  return {fingerprint:hashObject({rig:rigHash(doc.json),mapping:mappingFingerprint(mapping),atlas:await fileHash(mapping.atlasPath!,c),assets}),doc,mapping,rt};
+  return {filePath,mappingPath,fingerprint:hashObject({rig:rigHash(doc.json),mapping:mappingFingerprint(mapping),atlas:await fileHash(mapping.atlasPath!,c),assets}),doc,mapping,rt};
 }
 function validateReference(r:any) {
   if(!r)return;
   if(!r.imagePath||!r.facing||!r.basis||!Number.isFinite(r.time)||r.time<0||!Number.isFinite(r.height)||r.height<=0||!Number.isFinite(r.groundY)||!Array.isArray(r.crop)||r.crop.length!==4||!r.crop.every(Number.isFinite)||r.crop[2]<=0||r.crop[3]<=0)throw new Error('参考记录需 imagePath/time/facing/crop/height/groundY/basis；图像坐标仅用于观察。');
   for(const v of Object.values(r.points??{}) as any[])if(!['visible','occluded','unknown'].includes(v.visibility)||v.visibility==='visible'&&(!Number.isFinite(v.x)||!Number.isFinite(v.y)))throw new Error('参考关键点必须声明可见性，可见点需有限图像坐标。');
 }
-export async function createPoseDraft(a:any,c:ToolContext={}) {
+/** 读取原始姿态值；调用方不能用“已审查”回调跳过共用内容门禁。 */
+export type PoseDataReader = (posePath:string,c:ToolContext) => Promise<any>;
+/** 一次操作内相同路径只取一个值，避免标准姿态与关键姿态读到不同修订。 */
+function snapshotPoseReader(reader:PoseDataReader,c:ToolContext):PoseDataReader {
+  const values=new Map<string,any>();
+  return async posePath=>{
+    const absolute=resolveWorkspacePath(posePath,c),key=process.platform==='win32'?absolute.toLowerCase():absolute;
+    if(!values.has(key)){
+      if(values.size>=2001)throw new Error('姿态输入数量超过上限。');
+      values.set(key,structuredClone(await reader(posePath,c)));
+    }
+    return structuredClone(values.get(key));
+  };
+}
+/** 只构造候选；即使参数带 dryRun:false 也不写文件。依赖与审查仍严格验证。 */
+export async function createPoseDraftData(input:any,c:ToolContext={},readPose:PoseDataReader=readJson) {
+  const a=structuredClone(input);
+  return withStrict(async()=>{
   if(a.frame!==undefined)validatePoseInput('frame',a.frame);
   if(a.weapon!==undefined)validatePoseInput('weapon',a.weapon);
   const source=await characterFingerprint(a.filePath,a.mappingPath,c);let base:any={};
-  if(a.standardPosePath){base=await requireReviewedPose(a.standardPosePath,c);if(base.kind!=='standing'||base.sourceFingerprint!==source.fingerprint)throw new Error('标准姿态角色不匹配。');}
+  if(a.standardPosePath){resolveWorkspacePath(a.standardPosePath,c);base=await requireReviewedPoseData(await readPose(a.standardPosePath,c),c,a.standardPosePath);if(base.kind!=='standing'||base.sourceFingerprint!==source.fingerprint)throw new Error('标准姿态角色不匹配。');}
   if(!['standing','action'].includes(a.kind))throw new Error('kind 必须为 standing/action。');
   if(a.kind==='action'&&!a.standardPosePath)throw new Error('动作姿态必须选择已确认标准站姿。');
   if(a.referencePosePath){const record=await requireReferencePose(a.referencePosePath,c);a.reference=record.observation;}
@@ -47,6 +66,11 @@ export async function createPoseDraft(a:any,c:ToolContext={}) {
   const pose:any={version:1,id:a.id??randomUUID(),kind:a.kind,facing:a.facing??base.facing??'right',status:'draft',filePath:a.filePath,mappingPath:a.mappingPath,standardPosePath:a.standardPosePath??null,sourceFingerprint:source.fingerprint,frame:mergePose(base.frame??{time:0,body:{x:0,y:0,rotate:0},head:0,channels:{},targets:{}},a.frame),groundY:a.groundY??base.groundY??0,weapon:a.weapon??null,referencePosePath:a.referencePosePath??null,reference:a.reference??null,policy:{kneeFlexionMax:a.kneeFlexionMax??30,reason:a.thresholdReason??''}};
   if(!Number.isFinite(pose.policy.kneeFlexionMax)||pose.policy.kneeFlexionMax<0||pose.policy.kneeFlexionMax>180||pose.policy.kneeFlexionMax!==30&&!pose.policy.reason.trim())throw new Error('自定义膝部阈值需有限 0–180 度和明确理由。');
   Object.assign(pose,{visualRigPath:a.visualRigPath??null,correspondence:a.correspondence??null,...a.sequencePath?{sequencePath:a.sequencePath,stageId:a.stageId}:{}});
+  return pose;
+  });
+}
+export async function createPoseDraft(input:any,c:ToolContext={}) {
+  const a=structuredClone(input),pose=await createPoseDraftData(a,c);
   if(a.dryRun===false){try{await readFile(resolveWorkspacePath(a.posePath,c));throw new Error('姿态文件已存在，请使用新路径。');}catch(e:any){if(e.code!=='ENOENT')throw e;}await saveJson(a.posePath,pose,c);}return {ok:true,dryRun:a.dryRun??true,pose,posePath:a.posePath};
 }
 export async function adjustPose(a:any,c:ToolContext={}) {
@@ -61,7 +85,8 @@ export async function adjustPose(a:any,c:ToolContext={}) {
 export async function preparePoseSource(p:any,c:ToolContext) {
   const source=await characterFingerprint(p.filePath,p.mappingPath,c);
   let visualReader:((skeleton:any)=>any)|undefined;
-  if(p.visualRigPath){const mod=await import('./visualRig.js'),v=await mod.requireVisualRig(p.visualRigPath,c);if(v.fingerprint!==source.fingerprint)throw new Error('visualRig 与姿态角色不匹配。');visualReader=skeleton=>mod.readVisualNodes(skeleton,v.rig);}
+  if(p.visualRigPath){const mod=await import('./visualRig.js'),v=await mod.requireVisualRig(p.visualRigPath,c,true,source);if(v.fingerprint!==source.fingerprint)throw new Error('visualRig 与姿态角色不匹配。');visualReader=skeleton=>mod.readVisualNodes(skeleton,v.rig);}
+  if(p.frame.perspective?.mode&&p.frame.perspective.mode!=='diagnostic'){const calibration=await readArmCalibration(p.frame.perspective,c,source.fingerprint);if(calibration.facing!==p.facing||resolveWorkspacePath(calibration.visualRigPath,c)!==resolveWorkspacePath(p.visualRigPath,c))throw new Error('校准的视向或视觉绑定与当前姿态不同。');assertCalibrationFrame(calibration,p.frame);Object.assign(source,{perspectiveCalibration:calibration});}
   return {source,visualReader};
 }
 export async function solvePoseData(p:any,c:ToolContext) {
@@ -72,8 +97,14 @@ export async function solvePoseData(p:any,c:ToolContext) {
 export async function solvePose(a:any,c:ToolContext={}) {const p=await readJson(a.posePath,c),s=await solvePoseData(p,c);p.frame=s.frame;p.solution={bones:s.bones,...s.report,inputFingerprint:poseInputHash(p),dependencyFingerprint:(await poseDependencies(p,c)).dependencyFingerprint};p.status=s.report.ok?'solved':'failed';delete p.review;if(a.dryRun===false)await saveJson(a.posePath,p,c);return {ok:s.report.ok,dryRun:a.dryRun??true,pose:p,report:s.report};}
 async function requirePoseReference(p:any,c:ToolContext){if(!p.reference&&!p.referencePosePath)return;if(!p.referencePosePath)throw new Error('参考姿态需先独立标注和审查。');if(!p.reference)throw new Error('目标姿态缺少已审查参考标注副本。');const r=await requireReferencePose(p.referencePosePath,c);if(hashObject(r.observation)!==hashObject(p.reference))throw new Error('参考标注与目标姿态不一致。');}
 export async function requireReviewedPose(pth:string,c:ToolContext) {
+ return requireReviewedPoseData(await readJson(pth,c),c,pth);
+}
+/** 校验指定内存值，不重读同名旧姿态；图片、参考、角色与比较报告仍重新核验。 */
+export async function requireReviewedPoseData(value:any,c:ToolContext,pth='内存姿态') {
+ assertFormalPerspectiveAbsent(value.frame);
+ const p=structuredClone(value);
  return withStrict(async()=>{
-const p=await readJson(pth,c);const s=await solvePoseData(p,c);if(!s.report.ok)throw new Error('姿态当前数值校验失败。');await requirePoseReference(p,c);const comparison=await (await import('./referenceRetarget.js')).requirePoseComparison(p,c);if(p.status!=='confirmed'||p.review?.decision!=='approved'||p.review.poseFingerprint!==poseFingerprint(p)||comparison&&p.review.comparisonFingerprint!==comparisonFingerprint(comparison))throw new Error(`姿态未确认或已过期：${pth}`);await verifyEvidence(p.review.evidence,c);return p;
+const s=await solvePoseData(p,c);if(!s.report.ok)throw new Error('姿态当前数值校验失败。');await requirePoseReference(p,c);const comparison=await (await import('./referenceRetarget.js')).requirePoseComparison(p,c);if(p.status!=='confirmed'||p.review?.decision!=='approved'||p.review.poseFingerprint!==poseFingerprint(p)||comparison&&p.review.comparisonFingerprint!==comparisonFingerprint(comparison))throw new Error(`姿态未确认或已过期：${pth}`);validatePoseReviewInput(p.review,p.reference||p.referencePosePath?p.stageId??'':undefined);await verifyEvidence(p.review.evidence,c);return p;
  });
 }
 export async function evidenceFiles(files:string[],c:ToolContext){return Promise.all(files.map(async filePath=>({filePath,hash:await fileHash(filePath,c)})));}
@@ -96,6 +127,7 @@ export async function preparePoseReview(p:any,a:any,evidence:any[],c:ToolContext
   validatePoseReviewInput(a);
   const solved=await solvePoseData(p,c);
   if(a.decision==='approved'){
+    assertFormalPerspectiveAbsent(p.frame);
     await requirePoseReference(p,c);
     if(!solved.report.ok)throw new Error('姿态当前数值校验失败。');
     if(!p.solution?.ok||a.issues?.length||hashObject(p.solution.bones)!==hashObject(solved.bones))throw new Error('数值失败、求解已过期或仍有问题不能确认。');
@@ -119,20 +151,60 @@ export async function reviewPose(a:any,c:ToolContext={}) {
 
  });
 }
-export async function buildMotionFromPoses(a:any,c:ToolContext={}) {
-  const standard=await requireReviewedPose(a.standardPosePath,c);if(standard.kind!=='standing')throw new Error('需标准站姿。');
-  if(!Array.isArray(a.keyPoses)||a.keyPoses.length<2||a.keyPoses[0].time!==0||a.keyPoses.at(-1).time!==a.duration||a.keyPoses.some((v:any,i:number)=>!v.stageId||!Number.isFinite(v.time)||i>0&&v.time<=a.keyPoses[i-1].time))throw new Error('关键姿态需唯一递增时间、阶段 ID，包含 0 和 duration。');
+/** 生成与复核共用标准/阶段门禁，读取器只提供原始值，不能跳过审查。 */
+async function prepareMotionPoseData(a:any,c:ToolContext,reader:PoseDataReader) {
+  if(!Array.isArray(a.keyPoses)||a.keyPoses.length<2||a.keyPoses.length>2000||!Number.isFinite(a.duration)||a.duration<=0||a.keyPoses[0]?.time!==0||a.keyPoses.at(-1)?.time!==a.duration||a.keyPoses.some((v:any,i:number)=>!v||typeof v.stageId!=='string'||!v.stageId.trim()||typeof v.posePath!=='string'||!Number.isFinite(v.time)||i>0&&v.time<=a.keyPoses[i-1].time))throw new Error('关键姿态需 2–2000 项、唯一递增时间、非空阶段 ID，包含 0 和正数 duration。');
   if(new Set(a.keyPoses.map((v:any)=>v.stageId)).size!==a.keyPoses.length)throw new Error('阶段 ID 不可重复。');
-  const frames=[],reasons=new Set();let referenceBinding:string|undefined;for(const v of a.keyPoses){const p=await requireReviewedPose(v.posePath,c);if(p.sourceFingerprint!==standard.sourceFingerprint||p.groundY!==standard.groundY||p.kind!=='standing'&&p.standardPosePath!==a.standardPosePath)throw new Error('关键姿态标准站姿或角色不匹配。');if(p.reference){const binding=hashObject({visualRig:(await readJson(p.comparisonPath,c)).visualRigFingerprint,sequence:(await readJson(p.comparisonPath,c)).sequenceFingerprint,left:p.correspondence.left,right:p.correspondence.right});if(referenceBinding&&referenceBinding!==binding)throw new Error('阶段之间视觉绑定或左右对应不一致，禁止临时交换。');referenceBinding=binding;const reason=hashObject({reason:p.review.reason,checkResults:p.review.checkResults});if(p.review.stageId!==v.stageId||reasons.has(reason))throw new Error('参考关键姿态阶段不符或使用统一文本批量批准。');reasons.add(reason);}frames.push({...p.frame,time:v.time});}
-  const motion:MotionDefinition={version:2,name:a.name,duration:a.duration,loop:a.loop??false,groundY:standard.groundY,coordinateSystem:'normalizedSkeleton',frames,poseWorkflow:{standardPosePath:a.standardPosePath,keyPoses:a.keyPoses}};validateMotion(motion);
+  const read=snapshotPoseReader(reader,c),checked=new Map<string,any>();
+  const reviewed=async(pth:string)=>{
+    const absolute=resolveWorkspacePath(pth,c),key=process.platform==='win32'?absolute.toLowerCase():absolute;
+    if(!checked.has(key))checked.set(key,await requireReviewedPoseData(await read(pth,c),c,pth));
+    return checked.get(key);
+  };
+  const standard=await reviewed(a.standardPosePath);if(standard.kind!=='standing')throw new Error('需标准站姿。');
+  const frames=[],stamps=[],reasons=new Set();let referenceBinding:string|undefined;
+  for(const v of a.keyPoses){
+    checkpoint('motion 姿态门禁');
+    const p=await reviewed(v.posePath);
+    if(p.sourceFingerprint!==standard.sourceFingerprint||p.groundY!==standard.groundY||p.kind!=='standing'&&p.standardPosePath!==a.standardPosePath)throw new Error('关键姿态标准站姿、地面或角色不匹配。');
+    if(p.reference){
+      const comparison=await readJson(p.comparisonPath,c),binding=hashObject({visualRig:comparison.visualRigFingerprint,sequence:comparison.sequenceFingerprint,left:p.correspondence.left,right:p.correspondence.right});
+      if(referenceBinding&&referenceBinding!==binding)throw new Error('阶段之间视觉绑定或左右对应不一致，禁止临时交换。');
+      referenceBinding=binding;const reason=hashObject({reason:p.review.reason,checkResults:p.review.checkResults});
+      if(p.stageId!==v.stageId||p.review.stageId!==v.stageId||reasons.has(reason))throw new Error('参考关键姿态阶段不符或使用统一文本批量批准。');reasons.add(reason);
+    }
+    frames.push({...structuredClone(p.frame),time:v.time});
+    stamps.push({stageId:v.stageId,time:v.time,poseFingerprint:poseFingerprint(p),review:hashObject(p.review)});
+  }
+  return {standard,frames,stamps};
+}
+/** 只返回 v2 motion 候选，不保存、不签发令牌；Host 可传入固定的内存姿态读取器。 */
+export async function buildMotionFromPosesData(input:any,c:ToolContext={},reader:PoseDataReader=readJson) {
+  const a=structuredClone(input);
+  return withStrict(async()=>{
+    const {standard,frames}=await prepareMotionPoseData(a,c,reader);
+    const motion:MotionDefinition={version:2,name:a.name,duration:a.duration,loop:a.loop??false,groundY:standard.groundY,coordinateSystem:'normalizedSkeleton',frames,poseWorkflow:{standardPosePath:a.standardPosePath,keyPoses:a.keyPoses}};
+    validateMotion(motion);return motion;
+  });
+}
+export async function buildMotionFromPoses(input:any,c:ToolContext={}) {
+  const a=structuredClone(input),motion=await buildMotionFromPosesData(a,c);
   if(a.dryRun===false)await saveJson(a.motionPath,motion,c);return {ok:true,dryRun:a.dryRun??true,motion};
 }
-export async function poseGate(motion:MotionDefinition,c:ToolContext) {
-  try {if(!motion.poseWorkflow)throw new Error('缺少标准站姿与关键姿态审查；旧 motion 需补审查。');const standard=await requireReviewedPose(motion.poseWorkflow.standardPosePath,c);const stamps=[];
-    const reasons=new Set();let referenceBinding:string|undefined;for(const k of motion.poseWorkflow.keyPoses){const p=await requireReviewedPose(k.posePath,c);const f=motion.frames?.find(f=>Math.abs(f.time-k.time)<1e-8);if(!f||hashObject({...f,time:0})!==hashObject({...p.frame,time:0})||p.sourceFingerprint!==standard.sourceFingerprint)throw new Error('motion 关键姿态已偏离确认结果。');if(p.reference){const binding=hashObject({visualRig:(await readJson(p.comparisonPath,c)).visualRigFingerprint,sequence:(await readJson(p.comparisonPath,c)).sequenceFingerprint,left:p.correspondence.left,right:p.correspondence.right});if(referenceBinding&&referenceBinding!==binding)throw new Error('阶段之间视觉绑定或左右对应改变。');referenceBinding=binding;const reason=hashObject({reason:p.review.reason,checkResults:p.review.checkResults});if(p.review.stageId!==k.stageId||reasons.has(reason))throw new Error('参考阶段不符或统一文本审查。');reasons.add(reason);}stamps.push({stageId:k.stageId,time:k.time,poseFingerprint:poseFingerprint(p),review:hashObject(p.review)});}
-    if(!stamps.length||stamps[0].time!==0||stamps.at(-1)!.time!==motion.duration)throw new Error('审查必须覆盖开始与结束。');return {ok:true,sourceFingerprint:standard.sourceFingerprint,fingerprint:hashObject({standard:poseFingerprint(standard),review:standard.review,stamps}),issues:[] as string[]};
-  }catch(e){return {ok:false,sourceFingerprint:null,fingerprint:null,issues:[String(e)]};}
+export async function poseGateData(value:MotionDefinition,c:ToolContext,reader:PoseDataReader=readJson) {
+  const motion=structuredClone(value);
+  return withStrict(async()=>{
+    try {
+      if(!motion.poseWorkflow)throw new Error('缺少标准站姿与关键姿态审查；旧 motion 需补审查。');
+      validateMotion(motion);
+      const {standard,frames,stamps}=await prepareMotionPoseData({...motion.poseWorkflow,duration:motion.duration},c,reader);
+      if((motion.groundY??0)!==standard.groundY)throw new Error('motion 地面偏离已确认标准站姿。');
+      for(const expected of frames){const frame=motion.frames?.find(f=>Math.abs(f.time-expected.time)<1e-8);if(!frame||hashObject({...frame,time:0})!==hashObject({...expected,time:0}))throw new Error('motion 关键姿态已偏离确认结果。');}
+      return {ok:true,sourceFingerprint:standard.sourceFingerprint,fingerprint:hashObject({standard:poseFingerprint(standard),review:standard.review,stamps}),issues:[] as string[]};
+    }catch(e){return {ok:false,sourceFingerprint:null,fingerprint:null,issues:[String(e)]};}
+  });
 }
+export async function poseGate(motion:MotionDefinition,c:ToolContext) {return poseGateData(motion,c);}
 
 export async function renderPoseComparison(a:any,c:ToolContext={}) {
   if(!Array.isArray(a.posePaths)||!a.posePaths.length||a.posePaths.length>60)throw new Error('posePaths 数量需为 1–60。');

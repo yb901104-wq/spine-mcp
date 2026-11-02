@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-23T13:42:43.739Z",
+  "frozenInstall": "D:/AI_cc/spine test/host-observation-builds/c1-2026-10-23T10-22-13-507Z",
+  "workspace": "D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace",
+  "candidateHash": "12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97",
+  "observation": {
+    "running": true,
+    "runId": "8e0a98ea-1000-49e0-bf42-ff4c747fa043",
+    "file": ".spine-mcp/observation/runs/8e0a98ea-1000-49e0-bf42-ff4c747fa043.jsonl",
+    "samples": 64,
+    "intervalMs": 60000,
+    "error": null,
+    "testClock": false
+  },
+  "writeMode": "observer",
+  "writerAbsent": true,
+  "allInputsUnchanged": true,
+  "inputFilesVerified": 32,
+  "sessionCount": 3,
+  "samples": 101,
+  "monitoredMs": 5874254.779999999,
+  "errors": [],
+  "excluded": [],
+  "cleanStops": 1,
+  "activeOrUncleanSessions": 2,
+  "knownInterruptedSessions": 1,
+  "signedReport": ".spine-mcp/observation/reports/dc21f588-15ba-4501-8402-31932e0fc4ef.json",
+  "twoWeekWindowSatisfied": false,
+  "publicWriteEnabled": false,
+  "note": "三份会话签名/构建/依赖可核验；其中一份正常结束、一份进程死亡未正常结束、一份正在采样，中断不补时。C2 源码变化不改变固定 C1 候选，该采集不为 C2 验收背书。"
+}

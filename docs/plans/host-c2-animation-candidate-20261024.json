@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-23T19:02:45.936Z",
+  "localDate": "2026-10-24",
+  "stage": "C2-4c1 精确动画候选",
+  "previousStage": "host-c2-assets-20261024.json",
+  "developmentCandidateHash": "bca9e62cbdfb89372ed38b70d2db5d50d8bd114ab7e7b9aac7d25113aa120a94",
+  "codeHashes": {
+    "src/hostAnimationCandidate.ts": "e88d7f5800e3a37968c60945d81b37fe51d4743cdfb9cb0eb3d8d0961db18d49",
+    "src/hostAnimationEvaluator.ts": "225c2792c77d97e7f359ef3d20e3665af819f3e5c325f2f183d3f8452e944f5e",
+    "src/hostClient.ts": "e5c106e389cfba2858ad5d6d9452cd0ff1d954c5a3ae93bb662991040b2f438f",
+    "src/hostEditorStore.ts": "949375f748a8dbd0377b2a432f9529612106881597f2fb21cdd09172e4fc71e6",
+    "src/retargetEngine.ts": "2c0f6db666b3e86d1a39d79713550abb89e8303ee2b1e405d3b118f1bc834c9f",
+    "src/spineJson.ts": "1d40a1d6fba137471527d400eccfbabe50fbc0812e5418627bf985d988d126a9",
+    "src/server.ts": "c15dfce8c15b3e0339c4cb47e1f94508a7f2baad36f39f81a5d85136662f4bfe",
+    "test/hostAnimationCandidate.test.ts": "2265fcadf68b3d7da46d78fe5c7524608de388bcb19343168ea33144c5a109a7"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 193,
+    "pass": 193,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 30899.1383,
+    "outputHash": "b6b698e06df9b2db40203ead2d92d52af3ea3919db76fd9682a8d9cf49f24e77"
+  },
+  "implementation": [
+    "完整动画拟合及数值/runtime 复核抽为共用加载值入口，detached 与 Host MCP 共用，Host 不求解。",
+    "只允许 4.1.24、当前已选择同名 v2 motion、完整版本及同角色路径；拒绝静默改名/缩放周期和宽松门限。",
+    "单动画 diff、官方规范与结构引用审查，源结构/其它动画不变；当前回放发布实际拟合候选，完整字节哈希绑定报告与 live。",
+    "均匀 runtime 样本之外加入每个显式关键时间；极短关键帧的不可达手位不能因低于采样间隔而漏测。",
+    "只生成不可变 live/报告，无源资产、mapping、校准报告更新，无 reviewToken/授权或源替换。"
+  ],
+  "focused": {
+    "tests": 4,
+    "file": "test/hostAnimationCandidate.test.ts",
+    "coverage": "实际 stdio、PNG、拟合与稠密候选差异、输入字节不变、完整报告/候选哈希、路径/版本/门限/周期/校准漂移/真实写入拒绝、取消及纯审查反例。"
+  },
+  "publicToolCount": 101,
+  "publicTool": "spine_retarget_motion",
+  "newParameter": "expectedRevision",
+  "productionProfile": "c1",
+  "developmentProfile": "c2-pose",
+  "publicWriteEnabled": false,
+  "sourceAnimationCommitEnabled": false,
+  "fullAnimationReviewAttached": false,
+  "wholeC24cCompleted": false,
+  "wholeC2Accepted": false,
+  "newNativeDesktopRun": false,
+  "realArtApproved": false,
+  "editorImportPassed": false,
+  "remaining": [
+    "C2-4c2 完整动画 GIF/适用参考对比与当前 player 证据的附着审查。",
+    "C2-4c3 精确候选授权、源文件备份/原子替换、冲突/幂等/恢复及后续校准来源处理。",
+    "真实美术、第二角色、Spine 编辑器导入、真实负载性能及 C1 原观察/启用条件。"
+  ],
+  "note": "本批精确候选与数值回读不是完整动画批准。读取原门禁，未放宽阈值；D 仍受原实测判据约束。"
+}

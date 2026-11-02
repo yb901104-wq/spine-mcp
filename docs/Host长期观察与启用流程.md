@@ -2,6 +2,8 @@
 
 本说明落实 [主工单](plans/host-evolution.md) §5 的观察与启用前置，不新增阶段或放宽退出条件。记录、报告、人工评审和实际启用分别进行。当前生产写入默认关闭，尚无真实两周通过记录或生产启用审批；用户选择先在已验收 npc1 无参考站姿隔离工程试运行。该工程不代表完整攻击、第二角色或 Spine 编辑器导入通过。
 
+2026-10-24 03:26 独立复核：冻结安装及三份会话可核验，当前会话 408 次、累计 445 次真实采样，32 份输入不变、无 Writer、无新增记录错误；两周仍未满足，已知一次未知退出和中断不补计。[本次证据](plans/host-observation-frozen-verification-2026-10-23T19-26-40-979Z.json)。最新 C2 源码即使完成工程链路，也不取得这份冻结 C1 候选的观察或审批资格；不把新源码性能测试覆盖旧候选失败。
+
 ## 观察记录
 
 先构建源码，在已登记的受管工程启动编译版 Host，并显式打开 `poses/standing-hand-angle.json`。使用与启动时相同的工作区登记根；命令不会自动登记工程、启动 Host 或接管 Writer。
@@ -27,20 +29,31 @@ node dist/hostObservationCli.js report --workspace '已登记工作区绝对路�
 
 ## 本次实际试运行
 
-2026-10-23 17:58（北京时间）已按用户选择启动 npc1 站姿隔离工程的编译版隐藏 Host，未创建计划任务。32 份已验收输入哈希保持一致、Writer 不存在、启用意图为 false。启动证据见 [试运行记录](plans/host-observation-trial-2026-10-23T09-58-26-407Z.json)。本次工程和登记根相同，可直接查询或停止采样：
+2026-10-23 17:58（北京时间）已按用户选择启动 npc1 站姿隔离工程的编译版隐藏 Host，未创建计划任务。32 份已验收输入哈希保持一致、Writer 不存在、启用意图为 false。启动证据见 [试运行记录](plans/host-observation-trial-2026-10-23T09-58-26-407Z.json)。18:22 按用户指示开始 C2 研发前，完整复制 C1 编译代码、页面、包与实际依赖，核对构建哈希仍为 `12f3761db8f07f366adc79f6be49a5d6ca123a319d0eb4b86aa3ea6802d90f97`。旧会话正常结束，同工作区的新固定版会话继续，原始记录和签名索引不重置。见 [固定构建迁移记录](plans/host-observation-frozen-2026-10-23T10-22-21-057Z.json)。
+
+本次工程和登记根相同；汇总必须使用固定构建中的 CLI，以免把 C2 开发代码当作同候选：
 
 ```powershell
 $trialRoot = 'D:/AI_cc/spine test/host-desktop-acceptance/2026-10-23T09-00-42-744Z/workspace'
+$observerInstall = 'D:/AI_cc/spine test/host-observation-builds/c1-2026-10-23T10-22-13-507Z'
 $env:SPINE_MCP_REGISTRY_ROOT = $trialRoot
-node dist/hostObservationCli.js status --workspace $trialRoot
-node dist/hostObservationCli.js report --workspace $trialRoot
+node "$observerInstall/dist/hostObservationCli.js" status --workspace $trialRoot
+node "$observerInstall/dist/hostObservationCli.js" report --workspace $trialRoot
 # 需要结束这一轮采集时执行；该命令只停止记录，Host 仍可观察。
-node dist/hostObservationCli.js stop --workspace $trialRoot
+node "$observerInstall/dist/hostObservationCli.js" stop --workspace $trialRoot
 ```
 
-这是流程试运行，尚未满足两周或充分真实使用覆盖，不能生成生产启用结论。后续代码/Node/player/manifest 变化会改变候选分组；重新构建与重启后须重新核对并显式开始新一轮。采样原始文件位于该工作区，不在仓库内提交。
+这是流程试运行，尚未满足两周或充分真实使用覆盖，不能生成生产启用结论。固定版只为该 C1 候选积累证据，不为 C2 或未来构建背书；不要覆盖固定安装。固定代码/依赖/Node/player/manifest 变化会改变候选分组，重启后须核对并显式开始新会话。采样原始文件位于该工作区，不在仓库内提交。
 
-[18:01 初验](plans/host-observation-trial-verification-2026-10-23T10-01-14-582Z.json) 已确认真实定时器自动完成 3 次采样、约 120 秒无错误，32 份输入未变且无 Writer；运行页为 [npc1 只读 Host](http://127.0.0.1:56655/)，地址只适用于当前实例。完整回归与性能限制见 [本轮证据索引](plans/host-c1-observation-implementation-20261023.json)，其中编辑首轮 P95 120.50ms 超预算，不能通过启用审查。
+21:42 的 [固定版复核](plans/host-observation-frozen-verification-2026-10-23T13-42-43-739Z.json)：当前会话仍运行、自动采样 64 次，三个会话合计 101 次、有效监测约 5874.25 秒；错误/排除均为零，32 份输入未变且无 Writer。已知一次未正常结束会话继续保留，不能据累计时长宣称连续稳定或满足两周。C2-3 的新源码、player 合成测试不计入该候选。
+
+22:34 的 [后续复核](plans/host-observation-frozen-verification-2026-10-23T14-34-34-282Z.json)：当前会话继续采样 116 次，三会话合计 153 次、约 8994.65 秒，错误/排除为零、32 份输入未变、无 Writer；已知中断仍保留，两周未满足。C2-4a 的新编译、命令编辑和桌面诊断未改动固定安装或计入该候选。
+
+[18:01 初验](plans/host-observation-trial-verification-2026-10-23T10-01-14-582Z.json) 已确认真实定时器自动完成 3 次采样、约 120 秒无错误，32 份输入未变且无 Writer。18:22 迁移后的当前运行页为 [固定版 npc1 只读 Host](http://127.0.0.1:40590/)，旧 56655 实例已正常退出。C1 回归与性能限制见 [原候选证据索引](plans/host-c1-observation-implementation-20261023.json)，其中编辑首轮 P95 120.50ms 超预算，不能通过启用审查。
+
+20:38 更新：上述 40590 固定实例已在 18:33 最后采样后退出，原因未知，没有正常结束记录。已核对 PID 死亡及无 Writer，仅退役匹配的发现/控制文件，以 `Start-Process -WindowStyle Hidden` 启动同一固定构建并显式开始新会话，原日志和索引保留，中断不补时。当前页面为 [固定版 npc1 只读 Host](http://127.0.0.1:39895/)。3 份会话中一份正常结束、一份异常中断、一份正在运行；汇总中的未结束数同时包含后两者，须结合会话明细与 [中断记录](plans/host-observation-interruption-2026-10-23T12-38-00-945Z.json) 审阅，不能称为连续稳定通过。见 [恢复复核](plans/host-observation-frozen-verification-2026-10-23T12-38-49-036Z.json)。未安装自动重启服务。
+
+[20:45 复核](plans/host-observation-frozen-verification-2026-10-23T12-45-47-818Z.json)：恢复后的定时器已自动采样 7 次，三份会话共 44 次、实际监测约 2453.79 秒，32 份输入哈希不变、无 Writer。构建/工程/签名可核验不等于未知退出原因已解决；两周稳定和人工启用仍未通过。
 
 ## 报告与人工评审
 

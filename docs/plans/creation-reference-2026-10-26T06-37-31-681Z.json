@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T06:37:31.688Z",
+  "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "scope": "使用原 GIF，复用原有已审查 ready 标注；验证正式准备/序列创建/新副本登记，不宣称重新标注或参考匹配成功。",
+  "calls": [
+    {
+      "tool": "spine_register_workspace",
+      "durationMs": 14.820999999999913,
+      "textBytes": 392,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 666.5889999999999,
+      "textBytes": 1185,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_analyze_reference_gif",
+      "durationMs": 34668.805199999995,
+      "textBytes": 996,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_extract_reference_keyframes",
+      "durationMs": 12.010800000003655,
+      "textBytes": 1257,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_create_pose_sequence",
+      "durationMs": 99.04660000000149,
+      "textBytes": 1971,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_create_pose_sequence",
+      "durationMs": 116.40260000000126,
+      "textBytes": 1972,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_create_pose_sequence",
+      "durationMs": 12.985399999997753,
+      "textBytes": 343,
+      "error": true,
+      "code": "TARGET_STALE"
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 60.49470000000292,
+      "textBytes": 442,
+      "error": true,
+      "code": "PROJECT_BINDING_CONFLICT"
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 477.91330000000016,
+      "textBytes": 1162,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_get_creation_task",
+      "durationMs": 75.03629999999976,
+      "textBytes": 17943,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_get_creation_task",
+      "durationMs": 77.71969999999419,
+      "textBytes": 16095,
+      "error": false,
+      "code": null
+    },
+    {
+      "tool": "spine_validate_pose_sequence",
+      "durationMs": 42.38350000000355,
+      "textBytes": 403,
+      "error": false,
+      "code": null
+    }
+  ],
+  "passed": true,
+  "preparationTask": {
+    "taskId": "ad6377bd-c787-4ba2-8f47-5ece88b1e892",
+    "projectId": "creation-ca07c7e9-652f-4f78-a8c2-1235f9a83a2d",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-reference-trials\\2026-10-26T06-37-31-681Z"
+  },
+  "gif": {
+    "manifestPath": "output/reports/reference-frames/reference-manifest.json",
+    "frameCount": 171,
+    "duration": 5.88,
+    "sourceHash": "97b71b934e13a022b47bf6f97d5a0961e660cfb1803cc0a3ca79a34eb2090960",
+    "loop": false
+  },
+  "keyframes": [
+    {
+      "index": 0,
+      "time": 0,
+      "delay": 780,
+      "originalDelay": 780,
+      "delayCorrected": false,
+      "hash": "1fddf0567fcd7cebfe3da3fc85fe334d89e486d9dbc2cbff367d815d78df489f",
+      "duplicateOf": null,
+      "filePath": "output/reports/reference-frames/frame-0000.png"
+    },
+    {
+      "index": 85,
+      "time": 3.3,
+      "delay": 30,
+      "originalDelay": 30,
+      "delayCorrected": false,
+      "hash": "87bf11ee73217b39b1ad6cfb1125c718c6cb45aed23177f56c40aec3ad96d792",
+      "duplicateOf": null,
+      "filePath": "output/reports/reference-frames/frame-0085.png"
+    },
+    {
+      "index": 170,
+      "time": 5.85,
+      "delay": 30,
+      "originalDelay": 30,
+      "delayCorrected": false,
+      "hash": "3485df02111ff4d405bfe65308af172401c68d0f941b52f9c516872d94e849b8",
+      "duplicateOf": null,
+      "filePath": "output/reports/reference-frames/frame-0170.png"
+    }
+  ],
+  "sequence": {
+    "path": "reference/body-created.sequence.json",
+    "fingerprint": "543b4a5f16a5b382edb7c0070c75b05354451803c0e2d8162a122ed926f1ce4f",
+    "approvedAnimation": false
+  },
+  "overwriteDenied": true,
+  "inPlaceBindingChangeDenied": true,
+  "onboarding": {
+    "taskId": "85c2112b-f873-4d35-985b-eae09598b31d",
+    "projectId": "creation-b4ca16f5-45df-410a-98db-40758089ad2c",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-reference-trials\\2026-10-26T06-37-31-681Z\\prepared-reference"
+  },
+  "sourceManifestUnchanged": true,
+  "preparationInputsUnchanged": true,
+  "onboardingInputsUnchanged": true,
+  "nextAction": {
+    "tool": "spine_validate_pose_sequence",
+    "arguments": {
+      "projectId": "creation-b4ca16f5-45df-410a-98db-40758089ad2c",
+      "sequencePath": "reference/body-created.sequence.json"
+    },
+    "instruction": "动作级参考已登记；重验固定关系后用正式姿态创建/适配入口生成候选，失败不批准。"
+  },
+  "revalidated": true,
+  "noHostOrWriterOrCopiedJournal": true,
+  "referencePoseApprovedByThisRun": false,
+  "formalAnimationDelivered": false
+}

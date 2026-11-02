@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T03:39:55.356Z",
+  "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "reportPath": "docs/plans/creation-usability-trial-2026-10-26T03-39-55-346Z.json",
+  "bodyOnly": true,
+  "formalAnimationDelivered": false,
+  "editorImport": "notRun",
+  "secondCharacter": "notAvailable",
+  "publicWriteEnabled": false,
+  "calls": [
+    {
+      "tool": "spine_register_workspace",
+      "durationMs": 14.516200000000026,
+      "textBytes": 392,
+      "images": 0,
+      "error": false,
+      "version": null
+    },
+    {
+      "tool": "spine_start_creation_task",
+      "durationMs": 553.06,
+      "textBytes": 940,
+      "images": 0,
+      "error": false,
+      "version": null
+    }
+  ],
+  "task": {
+    "taskId": "035a630f-e0b3-414a-9af4-f9ed83227a48",
+    "projectId": "creation-be2de151-90ec-4760-897a-703d78d5193c",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T03-39-55-346Z",
+    "inputsFingerprint": "845d4e4d8091c0901b094df7c9ad5089cee27db57b741cf3e85d537add205af7"
+  },
+  "launch": {
+    "type": "creation-host-ready",
+    "endpoint": "http://127.0.0.1:20199",
+    "projectId": "creation-be2de151-90ec-4760-897a-703d78d5193c",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T03-39-55-346Z",
+    "profile": "c2-pose",
+    "publicWriteEnabled": false
+  },
+  "error": "TypeError: fetch failed",
+  "finished": false,
+  "hostStopped": true,
+  "writerReleased": true
+}

@@ -1,6 +1,14 @@
 #!/usr/bin/env node
+import {armCalibrationToolDefinitions,callArmCalibration} from './armCalibrationTools.js';
 import { createPoseDraft, solvePose, adjustPose, renderPoseComparison, reviewPose, buildMotionFromPoses, poseChecks } from './poseWorkflow.js';
-import { createReferencePose, renderReferencePoseSheet, reviewReferencePose, upgradeReferencePose } from './referencePose.js';
+import {fullAnimationChecks} from './hostAnimationSession.js';
+import { createReferencePose, renderReferencePoseSheet, reviewReferencePose, upgradeReferencePose, requireReferencePose, referenceFingerprint } from './referencePose.js';
+import { analyzeReferenceParts } from './referenceParts.js';
+import { creationToolDefinitions, callCreationTool, recordCreationCall } from './creationTasks.js';
+import { creationReferenceDefinitions, createPoseSequence } from './creationReference.js';
+import { summarizeHostResult } from './creationQuality.js';
+import { catalogToolDefinitions, ToolCatalog } from './toolCatalog.js';
+import { creationControlDefinitions, callCreationControl } from './creationControls.js';
 import { reviewAnimation, renderAnimationComparison } from './animationReview.js';
 import { calibrateVisualRig, reviewVisualRig } from './visualRig.js';
 import { retargetReferencePose, comparePoseGraphs } from './referenceRetarget.js';
@@ -68,7 +76,8 @@ import {
   validateSpineJson,
   resolveWorkspacePath,
 } from "./spineJson.js";
-import { readFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { dirname } from 'node:path';
 import {
   inspectCharacter,
   batchRetarget,
@@ -89,6 +98,8 @@ import { createProjectSchema } from './projectSchema.js';
 import { poseOperationProperties, poseOperationArguments, validatePoseOperationArguments } from './animationCommands.js';
 import { hostToolDefinitions, callHostTool, versionSchema } from './hostTools.js';
 import { hostClient } from './hostClient.js';
+import { isHostPoseCommand } from './hostPoseCommands.js';
+import { isHostAssetCommand } from './hostAssetCommands.js';
 import { readWriter } from './writerOwnership.js';
 import { HostError, hostFailure } from './hostContracts.js';
 import { runTask,checkpoint } from './taskControl.js';
@@ -97,6 +108,7 @@ import { getWorkspaceTree } from './workspaceTree.js';
 import { AjvJsonSchemaValidator } from '@modelcontextprotocol/sdk/validation/ajv';
 import { ToolError } from './toolError.js';
 import { frameInputSchema, posePatchInputSchema, weaponInputSchema } from './poseSchemas.js';
+import { checkEditorImport } from './editorImportAdvisory.js';
 
 type ToolArgs = Record<string, any>;
 
@@ -107,7 +119,7 @@ const server = new Server(
   },
   {
     capabilities: {
-      tools: {},
+      tools: {listChanged:true},
       resources:{subscribe:false,listChanged:false},prompts:{},logging:{},
     },
   },
@@ -183,6 +195,21 @@ const tools = [
     },
   },
   {
+    name: "spine_check_editor_import",
+    description: "§16 编辑器兼容性 advisory：回答「Spine 编辑器能否打开当前这些字节」，默认关闭，结果恒为非权威，不参与任何门禁。显式 enabled:true 且已配置环境变量 SPINE_EDITOR_CLI 才执行外部导入命令；未配置返回 unavailable（不是失败）。只读原名文件，唯一产物是 diagnostics 报告。",
+    inputSchema: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        filePath: filePathProperty,
+        enabled: { type: "boolean", description: "默认 false。必须显式为 true 才会执行；不传则不探测也不启动外部程序。" },
+        timeoutMs: { type: "number", description: "外部导入命令超时（毫秒），默认 60000；超时判 indeterminate，不构成文件结论。" },
+        writeReport: { type: "boolean", description: "默认 true：把 advisory 报告写入 .spine-mcp/diagnostics/editor-import-advisory/。" },
+      },
+      required: ["filePath"],
+    },
+  },
+  {
     name: "spine_inspect_character",
     description: "读取角色的骨骼、插槽、动画和版本摘要，只读。适合在建立 mapping 前调用。",
     inputSchema: { type: "object", properties: { filePath: filePathProperty }, required: ["filePath"] },
@@ -214,7 +241,7 @@ const tools = [
   },
   {
     name: "spine_retarget_motion",
-    description: "使用角色 mapping 将标准动作适配到目标 Spine JSON。默认 dryRun=true；会沿用现有备份、hash、diff 白名单和官方规范审查。",
+    description: "使用角色 mapping 适配动作。detached 沿用原审查/写入流程；隔离 C2 attached 必须 expectedRevision 和当前已选择的同名 v2 motion，仅 dryRun 制作精确 4.1.24 拟合候选、完整报告及审查产物，返回准备令牌，不代表批准或写入授权。批准后另用 spine_host_commit intent:animation 提交；此入口不改源文件、mapping 或校准报告。",
     inputSchema: {
       type: "object",
       properties: {
@@ -840,6 +867,7 @@ const tools = [
 ];
 
 const auxiliaryTools = [
+  {name:'spine_analyze_reference_parts',description:'优先分析可靠刚性轮廓与误差圆；遮挡或增强观测不足时回退两个既有节点连线，给出 estimated 方向和来源。ok 表示可用观测而非动作批准；节点未知不编造，可靠证据冲突仍复核。dryRun:false 只新建报告。',inputSchema:{type:'object',properties:{referencePosePath:filePathProperty,reportPath:filePathProperty,dryRun:{type:'boolean',default:true}},required:['referencePosePath']}},
   { name: 'spine_set_curve', description: '仅调整已有骨骼关键帧曲线；最后一帧禁止 curve；null 表示移除曲线。默认 dryRun，沿用备份和 diff 门禁。', inputSchema: { type: 'object', properties: { filePath: filePathProperty, animation: { type: 'string' }, bone: { type: 'string' }, timeline: { type: 'string', enum: ['rotate','translate','scale','shear'] }, time: { type: 'number', minimum: 0 }, curve: { anyOf: [{ type: 'string', enum: ['stepped'] }, { type: 'array', items: { type: 'number' } }, { type: 'null' }] }, ...writeProperties }, required: ['filePath','animation','bone','timeline','time','curve'] } },
   { name: 'spine_get_preview_report', description: '读取预览报告；默认返回摘要，需要轨迹时设置 detailed:true。', inputSchema: { type: 'object', properties: { manifestPath: filePathProperty, detailed: { type: 'boolean' } }, required: ['manifestPath'] } },
   { name: 'spine_analyze_reference_gif', description: '离线拆分参考 GIF，读取帧延迟、重复帧、循环扩展和统一画布；阶段由 Agent 显式标注。', inputSchema: { type: 'object', properties: { filePath: filePathProperty, outputDir: filePathProperty, fallbackDelay: { type: 'number', minimum: 10 }, loop: { type: 'boolean' }, phases: { type: 'array', items: { type: 'object', properties: { time: { type: 'number' }, phase: { type: 'string' } }, required: ['time','phase'] } } }, required: ['filePath'] } },
@@ -850,8 +878,8 @@ const poseToolDefinitions = [
  ['spine_calibrate_visual_rig','校准视觉关节与实际骨骼、切片绑定，输出角色、切片分解和节点图；原点候选不能自动确认。',calibrateVisualRig,['filePath','mappingPath','visualRigPath']],
  ['spine_review_visual_rig','确认校准后的视觉绑定及图像证据；角色资源变化后失效。',reviewVisualRig,['visualRigPath','decision','reviewedBy','reason']],
  ['spine_validate_pose_sequence','校验动作级左右身份、阶段、参考指纹与视角能力；旧交换对应不能混用。',validatePoseSequence,['sequencePath']],
- ['spine_refine_reference_pose','依最新静态比较做最多 60 次确定性局部修正，固定身份、支撑与弯曲侧；新修订仍需视觉审查。',refineReferencePose,['posePath','outputPosePath']],
- ['spine_retarget_reference_pose','按参考方向、躯干轴及双脚残差生成草稿，引用动作级身份；不平均接地冲突。',retargetReferencePose,['referencePosePath','visualRigPath','standardPosePath','posePath']],
+ ['spine_refine_reference_pose','依最新静态比较最多 60 次局部修正。隔离 C2 attached 需完整 expectedRevision，仅用当前内存和当前比较；成功时 false 暂存新草稿，另用 Host asset 保存，失败仅诊断。',refineReferencePose,['posePath','outputPosePath']],
+ ['spine_retarget_reference_pose','按已审查参考及动作级身份适配。隔离 C2 attached 需完整 expectedRevision；成功时暂存新资产。失败默认报告，显式 diagnosticMode:newStage 可预演/打开独立内存阶段，源绑定不变；未知必要点只保留部分诊断。失败无保存授权，仍需独立视觉审查。',retargetReferencePose,['referencePosePath','visualRigPath','standardPosePath','posePath']],
  ['spine_compare_pose_graphs','比较参考与 runtime 实际视觉节点，各指标独立通过；未知必要点不允许确认。',comparePoseGraphs,['posePath']],
  ['spine_create_reference_pose','先标注参考图像的头身和四肢关节；遮挡点需声明推测，未知点不得伪造。',createReferencePose,['referencePosePath','observation']],
  ['spine_render_reference_pose_sheet','生成上原图下参考节点连线的审查图，每页六列；实线可见、虚线推测。',renderReferencePoseSheet,['referencePosePaths','outputDir']],
@@ -860,27 +888,29 @@ const poseToolDefinitions = [
  ['spine_get_pose_state','只读勘察：返回当前 frame、求解后的关节/屈曲/头盒，以及各指标状态摘要；不写报告。',getPoseState,['posePath']],
  ['spine_recheck_pose','显式重算当前姿态的数值和关系摘要，不修改资产；附着时使用当前内存快照并发布派生结果。',(a:any,c:any)=>getPoseState({...a,recheck:true},c),['posePath']],
  ['spine_explain_pose','按指标逐项说明未通过原因与可调旋钮；明确标注不可调项。',explainPose,['posePath']],
- ['spine_set_pose_target','只改一个末端目标（x/y/angle/contact），输出新修订并清掉旧求解与审查。',setPoseTarget,['posePath','outputPosePath','role']],
- ['spine_set_pose_channel','只改一个语义通道的 rotate/x/y，输出新修订；用于肩线朝向与扭转。',setPoseChannel,['posePath','outputPosePath','name']],
- ['spine_batch_pose_ops','一次应用多个 target/channel/weapon 操作，再求解与比较，可顺带出对比图。',batchPoseOps,['posePath','outputPosePath','ops']],
- ['spine_create_pose_draft','创建标准站姿或动作关键姿态，默认 dryRun；action 需已确认标准站姿。',createPoseDraft,['filePath','mappingPath','posePath','kind']],
+ ['spine_set_pose_target','只改一个末端目标。detached 需 outputPosePath 新修订；隔离 C2 attached 需 expectedRevision、不得给输出路径，只修改 Host 内存 x/y/angle，不改 contact。',setPoseTarget,['posePath','role']],
+ ['spine_set_pose_channel','修改声明通道 rotate/x/y。detached 需 outputPosePath；隔离 C2 attached 需 expectedRevision、不得给输出路径，原子修改内存并清除旧批准。',setPoseChannel,['posePath','name']],
+ ['spine_batch_pose_ops','一次应用姿态命令。detached 需 outputPosePath，可用原 target/channel/weapon 和对比图；隔离 C2 attached 需 expectedRevision、不得给输出路径，仅 target/channel 原子批次并返回当前帧。',batchPoseOps,['posePath','ops']],
+ ['spine_create_pose_draft','创建标准站姿或动作关键姿态，默认 dryRun；action 需已确认标准站姿。隔离 C2 attached 必须完整 expectedRevision，false 仅暂存候选，保存另用 Host commit 的 asset 意图。',createPoseDraft,['filePath','mappingPath','posePath','kind']],
  ['spine_solve_pose','复用官方 runtime 求解单姿态，检查可达性、关节方向与站姿膝部屈曲；不写角色 JSON。',solvePose,['posePath']],
- ['spine_adjust_pose','批量修改姿态参数，输出新修订并清除求解与审查结果。',adjustPose,['posePath','outputPosePath','patch']],
+ ['spine_adjust_pose','批量修改姿态参数。detached 需 outputPosePath 新修订；隔离 C2 attached 需 expectedRevision、不得给输出路径，仅修改当前内存已开放的 frame 参数，保存另用 spine_host_commit。',adjustPose,['posePath','patch']],
  ['spine_render_pose_comparison','按指定关键姿态生成上参考下目标的干净图、诊断图；每页最多六列，固定比例地面线。',renderPoseComparison,['posePaths']],
  ['spine_review_pose','审查具体姿态；附着时必须带 expectedRevision，使用当前官方 player manifest，默认只预演；批准需数值、参考比较与逐项视觉理由。',reviewPose,['posePath','manifestPath','decision','reviewedBy','reason','checks']],
- ['spine_build_motion_from_poses','从已确认站姿与关键姿态生成 v2 motion，包含开始结束和阶段 ID。',buildMotionFromPoses,['standardPosePath','keyPoses','motionPath','name','duration']],
- ['spine_review_animation','审查完整候选动画 GIF，绑定关键姿态和证据指纹，返回真实写入所需 reviewToken。',reviewAnimation,['reviewToken','manifestPath','decision','reviewedBy','reason','checks']],
+ ['spine_build_motion_from_poses','从已确认站姿与关键姿态生成 v2 motion。隔离 C2 attached 必须完整 expectedRevision，false 仅暂存候选；引用当前姿态前须保存批准，保存 motion 另用 Host commit 的 asset 意图。',buildMotionFromPoses,['standardPosePath','keyPoses','motionPath','name','duration']],
+ ['spine_review_animation','审查完整候选动画 GIF，绑定关键姿态和证据。隔离 attached 必须完整 expectedRevision；批准还须当前 playerManifestPath 和五项独立 checkResults。返回视觉批准令牌，源写入另走 Host animation commit。',reviewAnimation,['reviewToken','manifestPath','decision','reviewedBy','reason','checks']],
  ['spine_render_animation_comparison','按严格递增阶段对应生成上下同步 GIF，同时保留目标原速 GIF；沿用姿态图相机。',renderAnimationComparison,['targetManifestPath','referenceManifestPath','poseManifestPath','phaseMap']],
 ] as const;
 const poseProperties:any={projectId:projectIdProperty,dryRun:{type:'boolean',default:true}};
+poseProperties.diagnosticMode={type:'string',enum:['report','newStage'],default:'report',description:'newStage 仅限隔离 C2 attached：参考失败时预演或显式打开独立内存阶段，不改变原文档绑定；默认 report 保持原诊断行为。'};
 poseProperties.headFromReference={type:'boolean',default:false,description:'仅在已确认面部锚点可用时从参考适配头部方向。'};
 poseProperties.weaponFromReference={type:'boolean',default:false,description:'按已确认参考握轴生成假想杆；不替代实际握持审查。'};
 poseProperties.expectedRevision=versionSchema;
 poseProperties.recheck={type:'boolean',default:false,description:'只读查询默认不求解；true 显式重新求解/比较，不写报告。'};
-for(const k of ['filePath','mappingPath','posePath','outputPosePath','standardPosePath','manifestPath','motionPath','outputDir','targetManifestPath','referenceManifestPath','poseManifestPath','referencePosePath','outputReferencePosePath','visualRigPath','comparisonPath','candidatePath','reportPath','sequencePath'])poseProperties[k]=filePathProperty;
+for(const k of ['filePath','mappingPath','posePath','outputPosePath','standardPosePath','manifestPath','playerManifestPath','motionPath','outputDir','targetManifestPath','referenceManifestPath','poseManifestPath','referencePosePath','outputReferencePosePath','visualRigPath','comparisonPath','candidatePath','reportPath','sequencePath'])poseProperties[k]=filePathProperty;
 Object.assign(poseProperties,{anatomicalSides:{type:'object',description:'解剖 left/right 绑定目标 left/right 语义链；basis 必填，纳入 visualRig 确认指纹。'},viewProfiles:{type:'array',items:{type:'object'},description:'身体视角的已校准切片状态配置：bodyView/attachments/bodySlots/basis。未配置视角不能靠标签批准。'},detailed:{type:'boolean',default:false,description:'默认返回节点和切片摘要，完整顶点/权重保存在报告中。'},nodes:{type:'object',description:'视觉锚点：boneLocal 或 meshTriangle，须 calibrated:true 和 basis。'},segments:{type:'object',description:'leftArm.0/1、rightArm.0/1、leftLeg.0/1、rightLeg.0/1：nodes/bones/attachments。'},correspondence:{type:'object',description:'目标 left/right 对应参考 left/right；basis、anatomicalIdentity、projectedOrder 必须明确。'},checkResults:{type:'object',description:'每个检查项独立 status:pass 和具体 reason。'},stageId:{type:'string'},animation:{type:'string'},time:{type:'number',minimum:0}});
 for(const k of ['name','id','reviewedBy','reason','thresholdReason','reviewToken'])poseProperties[k]={type:'string'};
 Object.assign(poseProperties,{role:{type:'string',enum:['leftHand','rightHand','leftFoot','rightFoot']},x:{type:'number'},y:{type:'number'},angle:{type:'number'},contact:{type:'boolean'},ops:{type:'array',items:{type:'object'},description:'[{op:target,role,x,y,angle,contact} | {op:channel,name,rotate} | {op:weapon,weapon}]'},render:{type:'boolean',default:false},observation:{type:'object',description:'参考图像坐标 v2：含 head/face/body 与左右肩肘腕髋膝踝；另需 silhouette（肩线/髋线同高度可见外缘）、orientation（band/amplitude/basis）、depth（前后证据）。visibility/confidence/basis，遮挡坐标 estimated:true。'},face:{type:'object',description:'面部朝向锚点（建议鼻尖）；头身中心连线不能代替头部朝向。'},silhouette:{type:'object',description:'可见轮廓四点：shoulder.left/right、hip.left/right，与肩线/髋线同高度。'},orientation:{type:'object',description:'朝向相对幅度：band(front/threeQuarter/profile/back)、amplitude 0–1、basis；只作同序列相对量。'},depth:{type:'object',description:'前后证据 1–8 条：id/a/b/relation(front|back)/kind(occlusion|overlap|scale)/basis；目标侧用 drawOrder 回读。'},referencePosePaths:{type:'array',items:filePathProperty},region:{type:'array',items:{type:'number'},minItems:4,maxItems:4,description:'局部放大区域 [x,y,width,height]，相对单图像面板。'},targetTimes:{type:'array',items:{type:'number'}},stageIds:{type:'array',items:{type:'string'}},facing:{type:'string',enum:['left','right']},kind:{type:'string',enum:['standing','action']},decision:{type:'string',enum:['approved','rejected']},frame:{type:'object',description:'normalizedSkeleton 语义姿态：time/body/head/channels/targets/bendDirections；不是图像坐标。'},patch:{type:'object',description:'允许 frame/weapon/reference/groundY/policy，深合并。'},reference:{type:'object',description:'imagePath/time/facing/crop[x,y,width,height]/height/groundY/basis/points；points 含 visibility 和可见点 x/y。'},weapon:{type:'object',description:'二维假想杆 x/y/angle/grips.left/right；需 mapping 手部 gripPoint。'},posePaths:{type:'array',items:{type:'string'},minItems:1,maxItems:60},keyPoses:{type:'array',items:{type:'object',properties:{posePath:filePathProperty,time:{type:'number'},stageId:{type:'string'}},required:['posePath','time','stageId']}},phaseMap:{type:'array',items:{type:'object',properties:{targetTime:{type:'number'},referenceTime:{type:'number'}},required:['targetTime','referenceTime']}},checks:{type:'array',items:{type:'string'}},issues:{type:'array',items:{type:'string'}},loop:{type:'boolean'},duration:{type:'number',exclusiveMinimum:0},groundY:{type:'number'},kneeFlexionMax:{type:'number',minimum:0,maximum:180},width:{type:'integer'},height:{type:'integer'}});
+poseProperties.observation.description+=' 可选 parts：leftArm.0/1、rightArm.0/1、leftLeg.0/1、rightLeg.0/1，含 source(rigidSlice|clothing|unknown)、有序 outline[{x,y}]、radius 像素误差及 basis；points 可声明 uncertaintyRadius，缺失不按零误差处理。';
 tools.push(...poseToolDefinitions.map(([name,description,_fn,required])=>{
   const properties={...poseProperties,...poseOperationProperties[name]},allowed=poseOperationArguments[name];
   Object.assign(properties,{frame:frameInputSchema,patch:posePatchInputSchema,weapon:weaponInputSchema});
@@ -889,17 +919,28 @@ tools.push(...poseToolDefinitions.map(([name,description,_fn,required])=>{
     properties.checkResults={type:'object',additionalProperties:false,properties:Object.fromEntries(poseChecks.map(key=>[key,{type:'object',additionalProperties:false,properties:{status:{type:'string',enum:['pass','fail','unverifiable']},reason:{type:'string',minLength:1}},required:['status','reason']}]))};
     properties.expectedRevision={...versionSchema,description:'附着会话必填：当前完整版本。缺失或过期拒绝，不能按路径推断版本。'};
   }
-  return{name,description,inputSchema:{type:'object',...(allowed?{additionalProperties:false}:{}),properties:allowed?Object.fromEntries(allowed.map(key=>[key,properties[key]])):properties,required:[...required]}};
+  if(name==='spine_review_animation'){
+    properties.checks={type:'array',uniqueItems:true,minItems:5,maxItems:5,items:{type:'string',enum:fullAnimationChecks}};
+    properties.checkResults={type:'object',additionalProperties:false,properties:Object.fromEntries(fullAnimationChecks.map(key=>[key,{type:'object',additionalProperties:false,properties:{status:{type:'string',enum:['pass','fail','unverifiable']},reason:{type:'string',minLength:1}},required:['status','reason']}]))};
+  }
+  if(isHostPoseCommand(name))properties.expectedRevision={...versionSchema,description:'隔离 C2 attached 必填完整版本，并省略 outputPosePath；detached 则须 outputPosePath，不接受此版本参数。'};
+  return{name,description,inputSchema:{type:'object',...(allowed?{additionalProperties:false}:{}),properties:allowed?Object.fromEntries(allowed.map(key=>[key,properties[key]])):properties,required:[...required],...(isHostPoseCommand(name)?{anyOf:[{required:['outputPosePath']},{required:['expectedRevision']}]}:{})}};
 }) as any);
 tools.push(...auxiliaryTools as any);
 tools.push(...hostToolDefinitions as any);
+tools.push(...creationToolDefinitions as any);
+tools.push(...creationReferenceDefinitions as any);
+tools.push(...catalogToolDefinitions as any);
+tools.push(...creationControlDefinitions as any);
+tools.push(...armCalibrationToolDefinitions as any);
 tools.push({name:'spine_get_workspace_tree',description:'有界只读工程树，忽略生成/凭据目录和链接；支持稳定分页，不执行求解。',inputSchema:{type:'object',additionalProperties:false,properties:{projectId:projectIdProperty,root:{type:'string'},depth:{type:'integer',minimum:0,maximum:6,default:3},maxEntries:{type:'integer',minimum:1,maximum:2000,default:500},pageSize:{type:'integer',minimum:1,maximum:500,default:500},cursor:{type:'string'},details:{type:'boolean',default:false},kinds:{type:'array',items:{type:'string'}}}}} as any);
 for (const tool of tools) {
   const props = tool.inputSchema.properties as Record<string, any>;
+  props.responseDetail={type:'string',enum:['summary','full'],default:'summary',description:'Host 常用返回默认摘要；full 读取完整数据，内部核验不受影响。'};
   props.projectId ??= projectIdProperty;
   if (!poseOperationArguments[tool.name]&&(tool.name.startsWith('spine_render_') || tool.name === 'spine_create_preview_manifest')) Object.assign(props, {times:{type:'array',items:{type:'number'},description:'显式关键时间，递增并含需检查的结束姿态；原速 GIF 不接受。'}}, { skin: { type: 'string' }, mappingPath: filePathProperty, motionPath: filePathProperty, scale: { type: 'number', exclusiveMinimum: 0 }, background: { type: 'string' }, premultipliedAlpha: { type: 'boolean' }, mipmaps: { type: 'boolean', default: false }, bounds: { type: 'object', properties: { minX: { type: 'number' }, minY: { type: 'number' }, maxX: { type: 'number' }, maxY: { type: 'number' } }, required: ['minX','minY','maxX','maxY'] } });
   if (tool.name === 'spine_compare_animation_previews') props.pixelComparison = { type: 'boolean', default: false };
-  if (tool.name === 'spine_retarget_motion') { props.preview = { type: 'boolean', default: true }; props.diagnosticPreview = { type:'boolean',default:false,description:'仅 dryRun：失败也输出完整诊断候选、逐姿态图和 GIF；不产生提交令牌，不能真实写入。' }; }
+  if (tool.name === 'spine_retarget_motion') { props.expectedRevision=versionSchema;props.preview = { type: 'boolean', default: true }; props.diagnosticPreview = { type:'boolean',default:false,description:'仅 dryRun：失败也输出完整诊断候选、逐姿态图和 GIF；不产生提交令牌，不能真实写入。' }; }
   if (tool.name === 'spine_run_validation_pipeline') props.preview = { type: 'boolean', default: true };
   if (tool.name === 'spine_fit_animation_curves') Object.assign(props,{atlasPath:filePathProperty,skin:{type:'string'},vertexTolerance:{type:'number',minimum:0}});
 }
@@ -909,7 +950,8 @@ const toolValidators=new Map(tools.map(tool=>{
   for(const required of schema.required??[])if(!schema.properties?.[required])throw new Error(`工具 schema 缺少必填字段声明：${tool.name}.${required}`);
   return[tool.name,schemaProvider.getValidator(schema)];
 }));
-server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
+const toolCatalog=new ToolCatalog(tools);
+server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools:toolCatalog.list() }));
 async function syncRoots() {
   if (!server.getClientCapabilities()?.roots) return;
   const result = await server.listRoots();
@@ -936,16 +978,23 @@ server.setRequestHandler(GetPromptRequestSchema,request=>protocolRead(()=>getPro
 server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
   const name = request.params.name;
   const args = (request.params.arguments ?? {}) as ToolArgs;
+  const started=performance.now();
+  const measured=async(response:any,version?:any,taskProjectId?:string)=>{
+    try{if(!name.includes('workspace'))await recordCreationCall(getWorkspaceContext(taskProjectId??args.projectId),{tool:name,durationMs:performance.now()-started,textBytes:Buffer.byteLength(response.content.filter((b:any)=>b.type==='text').map((b:any)=>b.text).join(''),'utf8'),images:response.content.filter((b:any)=>b.type==='image').length,error:response.isError===true,version});}
+    catch(error){process.stderr.write(`创作计量记录失败（工具结果保持原样）：${String(error)}\n`);try{const payload=JSON.parse(response.content[0].text);response.content[0].text=JSON.stringify({...payload,telemetry:{recorded:false,message:'本次计量落盘失败；操作回执仍有效，请用客户端日志补核。'}});}catch{}}
+    return response;
+  };
   try {
     await rootsReady;
-    const validator=toolValidators.get(name);if(!validator)throw new ToolError('CAPABILITY_MISSING',`未实现的工具：${name}`);
+    const validator=toolValidators.get(name);if(!validator||!toolCatalog.has(name))throw new ToolError('CAPABILITY_MISSING',`工具未实现或未在本连接启用：${name}；请查询 spine_get_tool_catalog。`);
     const validation=validator(args);if(!validation.valid)throw new ToolError('VALIDATION_FAILED',`参数不符合 ${name} 的已公布 schema。`,'validation',{validation:validation.errorMessage});
     if(connectionMonitor&&!name.includes('workspace'))await runInWorkspace(args.projectId,()=>name==='spine_agent_ping'?connectionMonitor!.identify(args.clientType??'custom',getWorkspaceContext(args.projectId)):connectionMonitor!.bind(getWorkspaceContext(args.projectId)));
     let progressNumber=0;
     const progressToken=request.params._meta?.progressToken;
     const progress=(stage:string)=>{if(progressToken!==undefined)void server.notification({method:'notifications/progress',params:{progressToken,progress:++progressNumber,message:stage}}).catch(()=>{});};
     const invoke=()=>name.includes('workspace') ? callTool(name,args) : runInWorkspace(args.projectId,()=>callTool(name,args,extra.signal,progress));
-    const result = await runTask({signal:extra.signal,progress:progressToken===undefined?undefined:(_current,_total,message)=>progress(message??'正在处理')},async()=>{const result=await invoke();checkpoint('工具执行');return result;});
+    const rawResult = await runTask({signal:extra.signal,progress:progressToken===undefined?undefined:(_current,_total,message)=>progress(message??'正在处理')},async()=>{const result=await invoke();checkpoint('工具执行');return result;});
+    const result=toolCatalog.projectActions(args.responseDetail==='full'?rawResult:summarizeHostResult(rawResult,name));
     if(progressToken!==undefined){progressNumber++;await server.notification({method:'notifications/progress',params:{progressToken,progress:progressNumber,total:progressNumber,message:'本次工具执行结束；执行成功不代表视觉批准。'}}).catch(()=>{});}
     const images = pickImages(result);
     const imageData=(result as any)?.__imageData;
@@ -960,12 +1009,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
         content.push({ type: 'image', data: buf.toString('base64'), mimeType: 'image/png' });
       } catch { /* 图片不存在时只返回文本，不阻断结果 */ }
     }
-    return { content };
+    return measured({ content },(result as any)?.version??(result as any)?.state?.version,(result as any)?.taskContext?.projectId);
   } catch (error) {
-    return {
+    return measured({
       isError: true,
       content: [{ type: "text", text: JSON.stringify(hostFailure(error,name)) }],
-    };
+    });
   }
 });
 
@@ -978,13 +1027,31 @@ function pickImages(r: any): string[] {
   return [...new Set(list)].slice(0, 3);
 }
 async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progress?:(stage:string)=>void) {
+  const {responseDetail:_responseDetail,...input}=args;args=input;
   const context = name.includes('workspace') ? {} : getWorkspaceContext(args.projectId);
+  if(name==='spine_get_tool_catalog')return toolCatalog.describe(args.group);
+  if(name==='spine_set_tool_groups'){const result=toolCatalog.select(args);if(args.dryRun===false)await server.notification({method:'notifications/tools/list_changed'});return result;}
+  if(creationToolDefinitions.some(tool=>tool.name===name))return callCreationTool(name,args,context,signal);
+  if(name==='spine_create_pose_sequence')return createPoseSequence(args,context,signal);
+  if(armCalibrationToolDefinitions.some(tool=>tool.name===name))return callArmCalibration(name,args,context,signal,progress);
+  if(creationControlDefinitions.some(tool=>tool.name===name))return callCreationControl(name,args,context,signal,progress);
   validatePoseOperationArguments(name,args,poseToolDefinitions.find(tool=>tool[0]===name)?.[3]);
   if(hostToolDefinitions.some(tool=>tool.name===name))return callHostTool(name,args,context,signal,progress);
+  if(name==='spine_retarget_motion'){
+    if((await readWriter(context))?.mode==='attached')return hostClient(context).animationCandidate(args,signal,progress);
+    if(args.expectedRevision!==undefined)throw new HostError('WRITE_FORBIDDEN','detached 不接受 Host expectedRevision，不能静默回退旧磁盘动画路径。',409);
+  }
+  if(['spine_review_animation','spine_render_animation_comparison'].includes(name)){
+    if((await readWriter(context))?.mode==='attached')return name==='spine_review_animation'?hostClient(context).animationReview(args,signal):hostClient(context).animationComparison(args,signal);
+    if(args.expectedRevision!==undefined||args.playerManifestPath!==undefined||args.checkResults!==undefined)throw new HostError('WRITE_FORBIDDEN','Host 动画审查参数仅用于 attached 会话，不得静默忽略后回退旧磁盘路径。',409);
+  }
   if(poseToolDefinitions.some(tool=>tool[0]===name)&&(await readWriter(context))?.mode==='attached'){
     const client=hostClient(context),state=await client.state();
     if(!state.available||state.writeMode==='frozen')throw new HostError('WRITE_OWNERSHIP_UNCERTAIN','附着会话失联；不能回读旧磁盘冒充当前姿态。',409);
+    if(isHostAssetCommand(name))return client.assetCommand(name,args,signal);
+    if(state.activeDoc?.kind!=='pose')throw new HostError('UNSUPPORTED_DOC_KIND','该姿态入口需要当前 pose；motion/skeleton 请使用显式动画观察入口。',409);
     if(args.posePath&&resolveWorkspacePath(args.posePath,context)!==resolveWorkspacePath(state.activeDoc?.path??'',context))throw new HostError('TARGET_DRIFT','请求路径与 Host 当前活动文档不一致。',409);
+    if(isHostPoseCommand(name))return client.poseCommand(name,args,signal,progress);
     if(['spine_solve_pose','spine_recheck_pose','spine_get_pose_state','spine_explain_pose'].includes(name)){
       if(['spine_solve_pose','spine_recheck_pose'].includes(name)||args.recheck===true)await client.evaluate(state.version,signal,progress);
       return client.state();
@@ -992,12 +1059,22 @@ async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progr
     if(name==='spine_review_pose')return client.review(args,signal,progress);
     throw new HostError('WRITE_FORBIDDEN','该旧姿态工具尚未适配附着会话，请使用 Host 当前明确开放的操作。',409);
   }
+  if(args.diagnosticMode==='newStage')throw new HostError('WRITE_FORBIDDEN','newStage 只用于隔离 C2 attached，不回退磁盘诊断资产写入。',409);
+  if(isHostAssetCommand(name)&&args.expectedRevision!==undefined)throw new HostError('WRITE_FORBIDDEN','detached 资产工具不接受 Host expectedRevision，不能静默回退磁盘。',409);
+  if(isHostPoseCommand(name)){
+    if(args.expectedRevision!==undefined)throw new HostError('WRITE_FORBIDDEN','detached 不接受 Host expectedRevision，不能静默改读磁盘；先确认 attached 实例。',409);
+    if(!args.outputPosePath)throw new HostError('INVALID_ARGUMENT','detached 姿态修改必须给出新 outputPosePath。');
+  }
   const poseTool=poseToolDefinitions.find(t=>t[0]===name);if(poseTool){const result=await poseTool[2](args,context);if(args.dryRun===false||name==='spine_render_pose_comparison')await setPreviewSession({operation:{title:poseTool[1],status:result.ok?'done':'failed',detail:JSON.stringify({posePath:args.posePath,manifestPath:(result as any).manifestPath,issues:(result as any).report?.issues})},log:{level:result.ok?'info':'warning',message:JSON.stringify({tool:name,posePath:args.posePath,manifestPath:(result as any).manifestPath}),toolName:name}},context);return result;}
   if (['spine_set_foot_target','spine_lock_foot_contact','spine_set_hand_target','spine_adjust_body_motion','spine_adjust_step_length','spine_adjust_arm_swing'].includes(name)) return adjustMotion(name, args as any, context);
   switch (name) {
     case 'spine_get_workspace_tree':return getWorkspaceTree(args,context);
     case 'spine_set_curve': return setCurve(args.filePath, args as any, context);
     case 'spine_get_preview_report': return getPreviewReport(args as any, context);
+    case 'spine_analyze_reference_parts': {
+      const reference=await requireReferencePose(args.referencePosePath as string,context,false),report={...analyzeReferenceParts(reference.observation),referencePosePath:args.referencePosePath,referenceFingerprint:referenceFingerprint(reference),diagnosticOnly:true,readyToCommit:false};
+      if(args.dryRun===false){if(!args.reportPath)throw new Error('保存部件诊断需显式 reportPath。');const output=resolveWorkspacePath(args.reportPath as string,context);await mkdir(dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2)+'\n',{flag:'wx'});}return {...report,dryRun:args.dryRun??true};
+    }
     case 'spine_analyze_reference_gif': return analyzeReferenceGif(args as any, context);
     case 'spine_extract_reference_keyframes': return extractReferenceKeyframes(args as any, context);
     case "spine_agent_ping": {
@@ -1013,6 +1090,10 @@ async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progr
     }
     case "spine_get_document_summary": {
       return getDocumentSummary(await readSpineDocument(args.filePath, context));
+    }
+    case "spine_check_editor_import": {
+      // 显式取值，不把未知参数透传进去；projectId/responseDetail 由外层统一处理。
+      return checkEditorImport({ filePath: args.filePath, enabled: args.enabled, timeoutMs: args.timeoutMs, writeReport: args.writeReport }, context);
     }
     case "spine_inspect_character": {
       return inspectCharacter(args.filePath, context);

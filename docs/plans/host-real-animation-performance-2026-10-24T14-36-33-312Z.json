@@ -1,0 +1,1472 @@
+{
+  "startedAt": "2026-10-24T14:36:33.312Z",
+  "desktopEvidence": "docs/plans/host-winforms-2026-10-23T19-46-36-278Z.json",
+  "workspace": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\workspace",
+  "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 MCP stdio 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；候选耗时包含 stdio；不含真实浏览器呈现耗时，不新增动作批准或源写入，不等于完整新动作交付。 本轮候选通过独立编译版 MCP stdio 子进程计算，Host 与求解分进程；测试 Writer 仅用于附着路由，不提交源文件。state/frame 仍按 HostClient 实测，不含其 stdio 编解码。",
+  "node": "v24.15.0",
+  "platform": "win32",
+  "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+  "warmups": 2,
+  "sampleCount": 30,
+  "size": 480,
+  "samples": [
+    {
+      "candidateClientMs": 885.6603000000005,
+      "stateClientMs": 10.356700000000274,
+      "frameClientMs": 31.311900000000605,
+      "stateStart": 4659.3586,
+      "stateEnd": 4669.7153,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 793.9179999999997,
+      "stateClientMs": 11.051699999999983,
+      "frameClientMs": 24.127799999999297,
+      "stateStart": 5620.6876,
+      "stateEnd": 5631.7393,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 913.4826000000003,
+      "stateClientMs": 9.933200000000397,
+      "frameClientMs": 24.27010000000064,
+      "stateStart": 6697.9162,
+      "stateEnd": 6707.8494,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 785.5016999999998,
+      "stateClientMs": 16.91690000000017,
+      "frameClientMs": 24.055700000000797,
+      "stateStart": 7652.089,
+      "stateEnd": 7669.0059,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": [
+        {
+          "startTime": 7652.2894,
+          "duration": 0.24180001020431519
+        },
+        {
+          "startTime": 7660.2856,
+          "duration": 2.1223000288009644
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 768.0638999999992,
+      "stateClientMs": 10.282100000000355,
+      "frameClientMs": 32.66580000000067,
+      "stateStart": 8586.8067,
+      "stateEnd": 8597.0888,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 902.7222000000002,
+      "stateClientMs": 10.932199999999284,
+      "frameClientMs": 26.048399999999674,
+      "stateStart": 9653.9491,
+      "stateEnd": 9664.8813,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 797.0271000000012,
+      "stateClientMs": 9.57470000000103,
+      "frameClientMs": 31.749499999999898,
+      "stateStart": 10609.7905,
+      "stateEnd": 10619.3652,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 921.8308000000015,
+      "stateClientMs": 17.02060000000165,
+      "frameClientMs": 55.312299999999595,
+      "stateStart": 11699.7977,
+      "stateEnd": 11716.8183,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 775.845299999999,
+      "stateClientMs": 9.308399999999892,
+      "frameClientMs": 24.13670000000093,
+      "stateStart": 12679.0212,
+      "stateEnd": 12688.3296,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 768.5515999999989,
+      "stateClientMs": 10.684100000000399,
+      "frameClientMs": 24.32849999999962,
+      "stateStart": 13614.131,
+      "stateEnd": 13624.8151,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 838.1995999999999,
+      "stateClientMs": 15.10319999999956,
+      "frameClientMs": 27.202400000000125,
+      "stateStart": 14613.1831,
+      "stateEnd": 14628.2863,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 735.5226999999995,
+      "stateClientMs": 23.365700000000288,
+      "frameClientMs": 24.701900000000023,
+      "stateStart": 15516.7182,
+      "stateEnd": 15540.0839,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": [
+        {
+          "startTime": 15521.2227,
+          "duration": 0.3644999861717224
+        },
+        {
+          "startTime": 15529.4141,
+          "duration": 3.953000009059906
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 735.0432999999994,
+      "stateClientMs": 9.890800000001036,
+      "frameClientMs": 22.900000000001455,
+      "stateStart": 16430.0838,
+      "stateEnd": 16439.9746,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 831.4774999999972,
+      "stateClientMs": 15.741000000001804,
+      "frameClientMs": 32.18709999999919,
+      "stateStart": 17425.797,
+      "stateEnd": 17441.538,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 780.0285000000003,
+      "stateClientMs": 10.285799999997835,
+      "frameClientMs": 22.852199999997538,
+      "stateStart": 18379.0649,
+      "stateEnd": 18389.3507,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 827.1659999999974,
+      "stateClientMs": 16.91309999999794,
+      "frameClientMs": 48.27470000000176,
+      "stateStart": 19368.1179,
+      "stateEnd": 19385.031,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 993.7946000000011,
+      "stateClientMs": 15.34139999999752,
+      "frameClientMs": 38.44369999999981,
+      "stateStart": 20559.5351,
+      "stateEnd": 20574.8765,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 838.3117999999995,
+      "stateClientMs": 9.927800000001298,
+      "frameClientMs": 34.623100000000704,
+      "stateStart": 21579.2793,
+      "stateEnd": 21589.2071,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 854.7537000000011,
+      "stateClientMs": 11.00930000000153,
+      "frameClientMs": 27.409099999997125,
+      "stateStart": 22611.3706,
+      "stateEnd": 22622.3799,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 840.9137999999984,
+      "stateClientMs": 10.839700000000448,
+      "frameClientMs": 25.15100000000166,
+      "stateStart": 23619.0024,
+      "stateEnd": 23629.8421,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 769.7665000000015,
+      "stateClientMs": 11.42529999999897,
+      "frameClientMs": 38.154200000000856,
+      "stateStart": 24552.1214,
+      "stateEnd": 24563.5467,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 947.1090000000004,
+      "stateClientMs": 10.4403999999995,
+      "frameClientMs": 24.869200000001,
+      "stateStart": 25671.8394,
+      "stateEnd": 25682.2798,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 766.630799999999,
+      "stateClientMs": 11.488699999998062,
+      "frameClientMs": 23.953300000001036,
+      "stateStart": 26602.4808,
+      "stateEnd": 26613.9695,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 891.3826999999983,
+      "stateClientMs": 12.7599999999984,
+      "frameClientMs": 25.73739999999816,
+      "stateStart": 27657.1263,
+      "stateEnd": 27669.8863,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 741.316700000003,
+      "stateClientMs": 9.557099999998172,
+      "frameClientMs": 27.871500000001106,
+      "stateStart": 28560.895,
+      "stateEnd": 28570.4521,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 760.3168000000005,
+      "stateClientMs": 10.10529999999926,
+      "frameClientMs": 23.824899999999616,
+      "stateStart": 29493.1228,
+      "stateEnd": 29503.2281,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 729.3577000000005,
+      "stateClientMs": 9.382000000001426,
+      "frameClientMs": 36.16370000000097,
+      "stateStart": 30391.2015,
+      "stateEnd": 30400.5835,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": [
+        {
+          "startTime": 30399.8451,
+          "duration": 0.2426999807357788
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 753.3104999999996,
+      "stateClientMs": 13.154999999998836,
+      "frameClientMs": 33.682599999996455,
+      "stateStart": 31323.0295,
+      "stateEnd": 31336.1845,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": [
+        {
+          "startTime": 31329.7176,
+          "duration": 0.32889997959136963
+        }
+      ]
+    },
+    {
+      "candidateClientMs": 1282.0264999999963,
+      "stateClientMs": 36.19970000000467,
+      "frameClientMs": 49.154099999999744,
+      "stateStart": 32779.0421,
+      "stateEnd": 32815.2418,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": []
+    },
+    {
+      "candidateClientMs": 891.635500000004,
+      "stateClientMs": 16.058199999999488,
+      "frameClientMs": 26.26860000000306,
+      "stateStart": 33876.8778,
+      "stateEnd": 33892.936,
+      "numericSamples": 337,
+      "candidateHash": "975155a44f75ab44ea14dca5aeb0af7d67637a0c85057ede32d38ce6a12f2fae",
+      "reportPath": ".spine-mcp/live/5ffcc63091ac4db1a809d57a8bae843d872f0300b455687979e5bffac1e2f806/e870830d-9f0c-48a0-a3b8-ce44229f515f/ae8fd43309bc40fb1b86bb11210786041523b1235343ee791945082968ab9bff/reports/7ec4a9c43ef7819837806e7556f69176ee2d18fd3e0f5b38cf6a7f6cdd1a5e72.json",
+      "overlappingGc": [
+        {
+          "startTime": 33877.0299,
+          "duration": 2.0687000155448914
+        }
+      ]
+    }
+  ],
+  "publicWriteEnabled": false,
+  "processSeparation": true,
+  "stateMeasurement": "HostClient 严格 state 完整读取",
+  "testWriterForAttachedRouting": true,
+  "diagnosticTracing": true,
+  "formalPerformanceEvidence": false,
+  "build": {
+    "schema": 1,
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "files": [
+      {
+        "file": "node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.min.js",
+        "hash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "25020b6033a3f2068c869b1cead097823fa132791405a85ad3c79607233b785d"
+      },
+      {
+        "file": "package.json",
+        "hash": "67f5c9d0d38538c3455a7f625e2d6082c73c4e979b11e5c4925b154f2ad47df9"
+      },
+      {
+        "file": "preview/host.html",
+        "hash": "f102e23db24c8d8a95023adc45ebb21b849febcacea16a5828fa5a6a7349af36"
+      },
+      {
+        "file": "src/actionSemantics.ts",
+        "hash": "e5af027e9529b229cd3e71eac992a66eaf6546ea7af525dfc5d83229bb7254fb"
+      },
+      {
+        "file": "src/agentConfigTools.ts",
+        "hash": "9ee0590f0da673268919cb0bfcd2049c4fc3a116291a5734cb46768f2ef27c28"
+      },
+      {
+        "file": "src/agentConnectionMonitor.ts",
+        "hash": "edf5b4a78351e4f36a7bd7dd7a9686aa967fbb0e969b3943a2b6175d815fa7e9"
+      },
+      {
+        "file": "src/agentTools.ts",
+        "hash": "f2e638f889c8c4dc66114a187ad5fe39a4c8d933614b966d634580773bbd74ee"
+      },
+      {
+        "file": "src/animationCommands.ts",
+        "hash": "785cd3bfb2cb4a3438395c1cd1ef1dba1146a757b85a7986eb71f6bdb34b37be"
+      },
+      {
+        "file": "src/animationKernel.ts",
+        "hash": "bf6ac4106128d6cb14e78d8a677ad3ddbac13fef562d991f4d6bd6181ac56171"
+      },
+      {
+        "file": "src/animationReview.ts",
+        "hash": "d3f8fa6b6a681f4dc05fa3d2e838430891eb633084360f3cd51571ded40fc5c9"
+      },
+      {
+        "file": "src/backupTools.ts",
+        "hash": "0c4c23a123b6b84f7fed308d79fca8fd91646262bc79dcb1461e8452b5765a09"
+      },
+      {
+        "file": "src/captureEvidence.ts",
+        "hash": "ed8311c14a3d7bdc0453c9198c696c985724978ebfc6522cae03303cd0222955"
+      },
+      {
+        "file": "src/domainFingerprints.ts",
+        "hash": "2749d501390dbc04a5a8bdd26e8e6a5957ba99cdcd3eb4e95f3a41cc66fa16cf"
+      },
+      {
+        "file": "src/goldenValidation.ts",
+        "hash": "cf7960e5c7db100c4f88edb840104983123645d74040e6a80a087a089ae89d52"
+      },
+      {
+        "file": "src/hostAnimationBundle.ts",
+        "hash": "12c87d75923208b1dde822ad56d2788a29cfa6f5eb548f697d78eae8cdcb96d2"
+      },
+      {
+        "file": "src/hostAnimationCandidate.ts",
+        "hash": "b3a931889875bb52fb9fa2ed1d83342e24331e91c5f8c99021cca0b221640a6d"
+      },
+      {
+        "file": "src/hostAnimationCommit.ts",
+        "hash": "086aa854455f66b136d295a4b8bf84ef36cc9ce0807536e2eb87766f036a85c3"
+      },
+      {
+        "file": "src/hostAnimationEvaluator.ts",
+        "hash": "225c2792c77d97e7f359ef3d20e3665af819f3e5c325f2f183d3f8452e944f5e"
+      },
+      {
+        "file": "src/hostAnimationMapping.ts",
+        "hash": "b88c6be65722608ebeedf930d4a04277d753f17a9d3fb078e2bce85ba0d045e9"
+      },
+      {
+        "file": "src/hostAnimationReview.ts",
+        "hash": "441ceefb1110e4a0f8b874d84b2ac40a6b130799b71c6049c0eae0c63129730b"
+      },
+      {
+        "file": "src/hostAnimationSession.ts",
+        "hash": "01ab6c97698f0f26f52a7f803a011cbf0f391490c34aac794f20a880c16b19f3"
+      },
+      {
+        "file": "src/hostAssetBinding.ts",
+        "hash": "321e99752300f866112eab8d6339595409f895f39ea2ec055a86aaf037e4936d"
+      },
+      {
+        "file": "src/hostAssetCommands.ts",
+        "hash": "1ac9b264254bd3ec788f5429d99cc828d2c9ea4a02a65bdcdb703a03b8f1cc64"
+      },
+      {
+        "file": "src/hostCapture.ts",
+        "hash": "bb8f2b1240d5d026117d1f6e2c16a9209327ed075464c01153bcecb36cc765ab"
+      },
+      {
+        "file": "src/hostClient.ts",
+        "hash": "1fdffbdbc8329a85b8f7eb95346a2001265eabdd81ee260d9523c4391de4b544"
+      },
+      {
+        "file": "src/hostContracts.ts",
+        "hash": "95e44c46fc5cd212a7a61f1d6a16e086a67a7beff3ec97f755405e8f61a0e545"
+      },
+      {
+        "file": "src/hostDocumentStore.ts",
+        "hash": "77e2438867c3d602c480b90e5eb01b2e0cad267c4537cc63e251da95927dfd0e"
+      },
+      {
+        "file": "src/hostEditorStore.ts",
+        "hash": "7d13d934affcb359654527a9f17eb249ec44535dd1eb7693ad611af6c2f9ebba"
+      },
+      {
+        "file": "src/hostEvaluationTasks.ts",
+        "hash": "b4f3187c0bd0f2bb922f6b982cd46429f84f5bdd92f689e2483805fe54a55963"
+      },
+      {
+        "file": "src/hostEvaluator.ts",
+        "hash": "ad9df9a8d1ca4e14e6013d8167aa881f6bf047e6a1b7eff50dc2d5eda4bd9121"
+      },
+      {
+        "file": "src/hostFileProtection.ts",
+        "hash": "c49bec6b28f53cb37ac8bfecb75f051ee1a6197cded1308ececb2151d190dbfc"
+      },
+      {
+        "file": "src/hostJournal.ts",
+        "hash": "6cdf2be0156b70250b14214508e2d9274af81b3fe5435a280e0b365961500d0e"
+      },
+      {
+        "file": "src/hostLifecycle.ts",
+        "hash": "f189706e87b562a64828f3899079fe203c337fadf67216f916e3afd182956595"
+      },
+      {
+        "file": "src/hostObservation.ts",
+        "hash": "f556afe8554112f934b7a1c27022563d9f669c87ccb87ba3178dd1d13cfc44d8"
+      },
+      {
+        "file": "src/hostObservationCatalog.ts",
+        "hash": "391ff1a37d06936867d87fe341a3d89836ea4863e916013b05988e171610ea7b"
+      },
+      {
+        "file": "src/hostObservationCli.ts",
+        "hash": "a8de834d3880b9c1b88bc43d358486a87682dba189688deb67d2cbd40bbfdc29"
+      },
+      {
+        "file": "src/hostPlayback.ts",
+        "hash": "9daf344d8aebf810d3a4ca60dd4eada9e86a216f7682a1a9dc09222a81cac622"
+      },
+      {
+        "file": "src/hostPose.ts",
+        "hash": "f4eae59eb06619567df8770956013e2fdd27ac8564effd0449c0228f40eae656"
+      },
+      {
+        "file": "src/hostPoseCommands.ts",
+        "hash": "d978b77e2271efda80ae149f22fb4fe380dd2485bccaa5583cb02d5fc2f93345"
+      },
+      {
+        "file": "src/hostPosePatch.ts",
+        "hash": "2e9e601d561c5506bc361d77245140c4e77439e7e4ebbe296a66681e61d0d064"
+      },
+      {
+        "file": "src/hostPoseReview.ts",
+        "hash": "1960c469a54a7fd8577737df03f7289457e046d3159624de6b54d04e39353f08"
+      },
+      {
+        "file": "src/hostReadiness.ts",
+        "hash": "830b6589438ee3f5c843cc559ab2b73d2716a0d3d1daeaf9f2f767ef2f17dcc0"
+      },
+      {
+        "file": "src/hostReleaseEvidence.ts",
+        "hash": "524bc2ff8f57574f450502760e027bf72466a2e2f121a61c5b8567ede5526f13"
+      },
+      {
+        "file": "src/hostRollout.ts",
+        "hash": "1e6d09503fb963d4a4f562456c985c53af3abbbf8a75316a4bbff1e5969981ba"
+      },
+      {
+        "file": "src/hostServer.ts",
+        "hash": "6fb7519ec6a49e8c5e83c9021de5ee083428a4d3f430085df96e3423c12c06cd"
+      },
+      {
+        "file": "src/hostTools.ts",
+        "hash": "eb44d7bede2d04925d550b48665b07d87757f3dd82a4c0bba9fbe2ed5d16d43c"
+      },
+      {
+        "file": "src/imageModules.d.ts",
+        "hash": "eedf14aa3e7334d492dacd9ef62f4c44d559a73f7073e758d0eade458fda8b08"
+      },
+      {
+        "file": "src/jobTools.ts",
+        "hash": "8d10c0a14668e3920bfc97870aed311c93663d1286279287fd6e3f4807d2397c"
+      },
+      {
+        "file": "src/mappingTools.ts",
+        "hash": "1a7589d8f29381c754ad89f43afc4ab24bff22c8f8c43ab15e2cdf5434812951"
+      },
+      {
+        "file": "src/motionAdjustmentTools.ts",
+        "hash": "bc352a46d691b9b2951f16052ab3ee631ae719e82fc9a216b6d74ac79f405cef"
+      },
+      {
+        "file": "src/motionEngine.ts",
+        "hash": "fbcbfd1c84f774689b8f294b9c5e1bfae0e004ebb300da5abe1ac7b7cbae6644"
+      },
+      {
+        "file": "src/motionMath.ts",
+        "hash": "5a866afc283d6888b3cbf63bc727531f4444402d0d19881a2ea479d0aa3f0249"
+      },
+      {
+        "file": "src/motionRuntime.ts",
+        "hash": "abb5cff49222ef53ca34f51fd17fd59a1548b5bbe6b8e61cf3054fdf23c28c17"
+      },
+      {
+        "file": "src/poseDigest.ts",
+        "hash": "e785b758d413a9f020d5935949cea584c4738ead5c8c83f0d2ccea5e95aa217d"
+      },
+      {
+        "file": "src/poseGraph.ts",
+        "hash": "504dd08477847d50fc04680cafa6e1de05dddbb6f8dde4e0a62bd13873b7336d"
+      },
+      {
+        "file": "src/poseOps.ts",
+        "hash": "ec48dc3a558bb36e9ae3a852c433ae32a7aa57d372ed01d187b558d4dc1b0d10"
+      },
+      {
+        "file": "src/posePresentation.ts",
+        "hash": "d3f8049a30a580cda9cd5b54ba9c36d3bbdf3177b5e6dc02b5c9d352c79af3b4"
+      },
+      {
+        "file": "src/poseRefinementMath.ts",
+        "hash": "166090b4d2556ab1d3756cd5ec01d324d52f4253ffad653f5ef485dfd36e0467"
+      },
+      {
+        "file": "src/poseRefinementTasks.ts",
+        "hash": "b3cf8e476f754e2f7a519774b5150bcdc8c7bf2efbc2429b03126a1e5318b8b1"
+      },
+      {
+        "file": "src/poseSchemas.ts",
+        "hash": "55473d16acbdee69ce0b180a6805469ffc8f4ad070c4b810aab0a85274afcb48"
+      },
+      {
+        "file": "src/poseSequence.ts",
+        "hash": "e20b8e5b9730fdf39bf9593546c491b251d2c367f1180ffe841f53b5a319edaa"
+      },
+      {
+        "file": "src/poseWorkflow.ts",
+        "hash": "1753e2e20f18e36e1e97834da038b5fbd81662b3bf8ad97a57b510912061689b"
+      },
+      {
+        "file": "src/previewAlpha.ts",
+        "hash": "63ca34c9ca7a4be0946feb28ff594ebb2fcee55e2506021cce3d80c3851797e6"
+      },
+      {
+        "file": "src/previewRenderTools.ts",
+        "hash": "f945d9fdfd52f9888783b673d10040f0883d5e7ab85b9a7e76db47ecc75deaa7"
+      },
+      {
+        "file": "src/previewServer.ts",
+        "hash": "27b4381a11135bf4d5c03bb9ca0e3c1198819fc1d3d011fd85d78e27ab362afd"
+      },
+      {
+        "file": "src/previewTools.ts",
+        "hash": "0dbe00235009149109f84e27bfc22155bf480ee6ae44bb3aab02cfe4115a3a3e"
+      },
+      {
+        "file": "src/projectModel.ts",
+        "hash": "9a4fc04459bef493d97bceb5a6b95df70517f4812f604a199dc876d6cc47784a"
+      },
+      {
+        "file": "src/projectSchema.ts",
+        "hash": "f1afe530e29c31e551ef71ce3da83204e45a8d8a04e2383c84be7b65f0987c9c"
+      },
+      {
+        "file": "src/rasterRenderer.ts",
+        "hash": "bcf1e27de7d1d843e7490bf4d624109ca87f3c92487aca0dfa492ded673d461d"
+      },
+      {
+        "file": "src/referencePose.ts",
+        "hash": "92c7fc5d8f919ef0d7636252c0243ba310e722281afe6a8c7542517aa18d7006"
+      },
+      {
+        "file": "src/referencePoseRefinement.ts",
+        "hash": "76b2d90c1b925f2914f7e337d43271f68647b6a4d044ecefebf6524214c0900a"
+      },
+      {
+        "file": "src/referenceRetarget.ts",
+        "hash": "00b2493ecdb2376fdfbee7ced67cb8f1fc81ba878c825b14b2c21be77877e7fa"
+      },
+      {
+        "file": "src/referenceRetargetKernel.ts",
+        "hash": "010544696fe0926a29706c063222f7771f6a8d3e934194d2bbcaaf7ad8dda1e4"
+      },
+      {
+        "file": "src/referenceTools.ts",
+        "hash": "fcd0b3a936e875d5b382ca0d487493498327c9c6dd91387ee9a08da5d58cf094"
+      },
+      {
+        "file": "src/renderSnapshot.ts",
+        "hash": "c15e359face0a580e01d6d864198365bd9b65ae5b08acebdd74098cda378c3b9"
+      },
+      {
+        "file": "src/resources.ts",
+        "hash": "d08032d86536d9e0c68a5e02d12195638a030d0ebdbed4023fa958bf1281d18e"
+      },
+      {
+        "file": "src/retargetEngine.ts",
+        "hash": "2c0f6db666b3e86d1a39d79713550abb89e8303ee2b1e405d3b118f1bc834c9f"
+      },
+      {
+        "file": "src/runtimeCache.ts",
+        "hash": "1e63e89dd04ec9f936644d4a9db81c4a2409eb0ad2aa272e0618eac1a0c49f60"
+      },
+      {
+        "file": "src/runtimeCurveFit.ts",
+        "hash": "20003772acd5b56ea8a42c18cf22adca00ce6230bf141f5a108d7a9450c709fe"
+      },
+      {
+        "file": "src/server.ts",
+        "hash": "91e209762b0b0e7ed5a36f81c776abc9860fed255328ddc2403932fcf297fa97"
+      },
+      {
+        "file": "src/sessionTools.ts",
+        "hash": "3fc54a1cd89a960cd25ac48cec26ff17bdd3417ce255ebf5eb6b118ac6b188d4"
+      },
+      {
+        "file": "src/spineJson.ts",
+        "hash": "c21cc43527076a6302224234108fcff326a8a416b0bce739a32d56cc89e65a1e"
+      },
+      {
+        "file": "src/strictFileChecks.ts",
+        "hash": "f9674a5d52d1139871bd4a8d4956cf1fa3043985d3ebc3b63b3634290e7f5aea"
+      },
+      {
+        "file": "src/taskControl.ts",
+        "hash": "5561d01d8ee9b7f109f74331b2a82c11044eadc2cc55d6349144f5a887923b25"
+      },
+      {
+        "file": "src/toolError.ts",
+        "hash": "5fb2cef8ef903d280fd5b6cf086cb281ef58d331382899bda157c6f87834a663"
+      },
+      {
+        "file": "src/visualRig.ts",
+        "hash": "57ce51b47d0fb28c6f93f04f238d3b7a8970d080899f9cf560352cc03f07d0cf"
+      },
+      {
+        "file": "src/workspaceTools.ts",
+        "hash": "0f2c498e10a95a3a5db688adc7157f208742e0c82eb542da1177f74d2809e072"
+      },
+      {
+        "file": "src/workspaceTree.ts",
+        "hash": "ac2b20c8961fc7fd064029300e9e724246a0475243beb0e6dd4da42694500752"
+      },
+      {
+        "file": "src/writerOwnership.ts",
+        "hash": "20f7a544ebd88e17b99e78ef5429596d78d7d9cf7ce0671bd34b624be90b3097"
+      }
+    ],
+    "hash": "acc6eedbea9ca16ffebb71485a20b9410c062924d7d91c4b4672df33a9bbf153"
+  },
+  "mcpExecutableHash": "b265f74a39908de85556a0c72811c382946cc8e8d8eb12fdc7011e1ad7b487ea",
+  "warmupSamples": [
+    {
+      "candidateClientMs": 940.6862000000001,
+      "stateClientMs": 14.074100000000271,
+      "frameClientMs": 36.70470000000023
+    },
+    {
+      "candidateClientMs": 793.3893000000003,
+      "stateClientMs": 12.823100000000068,
+      "frameClientMs": 33.22050000000036
+    }
+  ],
+  "allInputsUnchanged": true,
+  "phases": {
+    "candidateClientMs": {
+      "p50": 797.0271000000012,
+      "p95": 993.7946000000011,
+      "maximum": 1282.0264999999963
+    },
+    "stateClientMs": {
+      "p50": 10.932199999999284,
+      "p95": 23.365700000000288,
+      "maximum": 36.19970000000467
+    },
+    "frameClientMs": {
+      "p50": 26.26860000000306,
+      "p95": 49.154099999999744,
+      "maximum": 55.312299999999595
+    }
+  },
+  "budgets": {
+    "stateClientMs": 20,
+    "frameClientMs": 50
+  },
+  "budgetsPassed": false,
+  "mechanicsPassed": true,
+  "gcEvents": [
+    {
+      "startTime": 1621.2159,
+      "duration": 2.9312000274658203
+    },
+    {
+      "startTime": 1625.0079,
+      "duration": 0.1954999566078186
+    },
+    {
+      "startTime": 1631.5633,
+      "duration": 1.426300048828125
+    },
+    {
+      "startTime": 2504.0679,
+      "duration": 4.24099999666214
+    },
+    {
+      "startTime": 2542.56,
+      "duration": 0.35489994287490845
+    },
+    {
+      "startTime": 2549.3307,
+      "duration": 2.528999984264374
+    },
+    {
+      "startTime": 2626.8658,
+      "duration": 0.2578999996185303
+    },
+    {
+      "startTime": 2634.7396,
+      "duration": 2.041499972343445
+    },
+    {
+      "startTime": 3599.0343,
+      "duration": 0.23330003023147583
+    },
+    {
+      "startTime": 3606.6267,
+      "duration": 3.7407999634742737
+    },
+    {
+      "startTime": 3637.711,
+      "duration": 0.24629998207092285
+    },
+    {
+      "startTime": 3645.8872,
+      "duration": 3.3271999955177307
+    },
+    {
+      "startTime": 4578.8433,
+      "duration": 0.2978999614715576
+    },
+    {
+      "startTime": 4586.9593,
+      "duration": 3.3585000038146973
+    },
+    {
+      "startTime": 4643.4396,
+      "duration": 0.330299973487854
+    },
+    {
+      "startTime": 4651.9361,
+      "duration": 2.0020000338554382
+    },
+    {
+      "startTime": 4680.427,
+      "duration": 0.22579997777938843
+    },
+    {
+      "startTime": 4693.409,
+      "duration": 2.246399998664856
+    },
+    {
+      "startTime": 5477.7127,
+      "duration": 0.3197000026702881
+    },
+    {
+      "startTime": 5487.7135,
+      "duration": 2.528500020503998
+    },
+    {
+      "startTime": 5547.0184,
+      "duration": 0.22460001707077026
+    },
+    {
+      "startTime": 5554.0457,
+      "duration": 2.857200026512146
+    },
+    {
+      "startTime": 5608.5434,
+      "duration": 0.23960000276565552
+    },
+    {
+      "startTime": 5614.439,
+      "duration": 2.1832000017166138
+    },
+    {
+      "startTime": 5656.4625,
+      "duration": 0.23519998788833618
+    },
+    {
+      "startTime": 5662.1208,
+      "duration": 1.9437000155448914
+    },
+    {
+      "startTime": 6609.763,
+      "duration": 0.2631000280380249
+    },
+    {
+      "startTime": 6617.7984,
+      "duration": 3.5426999926567078
+    },
+    {
+      "startTime": 6683.1779,
+      "duration": 0.25370001792907715
+    },
+    {
+      "startTime": 6691.1682,
+      "duration": 2.0550000071525574
+    },
+    {
+      "startTime": 6882.9089,
+      "duration": 0.27810001373291016
+    },
+    {
+      "startTime": 6890.9064,
+      "duration": 2.953000009059906
+    },
+    {
+      "startTime": 7577.0241,
+      "duration": 0.22790002822875977
+    },
+    {
+      "startTime": 7584.1289,
+      "duration": 2.887499988079071
+    },
+    {
+      "startTime": 7652.2894,
+      "duration": 0.24180001020431519
+    },
+    {
+      "startTime": 7660.2856,
+      "duration": 2.1223000288009644
+    },
+    {
+      "startTime": 8452.0554,
+      "duration": 0.2598000168800354
+    },
+    {
+      "startTime": 8460.389,
+      "duration": 2.144599974155426
+    },
+    {
+      "startTime": 8515.8286,
+      "duration": 0.2254999876022339
+    },
+    {
+      "startTime": 8523.4304,
+      "duration": 2.33050000667572
+    },
+    {
+      "startTime": 8573.198,
+      "duration": 0.26759999990463257
+    },
+    {
+      "startTime": 8580.2516,
+      "duration": 1.8899999856948853
+    },
+    {
+      "startTime": 8606.7954,
+      "duration": 0.37040001153945923
+    },
+    {
+      "startTime": 8618.8258,
+      "duration": 3.5223999619483948
+    },
+    {
+      "startTime": 9517.2589,
+      "duration": 0.23799997568130493
+    },
+    {
+      "startTime": 9528.018,
+      "duration": 2.3986000418663025
+    },
+    {
+      "startTime": 9637.1213,
+      "duration": 0.24379998445510864
+    },
+    {
+      "startTime": 9646.1073,
+      "duration": 3.1317999958992004
+    },
+    {
+      "startTime": 9684.3405,
+      "duration": 0.23229998350143433
+    },
+    {
+      "startTime": 9692.4117,
+      "duration": 2.460700035095215
+    },
+    {
+      "startTime": 10553.6932,
+      "duration": 0.24459999799728394
+    },
+    {
+      "startTime": 10595.128,
+      "duration": 3.59060001373291
+    },
+    {
+      "startTime": 10629.4292,
+      "duration": 0.2310999631881714
+    },
+    {
+      "startTime": 10640.1001,
+      "duration": 2.619000017642975
+    },
+    {
+      "startTime": 11504.7804,
+      "duration": 0.23579996824264526
+    },
+    {
+      "startTime": 11519.4091,
+      "duration": 3.2964999675750732
+    },
+    {
+      "startTime": 11581.6471,
+      "duration": 0.28210002183914185
+    },
+    {
+      "startTime": 11606.8845,
+      "duration": 6.104200005531311
+    },
+    {
+      "startTime": 11732.5967,
+      "duration": 0.8210999965667725
+    },
+    {
+      "startTime": 11742.6794,
+      "duration": 4.176699995994568
+    },
+    {
+      "startTime": 12624.5298,
+      "duration": 0.23909997940063477
+    },
+    {
+      "startTime": 12664.2388,
+      "duration": 3.270299971103668
+    },
+    {
+      "startTime": 12707.3594,
+      "duration": 0.3513000011444092
+    },
+    {
+      "startTime": 12714.7427,
+      "duration": 1.8876000046730042
+    },
+    {
+      "startTime": 13475.1928,
+      "duration": 0.25279998779296875
+    },
+    {
+      "startTime": 13483.1647,
+      "duration": 2.1068999767303467
+    },
+    {
+      "startTime": 13539.9535,
+      "duration": 0.2603999972343445
+    },
+    {
+      "startTime": 13554.4328,
+      "duration": 3.3000999689102173
+    },
+    {
+      "startTime": 13598.8694,
+      "duration": 0.24610000848770142
+    },
+    {
+      "startTime": 13607.7136,
+      "duration": 2.06769996881485
+    },
+    {
+      "startTime": 14482.043,
+      "duration": 1.399999976158142
+    },
+    {
+      "startTime": 14493.5984,
+      "duration": 5.109499990940094
+    },
+    {
+      "startTime": 14580.597,
+      "duration": 0.3511999845504761
+    },
+    {
+      "startTime": 14591.3887,
+      "duration": 5.042800009250641
+    },
+    {
+      "startTime": 15521.2227,
+      "duration": 0.3644999861717224
+    },
+    {
+      "startTime": 15529.4141,
+      "duration": 3.953000009059906
+    },
+    {
+      "startTime": 15565.0213,
+      "duration": 0.2339000105857849
+    },
+    {
+      "startTime": 15571.1867,
+      "duration": 1.979699969291687
+    },
+    {
+      "startTime": 16316.9983,
+      "duration": 0.24810004234313965
+    },
+    {
+      "startTime": 16325.418,
+      "duration": 1.786400020122528
+    },
+    {
+      "startTime": 16414.6043,
+      "duration": 0.25760000944137573
+    },
+    {
+      "startTime": 16422.1923,
+      "duration": 3.05730003118515
+    },
+    {
+      "startTime": 16463.0971,
+      "duration": 0.2254999876022339
+    },
+    {
+      "startTime": 16468.8097,
+      "duration": 2.135800004005432
+    },
+    {
+      "startTime": 17282.1902,
+      "duration": 0.3522000312805176
+    },
+    {
+      "startTime": 17295.166,
+      "duration": 4.807700037956238
+    },
+    {
+      "startTime": 17393.17,
+      "duration": 0.4205000400543213
+    },
+    {
+      "startTime": 17404.1088,
+      "duration": 4.535899996757507
+    },
+    {
+      "startTime": 18291.7747,
+      "duration": 0.32089996337890625
+    },
+    {
+      "startTime": 18301.5893,
+      "duration": 4.586700022220612
+    },
+    {
+      "startTime": 18364.6906,
+      "duration": 0.24459999799728394
+    },
+    {
+      "startTime": 18371.976,
+      "duration": 2.5659000277519226
+    },
+    {
+      "startTime": 19326.8422,
+      "duration": 0.4643999934196472
+    },
+    {
+      "startTime": 19337.9269,
+      "duration": 6.728200018405914
+    },
+    {
+      "startTime": 19402.8599,
+      "duration": 0.34369999170303345
+    },
+    {
+      "startTime": 19423.5438,
+      "duration": 3.258300006389618
+    },
+    {
+      "startTime": 20409.0768,
+      "duration": 0.29329997301101685
+    },
+    {
+      "startTime": 20419.3049,
+      "duration": 2.0737000107765198
+    },
+    {
+      "startTime": 20482.393,
+      "duration": 0.23600000143051147
+    },
+    {
+      "startTime": 20497.2185,
+      "duration": 3.122099995613098
+    },
+    {
+      "startTime": 20577.3736,
+      "duration": 0.2916000485420227
+    },
+    {
+      "startTime": 20586.4187,
+      "duration": 2.127499997615814
+    },
+    {
+      "startTime": 21560.4386,
+      "duration": 0.2817000150680542
+    },
+    {
+      "startTime": 21568.4481,
+      "duration": 3.4103000164031982
+    },
+    {
+      "startTime": 21601.6867,
+      "duration": 0.23399996757507324
+    },
+    {
+      "startTime": 21615.5176,
+      "duration": 1.9954999685287476
+    },
+    {
+      "startTime": 22414.5295,
+      "duration": 0.46070003509521484
+    },
+    {
+      "startTime": 22427.5014,
+      "duration": 3.9460999965667725
+    },
+    {
+      "startTime": 22590.7109,
+      "duration": 0.44290000200271606
+    },
+    {
+      "startTime": 22600.5356,
+      "duration": 3.124300003051758
+    },
+    {
+      "startTime": 22650.0697,
+      "duration": 0.37199997901916504
+    },
+    {
+      "startTime": 22659.04,
+      "duration": 3.095400035381317
+    },
+    {
+      "startTime": 23539.6701,
+      "duration": 0.35290002822875977
+    },
+    {
+      "startTime": 23550.1598,
+      "duration": 2.9717999696731567
+    },
+    {
+      "startTime": 23604.1102,
+      "duration": 0.23559999465942383
+    },
+    {
+      "startTime": 23614.1103,
+      "duration": 2.088100016117096
+    },
+    {
+      "startTime": 24121.6416,
+      "duration": 0.2493000030517578
+    },
+    {
+      "startTime": 24129.7966,
+      "duration": 4.095200002193451
+    },
+    {
+      "startTime": 24462.3483,
+      "duration": 0.22909998893737793
+    },
+    {
+      "startTime": 24471.3241,
+      "duration": 4.070100009441376
+    },
+    {
+      "startTime": 24538.4288,
+      "duration": 0.26649999618530273
+    },
+    {
+      "startTime": 24547.1643,
+      "duration": 2.2091000080108643
+    },
+    {
+      "startTime": 25585.3799,
+      "duration": 0.2408999800682068
+    },
+    {
+      "startTime": 25594.4045,
+      "duration": 3.9634000062942505
+    },
+    {
+      "startTime": 25657.2974,
+      "duration": 0.2563999891281128
+    },
+    {
+      "startTime": 25665.4498,
+      "duration": 1.7951000332832336
+    },
+    {
+      "startTime": 26516.59,
+      "duration": 0.3004000186920166
+    },
+    {
+      "startTime": 26526.6597,
+      "duration": 3.8079999685287476
+    },
+    {
+      "startTime": 26586.6506,
+      "duration": 0.2348000407218933
+    },
+    {
+      "startTime": 26595.7985,
+      "duration": 2.1883999705314636
+    },
+    {
+      "startTime": 26782.5888,
+      "duration": 0.2712000012397766
+    },
+    {
+      "startTime": 26790.9057,
+      "duration": 2.721400022506714
+    },
+    {
+      "startTime": 27521.1564,
+      "duration": 0.3691999912261963
+    },
+    {
+      "startTime": 27533.6564,
+      "duration": 4.301999986171722
+    },
+    {
+      "startTime": 27640.5153,
+      "duration": 0.34359997510910034
+    },
+    {
+      "startTime": 27650.9499,
+      "duration": 2.7623000144958496
+    },
+    {
+      "startTime": 28454.1821,
+      "duration": 0.21219998598098755
+    },
+    {
+      "startTime": 28463.0109,
+      "duration": 2.189199984073639
+    },
+    {
+      "startTime": 28514.251,
+      "duration": 0.22619998455047607
+    },
+    {
+      "startTime": 28548.413,
+      "duration": 2.6965999603271484
+    },
+    {
+      "startTime": 28575.1209,
+      "duration": 0.21160000562667847
+    },
+    {
+      "startTime": 28583.8033,
+      "duration": 1.8716000318527222
+    },
+    {
+      "startTime": 29380.944,
+      "duration": 0.22460001707077026
+    },
+    {
+      "startTime": 29389.8194,
+      "duration": 2.5088000297546387
+    },
+    {
+      "startTime": 29479.1907,
+      "duration": 0.28279995918273926
+    },
+    {
+      "startTime": 29487.4732,
+      "duration": 3.0810999870300293
+    },
+    {
+      "startTime": 30399.8451,
+      "duration": 0.2426999807357788
+    },
+    {
+      "startTime": 30407.6272,
+      "duration": 3.571000039577484
+    },
+    {
+      "startTime": 30570.0729,
+      "duration": 0.27399998903274536
+    },
+    {
+      "startTime": 30578.3782,
+      "duration": 1.7745999693870544
+    },
+    {
+      "startTime": 31201.0673,
+      "duration": 0.2125999927520752
+    },
+    {
+      "startTime": 31210.5722,
+      "duration": 1.9824000000953674
+    },
+    {
+      "startTime": 31266.822,
+      "duration": 0.2526000142097473
+    },
+    {
+      "startTime": 31308.9261,
+      "duration": 2.909600019454956
+    },
+    {
+      "startTime": 31329.7176,
+      "duration": 0.32889997959136963
+    },
+    {
+      "startTime": 31340.0522,
+      "duration": 2.929300010204315
+    },
+    {
+      "startTime": 31510.7625,
+      "duration": 0.28780001401901245
+    },
+    {
+      "startTime": 31520.4446,
+      "duration": 2.6514999866485596
+    },
+    {
+      "startTime": 32652.1152,
+      "duration": 0.31859999895095825
+    },
+    {
+      "startTime": 32662.2727,
+      "duration": 4.362900018692017
+    },
+    {
+      "startTime": 32755.1897,
+      "duration": 0.3159000277519226
+    },
+    {
+      "startTime": 32766.2166,
+      "duration": 3.1911999583244324
+    },
+    {
+      "startTime": 32827.6441,
+      "duration": 0.37310004234313965
+    },
+    {
+      "startTime": 32851.1426,
+      "duration": 5.2388999462127686
+    },
+    {
+      "startTime": 33325.2029,
+      "duration": 0.3161999583244324
+    },
+    {
+      "startTime": 33334.4289,
+      "duration": 2.7240999937057495
+    },
+    {
+      "startTime": 33785.4758,
+      "duration": 0.254800021648407
+    },
+    {
+      "startTime": 33806.7889,
+      "duration": 3.626200020313263
+    },
+    {
+      "startTime": 33865.5659,
+      "duration": 0.2602999806404114
+    },
+    {
+      "startTime": 33877.0299,
+      "duration": 2.0687000155448914
+    }
+  ],
+  "finishedAt": "2026-10-24T14:37:06.801Z"
+}

@@ -11,6 +11,7 @@
     "test": "tsx --test test/*.test.ts",
     "preview": "node dist/previewServer.js",
     "host": "node dist/hostServer.js",
+    "host:creation": "node dist/creationTrialServer.js",
     "host:benchmark": "tsx scripts/benchmark-host.ts",
     "observer": "powershell -ExecutionPolicy Bypass -File scripts/start-observer.ps1",
     "observer:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop-observer.ps1"

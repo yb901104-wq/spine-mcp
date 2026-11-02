@@ -9,3 +9,6 @@ bin/
 obj/
 *.log
 releases/
+
+# 本轮隔离编译验证目录
+validation-build/

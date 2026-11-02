@@ -1,15 +1,17 @@
 import { hashObject } from './mappingTools.js';
 import { compareActionSemantics, compareDepth } from './actionSemantics.js';
+import { analyzeReferenceParts, referencePartsPolicyVersion } from './referenceParts.js';
 
 export type GraphPoint = {x:number;y:number;confidence?:number;visibility?:string};
 export const limbNodes:Record<string,string[]> = Object.fromEntries(['left','right'].flatMap(s=>[[s+'Arm',[s+'Shoulder',s+'Elbow',s+'Wrist']],[s+'Leg',[s+'Hip',s+'Knee',s+'Ankle']]]));
 export const graphEdges = [['head','body'], ...Object.values(limbNodes).flatMap(n=>[[n[0],n[1]],[n[1],n[2]]])];
 // 版本升级才可变更；MCP 不接受调用时门限覆盖。
 // v3 增加肩髋线、轮廓宽度、朝向幅度、肢体相对躯干与头部朝向；长度统一以躯干长归一。
-export const comparisonPolicy = Object.freeze({version:3,directionDegrees:15,flexionDegrees:15,stance:0.15,wrist:0.15,grip:0.15,extensionNeutral:0.15,bendNeutralDegrees:2,lineDegrees:12,twistDegrees:12,silhouetteWidth:0.15,facingRatio:0.25,reach:0.15,torsoHeight:0.12,torsoOffset:0.15,footOffset:0.2,headGap:0.2,headDegrees:18,headBandDegrees:[20,60]});
+export const comparisonPolicy = Object.freeze({version:4,directionDegrees:15,flexionDegrees:15,stance:0.15,wrist:0.15,grip:0.15,extensionNeutral:0.15,bendNeutralDegrees:2,lineDegrees:12,twistDegrees:12,silhouetteWidth:0.15,facingRatio:0.25,reach:0.15,torsoHeight:0.12,torsoOffset:0.15,footOffset:0.2,headGap:0.2,headDegrees:18,headBandDegrees:[20,60]});
 export const policyFingerprint = hashObject(comparisonPolicy);
+export const partObservationPolicyFingerprint=hashObject({version:referencePartsPolicyVersion,angularBudget:15,anisotropy:.5,uncertainty:'pixelCirclesAndOutline',fallback:'twoPointEstimated',oldGates:'unchanged'});
 // 只绑定判据本身：文案、uncertainties 或非判据字段变化不应让历史报告整体失效。
-export const comparisonFingerprint=(r:any)=>hashObject({version:r?.version,policyFingerprint:r?.policyFingerprint,ok:r?.ok,poseFingerprint:r?.poseFingerprint,referenceFingerprint:r?.referenceFingerprint,visualRigFingerprint:r?.visualRigFingerprint,sequenceFingerprint:r?.sequenceFingerprint,metrics:(r?.metrics??[]).map((m:any)=>[m.id,m.required,m.status,m.error])});
+export const comparisonFingerprint=(r:any)=>hashObject({version:r?.version,policyFingerprint:r?.policyFingerprint,...(r?.partObservations?{partObservationPolicyFingerprint:r.partObservationPolicyFingerprint}:{}),ok:r?.ok,poseFingerprint:r?.poseFingerprint,referenceFingerprint:r?.referenceFingerprint,visualRigFingerprint:r?.visualRigFingerprint,sequenceFingerprint:r?.sequenceFingerprint,metrics:(r?.metrics??[]).map((m:any)=>[m.id,m.required,m.status,m.error])});
 export function finitePoint(p:any):p is GraphPoint {return !!p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&p.visibility!=='unknown';}
 export const distance=(a:GraphPoint,b:GraphPoint)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const direction=(a:GraphPoint,b:GraphPoint)=>Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
@@ -51,6 +53,13 @@ export function flexion(a:GraphPoint,b:GraphPoint,c:GraphPoint){return angleErro
 export function normalizedGraph(points:Record<string,GraphPoint>,facing:string,image=false){
  if(!['left','right'].includes(facing))throw new Error('骨架必须明确朝向。');
  return Object.fromEntries(Object.entries(points).map(([k,p])=>[k,{...p,x:p.x*(facing==='left'?-1:1),y:p.y*(image?-1:1)}]));
+}
+/** 新阶段依已审查参考确定分支；后续局部修正与恢复固定这一分支。 */
+export function referenceBendDirections(observation:any,correspondence:any,targetFacing:string){
+ if(!['left','right'].includes(targetFacing))throw new Error('目标骨架必须明确朝向。');
+ validateCorrespondence(correspondence);const points=normalizedGraph(observation.points,observation.facing,true),factor=targetFacing==='left'?-1:1,result:Record<string,number>={};
+ for(const[role,nodes]of Object.entries(limbNodes)){const side=role.startsWith('left')?'left':'right',names=nodes.map(k=>correspondence[side]+k.slice(side.length));if(!names.every(n=>finitePoint(points[n])))continue;const[a,b,c]=names.map(n=>points[n]),cross=(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);result[role]=cross*factor>=0?-1:1;}
+ return result;
 }
 export function validateCorrespondence(v:any){
  if(!v?.basis?.trim()||!['left','right'].includes(v.left)||!['left','right'].includes(v.right)||v.left===v.right||!v.anatomicalIdentity?.trim()||!v.projectedOrder?.trim())throw new Error('必须明确左右对应、解剖身份、画面前后关系及依据，禁止自动交换。');
@@ -129,16 +138,17 @@ export function compareGraphs(reference:any,target:any,correspondence:any){
   const rb=valid?bend(mapped):null,tb=valid?bend(t):null;
   add(role+'.bendSide',n,rb,tb,valid?Number(rb!=='straight'&&tb!==rb):null,0);
   if(role.endsWith('Arm')){
-   const rv=valid?[(mapped[n[2]].x-mapped[n[0]].x)/len(mapped,n),(mapped[n[2]].y-mapped[n[0]].y)/len(mapped,n)]:null,tv=valid?[(t[n[2]].x-t[n[0]].x)/len(t,n),(t[n[2]].y-t[n[0]].y)/len(t,n)]:null;
+   const rv=valid&&rf?[(mapped[n[2]].x-mapped[n[0]].x)/rf.length,(mapped[n[2]].y-mapped[n[0]].y)/rf.length]:null,tv=valid&&tf?[(t[n[2]].x-t[n[0]].x)/tf.length,(t[n[2]].y-t[n[0]].y)/tf.length]:null;
    add(role+'.wrist',n,rv,tv,rv&&tv?Math.hypot(rv[0]-tv[0],rv[1]-tv[1]):null,comparisonPolicy.wrist);
    const extension=(v:number)=>Math.abs(v)<comparisonPolicy.extensionNeutral?'neutral':v>0?'forward':'backward';
    add(role+'.extension',n,rv?extension(rv[0]):null,tv?extension(tv[0]):null,rv&&tv?Number(extension(rv[0])!==extension(tv[0])):null,0);
   }
  }
- const mean=(p:any,part:string)=>(len(p,limbNodes['left'+part])+len(p,limbNodes['right'+part]))/2;
- const spread=(p:any)=>finitePoint(p.leftAnkle)&&finitePoint(p.rightAnkle)?Math.abs(p.leftAnkle.x-p.rightAnkle.x)/mean(p,'Leg'):NaN;
+ // v4：长度类一律按肩髋躯干长归一；不得用各自臂/腿长消除体型差异。
+ const torsoLength=(p:any)=>torsoFrame(p)?.length??NaN;
+ const spread=(p:any)=>finitePoint(p.leftAnkle)&&finitePoint(p.rightAnkle)?Math.abs(p.leftAnkle.x-p.rightAnkle.x)/torsoLength(p):NaN;
  const rs=spread(mapped),ts=spread(t);add('stance.width',['leftAnkle','rightAnkle'],rs,ts,Math.abs(rs-ts),comparisonPolicy.stance);
- const order=(p:any)=>{const d=(p.leftAnkle.x-p.rightAnkle.x)/mean(p,'Leg');return Math.abs(d)<.05?'aligned':d>0?'leftAhead':'rightAhead';};
+ const order=(p:any)=>{const d=(p.leftAnkle.x-p.rightAnkle.x)/torsoLength(p);return Math.abs(d)<.05?'aligned':d>0?'leftAhead':'rightAhead';};
  add('stance.order',['leftAnkle','rightAnkle'],Number.isFinite(rs)?order(mapped):null,Number.isFinite(ts)?order(t):null,Number.isFinite(rs)&&Number.isFinite(ts)?Number(order(mapped)!==order(t)):null,0);
  // 分腿/并腿由节点导出；不能以手部低误差抵消站距错误。
  add('stance.relation',['leftAnkle','rightAnkle'],rs>=.35?'spread':'close',ts>=.35?'spread':'close',Number.isFinite(rs)&&Number.isFinite(ts)?Number((rs>=.35)!==(ts>=.35)):null,0);
@@ -148,8 +158,8 @@ export function compareGraphs(reference:any,target:any,correspondence:any){
  }
  if(reference.grip){
   const rp=reference.grip.points, tp=target.grip?.points;
-  const rv=rp&&finitePoint(rp.left)&&finitePoint(rp.right)?distance(rp.left,rp.right)/mean(mapped,'Arm'):NaN;
-  const tv=tp&&finitePoint(tp.left)&&finitePoint(tp.right)?distance(tp.left,tp.right)/mean(t,'Arm'):NaN;
+  const rv=rp&&finitePoint(rp.left)&&finitePoint(rp.right)&&rf?distance(rp.left,rp.right)/rf.length:NaN;
+  const tv=tp&&finitePoint(tp.left)&&finitePoint(tp.right)&&tf?distance(tp.left,tp.right)/tf.length:NaN;
   add('grip.spacing',['leftWrist','rightWrist'],rv,tv,Math.abs(rv-tv),comparisonPolicy.grip);
   // 握轴方向一律从两点现算，不再依赖存储的 angle 标量（那是有向角被当成无向轴存，基准不明）。
   // 参考握点是图像坐标，必须与 normalizedGraph 同规则翻转 y；目标点已是世界坐标，只按 facing 镜像 x。
@@ -161,6 +171,18 @@ export function compareGraphs(reference:any,target:any,correspondence:any){
  }
  // 前后层序：参考声明 + 目标 drawOrder 回读；尺度推断不可自动验证。
  metrics.push(...compareDepth(reference,target));
+ const partObservations=reference.parts?analyzeReferenceParts(reference):null;
+ for(const part of partObservations?.parts??[]){
+  const refSide=part.id.startsWith('left')?'left':'right',side=correspondence.left===refSide?'left':'right';
+  const nodes=part.nodes.map(k=>side+k.slice(refSide.length));
+  add(`part.${part.id}.availability`,nodes,part.method,null,part.usable?0:null,0,{reasons:part.reasons});
+  add(`part.${part.id}.certainty`,nodes,part.status,null,part.status==='measurable'?0:null,0,{required:part.method!=='twoPoint',reasons:part.reasons,method:part.method});
+  const a=t[nodes[0]],b=t[nodes[1]],raw=part.directionDegrees;
+  const rd=raw===undefined||raw===null?null:Math.atan2(-Math.sin(raw*Math.PI/180),Math.cos(raw*Math.PI/180)*(reference.facing==='left'?-1:1))*180/Math.PI;
+  const td=finitePoint(a)&&finitePoint(b)&&distance(a,b)>1e-8?direction(a,b):null;
+  const error=part.usable&&rd!==null&&td!==null?lineError(rd,td)+(part.method==='contour'?part.axis!.sensitivityDegrees!:0):null;
+  add(`part.${part.id}.axis`,nodes,rd,td,error,comparisonPolicy.directionDegrees,{required:part.method!=='twoPoint',method:part.method,uncertaintyIncluded:part.method==='contour',uncertaintyKnown:part.uncertaintyKnown,axis:'undirected',note:part.method==='twoPoint'?'回退为两点近似；沿用原 segment 方向门禁，不把缺失的轮廓/误差圆变成新增阻塞或精确匹配。':'参考轮廓主轴对 runtime 视觉关节轴；目标切片可见形状仍需独立审查。'});
+ }
  for(const m of metrics){m.targetNodes=m.nodes;m.referenceNodes=m.nodes.map((k:string)=>k.startsWith('left')?correspondence.left+k.slice(4):k.startsWith('right')?correspondence.right+k.slice(5):k);}
- return {version:3,ok:metrics.filter(m=>m.required).every(m=>m.status==='pass'),policy:comparisonPolicy,policyFingerprint,metrics,uncertainties:Object.entries(reference.points).filter(([,p]:any)=>p.visibility!=='visible'||p.confidence<.7).map(([node,p]:any)=>({node,visibility:p.visibility,confidence:p.confidence,basis:p.basis})),message:'必要指标独立判定；未知必要点、退回及超差阻止确认。头身中心连线仅用于旧数据诊断。'};
+ return {version:3,ok:metrics.filter(m=>m.required).every(m=>m.status==='pass'),policy:comparisonPolicy,policyFingerprint,...(partObservations?{partObservations,partObservationPolicyFingerprint}:{}),metrics,uncertainties:Object.entries(reference.points).filter(([,p]:any)=>p.visibility!=='visible'||p.confidence<.7).map(([node,p]:any)=>({node,visibility:p.visibility,confidence:p.confidence,basis:p.basis})),message:'必要指标独立判定；未知必要点、退回及超差阻止确认。头身中心连线仅用于旧数据诊断。'};
 }

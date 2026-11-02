@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "plan": "docs/plans/host-evolution.md §14",
+  "scope": "首轮部件分析、单臂诊断和真实 npc1 静态对照",
+  "status": "firstPilotComplete",
+  "build": {
+    "command": "npm run build",
+    "status": "passed",
+    "compiled": {
+      "perspective": "aab324df3ce7539adbdf5909c25f1355ed619372b7ee6255cedd31dc7971f484",
+      "referenceParts": "99e0ccd9ec55b4310df13a1443e1c27e92652d4de5440e48f7d02d5b530ae947",
+      "motionEngine": "bac58a9e16268a419f83a19cccae692bce49b8ad02757ae651679a167b3be620",
+      "poseSchemas": "e6051e9e17faeebcad5346c3d07ffa0d90181ff837dd2b41df7e65dc3f4538b0",
+      "poseWorkflow": "ceea50e3d0e8b7764a8257d4cb12a95a2733fd1048a439b421f1f49a955c2f47",
+      "referencePose": "26953ccf0171dd4763eafe3c46153e2602cf79a66d8096dfa1b476e7f121e299",
+      "poseGraph": "9737edb816c5b378ec69b84de10a460c06320eb3181a49ec16e8632f2cf31a3a",
+      "referencePoseRefinement": "0b6c9f5c29fb4459570f52547c779d2e43b06df050425a0f1f42b0c153f6f829",
+      "retargetEngine": "5765c912d091939f16767033f637bb011ea3bb1f1b785a5bae2c0f52d477a03c",
+      "animationKernel": "29d15b6ffed5a3f5b50bc471cfda46a339268f3d103757bf3a077edb8d69a1ca",
+      "renderSnapshot": "507879cbdfc96b5f838070742ad586b1b236d69cecb351067ba12c4562f580bb",
+      "hostPosePatch": "6a077d7f44a5b36cb4326ac65fbf78e97001a93236d99eda5b1ae86438d8d469",
+      "hostPoseCommands": "ec033443d4258c3ec6779b72cda7638ea9fa937ea7d1ab8a12d0582a67ca4407",
+      "hostEvaluator": "1e940961db29a192e87a275da507b88f3d2b8f31fca45eccd526de9819a635d3",
+      "hostEditorStore": "f588e8d21b91ee4c27146dcc13d760c80413fd551b720866cb34abab6947b497",
+      "hostDocumentStore": "261587fdf3eb70791b9c9f3879ed6a0b5686a379c9505409935e97784532ce08",
+      "hostCapture": "6b2cc505db201024ca5c1d892053156c9e296369a2523d2bcdf01145f3c87567",
+      "hostReadiness": "6a8c8682d6bdefa0fbce61d8c5f3c291cec36db6382eb40b3421f4af83e9019f",
+      "server": "c8ba10a428f0d6025c0c53ecfb071a1bc21a857ea9d043079ac28e1391022d97"
+    }
+  },
+  "source": {
+    "perspective": "3f26994fa1dcdc38b5295a90b3c98ee1100d652fcdba80c207bf3bcad22cb57f",
+    "referenceParts": "3e46517eec6d10f136f0acd45d61f7c80cdbf1fb0b165b25a77fae31976ea0a1",
+    "motionEngine": "0476aee4f167c9ce9da50b5a1c940ed4177346982626474e4fcc8be98ebdfd3a",
+    "poseSchemas": "ee4097da2fa0c42c2521ae99c5b43e6c19bb126fad077421289bec555019dfbb",
+    "poseWorkflow": "74cc15460c5baef4def78d542ccd5f77905c2625a646706e8f9c45fd0b414ce0",
+    "referencePose": "1437d38b7de9e1dae899d6a67f9be49a1faa702d718c29d8b802f4ef98f77511",
+    "poseGraph": "425fd77f9a907931811cff617f72622c1a37284369acd84f7dfd26043c8e6aaf",
+    "referencePoseRefinement": "66ad7a1be4635b7d441629847e46c46a84e2ba45f42a73838d9a37ce9a3c65c2",
+    "retargetEngine": "3a60af836f3a6ed32a23742548875ea592989b0ea4d4b2a932ce3d2b692a3485",
+    "animationKernel": "1d9648a51c1b974e762b0261905fee5af2d86628d5f4ec6e8404fde3630078b6",
+    "renderSnapshot": "2a9d4ac92c06543957424837a73b1f1a349d8fe1a771923624589da374bb4cc3",
+    "hostPosePatch": "bd5c2821d9ad614e2333e4def151652b08264ef0c35baed12f2a697627db9e78",
+    "hostPoseCommands": "e72c1d8362b8ff5ee1b3bd867fb70d47d89081ef6f80f7cd632de928f5087422",
+    "hostEvaluator": "f76def6e412619d7c87c037c43d30f33f329cdb796757ea1884a5210bdc38d73",
+    "hostEditorStore": "bad2ae4d84ea3c5e284fabebe058a2fbbfaced2fb970d1eb6a7f7cebf91a3c66",
+    "hostDocumentStore": "31a41e1a7970af369a91a7eee35f4fcbc9577ab58d04cdba9bbe5ec6065f8f53",
+    "hostCapture": "c515835af395b4a2d5ffe50f6357ab4ec4a749d91f6b10b07b797d70545bba05",
+    "hostReadiness": "9e2ebadaa20bfe3f47afadef6a97a46aa661ca02730eebc42a07a127247541f2",
+    "server": "58134653b91d0c991388dfe7c7f903f5c21f4b8479d941017edc75d1264c15b4"
+  },
+  "sourceFingerprint": "3fc142082fc81002e257a21e7394f6c52a2f77ccfd8ba221e1d1655f59759689",
+  "regression": {
+    "command": "npm test",
+    "total": 212,
+    "passed": 212,
+    "failed": 0,
+    "durationMs": 30488.1777,
+    "logPath": ".codex-temp/perspective-regression-final.log",
+    "logHash": "73c75659f2bebc02e0ff0275c83904f6a7eb845fcead111676a86623a696ad92"
+  },
+  "trial": {
+    "path": "docs/plans/host-perspective-trial-2026-10-25T07-44-44-456Z.json",
+    "hash": "57e2b9bbf47ca3e318cc2dc5115238dc1f6b933573fe2d0cf980d6922e17c4d1",
+    "mcpCalls": 14,
+    "captureCount": 3,
+    "captureValidity": [
+      "verified",
+      "verified",
+      "verified"
+    ],
+    "numeric": [
+      {
+        "label": "baseline",
+        "ok": true
+      },
+      {
+        "label": "shorten-1",
+        "ok": true,
+        "perspective": {
+          "mode": "diagnostic",
+          "experimental": true,
+          "diagnosticOnly": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 0.9,
+          "lower": 0.85,
+          "ok": true,
+          "error": 0.00015559640782891352,
+          "angleError": 2.397246134933084e-7,
+          "branchOk": true,
+          "iterations": 17,
+          "reason": "converged",
+          "actualLengths": [
+            26.136619863110198,
+            14.099235712939926
+          ],
+          "note": "投影缩短不证明真实深度；比例未通过角色美术校准，禁止正式批准。"
+        }
+      },
+      {
+        "label": "shorten-2",
+        "ok": false,
+        "perspective": {
+          "mode": "diagnostic",
+          "experimental": true,
+          "diagnosticOnly": true,
+          "readyToCommit": false,
+          "limb": "leftArm",
+          "upper": 0.8,
+          "lower": 0.7,
+          "ok": false,
+          "error": 4.3908997365223,
+          "angleError": 1.8340801943850238e-7,
+          "branchOk": true,
+          "iterations": 33,
+          "reason": "localStall",
+          "actualLengths": [
+            23.232697358365765,
+            9.809185242668486
+          ],
+          "note": "投影缩短不证明真实深度；比例未通过角色美术校准，禁止正式批准。"
+        }
+      }
+    ],
+    "inputsUnchanged": true,
+    "hostStopped": true,
+    "writerReleased": true
+  },
+  "visual": {
+    "path": "docs/plans/host-perspective-assessment-20261025.json",
+    "hash": "3932415f873582ea7840425afbda90d0c237b5497c690618570bef33ddd4d44e",
+    "formalApproval": false,
+    "comparison": "D:\\AI_cc\\spine test\\perspective-trials\\2026-10-25T07-44-44-456Z\\trial\\perspective-2026-10-25T07-44-44-456Z\\comparison-reviewed.png",
+    "comparisonHash": "ae67cb3f0fecf990680aad2a1ab06d076eeaa4b2f1afe842a00ffc05f75c9c11"
+  },
+  "buildScopeNote": "实际 player 采集时模块见独立视觉记录的 observedBuild；最终构建另补部件零面积退化、无向残差、Host 拒绝失败透视草稿授权及重开诊断状态，并通过完整回归。没有把最终构建冒充采集当时的构建。",
+  "golden": {
+    "goldenPassed": true,
+    "reportHash": "ec0a88bc6b9b13607a630e049ae1eb0d044f9f696815408b92989ef5b6e6cf51",
+    "reasons": [],
+    "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。",
+    "cases": [
+      {
+        "id": "region-setup",
+        "changedRatio": 0.0015234375,
+        "maximumChannelError": 1
+      },
+      {
+        "id": "region-presentation",
+        "changedRatio": 0.000810546875,
+        "maximumChannelError": 1
+      },
+      {
+        "id": "region-rotated-overlap",
+        "changedRatio": 0.00146484375,
+        "maximumChannelError": 1
+      }
+    ]
+  },
+  "productionEnabled": false,
+  "referenceMatched": false,
+  "editorImport": "unverified",
+  "remaining": [
+    "可确认的参考身体轮廓与连续帧观测",
+    "角色纵向/宽度/末端继承的美术范围校准",
+    "连续动作与完整 motion",
+    "新负载性能仍超原预算",
+    "独立 Spine 编辑器导入"
+  ]
+}

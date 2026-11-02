@@ -1,0 +1,80 @@
+{
+  "startedAt": "2026-10-23T14:26:07.069Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T14-26-07-065Z",
+  "scope": "实际 WinForms/WebView2、隔离 C2 高层姿态命令；编辑当前内存后释放测试 Writer，以观察模式采集实际 player，不保存角色或姿态源文件，不批准真实美术。",
+  "inputHashes": {
+    "body.json": "a7d5c9ce6e96459acd72b55e277c96d7eaea921a000f27f27f9c8b9181bea1e6",
+    "body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+    "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+    "mapping.json": "d56b7889fe0bc14fb441d3340268e245ef2e2ff339a9924596447024216f21ab",
+    "a.pose.json": "7eb4dee2b7ac1966bb177c8f44cfbe85a81dd25a512252afb259b888d44fa1f3"
+  },
+  "kind": "pose",
+  "view": null,
+  "commandAdapters": [
+    {
+      "tool": "spine_adjust_pose",
+      "version": {
+        "sessionId": "26e55301-0a23-4d1c-8d2b-7ae8c0d795c2",
+        "documentId": "3fdf055dcf3c3985f269cd89e295669994f6095c90472d6fce4d66c3ad7f4a4d",
+        "openEpoch": "bc73ed3e-d354-4ca9-8020-5af3ef6d594f",
+        "revision": 1
+      },
+      "adapter": {
+        "tool": "spine_adjust_pose",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_set_pose_channel",
+      "version": {
+        "sessionId": "26e55301-0a23-4d1c-8d2b-7ae8c0d795c2",
+        "documentId": "3fdf055dcf3c3985f269cd89e295669994f6095c90472d6fce4d66c3ad7f4a4d",
+        "openEpoch": "bc73ed3e-d354-4ca9-8020-5af3ef6d594f",
+        "revision": 2
+      },
+      "adapter": {
+        "tool": "spine_set_pose_channel",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_set_pose_target",
+      "version": {
+        "sessionId": "26e55301-0a23-4d1c-8d2b-7ae8c0d795c2",
+        "documentId": "3fdf055dcf3c3985f269cd89e295669994f6095c90472d6fce4d66c3ad7f4a4d",
+        "openEpoch": "bc73ed3e-d354-4ca9-8020-5af3ef6d594f",
+        "revision": 3
+      },
+      "adapter": {
+        "tool": "spine_set_pose_target",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    },
+    {
+      "tool": "spine_batch_pose_ops",
+      "version": {
+        "sessionId": "26e55301-0a23-4d1c-8d2b-7ae8c0d795c2",
+        "documentId": "3fdf055dcf3c3985f269cd89e295669994f6095c90472d6fce4d66c3ad7f4a4d",
+        "openEpoch": "bc73ed3e-d354-4ca9-8020-5af3ef6d594f",
+        "revision": 4
+      },
+      "adapter": {
+        "tool": "spine_batch_pose_ops",
+        "execution": "host-memory",
+        "persisted": false,
+        "saveTool": "spine_host_commit"
+      }
+    }
+  ],
+  "testWriterReleased": true,
+  "error": "Expected values to be strictly equal:\n\nfalse !== true\n",
+  "passed": false,
+  "finishedAt": "2026-10-23T14:26:09.405Z"
+}

@@ -1,0 +1,288 @@
+{
+  "at": "2026-10-24T15:11:19.300Z",
+  "clientDate": "2026-10-24",
+  "stage": "Host state 性能收敛",
+  "developmentCandidateHash": "237d5454b976fccbc33c062cc305e4fc611673e9c5ed5f36c35845c55fb0a488",
+  "sourceCandidateHash": "8c0baf3b659c2af9b694393b44005e62b4ab6d543cfae0f7b105bee93c696915",
+  "codeHashes": {
+    "src/hostClient.ts": "1fdffbdbc8329a85b8f7eb95346a2001265eabdd81ee260d9523c4391de4b544",
+    "src/hostDocumentStore.ts": "cafb56906dad2949967e2dbca9f6571948b5e48c1cae2fee29383fbf7b987e1d",
+    "src/hostEditorStore.ts": "a809b322c602054b4b9ab8d238af99052df92566d8565d1fe5090c30348c76b6",
+    "src/hostPlayback.ts": "d82d6cd0b3c8cd3687803fb34e608304c3853326a5d3c7f3ae7061830502091f",
+    "src/hostAnimationSession.ts": "d3f674b869cc6eb696c0514debdf1ca0f77d8af3f36cfcc5eef15d7b7c481d0e",
+    "src/strictFileChecks.ts": "2d80096e90bace7ffdf394a98760e7c96e3601b6868d4316518c728622133f02",
+    "src/spineJson.ts": "b57ba79fc213e29c54e0a35caeed52ccf6bac1b9b73773605d4a01175bc649ab",
+    "test/hostDiscovery.test.ts": "95308aab5bd4e0982b42db93df67c77508e22fceb4707c45b0513c79917d6047",
+    "test/hostContinuation.test.ts": "8fe20b42f5bcaf65789c15f0a81e04c1228da608f300831e4d64473dbfbc8c12",
+    "test/hostPlayback.test.ts": "3106a95305f6e48e2806cb2b602b99f05eedff9e1347b81930f4af6413525b80",
+    "scripts/benchmark-host-real-animation.ts": "262872467620206c8e33596045aa8b6b8cce7af890ad33d7ff4851a3dd20013b",
+    "scripts/summarize-host-real-animation-performance.ts": "7a9333246089a5d86fb8e49bb8454003b76ab010f5a45bae0470ffe880d08745",
+    "scripts/host-benchmark-worker.mjs": "1281b30952c1c6d0ceaeaa5baa9f8111a27d8a93bba25b9a3a60c7e04f532a76"
+  },
+  "previousIndex": "host-c2-animation-transaction-final-20261024.json",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm test",
+    "tests": 203,
+    "pass": 203,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 30137.7526,
+    "outputHash": "d03e45b575a8db566420edda9768e2a2415a5109c30d2b67ad7c682533f49f13"
+  },
+  "implementation": [
+    "端口及 control 文件在本次发现中异步并发读取，仍逐次验证路径、实例/会话、API、项目和 PID；不复用旧凭据。",
+    "state 的独立写入权、依赖及动画证据核验并发收束；查询途中切换文档保守标 TARGET_DRIFT，不以旧检查声明新文档可信。",
+    "一次只读 state 请求固定真实根，每个目标重新 realpath；根中途改指拒绝，新请求重核根。相同真实文件的字节哈希只在该次请求内复用，各自预期哈希分别比较。",
+    "共享读取不跨请求，不以 mtime/size 替代字节；提交与授权仍逐阶段重读，不使用 state 的批次结果。",
+    "动画 PNG 命中不再重新解析候选/重建 runtime；首个或其它尺寸帧可复用发布时已回读核验且完整绑定的 runtime。选择、依赖及 live 字节仍前后核验，变更/失效/切换会清除或拒绝。"
+  ],
+  "performance": {
+    "summaryFile": "docs/plans/host-real-animation-performance-summary-2026-10-24T15-06-26-244Z.json",
+    "summaryHash": "a28c6904d3cedf2c02fe1a4a051d8f9c8e996ef9acc579ce7d027def00a93e4d",
+    "sourceBuildHash": "8c0baf3b659c2af9b694393b44005e62b4ab6d543cfae0f7b105bee93c696915",
+    "compiledHostAndMcpHash": "237d5454b976fccbc33c062cc305e4fc611673e9c5ed5f36c35845c55fb0a488",
+    "sampleCount": 90,
+    "warmupsPerRound": 2,
+    "hostProcessIsolation": true,
+    "scope": "实际 npc1 已批准站姿的固定站姿动画，独立隔离副本。实际 MCP stdio 精确候选/完整数值及 GIF/联系图/PNG、严格 state 和缓存 frame；候选耗时包含 stdio；不含真实浏览器呈现耗时，不新增动作批准或源写入，不等于完整新动作交付。 测试驱动、Host 和 MCP 三个独立进程，避免驱动接收图像的内存分配影响 Host。 本轮候选通过独立编译版 MCP stdio 子进程计算，Host 与求解分进程；测试 Writer 仅用于附着路由，不提交源文件。state/frame 仍按 HostClient 实测，不含其 stdio 编解码。",
+    "stateMeasurement": "HostClient 严格 state 完整读取",
+    "phases": {
+      "candidateClientMs": {
+        "p50": 751.1705000000002,
+        "p95": 938.9804000000004,
+        "maximum": 997.6445000000003
+      },
+      "stateClientMs": {
+        "p50": 8.111700000001292,
+        "p95": 12.391700000000128,
+        "maximum": 18.5612000000001
+      },
+      "frameClientMs": {
+        "p50": 16.675099999998565,
+        "p95": 25.51299999999901,
+        "maximum": 40.402399999999034
+      }
+    },
+    "roundP95": [
+      {
+        "candidateClientMs": 918.6564999999991,
+        "stateClientMs": 10.534099999999853,
+        "frameClientMs": 25.05079999999907
+      },
+      {
+        "candidateClientMs": 938.9804000000004,
+        "stateClientMs": 11.710100000000239,
+        "frameClientMs": 25.51299999999901
+      },
+      {
+        "candidateClientMs": 985.9274000000005,
+        "stateClientMs": 13.349999999998545,
+        "frameClientMs": 28.314000000000306
+      }
+    ],
+    "allRoundsPassed": true,
+    "aggregatePassed": true,
+    "budgets": {
+      "stateClientMs": 20,
+      "frameClientMs": 50
+    },
+    "allInputsUnchanged": true,
+    "hostsStopped": true,
+    "osRelease": "10.0.19045",
+    "publicWriteEnabled": false
+  },
+  "c1Smoke": {
+    "file": "docs/plans/host-client-performance-2026-10-24T15-06-31-512Z.json",
+    "hash": "27d010dfca391a57aff96a85cf469b54f82d854b43d707e8d54857fb6ceba637",
+    "samples": 30,
+    "phases": {
+      "endToEndMs": {
+        "p50": 49.40059999999994,
+        "p95": 92.6568000000002,
+        "maximum": 93.88079999999991
+      },
+      "stateHttpMs": {
+        "p50": 2.1902000000000044,
+        "p95": 3.341899999999896,
+        "maximum": 4.154599999999846
+      },
+      "stateClientMs": {
+        "p50": 3.0726000000004206,
+        "p95": 4.878899999999703,
+        "maximum": 6.954600000000028
+      },
+      "firstFrameClientMs": {
+        "p50": 17.30390000000034,
+        "p95": 29.6237000000001,
+        "maximum": 30.66989999999987
+      },
+      "frameHttpMs": {
+        "p50": 2.777100000000246,
+        "p95": 5.633300000000418,
+        "maximum": 12.31710000000021
+      }
+    },
+    "budgetsPassed": true,
+    "scope": "合成关节与两个 region；实际 HostClient.patch 含独立任务 begin/finish、MCP 领域求解、状态及 PNG 读取；不含 stdio 编解码或浏览器呈现。",
+    "note": "一轮当前源码防回退，不覆盖冻结 C1 候选的旧失败或其长期观察资格。"
+  },
+  "native": {
+    "npc1": {
+      "file": "docs/plans/host-winforms-2026-10-24T15-02-54-217Z.json",
+      "hash": "16edad5c103acff34339259b031f45f1c66193051bf3edee16d53943cd908db2",
+      "checks": 29,
+      "reconnectPixelsIdentical": true,
+      "unchangedInputs": true,
+      "sourceTransaction": false,
+      "player": {
+        "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-24T15-02-54-217Z\\initial-player.png",
+        "hash": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83",
+        "previous": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-46-36-278Z\\initial-player.png",
+        "pixelsIdenticalBeforeAfter": true
+      },
+      "visualArtApproval": false
+    },
+    "synthetic": {
+      "file": "docs/plans/host-winforms-2026-10-24T15-04-36-025Z.json",
+      "hash": "10f2180034122dd7df07072d3200447a7908e1638fa67952740b281f0fd26702",
+      "checks": 29,
+      "reconnectPixelsIdentical": true,
+      "unchangedInputs": false,
+      "sourceTransaction": true,
+      "player": {
+        "file": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-24T15-04-36-025Z\\initial-player.png",
+        "hash": "f15799c26e8e9fa689d3cbbb5daa87d506b5329be5cfa3d835674f74e87a2b07",
+        "previous": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T19-45-46-267Z\\initial-player.png",
+        "pixelsIdenticalBeforeAfter": true
+      },
+      "visualArtApproval": false
+    }
+  },
+  "retainedEvidence": {
+    "historicalRealStateFailure": {
+      "file": "docs/plans/host-real-animation-performance-2026-10-23T19-53-48-556Z.json",
+      "stateP95Ms": 28.51629999999932
+    },
+    "intermediateMixedProcessCohort": {
+      "file": "docs/plans/host-real-animation-performance-summary-2026-10-24T14-56-36-447Z.json",
+      "aggregatePassed": true,
+      "allRoundsPassed": false,
+      "stateP95Ms": 19.195999999999913,
+      "thirdRoundP95Ms": 24.305700000000797
+    },
+    "retainedIterations": [
+      {
+        "file": "docs/plans/host-real-animation-performance-2026-10-24T14-34-15-672Z.json",
+        "hash": "a8072e9549490fa6e7c20a859b3c66a16620bde5fa00a1ce1869e623e810f96c",
+        "phases": {
+          "candidateClientMs": {
+            "p50": 974.0251999999991,
+            "p95": 1186.652399999999,
+            "maximum": 1279.435599999997
+          },
+          "stateClientMs": {
+            "p50": 14.620899999994435,
+            "p95": 25.789199999999255,
+            "maximum": 26.125700000000506
+          },
+          "frameClientMs": {
+            "p50": 30.230999999999767,
+            "p95": 45.27130000000034,
+            "maximum": 45.68120000000272
+          }
+        },
+        "budgetsPassed": false
+      },
+      {
+        "file": "docs/plans/host-real-animation-performance-2026-10-24T14-40-48-767Z.json",
+        "hash": "6683446ef06e54a96ef3f227ec3e26c7603fa35da0b5afe4f6321f5d01a7a2b8",
+        "phases": {
+          "candidateClientMs": {
+            "p50": 879.6925999999985,
+            "p95": 1116.7576999999983,
+            "maximum": 1254.5541999999987
+          },
+          "stateClientMs": {
+            "p50": 15.574799999998504,
+            "p95": 25.431400000001304,
+            "maximum": 25.93369999999959
+          },
+          "frameClientMs": {
+            "p50": 27.162499999998545,
+            "p95": 54.669200000000274,
+            "maximum": 63.21519999999873
+          }
+        },
+        "budgetsPassed": false
+      },
+      {
+        "file": "docs/plans/host-real-animation-performance-2026-10-24T14-44-37-286Z.json",
+        "hash": "abd759a8cb1a691e4d85bb50da582870b1ec6722d333f990dcda386160c7ac9d",
+        "phases": {
+          "candidateClientMs": {
+            "p50": 771.4558999999972,
+            "p95": 904.5039999999999,
+            "maximum": 915.6283000000003
+          },
+          "stateClientMs": {
+            "p50": 10.070400000000518,
+            "p95": 22.16439999999784,
+            "maximum": 23.564399999999296
+          },
+          "frameClientMs": {
+            "p50": 22.34570000000167,
+            "p95": 34.261899999997695,
+            "maximum": 38.383200000000215
+          }
+        },
+        "budgetsPassed": false
+      },
+      {
+        "file": "docs/plans/host-real-animation-performance-2026-10-24T14-50-22-172Z.json",
+        "hash": "02c834dc62befb4f2ff4110232f54bf6c2bad764ddafe3d6650efa4227b77e5a",
+        "phases": {
+          "candidateClientMs": {
+            "p50": 780.835500000001,
+            "p95": 930.7533999999996,
+            "maximum": 965.9637999999995
+          },
+          "stateClientMs": {
+            "p50": 11.725100000000566,
+            "p95": 21.6124000000018,
+            "maximum": 22.41780000000108
+          },
+          "frameClientMs": {
+            "p50": 17.68000000000029,
+            "p95": 33.262000000000626,
+            "maximum": 33.475000000000364
+          }
+        },
+        "budgetsPassed": false
+      }
+    ],
+    "diagnosticFiles": [
+      ".codex-temp/state-profile-2026-10-24T14-32-09-628Z.json",
+      ".codex-temp/state-profile-2026-10-24T14-37-06-806Z.json"
+    ],
+    "measurementNote": "先前测试驱动与 Host 混进程，计入图像响应处理的 GC 干扰，失败保留。最终测试驱动/Host/MCP 三个独立进程匹配实际部署；不放宽预算，不筛除轮次；候选包含 stdio，state/frame 仍测 HostClient，未声称覆盖其 stdio 编解码。"
+  },
+  "statePerformanceAcceptedForDeclaredScope": true,
+  "wholeEvolutionAccepted": false,
+  "publicToolCount": 101,
+  "productionProfile": "c1",
+  "publicWriteEnabled": false,
+  "portableUpdated": false,
+  "newArtAnimationApproved": false,
+  "editorImportPassed": false,
+  "remaining": [
+    "完整真实动作及适用参考逐项视觉；固定已批准站姿不替代新动作。",
+    "第二完整真实角色和 Spine 编辑器路径及独立导入验收，继续排除 exp/xiaoren。",
+    "C1 实际两周观察、充分使用与人工启用；本次源码不继承冻结候选资格。",
+    "其它角色/更长动画及真实动画源提交性能仍须按范围测量；D 按原四周稳定、调用量和瓶颈条件评估。"
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T07:42:34.733Z",
+  "scope": "CU-1 独立失败阶段的内存载入、持续编辑及安全恢复；不代表完整作品或全工单完成。",
+  "build": {
+    "name": "spine-json-mcp",
+    "version": "0.2.0",
+    "kind": "compiled",
+    "buildFingerprint": "130764b8f32542a3377d16efd85ca0c8499872eb179852a21ef3b889035bde73",
+    "moduleCount": 96
+  },
+  "toolCount": 112,
+  "sourceHashes": [
+    {
+      "path": "src/hostDiagnosticPose.ts",
+      "hash": "60e915cd26034ced5a38b5c883fd12a823689e3ee7c71e4761648730b28d0ba9"
+    },
+    {
+      "path": "src/hostDocumentStore.ts",
+      "hash": "d3d584befce2b53059bf9fa46a71b502622e39030d61d2d9dd5f0c8b92d3a599"
+    },
+    {
+      "path": "src/hostEditorStore.ts",
+      "hash": "46d888f04185ec51a1ee0967ae09aaa5b7e96d23c8cb54d2e4cd8e79651385a3"
+    },
+    {
+      "path": "src/hostClient.ts",
+      "hash": "4c08beb5af22298475ba79232eda07e249bd4a83f6bc61cb3db00ac4c4f44121"
+    },
+    {
+      "path": "src/hostServer.ts",
+      "hash": "f5e2ca384897ba2e1370737c768d5cfb90efe1526fa84faa257d9869f8fd08af"
+    },
+    {
+      "path": "src/hostTools.ts",
+      "hash": "6c4bf24cf265621c2fe5370fc3494ff8e40e004649f6074963c6b1bffa6363ab"
+    },
+    {
+      "path": "src/hostAssetCommands.ts",
+      "hash": "4e836c2638e8dc988b241a8b726d3d8656576d288ac00bcaf74722040c1b6bce"
+    },
+    {
+      "path": "src/hostJournal.ts",
+      "hash": "5d5f1e1c6f1c7e010cf10d60738c00dd9958e53a73d11c213f0ec34f10603dec"
+    },
+    {
+      "path": "src/creationTasks.ts",
+      "hash": "f10b3c7095460bdfaa4d9d91dc093ffa58fae04bcce4bea888cdd4fa072ae3a0"
+    },
+    {
+      "path": "src/creationTrialServer.ts",
+      "hash": "381598054c854776f91eccc73ab06add487c850eeff99cd7e47cc938191d64de"
+    },
+    {
+      "path": "src/creationQuality.ts",
+      "hash": "0000c1fc8b401af3afbfdb9f54caa2ca4db13498a908df19e2598a60de8e652d"
+    },
+    {
+      "path": "src/poseGraph.ts",
+      "hash": "b5ba495725c111ade804786762e8f561b15bd485c030e4a158758b5439625728"
+    },
+    {
+      "path": "src/referenceRetargetKernel.ts",
+      "hash": "84a5260d4f74fa041b8aef75b831e1babf2483e8ab648c2dac9a262e99e1fca5"
+    },
+    {
+      "path": "src/animationCommands.ts",
+      "hash": "77e97b7ca2bc80fd455f856867d2097d6ce4d27fa25a1f1208a6a88e0bc69796"
+    },
+    {
+      "path": "src/toolCatalog.ts",
+      "hash": "87f638f6bd45484e873beabd369a0892bed95ace5081ad3a5c69504dd31e4708"
+    },
+    {
+      "path": "src/server.ts",
+      "hash": "0ad5d6226b86640f56a3785bff096990f7fe6ba9ff801a8c3d39e228f3df9dba"
+    },
+    {
+      "path": "preview/host.html",
+      "hash": "98bcefab9be9cc2a734efb40ddf24a288ef2bda4ceea87e373ace19f5e0bfde0"
+    },
+    {
+      "path": "test/visualRig.test.ts",
+      "hash": "6ef50a9c43b056002df7c60acb57f7ce80c2fa0e31840113ba41d5e5caefd056"
+    },
+    {
+      "path": "test/creationControls.test.ts",
+      "hash": "6131095ded0a096f7b21b826fc7344efa8a64b024a8cdfd4cc64e3000ae3de38"
+    },
+    {
+      "path": "scripts/acceptance-new-diagnostic-stage.mjs",
+      "hash": "6b5f3f5250e890399a4ac55a43f4940d12787625490a1f6de2286d8271ba71da"
+    }
+  ],
+  "protocol": {
+    "catalogPath": "docs/plans/new-diagnostic-stage-tools-20261026.json",
+    "hash": "467cf897450eaef79a55b1fa5f75f6508a461c5333a733e6491f8a4f09d0ea17"
+  },
+  "validation": {
+    "build": "passed",
+    "tests": {
+      "total": 225,
+      "passed": 225,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 47014.4691,
+      "logHash": "33596dc2a8f5da04fc86f0b27fc094a8c92067ab3150cfb5ff3ad49d6153dd90"
+    },
+    "scriptSyntax": "passed",
+    "diffWhitespace": "passed"
+  },
+  "realTrial": {
+    "path": "docs/plans/new-diagnostic-stage-2026-10-26T07-37-09-115Z.json",
+    "hash": "18511a40bd669ed1a9db99c86217db53108635cd8f7999cfaaa96870ef53176f",
+    "passed": true,
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-diagnostic-trials\\2026-10-26T07-37-09-115Z",
+    "taskId": "52ee9345-f5ed-43de-9601-6e09d79e379f",
+    "diagnosticId": "bc99bc7812575c59a8eabf8ebf28f4679dcd1b792c1812394703e3bf67b203d6",
+    "defaultReportPreserved": true,
+    "dryRunVersionUnchanged": true,
+    "taskTracksDiagnostic": true,
+    "offlineContextRetained": true,
+    "recoveryPreview": {
+      "sourcePath": "trial/neutral-stand-v2.pose.json",
+      "sourceHash": "ba115c2c20bfdcd001b30a6c21ece6f48391e8e8725038132e2ebf747f59f7dd",
+      "changeCount": 2,
+      "changes": [
+        {
+          "path": "/frame/head",
+          "before": 0,
+          "after": 1
+        },
+        {
+          "path": "/id",
+          "before": "e9f3c2ec-d3c9-4b0e-b3f2-078943980826",
+          "after": "pose-7b618db156ef2e5943962d00"
+        }
+      ]
+    },
+    "oldVersionDenied": true,
+    "oldEvidenceDenied": true,
+    "rejectionRecorded": true,
+    "failedCommitDenied": true,
+    "frozenInputsUnchanged": true,
+    "sourceUnchanged": true,
+    "hostStopped": true,
+    "writerReleased": true
+  },
+  "reference": {
+    "status": "failed",
+    "failureCount": 9,
+    "approved": false,
+    "formalAnimationDelivered": false
+  },
+  "visualReview": {
+    "status": "rejected",
+    "scope": "独立查看干净恢复后 player 和界面；本轮恢复图与此前已查看的完整 player PNG 哈希一致。",
+    "image": {
+      "path": "output/reports/new-diagnostic-2026-10-26T07-37-09-115Z/restored-player-0.png",
+      "hash": "65016dcee5aa1a0df6378ffef78399cc850124ea1ea546b13f1372541ed8a028"
+    },
+    "samePixelsAsEarlierViewed": true,
+    "reason": "角色可见且完整；目标仍单臂前举、另一臂垂低，肩臂及躯干关系尚未匹配参考。头向、接缝与支撑仍需继续独立审查，不把数值或连线代替美术批准。"
+  },
+  "mechanicalValidation": {
+    "scope": "合成机械夹具，不作真实美术验收。",
+    "covered": [
+      "新阶段预演无资产/文档副作用",
+      "新参考初始固定分支、支撑/绑定校验",
+      "未知必要点只返回部分诊断，拒绝新阶段载入",
+      "失败修改/撤销/重做/恢复及提交拒绝",
+      "可达独立夹具通过后备份另存、正确新绑定与正式重开",
+      "保存后任务仍识别阶段并建议打开真实输出",
+      "诊断发布后断电按目标哈希补回执；同 requestId 不重复发布",
+      "C1/detached 拒绝新阶段/恢复，普通页面 token 无控制权"
+    ]
+  },
+  "measurement": {
+    "calls": 23,
+    "toolDurationMs": 9020.989099999999,
+    "textBytes": 1439089,
+    "returnedImages": 8,
+    "artifacts": 6,
+    "tokens": null,
+    "scope": "同一实际工作流的调用计量；不含模型推理/浏览器等待/进程启动，不作三轮 P95 或 attached/detached 对照，不能据字节换算 token。"
+  },
+  "artifacts": [
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\changed-frame-0.png",
+      "hash": "363fc188bff6921186c475252fcfde928a0b83aa48abcefd1735d55924300b11",
+      "bytes": 127868
+    },
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\created-frame-0.png",
+      "hash": "6a7869cfef9965c136b68107e1451e8ebd1885e38188471886914bf59c42a566",
+      "bytes": 128003
+    },
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\created-player-0.png",
+      "hash": "1a592dada5284668af92afafe7af805c3efe46b123d9075883860514b1c8ef16",
+      "bytes": 479370
+    },
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\host-offline.png",
+      "hash": "766a6f30b33c610a5791d8dfe73b7fc186de397a1327c0beeb3824718a44ffed",
+      "bytes": 80033
+    },
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\restored-frame-0.png",
+      "hash": "69ce4a2434072c342c2162aa0874b59aa3aac1522155a668fba904fa426b404c",
+      "bytes": 128048
+    },
+    {
+      "path": "output\\reports\\new-diagnostic-2026-10-26T07-37-09-115Z\\restored-player-0.png",
+      "hash": "65016dcee5aa1a0df6378ffef78399cc850124ea1ea546b13f1372541ed8a028",
+      "bytes": 478674
+    }
+  ],
+  "editorImport": "本批失败新阶段未交付正式资产，未做新的编辑器导入；前批独立精确候选导入记录保留，不转成本候选通过。",
+  "remaining": [
+    "CU-1 新标注全链和完整取消/失联/故障组合仍未全部真实验收。",
+    "CU-2 实际目标 Agent 客户端发现/动态工具组待验。",
+    "CU-3 第二合适完整角色待选；用户排除的立绘/拆分皮肤不使用。",
+    "CU-4 正式单臂透视、宽度、末端补偿和角色范围校准待实现/验收。",
+    "CU-5 motion 区间编辑及原 GIF 完整身体动画未交付。",
+    "CU-6 新负载三轮 P95、同任务对照和实际客户端 token 未验。",
+    "CU-7 完整作品、第二角色、编辑器视觉/贴图和发行包未齐；原长期观察/人工评审保留。"
+  ],
+  "publicWriteEnabled": false,
+  "history": [
+    {
+      "path": "docs/plans/new-diagnostic-stage-2026-10-26T07-22-43-915Z.json",
+      "result": "failed",
+      "reason": "验收脚本错误地要求参考失败时 evidenceEligible 必为 false；已改为分别核对截图准入和内容门禁，未修改既定截图规则。"
+    },
+    {
+      "path": "docs/plans/new-diagnostic-stage-2026-10-26T07-25-01-769Z.json",
+      "result": "passed",
+      "scope": "中间构建，最终证据另列。"
+    },
+    {
+      "path": "docs/plans/new-diagnostic-stage-2026-10-26T07-29-24-337Z.json",
+      "result": "passed",
+      "scope": "中间构建，最终证据另列。"
+    }
+  ]
+}

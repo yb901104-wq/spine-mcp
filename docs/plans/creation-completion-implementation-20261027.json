@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T17:42:30.665Z",
+  "workOrder": "docs/plans/creation-usability.md",
+  "status": "施工成果可隔离试用；整个工单尚未关闭",
+  "closed": false,
+  "build": {
+    "release": {
+      "name": "spine-json-mcp",
+      "version": "0.2.0",
+      "kind": "compiled",
+      "buildFingerprint": "cce68ebeef81149569c7e3efdb70395c681375475c095b5108a35ed1f5f491d9",
+      "moduleCount": 100
+    },
+    "compiledDirectory": "validation-build",
+    "isolatedSourceRoot": "D:/AI_cc/spine test/cu-verification-20261026-01",
+    "compiledModulesEqual": 100,
+    "visualTrial": {
+      "name": "spine-json-mcp",
+      "version": "0.2.0",
+      "kind": "compiled",
+      "buildFingerprint": "7b2aafaafcd6282d81087d43069280978e751c5acbadf179f9b77ee294b8e6cc",
+      "moduleCount": 100,
+      "profile": "c2-pose",
+      "trial": {
+        "isolated": true,
+        "sourceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+        "recovery": [],
+        "resume": false
+      }
+    },
+    "changedModulesSinceVisualTrial": [
+      "hostTools.js"
+    ],
+    "changeScope": "仅 hostTools 三条人类可读说明修正；schema 已逐项比较相同。旧实际 player/导入记录保持原构建来源，不追改为新捕获。"
+  },
+  "implemented": [
+    "创作任务冻结、参考准备、阶段/修订续接、默认摘要和任务目录",
+    "合法失败候选独立内存编辑、实际看图、撤销与显式重启恢复",
+    "语义身体/头部/末端参数和条件可达性预检",
+    "独立单臂世界投影校准、批准前连续扫掠、真实 player 审查与末端补偿",
+    "受控 motion 区间修改、历史/恢复/备份重开",
+    "绑定当前候选的官方 player 播放/暂停/时间及阶段定位",
+    "同输入 stdio 对照与逐轮性能、可校验 Node 隔离 ZIP"
+  ],
+  "tests": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test -- --test-concurrency=4",
+    "legacyRoot": "D:/AI_cc/spine test",
+    "passed": 233,
+    "failed": 0,
+    "skipped": 0,
+    "log": {
+      "path": "D:/AI_cc/spine test/cu-completion-233-final-regression-20261027.log",
+      "sha256": "e2a13bd35eac3228a9875c968fc44f0b05f9e64f10b4c927ea924d4213e0e7c8",
+      "bytes": 25323
+    },
+    "goldenRevalidation": {
+      "path": "D:/AI_cc/spine-mcp/docs/plans/creation-golden-revalidation-20261027.json",
+      "sha256": "a5b400d9bd9939510ad8c1d661a0cda3453bcfb5e1cf8045dbf6f74aa1200f15",
+      "bytes": 16006
+    },
+    "pixelThresholdsUnchanged": {
+      "changedRatio": 0.005,
+      "maximumChannelError": 8
+    },
+    "measuredMaximumChannelErrors": [
+      1,
+      1,
+      1
+    ],
+    "failureHistory": [
+      {
+        "log": "D:/AI_cc/spine test/cu-completion-final-233-regression-20261027.log",
+        "passed": 231,
+        "failed": 2,
+        "reason": "回放版本登记失配；保留原始黄金帧/捕获字节，按当前回放重新实测后登记，未改阈值。"
+      },
+      {
+        "log": "D:/AI_cc/spine test/cu-completion-233-release-regression-20261027.log",
+        "passed": 232,
+        "failed": 1,
+        "reason": "独立连接心跳原子临时文件导致目录快照偶发变化；测试仅排除 connections，资产/journal/Writer 仍严格比较，修复后完整复验233通过。"
+      }
+    ]
+  },
+  "actualTrial": {
+    "evidence": {
+      "path": "D:/AI_cc/spine-mcp/docs/plans/creation-completion-trial-2026-10-26T17-08-00-367Z.json",
+      "sha256": "60f8255700f78e277e03db9170057aebf01308a6c5d79d412efc0d0d528b8b71",
+      "bytes": 518951
+    },
+    "task": {
+      "taskId": "23edf2b8-8058-4736-bcbd-66d25fa7ea1b",
+      "projectId": "creation-903ccc01-820a-48a6-b83f-41b500500194",
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T17-08-00-367Z",
+      "inputsFingerprint": "c574140e0a6903e1cde602b4a466fe46e5866f5a7f4cf74179c3c02f36a4360c"
+    },
+    "inputsUnchanged": true,
+    "writerReleased": true,
+    "wideRange": {
+      "evidence": {
+        "path": "D:/AI_cc/spine-mcp/docs/plans/creation-completion-trial-2026-10-26T16-41-23-406Z.json",
+        "sha256": "23dab68b296a982b46fb3fe4ce61f55f842dbb7586c262c31838eda05eb32203",
+        "bytes": 68757
+      },
+      "range": [
+        0.55,
+        1
+      ],
+      "decision": "rejected",
+      "reason": "数值通过不抵消实际切片失真。"
+    },
+    "narrowRange": {
+      "range": [
+        0.85,
+        1
+      ],
+      "width": [
+        1,
+        1
+      ],
+      "fixedBodyViewBranch": true,
+      "actualPlayerSamples": 4,
+      "continuityFrames": 33,
+      "decision": "approved",
+      "scope": "仅新校准记录中的身体、视向、分支和目标范围；不批准原 GIF、宽范围或其它角色。"
+    },
+    "formalTrial": {
+      "motionPath": "trial/formal-arm.motion.json",
+      "candidatePath": ".spine-mcp/live/ef0539d95bd111cb52e86db902b0455140471e7e591c3ff4704ff805823833e3/e45fb9ba-448b-40ac-a1fc-c54c70862e5a/2284b300f8f4e7e4c78be63e121b79fbf52b6e7d25014f81b4c7f49ce85bafe9/scene.json",
+      "candidateHash": "cca0418d67a6e93cec604af68714233186cc19bc37adabb3f7fc26c0d5c622e4",
+      "numericOk": true,
+      "sourceAnimationCommitted": false,
+      "originalGifDelivered": false,
+      "images": [
+        {
+          "path": "output/reports/creation-2026-10-26T17-08-00-367Z/formal-motion-0.png",
+          "hash": "8155c37b0b91e39454969084c0d23f16d5b55b5b990fae32d86384d617360eac"
+        }
+      ],
+      "candidate": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/.spine-mcp/live/ef0539d95bd111cb52e86db902b0455140471e7e591c3ff4704ff805823833e3/e45fb9ba-448b-40ac-a1fc-c54c70862e5a/2284b300f8f4e7e4c78be63e121b79fbf52b6e7d25014f81b4c7f49ce85bafe9/scene.json",
+        "sha256": "cca0418d67a6e93cec604af68714233186cc19bc37adabb3f7fc26c0d5c622e4",
+        "bytes": 893182
+      },
+      "motion": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/trial/formal-arm.motion.json",
+        "sha256": "287a2e2c77bfb04be75e23fddc4bae0ea9dc9479b477b2ec93f55593c24647c2",
+        "bytes": 3433
+      },
+      "offlinePreview": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/previews/cache/55788c177916a1433643f9712f0aecade221a2ed81072a52fabb4df9a95c7951/animation.gif",
+        "sha256": "c6f34ce8829484c158afbb181df71b8097294a819495f2e94261970d7cfe15c6",
+        "bytes": 405126
+      },
+      "previewManifest": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/previews/cache/55788c177916a1433643f9712f0aecade221a2ed81072a52fabb4df9a95c7951/preview-manifest.json",
+        "sha256": "4b97377bae3054aa44ddaea9a6a49a30be7c6e5e0d0fd4bbdfc4f4225627a2c1",
+        "bytes": 160091
+      },
+      "encodedDurationMs": 1000,
+      "previewScope": "30帧官方 runtime/Canvas 原速诊断预览；不替代真实 player 或完整作品批准。",
+      "uiScreenshot": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/output/reports/creation-2026-10-26T17-08-00-367Z/formal-projection-ui.png",
+        "sha256": "4cc97591ce7f0309962209463e4e3e7302898f168941f93f4d65c50ea20c6ff9",
+        "bytes": 65077
+      },
+      "playback": {
+        "passed": true,
+        "scope": "仅当前 npc1 受限 arm_projection_trial 的只读播放，不批准原 GIF、参考关系或源动画提交",
+        "endpoint": "http://127.0.0.1:35038/",
+        "candidateHashPrefix": "cca0418d67a6",
+        "animation": "arm_projection_trial",
+        "checks": {
+          "play": "点击播放后时间从 0.5 秒推进到 0.733 秒，按钮变为暂停",
+          "pause": "点击暂停后按钮恢复为播放",
+          "seek": "通过本地播放时间控件设置 0.25 秒后可重新播放并暂停",
+          "stage": "选择 projection-1 后控件为 1 秒，显示 1.000s，当前绑定仍为修订 0 / cca0418d67a6 / arm_projection_trial",
+          "evidenceBoundary": "页面明确提示播放不产生批准，截图仍须 MCP 暂停和核验"
+        },
+        "screenshot": "output/reports/creation-2026-10-26T17-08-00-367Z/formal-projection-ui.png"
+      },
+      "editorEvidence": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/output/reports/formal-editor-import-20261027/editor-import.json",
+        "sha256": "8c23d0ac49a07f54bcc3f11d05cbedb3a26d27f2d39db0bd47e6668e8857c174",
+        "bytes": 2426
+      },
+      "editorProject": {
+        "path": "D:/AI_cc/spine test/body-reference-trials/2026-10-24T15-53-20-542Z/creation-completion-trials/2026-10-26T17-08-00-367Z/output/reports/formal-editor-import-20261027/candidate.spine",
+        "sha256": "0547ffdd2533c431431b1f4ce7e5838425a469b4f4c4aa2dd243b8c688db6589",
+        "bytes": 66295
+      },
+      "editorScope": "官方 4.1.24 JSON 解析、工程保存；未验证编辑器画面/贴图，不代表完整参考动画批准。",
+      "previewTiming": {
+        "path": "D:/AI_cc/spine-mcp/docs/plans/creation-formal-preview-timing-20261027.json",
+        "sha256": "f98b2b9d9c2216806ebb593d76283998dced381558653eb13645e223bb8a8e31",
+        "bytes": 714
+      }
+    },
+    "originalGifDelivered": false
+  },
+  "performance": {
+    "evidence": {
+      "path": "D:/AI_cc/spine-mcp/docs/plans/creation-performance-2026-10-26T17-33-15-808Z.json",
+      "sha256": "275d7a976e15634e8b6a2b7a7c46f087755a24b5c3ec53fd6c1c5feb8abf89e7",
+      "bytes": 576010
+    },
+    "sameBuildRounds": 3,
+    "samplesPerModePerRound": 30,
+    "warmups": 2,
+    "mechanicsPassed": true,
+    "budgetsPassed": false,
+    "rounds": [
+      {
+        "round": 1,
+        "sameInputs": true,
+        "sameQuality": true,
+        "budgets": {
+          "stateMs": {
+            "limit": 20,
+            "p95": 54.55529999999999,
+            "passed": false
+          },
+          "frameMs": {
+            "limit": 50,
+            "p95": 67.72600000000239,
+            "passed": false
+          },
+          "patchToFrameMs": {
+            "limit": 120,
+            "p95": 332.1579000000056,
+            "passed": false
+          },
+          "undoTransactionMs": {
+            "limit": 50,
+            "p95": 20.907399999996414,
+            "passed": true
+          },
+          "undoToFrameMs": {
+            "limit": 120,
+            "p95": 312.79419999999664,
+            "passed": false
+          },
+          "commitMs": {
+            "limit": 200,
+            "p95": 243.53169999999955,
+            "passed": false
+          }
+        },
+        "comparableCosts": {
+          "detached": {
+            "calls": 30,
+            "durationMs": 20142.597100000003,
+            "textBytes": 1432650,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          },
+          "attached": {
+            "calls": 30,
+            "durationMs": 26200.2018,
+            "textBytes": 6606540,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          }
+        },
+        "preparationCosts": {
+          "detached": {
+            "calls": 3,
+            "durationMs": 776.8979999999997,
+            "textBytes": 20692,
+            "imageBytes": 0,
+            "images": 0
+          },
+          "attached": {
+            "calls": 5,
+            "durationMs": 1631.6110999999946,
+            "textBytes": 67790,
+            "imageBytes": 124943,
+            "images": 1
+          }
+        }
+      },
+      {
+        "round": 2,
+        "sameInputs": true,
+        "sameQuality": true,
+        "budgets": {
+          "stateMs": {
+            "limit": 20,
+            "p95": 48.20689999999013,
+            "passed": false
+          },
+          "frameMs": {
+            "limit": 50,
+            "p95": 52.609800000005635,
+            "passed": false
+          },
+          "patchToFrameMs": {
+            "limit": 120,
+            "p95": 256.09060000001045,
+            "passed": false
+          },
+          "undoTransactionMs": {
+            "limit": 50,
+            "p95": 13.374400000000605,
+            "passed": true
+          },
+          "undoToFrameMs": {
+            "limit": 120,
+            "p95": 250.2942000000039,
+            "passed": false
+          },
+          "commitMs": {
+            "limit": 200,
+            "p95": 209.25410000002012,
+            "passed": false
+          }
+        },
+        "comparableCosts": {
+          "attached": {
+            "calls": 30,
+            "durationMs": 23869.944699999993,
+            "textBytes": 6606540,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          },
+          "detached": {
+            "calls": 30,
+            "durationMs": 20582.733900000138,
+            "textBytes": 1432650,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          }
+        },
+        "preparationCosts": {
+          "attached": {
+            "calls": 5,
+            "durationMs": 1831.5926000000181,
+            "textBytes": 67792,
+            "imageBytes": 124943,
+            "images": 1
+          },
+          "detached": {
+            "calls": 3,
+            "durationMs": 941.854800000001,
+            "textBytes": 20674,
+            "imageBytes": 0,
+            "images": 0
+          }
+        }
+      },
+      {
+        "round": 3,
+        "sameInputs": true,
+        "sameQuality": true,
+        "budgets": {
+          "stateMs": {
+            "limit": 20,
+            "p95": 42.335599999991246,
+            "passed": false
+          },
+          "frameMs": {
+            "limit": 50,
+            "p95": 55.725199999986216,
+            "passed": false
+          },
+          "patchToFrameMs": {
+            "limit": 120,
+            "p95": 230.85029999999097,
+            "passed": false
+          },
+          "undoTransactionMs": {
+            "limit": 50,
+            "p95": 11.836899999994785,
+            "passed": true
+          },
+          "undoToFrameMs": {
+            "limit": 120,
+            "p95": 219.3228999999992,
+            "passed": false
+          },
+          "commitMs": {
+            "limit": 200,
+            "p95": 206.99180000001797,
+            "passed": false
+          }
+        },
+        "comparableCosts": {
+          "detached": {
+            "calls": 30,
+            "durationMs": 20709.526199999964,
+            "textBytes": 1432650,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          },
+          "attached": {
+            "calls": 30,
+            "durationMs": 22517.188600000023,
+            "textBytes": 6606540,
+            "scope": "同一冻结起始帧适配请求；其它附着微预算操作不混入效率比较"
+          }
+        },
+        "preparationCosts": {
+          "detached": {
+            "calls": 3,
+            "durationMs": 906.4212999999872,
+            "textBytes": 20692,
+            "imageBytes": 0,
+            "images": 0
+          },
+          "attached": {
+            "calls": 5,
+            "durationMs": 1540.9055999999982,
+            "textBytes": 67772,
+            "imageBytes": 124943,
+            "images": 1
+          }
+        }
+      }
+    ],
+    "tokenUsage": null,
+    "tokenReason": "MCP SDK 客户端不提供模型实际 token 记录。",
+    "captureBudget": "notRun",
+    "pageReloadBudget": "notRun",
+    "scope": "同一原 GIF 起始帧适配请求（dryRun，无参考批准）在 detached/attached 的真实 stdio 对照；同冻结标准姿态另测状态、帧、头部 +1°、撤销、备份保存。不是完整 GIF 动作交付或模型效率证明。"
+  },
+  "package": {
+    "directory": "D:/AI_cc/spine test/creation-packages/cu-trial-20261027-02",
+    "archive": {
+      "path": "D:/AI_cc/spine test/creation-packages/cu-trial-20261027-02.zip",
+      "sha256": "03dbc35c0555c0a870aaae53554184d734ce915db7c38b181972174b8df82d71",
+      "bytes": 928647
+    },
+    "manifest": {
+      "path": "D:/AI_cc/spine test/creation-packages/cu-trial-20261027-02/trial-package.json",
+      "sha256": "61e61d5ca191240d4c9d1b97c3f061ba6699382775a1fe5b5ad696287cafa45b",
+      "bytes": 23274
+    },
+    "version": "0.2.0",
+    "buildFingerprint": "cce68ebeef81149569c7e3efdb70395c681375475c095b5108a35ed1f5f491d9",
+    "files": 143,
+    "verification": {
+      "path": "D:/AI_cc/spine-mcp/docs/plans/creation-package-verification-2026-10-26T17-39-34-528Z.json",
+      "sha256": "810c81c3bad17e8e5915fb156cdab651c9dbf2e7800ef4ac3c17a50706498a1f",
+      "bytes": 2018
+    },
+    "productionEnabled": false,
+    "dependenciesIncluded": false,
+    "verificationScope": "已有本机依赖复用下的已解包包校验、真实 stdio 发现、全新隔离 Host 启动/看图/关闭；不是全新系统安装或 WinForms 发行验收。",
+    "writerReleased": true
+  },
+  "pending": [
+    {
+      "stage": "CU-1",
+      "item": "新标注到通过的完整真实姿态流程及全部故障组合未验完。"
+    },
+    {
+      "stage": "CU-2",
+      "item": "实际目标 Agent 客户端发现/动态分组/schema执行未验；SDK通过不代替。"
+    },
+    {
+      "stage": "CU-3",
+      "item": "缺第二个合适完整真实美术角色；用户排除立绘及多拆分皮肤案例。"
+    },
+    {
+      "stage": "CU-4",
+      "item": "已批准范围外的身体、目标、宽度和视角缺新校准；0.55–1仍退回。"
+    },
+    {
+      "stage": "CU-5",
+      "item": "原 GIF 准备姿态仍9项必要失败，不制作批准后续完整动作，不放宽比较要求。"
+    },
+    {
+      "stage": "CU-6",
+      "item": "端到端预算超限，capture/重载三轮预算及真实客户端token未验。"
+    },
+    {
+      "stage": "CU-7",
+      "item": "原 GIF 完整作品、第二角色、编辑器画面/贴图未交付；长期观察/人工评审和生产C1边界保留。"
+    }
+  ],
+  "sourceInputsNotEdited": true,
+  "gitCommitCreated": false,
+  "cleanup": [
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-completion-trials\\2026-10-26T17-08-00-367Z",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r1-detached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r1-attached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r2-attached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r2-detached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r3-detached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-performance\\2026-10-26T17-33-15-808Z\\r3-attached",
+      "writerReleased": true
+    },
+    {
+      "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-package-smoke\\2026-10-26T17-39-34-528Z",
+      "writerReleased": true
+    }
+  ]
+}

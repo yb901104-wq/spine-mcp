@@ -1,0 +1,438 @@
+{
+  "at": "2026-10-24T16:10:24.959Z",
+  "workspace": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "sourceWorkspace": "D:/AI_cc/spine test/host-acceptance/2026-10-22T02-18-08-219Z",
+  "request": "根据用户 GIF 制作 npc1 身体动作，忽略武器；未沿用旧站姿批准。",
+  "reference": {
+    "filePath": "reference/body.gif",
+    "sourceHash": "97b71b934e13a022b47bf6f97d5a0961e660cfb1803cc0a3ca79a34eb2090960",
+    "frames": 171,
+    "duration": 5.88,
+    "phases": [
+      "站立",
+      "收手后仰",
+      "下沉坐地",
+      "低头停顿",
+      "短暂起身",
+      "再次坐地"
+    ],
+    "annotation": "reference/ready-v1.reference.json",
+    "reviewSheet": "reference/ready-v1-sheet/reference-pose-sheet.json"
+  },
+  "newStandardPose": {
+    "path": "trial/neutral-stand-v2.pose.json",
+    "numeric": true,
+    "reviewed": true,
+    "note": "新建两版并独立审查，未继承旧 standing-hand-angle 的批准。"
+  },
+  "readyPose": {
+    "path": "trial/ready-v1.pose.json",
+    "numeric": true,
+    "relationsPassed": false,
+    "optimizer": {
+      "method": "boundedDampedLeastSquares",
+      "cost": 15.087361981448357,
+      "history": [
+        {
+          "iteration": 0,
+          "cost": 254699.15953237843
+        },
+        {
+          "iteration": 1,
+          "cost": 3551.1937555356108,
+          "step": 1
+        },
+        {
+          "iteration": 2,
+          "cost": 23.837499453165496,
+          "step": 1
+        },
+        {
+          "iteration": 3,
+          "cost": 20.21094808800203,
+          "step": 0.25
+        },
+        {
+          "iteration": 4,
+          "cost": 17.950611491760142,
+          "step": 0.25
+        },
+        {
+          "iteration": 5,
+          "cost": 15.701120893291623,
+          "step": 0.5
+        },
+        {
+          "iteration": 6,
+          "cost": 15.492510191278049,
+          "step": 0.5
+        },
+        {
+          "iteration": 7,
+          "cost": 15.374880342236724,
+          "step": 0.25
+        },
+        {
+          "iteration": 8,
+          "cost": 15.350879310641394,
+          "step": 0.0625
+        },
+        {
+          "iteration": 9,
+          "cost": 15.304220186894511,
+          "step": 1
+        },
+        {
+          "iteration": 10,
+          "cost": 15.14160096564736,
+          "step": 0.5
+        },
+        {
+          "iteration": 11,
+          "cost": 15.138703287956812,
+          "step": 0.0625
+        },
+        {
+          "iteration": 14,
+          "cost": 15.127271856983507,
+          "step": 0.5
+        },
+        {
+          "iteration": 16,
+          "cost": 15.099384909622174,
+          "step": 1
+        },
+        {
+          "iteration": 17,
+          "cost": 15.091648206291735,
+          "step": 1
+        },
+        {
+          "iteration": 19,
+          "cost": 15.087730767363174,
+          "step": 1
+        },
+        {
+          "iteration": 20,
+          "cost": 15.087671156685893,
+          "step": 1
+        },
+        {
+          "iteration": 22,
+          "cost": 15.087388180762652,
+          "step": 1
+        },
+        {
+          "iteration": 24,
+          "cost": 15.087367886416176,
+          "step": 1
+        },
+        {
+          "iteration": 25,
+          "cost": 15.087367858462535,
+          "step": 0.5
+        },
+        {
+          "iteration": 27,
+          "cost": 15.087365958030736,
+          "step": 1
+        },
+        {
+          "iteration": 28,
+          "cost": 15.087365650800237,
+          "step": 1
+        },
+        {
+          "iteration": 29,
+          "cost": 15.087365633718743,
+          "step": 0.25
+        },
+        {
+          "iteration": 31,
+          "cost": 15.087364829124448,
+          "step": 1
+        },
+        {
+          "iteration": 32,
+          "cost": 15.087364635182748,
+          "step": 1
+        },
+        {
+          "iteration": 33,
+          "cost": 15.087364615863294,
+          "step": 0.5
+        },
+        {
+          "iteration": 35,
+          "cost": 15.08736399561434,
+          "step": 1
+        },
+        {
+          "iteration": 36,
+          "cost": 15.08736386305195,
+          "step": 1
+        },
+        {
+          "iteration": 37,
+          "cost": 15.087363832717621,
+          "step": 0.5
+        },
+        {
+          "iteration": 39,
+          "cost": 15.087363453854124,
+          "step": 1
+        },
+        {
+          "iteration": 40,
+          "cost": 15.087363355955533,
+          "step": 1
+        },
+        {
+          "iteration": 41,
+          "cost": 15.087363322780838,
+          "step": 1
+        },
+        {
+          "iteration": 43,
+          "cost": 15.08736295303439,
+          "step": 1
+        },
+        {
+          "iteration": 44,
+          "cost": 15.087362883002726,
+          "step": 1
+        },
+        {
+          "iteration": 45,
+          "cost": 15.087362841351151,
+          "step": 1
+        },
+        {
+          "iteration": 47,
+          "cost": 15.087362611512198,
+          "step": 1
+        },
+        {
+          "iteration": 48,
+          "cost": 15.087362559582973,
+          "step": 1
+        },
+        {
+          "iteration": 49,
+          "cost": 15.087362516380876,
+          "step": 1
+        },
+        {
+          "iteration": 51,
+          "cost": 15.087362370245827,
+          "step": 1
+        },
+        {
+          "iteration": 52,
+          "cost": 15.08736233092933,
+          "step": 1
+        },
+        {
+          "iteration": 53,
+          "cost": 15.08736228996943,
+          "step": 1
+        },
+        {
+          "iteration": 54,
+          "cost": 15.087362289534253,
+          "step": 0.25
+        },
+        {
+          "iteration": 56,
+          "cost": 15.087362147311373,
+          "step": 1
+        },
+        {
+          "iteration": 57,
+          "cost": 15.087362110631984,
+          "step": 1
+        },
+        {
+          "iteration": 58,
+          "cost": 15.08736210493072,
+          "step": 0.5
+        },
+        {
+          "iteration": 60,
+          "cost": 15.087361981448357,
+          "step": 1
+        }
+      ],
+      "reason": "iterationLimit",
+      "iterations": 60,
+      "acceptedSteps": 45,
+      "attemptLimit": 60
+    },
+    "failed": [
+      {
+        "id": "arm.left.wristReach",
+        "nodes": [
+          "leftShoulder",
+          "leftWrist"
+        ],
+        "reference": 0.5063933783399812,
+        "target": 0.8047271069831191,
+        "error": 0.2983337286431379,
+        "tolerance": 0.15,
+        "required": true,
+        "status": "fail",
+        "targetNodes": [
+          "leftShoulder",
+          "leftWrist"
+        ],
+        "referenceNodes": [
+          "leftShoulder",
+          "leftWrist"
+        ]
+      },
+      {
+        "id": "arm.left.wristTorsoHeight",
+        "nodes": [
+          "leftWrist"
+        ],
+        "reference": 0.8845343940102949,
+        "target": 0.7361129770367842,
+        "error": 0.14842141697351063,
+        "tolerance": 0.12,
+        "required": true,
+        "status": "fail",
+        "targetNodes": [
+          "leftWrist"
+        ],
+        "referenceNodes": [
+          "leftWrist"
+        ]
+      },
+      {
+        "id": "arm.right.wristReach",
+        "nodes": [
+          "rightShoulder",
+          "rightWrist"
+        ],
+        "reference": 0.8829482242364299,
+        "target": 1.041857034071145,
+        "error": 0.15890880983471511,
+        "tolerance": 0.15,
+        "required": true,
+        "status": "fail",
+        "targetNodes": [
+          "rightShoulder",
+          "rightWrist"
+        ],
+        "referenceNodes": [
+          "rightShoulder",
+          "rightWrist"
+        ]
+      },
+      {
+        "id": "arm.right.wristOutsideTorso",
+        "nodes": [
+          "rightWrist"
+        ],
+        "reference": true,
+        "target": false,
+        "error": 1,
+        "tolerance": 0,
+        "required": true,
+        "status": "fail",
+        "targetNodes": [
+          "rightWrist"
+        ],
+        "referenceNodes": [
+          "rightWrist"
+        ]
+      },
+      {
+        "id": "arm.right.wristHeadGap",
+        "nodes": [
+          "rightWrist",
+          "head"
+        ],
+        "reference": 1.5908018244107065,
+        "target": 1.9449288827988134,
+        "error": 0.3541270583881069,
+        "tolerance": 0.2,
+        "required": true,
+        "status": "fail",
+        "targetNodes": [
+          "rightWrist",
+          "head"
+        ],
+        "referenceNodes": [
+          "rightWrist",
+          "head"
+        ]
+      }
+    ],
+    "comparisonPath": "trial/ready-v1.pose.comparison.json",
+    "cleanSheet": "trial/ready-v1-comparison/page-1-clean.png",
+    "player": "trial/ready-player.png",
+    "playerHash": "820dcb087c74a7c25bce968405ed5da638f81dc9f0fd1a64dcbe10b17b77cd1e",
+    "playerCapture": "output/previews/captures/f3e549e5d9d1e4332e63bf327386576cb9e52e512336bdc6c2038d9da864518e/564d1df3-e1eb-4074-827f-8d971f818204/8f6bb3b4-f131-4bed-af6e-8e304ee7efd2/820dcb087c74a7c25bce968405ed5da638f81dc9f0fd1a64dcbe10b17b77cd1e.png.manifest.json",
+    "captureValidity": {
+      "status": "verified",
+      "checks": {
+        "version": true,
+        "dependencies": true,
+        "candidate": true,
+        "runtimeReadback": true,
+        "resourceHashes": true,
+        "playerScript": true,
+        "fixedCamera": true,
+        "visible": true,
+        "canvas": true,
+        "viewport": true
+      },
+      "reasons": []
+    }
+  },
+  "bodyAnimationCompleted": false,
+  "animationApproved": false,
+  "sourceCommitted": false,
+  "sourceInputsUnchanged": true,
+  "inputHashes": {
+    "目标/npc1.atlas": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "目标/npc1.json": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83",
+    "目标/npc1.png": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251",
+    "poses/standing-hand-angle.json": "5ea161b768155b03c11a19aeb2159ddb019d01276315f115f15771d6bc71199f",
+    "previews/pose-workflow-20261009/npc1.mapping.calibration.json": "42a4db812e69ab6b0fe8038b894ebe4cb7d3391fc89e339596e4604762a204bc",
+    "previews/pose-workflow-20261009/npc1.mapping.json": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-clean.png": "79b2233b178d14cdba4b3e5861937191e41dd0c5f17fdba2dbcef38b29343521",
+    "previews/pose-workflow-20261009/standing-comparison/page-1-diagnostic.png": "7b535f771792bb33c1cbb5495c0edde648fb1a51fc12c6a95d61908efbd001c9",
+    "previews/pose-workflow-20261009/standing-comparison/pose-comparison.json": "ac461d7a4f2955b384735511a7bf8db10637417bbba4565e811d33f90c6a5ac2",
+    "previews/pose-workflow-20261009/standing.pose.json": "6868836cf798e32cbfe173c6047cb203a3b6c1a506b37011539de8515c9cdf03",
+    "output/calls/1-spine_create_project.json": "78ef591772a62e91a7bae7cabfbb4f2605f39adacd9e590801dd5dd7e64f765c",
+    "output/calls/10-spine_host_patch.json": "7788011663c33fbeb944d63829b77fbacf0683720c1d843097aa0b2e04deace5",
+    "output/calls/11-spine_host_undo.json": "0c34feb2e6598ddcfd71598921c819f82cabbb88ac9eaf6f56a248e64df04cfd",
+    "output/calls/12-spine_preview_state.json": "58f3c822f89ff94a4e0b91e93663f882dc0d815eefa2584272b48aaf187f156b",
+    "output/calls/13-spine_preview_capture.json": "29083e93ea9ecf750e7d3aa16b76aa17955088d3aa536515b76fc9ebe9a911fc",
+    "output/calls/14-spine_review_pose.json": "9dde273aa6d0a394d71a680e3358e66d2fdd522f979bdc0a02efbc5a0eb62ae2",
+    "output/calls/15-spine_review_pose.json": "cd8ec2a69c99b903a045d5685c8b2480c45e960b05cfc71701fa7dd20abaf50e",
+    "output/calls/16-spine_host_commit.json": "53aacbfa6dd8b7bd22394b682682c5fc7fd5c97278acebe6556f808c2845af7e",
+    "output/calls/17-spine_host_commit.json": "0a57fc4da1f132be6a86f3d144f463f4a37e950524a0bfa85123ae50996ce2ee",
+    "output/calls/18-spine_host_open.json": "bb72ee225528d0ce872b90e6af23f0ce83115dc1c9b64250f8667646cef360dc",
+    "output/calls/2-spine_host_open.json": "51ab9598cdc676fc9f7f76427c973597c016710ba3a3582bf8e75642694e34fe",
+    "output/calls/3-spine_host_pin.json": "6a9738dafb7ec86674937d171d73e8ac9aa08eddfdc11bbbb8df00e9da321565",
+    "output/calls/4-spine_recheck_pose.json": "9ca98af3fa014ec0393fab9bd69457b959d94ecc225068f2b4d7573fef599c86",
+    "output/calls/5-spine_preview_capture.json": "71936ecbba18d6c57ac0357253ed3a6c6b941f03e9c79a9e59b31bf65d20b158",
+    "output/calls/6-spine_preview_state.json": "c86358956fd18c095c1690ad3eb54dd9c6b6746eaca36fd400eb57265c32f51c",
+    "output/calls/7-spine_host_patch.json": "f3005daf0d84251a4907eb6721ec6486122ea1f2bad83f82e6faf6d39f3fd82a",
+    "output/calls/8-spine_preview_state.json": "3a5787849ff5e6d05314a038ed2476669e0f0d120fcd8b7697874b2167dc53fd",
+    "output/calls/9-spine_host_patch.json": "c28d25280a375c2aaafffed93c03f71e49bf382a94a4d123238bbec029b9c5e2",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/0a427c7a-593d-41d7-98c2-969abcf414a9/85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f.png": "85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/0a427c7a-593d-41d7-98c2-969abcf414a9/85c4302ea1c5df1fae5a12a6be5839de3cefcb74aa06e4842803fc9c98c9c79f.png.manifest.json": "6c670a9efef747346da17cc3f4d57f5e9797f811f0d9e9060325835ba2de2189",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png": "720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83",
+    "output/previews/captures/ecbdaa2fecf3e2938803d528690f6b03a991f37893f426abc3f15232c260c572/4baae437-8fb8-494e-915f-70654f40e88f/90e087bc-a007-4f3b-b83d-23192b48b6e0/720dc26d94be7f8e5e208cf15369f602635cdad4b3c50b3623d3f0c9db72ba83.png.manifest.json": "3f4de9b85e33fc6586bb52a2880ad77154fbe9ab77a41718470dabf699815370"
+  },
+  "hostStopped": true,
+  "writerAcquired": false,
+  "productionProfileUnchanged": true,
+  "stoppedAt": "初始参考姿态仍有 5 项必要关系失败，达到 60 次修正上限；按准备姿态闭环规则不制作并批准整段动作。",
+  "nextInvestigation": "检查跨角色身体比例、关节标注语义与方向/躯干归一手位指标的兼容性；本轮不能据失败直接认定无解，也不改门限。",
+  "viewerUrl": "http://127.0.0.1:2885/"
+}

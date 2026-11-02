@@ -7,7 +7,7 @@ import { createPoseDraft, solvePose } from '../../src/poseWorkflow.js';
 import { registerWorkspace } from '../../src/workspaceTools.js';
 import { createProject } from '../../src/projectModel.js';
 import type { ProjectManifest } from '../../src/projectSchema.js';
-export async function withHostFixture(fn:(fixture:{root:string;context:{workspaceRoot:string;projectId:string};manifest:ProjectManifest})=>Promise<void>,options:{neutralSetup?:boolean}={}){
+export async function withHostFixture(fn:(fixture:{root:string;context:{workspaceRoot:string;projectId:string};manifest:ProjectManifest})=>Promise<void>,options:{neutralSetup?:boolean;animations?:Record<string,any>}={}){
   const root=await mkdtemp(path.join(os.tmpdir(),'spine-host-')),previous=process.env.SPINE_MCP_WORKSPACE;
   process.env.SPINE_MCP_WORKSPACE=root;
   try{
@@ -20,7 +20,7 @@ export async function withHostFixture(fn:(fixture:{root:string;context:{workspac
     const attachment={type:'region',path:'body',width:12,height:24};
     // 独立机械成功夹具；原非零 setup 夹具继续覆盖失败路径，不能当真实美术验收。
     if(options.neutralSetup){bones[0]={...bones[0],x:0,y:0,rotation:0};bones[1]={...bones[1],x:0,rotation:0};bones[2]={...bones[2],x:0,rotation:0};}
-    await writeFile(path.join(root,'body.json'),JSON.stringify({skeleton:{spine:'4.1.24'},bones,slots:[{name:'bodySlot',bone:'body',attachment:'body'},{name:'accentSlot',bone:'root',attachment:'body'}],skins:[{name:'default',attachments:{bodySlot:{body:attachment,alternate:{...attachment,width:18}},accentSlot:{body:attachment}}},{name:'alternate',attachments:{bodySlot:{body:{...attachment,height:18}},accentSlot:{body:attachment}}}],animations:{original:{}}}));
+    await writeFile(path.join(root,'body.json'),JSON.stringify({skeleton:{spine:'4.1.24'},bones,slots:[{name:'bodySlot',bone:'body',attachment:'body'},{name:'accentSlot',bone:'root',attachment:'body'}],skins:[{name:'default',attachments:{bodySlot:{body:attachment,alternate:{...attachment,width:18}},accentSlot:{body:attachment}}},{name:'alternate',attachments:{bodySlot:{body:{...attachment,height:18}},accentSlot:{body:attachment}}}],animations:options.animations??{original:{}}}));
     await writeFile(path.join(root,'body.atlas'),'body.png\nsize: 32,32\nformat: RGBA8888\nfilter: Linear,Linear\nrepeat: none\nbody\n  rotate: false\n  xy: 0,0\n  size: 32,32\n  orig: 32,32\n  offset: 0,0\n  index: -1\n');
     const canvas=createCanvas(32,32),ctx=canvas.getContext('2d');ctx.fillStyle='#55bcdd';ctx.fillRect(0,0,32,32);ctx.fillStyle='#efab55';ctx.fillRect(0,0,8,32);await writeFile(path.join(root,'body.png'),canvas.toBuffer('image/png'));
     await registerWorkspace({rootPath:root,projectId:context.projectId});

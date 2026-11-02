@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T17:30:24.857Z",
+  "packageDirectory": "D:\\AI_cc\\spine test\\creation-packages\\cu-unpacked-20261027-01",
+  "buildFingerprint": "7b2aafaafcd6282d81087d43069280978e751c5acbadf179f9b77ee294b8e6cc",
+  "source": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z",
+  "scope": "已有本机依赖复用下的已解包包校验、真实 stdio 发现、全新隔离 Host 启动/看图/关闭；不是全新系统安装或 WinForms 发行验收。",
+  "dependencyPreparation": "验证者事先建立本机 node_modules 只读依赖复用链接；ZIP 不包含该链接或依赖。",
+  "passed": true,
+  "integrity": true,
+  "tamperRejected": true,
+  "restored": true,
+  "toolCount": 115,
+  "taskContext": {
+    "projectId": "creation-33846077-2952-40ff-8e1c-678d3294de7e",
+    "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-package-smoke\\2026-10-26T17-30-24-855Z"
+  },
+  "version": {
+    "sessionId": "1892eff3-b8ef-4bdb-af77-ba7d5a86dac4",
+    "documentId": "f4d8a833c2ea934500a295f9f388761c65102a77b897892d79bdbfa0b0040ed0",
+    "openEpoch": "510aecff-b2be-4f77-ae6c-017104dc6e2e",
+    "revision": 0
+  },
+  "frameHash": "2e9a7290deb15f10e4da62a5ff3f035a5e88fa8160f69d780ed35bf0211cdae0",
+  "golden": {
+    "goldenPassed": true,
+    "reportHash": "3594f2ee24018a1cc537c583aa04c4eae7c380141853f94c239db55d0fdd7094",
+    "reasons": [],
+    "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。",
+    "cases": [
+      {
+        "id": "region-setup",
+        "changedRatio": 0.0015234375,
+        "maximumChannelError": 1
+      },
+      {
+        "id": "region-presentation",
+        "changedRatio": 0.000810546875,
+        "maximumChannelError": 1
+      },
+      {
+        "id": "region-rotated-overlap",
+        "changedRatio": 0.00146484375,
+        "maximumChannelError": 1
+      }
+    ]
+  },
+  "inputsUnchanged": true,
+  "hostStopped": true,
+  "writerReleased": true
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T06:40:15.775Z",
+  "workspaceRoot": "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T06-37-37-079Z",
+  "candidatePath": ".spine-mcp\\live\\6b5f8ae833f55c8dc68090565fa661513f90d37469952b7493f18c460ed7c77d\\6a9bd2ee-44ac-4f96-907c-4a326c295ef3\\52bb22c444db6722bdf0fbaf9ab74ce6a8364e3a8f8e7acc074f7f991712de96\\pose.json",
+  "candidateHash": "d14ecf45adcbdce7879a0ce2a6c128db9807421d1ec8a5dccd6d4c95e2577ae7",
+  "outputDirectory": "output/reports/editor-import-reference-continuation",
+  "executable": "D:/Program Files/Spine/Spine.com",
+  "officialBasis": "https://esotericsoftware.com/spine-command-line-interface#Import",
+  "scope": "官方 4.1.24 JSON 解析、工程保存；未验证编辑器画面/贴图，不代表完整参考动画批准。",
+  "visualReview": "notRun",
+  "referenceApproval": false,
+  "sourceUnchanged": true,
+  "passed": true,
+  "version": {
+    "args": [
+      "-u",
+      "4.1.24",
+      "--version"
+    ],
+    "exitCode": 0,
+    "signal": null,
+    "durationMs": 3880.0329,
+    "output": "Spine Launcher 4.1.10\nEsoteric Software LLC (C) 2013-2022 | http://esotericsoftware.com\nWindows 10 Pro amd64 10.0\nStarting: Spine 4.1.24 Professional\nSpine 4.1.24 Professional\nComplete.\n"
+  },
+  "import": {
+    "args": [
+      "-u",
+      "4.1.24",
+      "-i",
+      "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T06-37-37-079Z\\.spine-mcp\\live\\6b5f8ae833f55c8dc68090565fa661513f90d37469952b7493f18c460ed7c77d\\6a9bd2ee-44ac-4f96-907c-4a326c295ef3\\52bb22c444db6722bdf0fbaf9ab74ce6a8364e3a8f8e7acc074f7f991712de96\\pose.json",
+      "-o",
+      "D:\\AI_cc\\spine test\\body-reference-trials\\2026-10-24T15-53-20-542Z\\creation-trials\\2026-10-26T06-37-37-079Z\\output\\reports\\editor-import-reference-continuation\\candidate.spine",
+      "--import"
+    ],
+    "exitCode": 0,
+    "signal": null,
+    "durationMs": 3816.8768,
+    "output": "Spine Launcher 4.1.10\nEsoteric Software LLC (C) 2013-2022 | http://esotericsoftware.com\nWindows 10 Pro amd64 10.0\nStarting: Spine 4.1.24 Professional\nSpine 4.1.24 Professional\n"
+  },
+  "project": {
+    "path": "output/reports/editor-import-reference-continuation/candidate.spine",
+    "hash": "c5f28a47d8579a484af5f4caef9b2718731d3add94528d7852816e1c12b55174",
+    "bytes": 66732
+  }
+}

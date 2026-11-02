@@ -34,10 +34,10 @@ function pose(scale = 1) {
   };
 }
 
-test('v3 策略与 policies/pose-comparison.v3.json 一致', async () => {
-  const file = JSON.parse(await readFile('policies/pose-comparison.v3.json', 'utf8'));
+test('v4 策略与 policies/pose-comparison.v4.json 一致', async () => {
+  const file = JSON.parse(await readFile('policies/pose-comparison.v4.json', 'utf8'));
   assert.deepEqual(file, comparisonPolicy);
-  assert.equal(comparisonPolicy.version, 3);
+  assert.equal(comparisonPolicy.version, 4);
   for (const key of ['lineDegrees', 'twistDegrees', 'silhouetteWidth', 'facingRatio', 'reach', 'torsoHeight', 'torsoOffset', 'footOffset', 'headGap', 'headDegrees']) {
     assert.equal(typeof (comparisonPolicy as any)[key], 'number', `缺少数值门限 ${key}`);
   }
@@ -85,7 +85,7 @@ test('图像坐标镜像与 normalizedGraph 使用同一规则', () => {
 
 // 真实负例：同一份未修改的 v4 目标，v2 策略曾 27 项全 pass 却被真人退回。
 // v3 必须给出可量化的失败原因；参考仍为 v1 时，轮廓/头部朝向必须 unverifiable 而不是 pass。
-test('真实 ready 案例：v3 结构指标必须把「外伸变贴身」判为失败', async t => {
+test('真实 ready 案例：v4 保留结构门禁并按躯干归一腕位', async t => {
   const root = 'D:/AI_cc/spine test';
   const dir = 'previews/ready-refinement-2026-10-10T04-03-50.693Z';
   let ref: any, cmp: any;
@@ -106,5 +106,5 @@ test('真实 ready 案例：v3 结构指标必须把「外伸变贴身」判为�
   assert.equal(result.metrics.filter((m: any) => m.status === 'fail').length >= 6, true);
   // v1 参考没有轮廓/面部锚点/前后证据：不得静默通过
   for (const id of ['body.shoulderSilhouette', 'head.orientation', 'head.turnBand']) assert.equal(status(id), 'unverifiable', id);
-  assert.ok(result.metrics.some((m: any) => m.id === 'leftArm.wrist' && m.status === 'pass'), '旧方向指标仍会通过，正是需要被新指标补偿的地方');
+  assert.equal(status('leftArm.wrist'), 'fail', 'v4 不再用各自臂长吸收腕位差异');
 });

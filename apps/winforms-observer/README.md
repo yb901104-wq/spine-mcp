@@ -1,5 +1,35 @@
 # Spine MCP WinForms 观察平台
 
+
+本轮新增校准连续性诊断 GIF/联系图，不需要先批准正式 motion。实际浏览器已验证播放/暂停/拖动/阶段定位，仍不等于本轮 WinForms/WebView2 发行包验收。
+## 2026-10-26 创作工具续建
+
+当前 115 个 MCP 工具。区间编辑和单臂独立校准/审查已接通，Host 网页增加只读播放、暂停、拖动与关键姿态定位；本轮实际浏览器已验证播放、暂停、时间控件及阶段定位，新 WinForms/WebView2 包仍未验收。新增 Node 隔离试用包不是 WinForms 便携发行包。
+
+包内运行 `node scripts/run-creation-trial.mjs --verify-only` 核对构建；手动准备依赖后，用 --workspace 指向正式 MCP 生成的隔离副本，恢复须 --resume。原观察平台启动参数不变。自动端口遇 Windows 保留范围或占用会有界重选，显式 --port 不改，默认本机监听及生产审批不变。
+
+2026-10-26 独立诊断续建：网页显示内存草稿、来源和拟保存路径，Agent 通过 newStage 显式开启新上下文、通过 spine_resume_diagnostic_pose 恢复；页面不写姿态或清单。恢复使用原隔离 --resume 启动后再由 MCP 预演/执行。当前 112 工具，不因本批源码与浏览器验证宣称便携包已发布。
+
+2026-10-26 续建：当前 MCP 112 工具；参考准备可不启动观察页面，正式动作级记录与新参考登记由 MCP 完成。任务可按完整版本继续已保存修订，Host 页面沿用原三图/失联规则；本批未生成新的 WinForms 发行包或改变启动参数。
+
+2026-10-26：Host 网页增加任务创作检查、参考/当前/前次诊断图与构建/profile 显示；操作继续经过 MCP。源码更新未打包为新的 WinForms 便携版本，本批浏览器验收不能替代新的 WebView2/桌面包验收。
+
+隔离试用先通过 `spine_start_creation_task` 的 `isolatedDirectory` 创建副本，再从项目目录执行 `npm run host:creation -- --workspace "返回的 workspaceRoot" --isolated`。默认本机随机端口，可加 `--port`；遇到旧 journal 先查看来源/差异，显式 `--resume` 才恢复。该入口不改变原观察平台启动参数或生产 C1/长期观察审批，连接向导不写用户全局配置。详见 [专项工单](../../docs/plans/creation-usability.md)。
+
+2026-10-24 性能复验使用 `npx tsx scripts/benchmark-host-real-animation.ts <真实桌面报告路径> --stdio --isolated-host`，连续三轮后用 `scripts/summarize-host-real-animation-performance.ts` 传入三份报告汇总。测试驱动、编译版 Host 与 MCP 独立进程，记录两端构建指纹和 worker 退出；内部 worker 必须由 IPC 启动且核验隔离报告，不是生产 C2 入口。90 样本逐轮通过，state/frame P95 12.39/25.51ms；203 项回归、实际 npc1 与合成源事务各 29 项桌面检查通过，优化前后像素一致。[本批证据](../../docs/plans/host-state-performance-closeout-20261024.json)。生产默认观察，旧便携包不变。
+
+实际资源候选自检可用 `--real-animation-candidate`，复制已批准 npc1 站姿到独立工程，仅生成固定站姿候选及当前 player，不新增动作批准或写入真实角色源。最新 [29 项报告](../../docs/plans/host-winforms-2026-10-23T19-46-36-278Z.json) 输入未变；这不替代完整新动作或第二角色。资源性能复跑：`npx tsx scripts/benchmark-host-real-animation.ts <该真实桌面报告路径> --stdio`，候选在独立编译版 MCP 子进程计算，state/frame 仍测 HostClient；源码与 dist 应匹配。当前真实 state 超预算，生产仍观察。
+
+2026-10-24 C2-4c 开发自检：先运行 `npm run build` 和本应用 `dotnet build`，再运行 `npx tsx scripts/acceptance-winforms-host.ts --animation-candidate`。它只在独立合成工程制作精确拟合动画、通过实际 WebView2 当前 player 截图和重连，再验证完整审查及备份/原子源提交，结束释放测试 Writer；不能开启生产 C2。29 项通过不代表真实美术或 Spine 导入，[报告](../../docs/plans/host-winforms-2026-10-23T19-45-46-267Z.json)。源码及默认 C1 观察边界保持，旧便携包未更新。
+
+2026-10-24 C2-4b 已接通，构建及 189/189 回归通过。高级 MCP 工具暂存候选后独立 Host asset commit 保存，观察文档不自动切换；Agent 显式打开新 pose/motion 后按原页面回放。未新增 WinForms 写入按钮、生产开关或本批真实桌面验收，C2-4c、真实美术和编辑器导入仍待完成。见 [主工单](../../docs/plans/host-evolution.md)。
+
+C2-4a 追加：四个既有姿态命令已在隔离 C2 attached 中适配内存，完整版本必填，保存独立。最新 TypeScript 回归 180/180，真实桌面组合姿态仅作诊断验证，数值失败保持失败；27 项桌面检查不代表真实美术通过。开发自检可运行 `npx tsx scripts/acceptance-winforms-host.ts --pose-commands`，它只在合成夹具取得测试 Writer、编辑后释放并回到观察模式，保留 player 截图与失败诊断；不能开启生产写入。旧便携包不变。[本批证据](../../docs/plans/host-c2-pose-commands-20261023.json)。
+
+2026-10-23 C2-1～3 已在隔离服务实现，实际能力由 Host `capabilities.editing/viewing` 声明；WinForms 观察页显示 Agent 显式选择的 motion/skeleton 动画/时间或 setup 及采样状态，不提供 C2 切换、批准或新编辑面板。175 项 TypeScript 回归通过，真实 WebView2 合成场景不代替真实美术、第二角色或编辑器导入验收。C1 固定候选独立采样，已保留一次未知退出，中断不补时。启动脚本、默认端口及旧便携包不变。[C2-3 记录](../../docs/plans/host-c2-playback-20261023.json)、[前两批](../../docs/plans/host-c2-pose-20261023.json)、[观察操作](../../docs/Host长期观察与启用流程.md)。
+
+动画观察开发自检：`npx tsx scripts/acceptance-winforms-host.ts --playback=skeleton`，另可指定 `motion` 或 `setup`。只在合成隔离工程构造 C2 profile，真实桌面核对所选标签、采样状态和当前 player 截图/恢复；不能用于开启生产写入。先运行 TypeScript 构建与本应用的 dotnet build。
+
 2026-10-23 新增长期观察状态：Host 页显示采集中次数、未启动或记录错误，通过 `observation-updated` 仅刷新状态。采样由独立 Host 持续执行，切走或卸载 WebView 不停止；退出 Host/休眠不补时。平台不读取 control 或生成审批。CLI、限定启用变量 `SPINE_HOST_WRITE`/`SPINE_HOST_ROLLOUT_APPROVAL` 与安全关闭见 [操作流程](../../docs/Host长期观察与启用流程.md)，原启动脚本、默认端口不变，生产写入仍关闭，旧便携包未更新。
 
 新增后的 [真实桌面 28 项](../../docs/plans/host-winforms-2026-10-23T09-53-17-726Z.json) 通过，重载 P95 105.65ms、实际 MCP/player 截图完整回传 383.35ms，观察状态已查看，输入/版本及重连像素一致。完整回归 160/160；编辑首轮轻微超预算仍待收敛，长期试运行已启动，无生产启用，见 [最新索引](../../docs/plans/host-c1-observation-implementation-20261023.json)。

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { objectHash, HostError } from './hostContracts.js';
 import { resolveWorkspacePath, resolveWorkspacePathAsync, type ToolContext } from './spineJson.js';
+import type { CommittedDocumentEntry } from './hostAssetBinding.js';
 export type JournalRecord = { type: string; [key: string]: any };
 interface Envelope { previous: string; record: JournalRecord; checksum: string }
 export class HostJournal {
@@ -68,10 +69,25 @@ async function* journalRecords(context: ToolContext) {
 
 /** 仅枚举内部 journal；legacy 工作区不会借此扫描美术资源。 */
 export async function readCommittedIndex(context: ToolContext) {
-  const result: Array<{ path: string; kind: string; characterId: string; sourceDocument: string; hash: string; documentId: string }> = [];
+  const result: CommittedDocumentEntry[] = [];
   for await (const records of journalRecords(context)) {
     for (const record of records) if (record.type === 'committed' && record.indexEntry) result.push(record.indexEntry);
   }
+  return result;
+}
+/** 仅列可恢复上下文；基线/历史留在内部 journal，不作为已批准资产。 */
+export async function readDiagnosticIndex(context:ToolContext){
+  const result:any[]=[];
+  for await(const records of journalRecords(context)){
+    const header=records[0];if(!header.diagnostic)continue;
+    const edit=records.slice().reverse().find(r=>r.type==='edit'),committed=records.find(r=>r.type==='committed'&&r.receipt?.switched!==false);
+    result.push({diagnosticId:header.documentId,...header.diagnostic,dependencies:header.diagnosticDependencies,dependencyFingerprint:header.diagnosticDependencyFingerprint,lastEditRevision:edit?.revision??0,committedOutputPath:committed?.receipt?.outputPath??null});
+  }
+  return result;
+}
+export async function readCommittedAnimations(context:ToolContext){
+  const result:JournalRecord[]=[];
+  for await(const records of journalRecords(context))for(const record of records)if(record.type==='committed'&&record.animationCommit)result.push(record);
   return result;
 }
 

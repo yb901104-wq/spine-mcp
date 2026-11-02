@@ -1,0 +1,642 @@
+{
+  "startedAt": "2026-10-23T13:41:44.161Z",
+  "artifactDir": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-41-44-156Z",
+  "scope": "实际 WinForms/WebView2、C2 开发 profile、只读动画观察；合成 region 夹具，不代表真实角色动作、完整动画数值或编辑器导入验收。",
+  "inputHashes": {
+    "body.json": "d9d7c27bef457cab6fd76802647430a38c278dee2c4fd617ed07787031b7cb7b",
+    "body.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+    "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab",
+    "mapping.json": "ad026cfee95d4f587f721d659d2d3240f18abbe10bd886c84c1ef10f0e5107bd",
+    "wave.motion.json": "fce5e2a1411941194fef44b5b7ac396c6867bc99ab17b4617a99e380abc55ca0"
+  },
+  "kind": "skeleton",
+  "view": {
+    "animation": "move",
+    "time": 0.5
+  },
+  "captures": {
+    "initial": {
+      "filePath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/b3688852-1e1e-49f5-b614-c679e0f3cee7/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png",
+      "manifestPath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/b3688852-1e1e-49f5-b614-c679e0f3cee7/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "b3688852-1e1e-49f5-b614-c679e0f3cee7",
+        "capturedAt": "2026-10-23T13:41:47.352Z",
+        "version": {
+          "sessionId": "5be8d08a-f355-4a18-a7a6-96e37107b104",
+          "documentId": "e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337",
+          "openEpoch": "db609082-1601-4907-a06d-4a2ff6b99685",
+          "revision": 0
+        },
+        "snapshotHash": "dd8f67128370ddd6871bc053a87686fd641c6d1c531489fdb16fef45467ffbcd",
+        "source": "player",
+        "generated": true,
+        "contentHash": "c22f1e7061985a928798badd729dc3ed246b1de9f1064edbcd8b325a052605d4",
+        "dependencyFingerprint": "a3924dcbe1b5702f9552d1ad0f48f4740535978297a5345bdca43585f68c7489",
+        "derivedHash": "2b3ffa791a2954ae923c20a15533b10a692e27570745ecc98aef15433397069d",
+        "fileHash": "d9d7c27bef457cab6fd76802647430a38c278dee2c4fd617ed07787031b7cb7b",
+        "exported": true,
+        "kind": "skeleton",
+        "view": {
+          "animation": "move",
+          "time": 0.5
+        },
+        "candidateHash": "31407d9055efa292155d14307628a33280b70b4fc995a6369a70a947aa219b7c",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "alternate"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "31407d9055efa292155d14307628a33280b70b4fc995a6369a70a947aa219b7c",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.0000018564082666513934,
+              79.99999999999999,
+              0.9848077485349592,
+              -0.17364822591123555,
+              0.1736481802061043,
+              0.9848077485349587
+            ],
+            [
+              "head",
+              -4.341207504189155,
+              104.62019371337395,
+              0.9848077485349592,
+              -0.17364824876380108,
+              0.1736481802061043,
+              0.9848077445054345
+            ],
+            [
+              "leftLeg1",
+              -10.949453709271598,
+              72.99218309485194,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "leftLeg2",
+              -4.0035255869248,
+              33.599872992272644,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "leftLeg3",
+              2.942402535421998,
+              -5.7924371103066505,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "leftArm1",
+              -16.158900486608665,
+              102.5364155509007,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "leftArm2",
+              -5.740008303088468,
+              43.447950397031754,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "leftArm3",
+              4.67888388043173,
+              -15.640514756837192,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "rightLeg1",
+              12.685932255567423,
+              77.15973941979844,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "rightLeg2",
+              19.631860377914222,
+              37.76742931721915,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "rightLeg3",
+              26.577788500261022,
+              -1.6248807853601477,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "rightArm1",
+              7.476485478230355,
+              106.7039718758472,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "rightArm2",
+              17.89537766175055,
+              47.61550672197826,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "rightArm3",
+              28.31426984527075,
+              -11.472958431890689,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ]
+          ],
+          "vertices": {
+            "bodySlot:alternate": [
+              -6.779492882288073,
+              66.61947339572555,
+              -10.947050304157726,
+              90.25485936056455,
+              6.779489169471541,
+              93.38052660427442,
+              10.947046591341193,
+              69.74514063943542
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "alternate"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "accentSlot",
+            "bodySlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/b3688852-1e1e-49f5-b614-c679e0f3cee7/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png",
+            "hash": "a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-41-44-156Z\\initial-player.png"
+    },
+    "restored": {
+      "filePath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/3f75cfa7-3960-4cd0-a4a1-c3b98222e690/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png",
+      "manifestPath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/3f75cfa7-3960-4cd0-a4a1-c3b98222e690/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png.manifest.json",
+      "manifest": {
+        "evidenceSchema": 2,
+        "captureId": "3f75cfa7-3960-4cd0-a4a1-c3b98222e690",
+        "capturedAt": "2026-10-23T13:41:48.388Z",
+        "version": {
+          "sessionId": "5be8d08a-f355-4a18-a7a6-96e37107b104",
+          "documentId": "e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337",
+          "openEpoch": "db609082-1601-4907-a06d-4a2ff6b99685",
+          "revision": 0
+        },
+        "snapshotHash": "dd8f67128370ddd6871bc053a87686fd641c6d1c531489fdb16fef45467ffbcd",
+        "source": "player",
+        "generated": true,
+        "contentHash": "c22f1e7061985a928798badd729dc3ed246b1de9f1064edbcd8b325a052605d4",
+        "dependencyFingerprint": "a3924dcbe1b5702f9552d1ad0f48f4740535978297a5345bdca43585f68c7489",
+        "derivedHash": "2b3ffa791a2954ae923c20a15533b10a692e27570745ecc98aef15433397069d",
+        "fileHash": "d9d7c27bef457cab6fd76802647430a38c278dee2c4fd617ed07787031b7cb7b",
+        "exported": true,
+        "kind": "skeleton",
+        "view": {
+          "animation": "move",
+          "time": 0.5
+        },
+        "candidateHash": "31407d9055efa292155d14307628a33280b70b4fc995a6369a70a947aa219b7c",
+        "camera": {
+          "minX": -119.99999999999994,
+          "maxX": 119.99999999999994,
+          "minY": -19.99999999999999,
+          "maxY": 219.9999999999999
+        },
+        "viewport": {
+          "width": 960,
+          "height": 960
+        },
+        "canvas": {
+          "width": 960,
+          "height": 960
+        },
+        "dpr": 1,
+        "skin": null,
+        "attachments": [
+          [
+            "bodySlot",
+            "alternate"
+          ],
+          [
+            "accentSlot",
+            "body"
+          ]
+        ],
+        "drawOrder": [
+          "accentSlot",
+          "bodySlot"
+        ],
+        "pma": false,
+        "runtime": {
+          "player": "4.1.56",
+          "core": "4.1.56",
+          "replaySchema": 1
+        },
+        "goldenPassed": true,
+        "goldenReportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+        "rendererParity": {
+          "status": "passed",
+          "reportHash": "da17d046243b040d90f0c16ad7a8d15b20963b02e5f2f1cf3d43838c89a94398",
+          "reasons": [],
+          "scope": "三个合成不透明 region 场景；不代表 mesh/透明/tint/特殊混合或真实美术验收。"
+        },
+        "captureValidity": {
+          "status": "verified",
+          "checks": {
+            "version": true,
+            "dependencies": true,
+            "candidate": true,
+            "runtimeReadback": true,
+            "resourceHashes": true,
+            "playerScript": true,
+            "fixedCamera": true,
+            "visible": true,
+            "canvas": true,
+            "viewport": true
+          },
+          "reasons": []
+        },
+        "evidenceEligible": true,
+        "resourceHashes": {
+          "pose.json": "31407d9055efa292155d14307628a33280b70b4fc995a6369a70a947aa219b7c",
+          "atlas.atlas": "f87b0b13733bb650639a10e04c7edb712250fe2ac6cf07338c6cf6cebdceaf55",
+          "body.png": "03421f920ee5804c8fe5afd36c67914ca310f8a4b0d01b617183d76d260ae9ab"
+        },
+        "playerScriptHash": "24cce070d92269584899187c3bf5d48a47e92e6f8501696855f0683c71bf2e0b",
+        "actual": {
+          "skin": "default",
+          "bones": [
+            [
+              "root",
+              0,
+              0,
+              1,
+              -2.3205103333142417e-8,
+              0,
+              0.9999999999999998
+            ],
+            [
+              "body",
+              -0.0000018564082666513934,
+              79.99999999999999,
+              0.9848077485349592,
+              -0.17364822591123555,
+              0.1736481802061043,
+              0.9848077485349587
+            ],
+            [
+              "head",
+              -4.341207504189155,
+              104.62019371337395,
+              0.9848077485349592,
+              -0.17364824876380108,
+              0.1736481802061043,
+              0.9848077445054345
+            ],
+            [
+              "leftLeg1",
+              -10.949453709271598,
+              72.99218309485194,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "leftLeg2",
+              -4.0035255869248,
+              33.599872992272644,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "leftLeg3",
+              2.942402535421998,
+              -5.7924371103066505,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "leftArm1",
+              -16.158900486608665,
+              102.5364155509007,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "leftArm2",
+              -5.740008303088468,
+              43.447950397031754,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "leftArm3",
+              4.67888388043173,
+              -15.640514756837192,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "rightLeg1",
+              12.685932255567423,
+              77.15973941979844,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "rightLeg2",
+              19.631860377914222,
+              37.76742931721915,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "rightLeg3",
+              26.577788500261022,
+              -1.6248807853601477,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ],
+            [
+              "rightArm1",
+              7.476485478230355,
+              106.7039718758472,
+              0.17364820305866996,
+              0.9848077485349592,
+              -0.9848077525644824,
+              0.1736481802061043
+            ],
+            [
+              "rightArm2",
+              17.89537766175055,
+              47.61550672197826,
+              0.17364820305866996,
+              0.9848077445054345,
+              -0.9848077525644824,
+              0.17364820305866996
+            ],
+            [
+              "rightArm3",
+              28.31426984527075,
+              -11.472958431890689,
+              0.17364820305866996,
+              0.9848077404759098,
+              -0.9848077525644824,
+              0.1736482259112356
+            ]
+          ],
+          "vertices": {
+            "bodySlot:alternate": [
+              -6.779492882288073,
+              66.61947339572555,
+              -10.947050304157726,
+              90.25485936056455,
+              6.779489169471541,
+              93.38052660427442,
+              10.947046591341193,
+              69.74514063943542
+            ],
+            "accentSlot:body": [
+              -5.99999972153876,
+              -11.999999999999996,
+              -6.00000027846124,
+              11.999999999999996,
+              5.99999972153876,
+              11.999999999999996,
+              6.00000027846124,
+              -11.999999999999996
+            ]
+          },
+          "attachments": [
+            [
+              "bodySlot",
+              "alternate"
+            ],
+            [
+              "accentSlot",
+              "body"
+            ]
+          ],
+          "drawOrder": [
+            "accentSlot",
+            "bodySlot"
+          ]
+        },
+        "actualCamera": {
+          "x": 0,
+          "y": 99.99999999999996,
+          "zoom": 0.2499999999999999,
+          "viewportWidth": 960,
+          "viewportHeight": 960
+        },
+        "viewportMatches": true,
+        "advisory": false,
+        "evidence": [
+          {
+            "filePath": "output/previews/captures/e93a4401a3f273a38073cc714066209a0ba1f89e71b9bac85b9b99f050e3a337/db609082-1601-4907-a06d-4a2ff6b99685/3f75cfa7-3960-4cd0-a4a1-c3b98222e690/a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc.png",
+            "hash": "a66613e57143496671c3f38aacb742d3d637715c52271e1d82b405d5b8877cdc"
+          }
+        ],
+        "goldenReasons": []
+      },
+      "savedFilePath": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-41-44-156Z\\restored-player.png"
+    }
+  },
+  "reconnectPixelsIdentical": true,
+  "native": {
+    "ok": true,
+    "checks": [
+      "当前 Host 为观察模式",
+      "页面 URL 不含凭据",
+      "未开放原生对象或 WebMessage 桥",
+      "实际页面完成 MCP 截图检查点：initial",
+      "初始页面与截图后没有 frame 限流错误",
+      "切到旧预览后卸载 Host 页，服务实际收到 hidden",
+      "切回后从当前 Host 重新加载页面",
+      "最小化卸载，还原后重新读取当前帧",
+      "跨来源导航在请求前阻止",
+      "阻止导航后保留原 Host 页面",
+      "已保存实际 WebView2 诊断截图（非审查证据）",
+      "远程预览来源拒绝并断开旧 Host",
+      "发现负例拒绝：dead-pid",
+      "发现负例拒绝：invalid-port",
+      "发现负例拒绝：invalid-token",
+      "发现负例拒绝：linked",
+      "发现负例拒绝：missing",
+      "发现负例拒绝：unknown-api",
+      "发现负例拒绝：wrong-instance",
+      "发现负例拒绝：wrong-project",
+      "发现负例拒绝：wrong-session",
+      "发现负例拒绝：wrong-started-at",
+      "发现负例拒绝：wrong-workspace",
+      "负例之后可以显式重连正确 Host",
+      "实际页面完成 MCP 截图检查点：restored",
+      "重连历史事件后没有 frame 限流错误",
+      "本次 WebView2 浏览器进程已退出"
+    ],
+    "time": "2026-10-23T13:41:54.9722537+00:00",
+    "screenshot": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\spine-host-yjubyz\\native-host.png",
+    "browserPid": 33156,
+    "evidenceEligible": false,
+    "performance": null
+  },
+  "screenshot": "D:\\AI_cc\\spine test\\host-desktop-acceptance\\2026-10-23T13-41-44-156Z\\host-workspace.png",
+  "sourceUnchanged": true,
+  "documentVersionUnchanged": true,
+  "publicWriteEnabled": false,
+  "passed": true,
+  "allInputsUnchanged": true,
+  "finishedAt": "2026-10-23T13:41:56.734Z"
+}

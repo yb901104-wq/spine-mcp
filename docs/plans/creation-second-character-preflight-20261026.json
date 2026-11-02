@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-26T04:09:03.432Z",
+  "sourcePath": "D:/spine练习/初音喇叭/111/chuyinlaba.json",
+  "sourceHash": "8760e9d369761b3794485aa158280878d4bfa49c6ae2787988cc6509f4b8f813",
+  "spineVersion": "4.1.24",
+  "boneCount": 330,
+  "skinCount": 1,
+  "skins": [
+    "default"
+  ],
+  "animationCount": 14,
+  "constraints": {
+    "ik": 8,
+    "transform": 30,
+    "path": 0
+  },
+  "inheritance": {
+    "normal": 318,
+    "noRotationOrReflection": 8,
+    "onlyTranslation": 2,
+    "noScale": 2
+  },
+  "atlasPath": "D:\\spine练习\\初音喇叭\\111\\chuyinlaba.atlas",
+  "atlasHash": "ad81ef1f0fbe1b95de0441b536c6d7bc4a300bc1a17ca454c262565e20405abd",
+  "approved": false,
+  "status": "excludedByUser",
+  "exclusionReason": "用户明确说明这是立绘角色，不用于当前研究或第二角色验收。保留既有只读结构预检，不继续使用、复制或渲染。",
+  "missing": [
+    "待选择/确认第二角色",
+    "缺本项目已确认 mapping 和 visualRig",
+    "未验证目标链继承/约束适配与范围",
+    "未进行完整动作、干净图或编辑器验收"
+  ],
+  "scope": "只读本机候选结构预检；单皮肤与版本匹配不等于兼容，未修改或复制候选资源。"
+}

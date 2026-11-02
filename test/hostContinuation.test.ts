@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { readFile,writeFile,mkdir,symlink,unlink,utimes } from 'node:fs/promises';
 import path from 'node:path';
 import { withHostFixture } from './helpers/hostFixture.js';
-import { strictFileChecks } from '../src/strictFileChecks.js';
+import { strictFileChecks,withFileCheckBatch } from '../src/strictFileChecks.js';
 import { strictHash } from '../src/hostContracts.js';
-import { resolveWorkspacePath,resolveWorkspacePathAsync } from '../src/spineJson.js';
+import { resolveWorkspacePath,resolveWorkspacePathAsync,createWorkspaceReadResolver } from '../src/spineJson.js';
 import { HostEditorStore } from '../src/hostEditorStore.js';
 import { evaluateHostSnapshot } from '../src/hostEvaluator.js';
 import { createMotionRuntime,worldVertices } from '../src/motionRuntime.js';
@@ -18,6 +18,31 @@ test('并发严格读取保持输入次序，缺文件不遗留后台结果，�
   assert.deepEqual(first.map(r=>r.filePath),files.map(f=>f.filePath));assert.ok(first[5].error);assert.equal(first.at(-1)!.actual,files.at(-1)!.hash);
   const file=path.join(root,files[0].filePath),time=new Date('2020-01-01');await utimes(file,time,time);await strictFileChecks([files[0]],resolve);await writeFile(file,'{"n":9}');await utimes(file,time,time);
   assert.notEqual((await strictFileChecks([files[0]],resolve))[0].actual,files[0].hash);
+}));
+
+test('只读批次不跨请求复用；真实身份区分同路径的 junction 改指，每份预期哈希独立比较',async()=>withHostFixture(async({root,context})=>{
+ const a=path.join(root,'batch-a'),b=path.join(root,'batch-b'),link=path.join(root,'batch-link');await mkdir(a);await mkdir(b);
+ await writeFile(path.join(a,'value.json'),'one');await writeFile(path.join(b,'value.json'),'two');const stamp=new Date('2020-01-01');await utimes(path.join(b,'value.json'),stamp,stamp);const file={filePath:'batch-link/value.json',hash:strictHash('one')},kind=process.platform==='win32'?'junction':'dir';
+ await symlink(a,link,kind);let resolves=0;
+ const resolve=async(name:string)=>{resolves++;return resolveWorkspacePathAsync(name,context,{canonicalExisting:true});};
+ await withFileCheckBatch(async()=>{
+  assert.equal((await strictFileChecks([file],resolve))[0].actual,file.hash);
+  assert.notEqual((await strictFileChecks([{...file,hash:'wrong'}],resolve))[0].actual,'wrong');
+  await unlink(link);await symlink(b,link,kind);assert.equal((await strictFileChecks([file],resolve))[0].actual,strictHash('two'));
+ });
+ assert.equal(resolves,3);await writeFile(path.join(b,'value.json'),'new');await utimes(path.join(b,'value.json'),stamp,stamp);
+ assert.equal((await withFileCheckBatch(()=>strictFileChecks([file],resolve)))[0].actual,strictHash('new'));
+ await unlink(link);
+}));
+
+test('只读请求固定真实根：根 junction 改指当次拒绝，新请求重核根；缺失/断链/越界均拒绝',async()=>withHostFixture(async({root})=>{
+ const a=path.join(root,'root-a'),b=path.join(root,'root-b'),alias=path.join(root,'root-alias');await mkdir(a);await mkdir(b);
+ await writeFile(path.join(a,'value.json'),'one');await writeFile(path.join(b,'value.json'),'two');const kind=process.platform==='win32'?'junction':'dir';
+ await symlink(a,alias,kind);const fixed=await createWorkspaceReadResolver({workspaceRoot:alias});assert.equal(await readFile(await fixed('value.json'),'utf8'),'one');
+ await assert.rejects(fixed('../value.json'));await assert.rejects(fixed('missing.json'));
+ await unlink(alias);await symlink(b,alias,kind);await assert.rejects(fixed('value.json'),/工作区边界/);
+ const next=await createWorkspaceReadResolver({workspaceRoot:alias});assert.equal(await readFile(await next('value.json'),'utf8'),'two');
+ await symlink(path.join(root,'gone'),path.join(b,'broken'),kind);await assert.rejects(next('broken/value.json'));await unlink(path.join(b,'broken'));await unlink(alias);
 }));
 
 test('原生 realpath 每次识别 junction 目标变化，缺失子路径也不能借旧边界检查越界',async()=>withHostFixture(async({root,context})=>withHostFixture(async outside=>{
