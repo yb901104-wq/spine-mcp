@@ -50,7 +50,7 @@ export const poseOperationArguments:Record<string,string[]>={
   spine_render_pose_comparison:['projectId','posePaths','stageIds','targetTimes','outputDir','width','height','region'],
   spine_build_motion_from_poses:['projectId','expectedRevision','standardPosePath','keyPoses','motionPath','name','duration','loop','dryRun'],
   spine_review_animation:['projectId','expectedRevision','reviewToken','manifestPath','playerManifestPath','decision','reviewedBy','reason','checks','checkResults','issues','dryRun'],
-  spine_render_animation_comparison:['projectId','expectedRevision','targetManifestPath','referenceManifestPath','poseManifestPath','phaseMap','outputDir'],
+  spine_render_animation_comparison:['projectId','expectedRevision','targetManifestPath','referenceManifestPath','poseManifestPath','phaseMap','outputDir','layout','opacity','times'],
   spine_review_pose:['projectId','posePath','manifestPath','expectedRevision','comparisonPath','decision','reviewedBy','reason','checks','checkResults','stageId','issues','dryRun'],
   spine_set_pose_target:['projectId','posePath','outputPosePath','expectedRevision','dryRun',...Object.keys(targetProperties)],
   spine_set_pose_channel:['projectId','posePath','outputPosePath','expectedRevision','dryRun',...Object.keys(channelProperties)],

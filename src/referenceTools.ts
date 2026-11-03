@@ -1,12 +1,44 @@
 import sharp from 'sharp';
 import { parseGIF, decompressFrames } from 'gifuct-js';
-import { createCanvas, ImageData } from '@napi-rs/canvas';
+import { createCanvas, ImageData, loadImage } from '@napi-rs/canvas';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
 
-export async function analyzeReferenceGif(args: { filePath: string; outputDir?: string; fallbackDelay?: number; phases?: Array<{ time: number; phase: string }>; loop?: boolean }, context: ToolContext = {}) {
+const CONTACT_CELL_W = 256, CONTACT_CELL_H = 280;
+
+function assertContactSheetOptions(columns: number, maxTiles: number) {
+  if (!Number.isInteger(columns) || columns < 1 || columns > 12) throw new Error('联系表 columns 必须为1–12。');
+  if (!Number.isInteger(maxTiles) || maxTiles < 1 || maxTiles > 32) throw new Error('联系表 maxTiles 必须为1–32。');
+}
+
+/** 把若干参考帧合成一张联系表（网格 + 帧序号与时间标签），供模型直接查看。
+ * 只合成一张图是刻意的：pickImages 上限 3 张，且单张图的 token 成本远低于 N 张独立图。 */
+async function buildReferenceContactSheet(args: {
+  frames: Array<{ index: number; time: number; filePath: string }>; dir: string; name: string; columns: number; maxTiles: number; context: ToolContext;
+}): Promise<string> {
+  const { frames, dir, name, columns, maxTiles, context } = args;
+  const tiles = frames.slice(0, maxTiles);
+  const canvas = createCanvas(columns * CONTACT_CELL_W, Math.ceil(tiles.length / columns) * CONTACT_CELL_H), ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#20242b'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let n = 0; n < tiles.length; n++) {
+    const f = tiles[n], x = n % columns * CONTACT_CELL_W, y = Math.floor(n / columns) * CONTACT_CELL_H;
+    ctx.drawImage(await loadImage(await readFile(resolveWorkspacePath(f.filePath, context))), x, y, CONTACT_CELL_W, CONTACT_CELL_W);
+    ctx.fillStyle = 'white'; ctx.font = '14px sans-serif';
+    ctx.fillText(`${f.index} / ${f.time.toFixed(3)}s`, x + 8, y + CONTACT_CELL_H - 6);
+  }
+  const filePath = `${dir}/${name}`;
+  await writeFile(resolveWorkspacePath(filePath, context), canvas.toBuffer('image/png'));
+  return filePath;
+}
+
+function manifestDir(manifestPath: string): string {
+  const i = manifestPath.lastIndexOf('/');
+  return i > 0 ? manifestPath.slice(0, i) : 'previews/jobs';
+}
+
+export async function analyzeReferenceGif(args: { filePath: string; outputDir?: string; fallbackDelay?: number; phases?: Array<{ time: number; phase: string }>; loop?: boolean; columns?: number; maxTiles?: number }, context: ToolContext = {}) {
   if(args.fallbackDelay!==undefined&&(!Number.isFinite(args.fallbackDelay)||args.fallbackDelay<=0))throw new Error('fallbackDelay 必须为正数。');
   const raw = await readFile(resolveWorkspacePath(args.filePath, context));
   if(!raw.subarray(0,6).toString().startsWith('GIF8'))return analyzeRasterReference(args,raw,context);
@@ -31,18 +63,23 @@ export async function analyzeReferenceGif(args: { filePath: string; outputDir?: 
     if (!seen.has(hash)) seen.set(hash, i); time += delay; previous = { frame: f, saved };
   }
   const phases = args.phases ?? [];
+  const columns = args.columns ?? 4, maxTiles = args.maxTiles ?? 12;
+  assertContactSheetOptions(columns, maxTiles);
   if (phases.some(p => !Number.isFinite(p.time) || p.time < 0 || p.time > time / 1000 || !p.phase)) throw new Error('参考阶段标注的时间或名称无效。');
   const loopExtension = raw.includes(Buffer.from('NETSCAPE2.0'));
-  const report = { ok: true, version: 1, sourceHash: createHash('sha256').update(raw).digest('hex'), filePath: args.filePath, width: c.width, height: c.height, duration: time / 1000, estimatedPeriod: time / 1000, loop: args.loop ?? loopExtension, loopEvidence: args.loop !== undefined ? 'Agent 指定' : 'GIF NETSCAPE 扩展', frames: entries, bounds: Number.isFinite(minX) ? { minX, minY, maxX, maxY } : null, phases, phaseSource: phases.length ? 'Agent 标注' : '未标注', warnings: ['GIF 只用于姿态和节奏参考；相机运动与角色运动不能仅凭拆帧自动区分。', 'estimatedPeriod 为文件总时长，需 Agent 确认是否完整循环。'], manifestPath: `${dir}/reference-manifest.json` };
-  await writeFile(resolveWorkspacePath(report.manifestPath, context), JSON.stringify(report, null, 2) + '\n'); return report;
+  const report = { ok: true, version: 1, sourceHash: createHash('sha256').update(raw).digest('hex'), filePath: args.filePath, width: c.width, height: c.height, duration: time / 1000, estimatedPeriod: time / 1000, loop: args.loop ?? loopExtension, loopEvidence: args.loop !== undefined ? 'Agent 指定' : 'GIF NETSCAPE 扩展', frames: entries, bounds: Number.isFinite(minX) ? { minX, minY, maxX, maxY } : null, phases, phaseSource: phases.length ? 'Agent 标注' : '未标注', warnings: ['GIF 只用于姿态和节奏参考；相机运动与角色运动不能仅凭拆帧自动区分。', 'estimatedPeriod 为文件总时长，需 Agent 确认是否完整循环。'], manifestPath: `${dir}/reference-manifest.json`, contactSheet: await buildReferenceContactSheet({ frames: entries.filter((e: any) => e.duplicateOf === null), dir, name: `frames-${columns}.png`, columns, maxTiles, context }) };
+  await writeFile(resolveWorkspacePath(report.manifestPath, context), JSON.stringify(report, null, 2) + '\n'); return { ...report, __images: [report.contactSheet] };
 }
 
-export async function extractReferenceKeyframes(args: { manifestPath: string; count?: number }, context: ToolContext = {}) {
+export async function extractReferenceKeyframes(args: { manifestPath: string; count?: number; columns?: number; maxTiles?: number }, context: ToolContext = {}) {
   const r = JSON.parse(await readFile(resolveWorkspacePath(args.manifestPath, context), 'utf8')), count = args.count ?? 8;
   if (!Number.isInteger(count) || count < 2 || count > 32) throw new Error('关键姿态数量必须为2–32。');
+  const columns = args.columns ?? 4, maxTiles = args.maxTiles ?? 12;
+  assertContactSheetOptions(columns, maxTiles);
   const unique = r.frames.filter((f: any) => f.duplicateOf === null);
   const keys = Array.from({ length: Math.min(count, unique.length) }, (_, i) => unique[Math.floor(i * (unique.length - 1) / Math.max(1, Math.min(count, unique.length) - 1))]);
-  return { ok: true, sourceHash: r.sourceHash, keyframes: keys, phases: r.phases, warnings: r.warnings };
+  const sheet = await buildReferenceContactSheet({ frames: keys, dir: manifestDir(args.manifestPath), name: `keyframes-${columns}.png`, columns, maxTiles, context });
+  return { ok: true, sourceHash: r.sourceHash, keyframes: keys, phases: r.phases, warnings: r.warnings, keyframeSheet: sheet, __images: [sheet] };
 }
 
 async function analyzeRasterReference(args:any,raw:Buffer,context:ToolContext) {
@@ -51,5 +88,6 @@ async function analyzeRasterReference(args:any,raw:Buffer,context:ToolContext) {
  const dir=args.outputDir??`previews/jobs/reference-${randomUUID()}`;await mkdir(resolveWorkspacePath(dir,context),{recursive:true});const decoded=await sharp(raw,{animated:true}).ensureAlpha().raw().toBuffer();const bytes=width*height*4;if(decoded.length!==pages*bytes)throw new Error('参考帧解码尺寸不匹配。');
  const frames=[],seen=new Map<string,number>();let time=0;
  for(let i=0;i<pages;i++){const pixels=decoded.subarray(i*bytes,(i+1)*bytes),hash=createHash('sha256').update(pixels).digest('hex'),delay=meta.delay?.[i]||args.fallbackDelay||100,filePath=`${dir}/frame-${String(i).padStart(4,'0')}.png`;await sharp(pixels,{raw:{width,height,channels:4}}).png().toFile(resolveWorkspacePath(filePath,context));frames.push({index:i,time:time/1000,delay,originalDelay:meta.delay?.[i]??null,delayCorrected:!meta.delay?.[i],hash,duplicateOf:seen.get(hash)??null,filePath});if(!seen.has(hash))seen.set(hash,i);time+=delay;}
- const result={ok:true,version:1,filePath:args.filePath,sourceHash:createHash('sha256').update(raw).digest('hex'),format:meta.format,width,height,duration:time/1000,estimatedPeriod:time/1000,loop:args.loop??(meta.loop===0),frames,phases:args.phases??[],warnings:['图像关键点需要 Agent 标注；总时长不能直接证明完整动作周期。'],manifestPath:`${dir}/reference-manifest.json`};await writeFile(resolveWorkspacePath(result.manifestPath,context),JSON.stringify(result,null,2));return result;
+ const columns=args.columns??4,maxTiles=args.maxTiles??12;assertContactSheetOptions(columns,maxTiles);
+ const result={ok:true,version:1,filePath:args.filePath,sourceHash:createHash('sha256').update(raw).digest('hex'),format:meta.format,width,height,duration:time/1000,estimatedPeriod:time/1000,loop:args.loop??(meta.loop===0),frames,phases:args.phases??[],warnings:['图像关键点需要 Agent 标注；总时长不能直接证明完整动作周期。'],manifestPath:`${dir}/reference-manifest.json`,contactSheet:await buildReferenceContactSheet({frames:frames.filter((e:any)=>e.duplicateOf===null),dir,name:`frames-${columns}.png`,columns,maxTiles,context})};await writeFile(resolveWorkspacePath(result.manifestPath,context),JSON.stringify(result,null,2));return {...result,__images:[result.contactSheet]};
 }

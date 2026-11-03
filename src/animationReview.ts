@@ -14,13 +14,41 @@ export async function renderAnimationComparison(a:any,c:ToolContext={}) {
  const target=await readJson(a.targetManifestPath,c),reference=await readJson(a.referenceManifestPath,c),poses=await readJson(a.poseManifestPath,c),map=a.phaseMap;
  if(!Array.isArray(map)||map.length<2||map[0].targetTime!==0||Math.abs(map.at(-1).targetTime-target.duration)>1e-5||map.some((v:any,i:number)=>![v.targetTime,v.referenceTime].every(Number.isFinite)||v.referenceTime<0||v.referenceTime>reference.duration+1e-6||i>0&&(v.targetTime<=map[i-1].targetTime||v.referenceTime<=map[i-1].referenceTime)))throw new Error('阶段时间映射必须严格递增且覆盖完整目标动画。');
  if(!poses.reference||!target.gifPath||!target.frames?.length||hashObject(poses.bounds)!==hashObject(target.bounds))throw new Error('需参考观察参数、目标原速 GIF，且沿用姿态对比的固定相机。');
+ const layout=a.layout??'reference-above-target';
+ if(!['reference-above-target','overlay'].includes(layout))throw new Error("layout 必须为 'reference-above-target'（上参考下目标）或 'overlay'（叠加）。");
+ const opacity=a.opacity??0.6;
+ if(!Number.isFinite(opacity)||opacity<0.1||opacity>1)throw new Error('叠加不透明度 opacity 必须为0.1–1。');
+ const overlay=layout==='overlay';
  const view=poses.reference,w=target.canvas.width,h=target.canvas.height,rs=poses.targetScale*poses.standardHeight/view.height,refY=h*.9-(view.groundY-view.crop[1])*rs,refX=w/2-view.crop[2]*rs/2;
- const out=a.outputDir??target.outputDir;await mkdir(resolveWorkspacePath(out,c),{recursive:true});const gif=GIFEncoder();
- for(let i=0;i<target.frames.length;i++){await taskCheckpoint('动画对比');reportProgress(i,target.frames.length,'逐帧生成参考对比');const t=target.duration*i/target.frames.length;let k=map.findIndex((v:any)=>v.targetTime>t);if(k<0)k=map.length-1;k=Math.max(1,k);const l=map[k-1],r=map[k],rt=l.referenceTime+(r.referenceTime-l.referenceTime)*(t-l.targetTime)/(r.targetTime-l.targetTime);const f=referenceFrameAt(reference.frames,rt);
-  const canvas=createCanvas(w,(h+28)*2),ctx=canvas.getContext('2d');ctx.fillStyle='#20242b';ctx.fillRect(0,0,canvas.width,canvas.height);const im=await loadImage(await readFile(resolveWorkspacePath(f.filePath,c)));ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();ctx.drawImage(im,...view.crop as [number,number,number,number],refX,refY,view.crop[2]*rs,view.crop[3]*rs);ctx.restore();ctx.drawImage(await loadImage(await readFile(resolveWorkspacePath(target.frames[i],c))),0,h+28);ctx.fillStyle='white';ctx.font='14px sans-serif';ctx.fillText(`reference ${rt.toFixed(3)}s`,8,h+20);ctx.fillText(`target ${t.toFixed(3)}s`,8,2*h+48);
-  const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data,palette=quantize(pixels,256);const delay=Math.max(10,(Math.round((i+1)*target.duration*100/target.frames.length)-Math.round(i*target.duration*100/target.frames.length))*10);gif.writeFrame(applyPalette(pixels,palette),canvas.width,canvas.height,{palette,delay,repeat:0});
+ // times 可选：只输出指定时间点，避免必须整段渲染。目标帧是既已渲染的 PNG，故按最接近的采样时间取帧。
+ const frameTimes:number[]=Array.isArray(target.sampleTimes)&&target.sampleTimes.length===target.frames.length?target.sampleTimes:Array.from({length:target.frames.length},(_,k)=>target.duration*k/target.frames.length);
+ let selected:number[];
+ if(a.times===undefined||a.times===null)selected=frameTimes.map((_,k)=>k);
+ else{
+  if(!Array.isArray(a.times)||!a.times.length||!a.times.every((v:any)=>Number.isFinite(v)&&v>=0&&v<=target.duration+1e-6))throw new Error('times 必须为非空数组，且每个值在0到目标时长之间。');
+  selected=a.times.map((v:number)=>{let best=0,bd=Infinity;for(let k=0;k<frameTimes.length;k++){const d=Math.abs(frameTimes[k]-v);if(d<bd){bd=d;best=k;}}return best;});
  }
- gif.finish();reportProgress(target.frames.length,target.frames.length,'动画对比已编码');const gifPath=`${out}/reference-above-target.gif`;await writeFile(resolveWorkspacePath(gifPath,c),gif.bytes());const manifestPath=`${out}/animation-comparison.json`,evidence=await evidenceFiles([gifPath,a.targetManifestPath,target.gifPath,a.referenceManifestPath,a.poseManifestPath,...reference.frames.map((f:any)=>f.filePath)],c);const result={ok:true,layout:'reference-above-target',jsonHash:target.jsonHash,gifPath,originalSpeedGif:target.gifPath,phaseMap:map,evidence,manifestPath};await saveJson(manifestPath,result,c);return result;
+ const out=a.outputDir??target.outputDir;await mkdir(resolveWorkspacePath(out,c),{recursive:true});const gif=GIFEncoder();
+ for(let n=0;n<selected.length;n++){const i=selected[n];await taskCheckpoint('动画对比');reportProgress(n,selected.length,'逐帧生成参考对比');const t=frameTimes[i];let k=map.findIndex((v:any)=>v.targetTime>t);if(k<0)k=map.length-1;k=Math.max(1,k);const l=map[k-1],r=map[k],rt=l.referenceTime+(r.referenceTime-l.referenceTime)*(t-l.targetTime)/(r.targetTime-l.targetTime);const f=referenceFrameAt(reference.frames,rt);
+  // 叠加布局标签区为两行（h+44）：单行放不下"参考/目标时间 + 不透明度"，窄画布会裁切。
+  const canvas=createCanvas(w,overlay?h+44:(h+28)*2),ctx=canvas.getContext('2d');ctx.fillStyle='#20242b';ctx.fillRect(0,0,canvas.width,canvas.height);const im=await loadImage(await readFile(resolveWorkspacePath(f.filePath,c)));ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();ctx.drawImage(im,...view.crop as [number,number,number,number],refX,refY,view.crop[2]*rs,view.crop[3]*rs);ctx.restore();
+  const targetImage=await loadImage(await readFile(resolveWorkspacePath(target.frames[i],c)));
+  if(overlay){ctx.save();ctx.globalAlpha=opacity;ctx.drawImage(targetImage,0,0);ctx.restore();}
+  else ctx.drawImage(targetImage,0,h+28);
+  ctx.fillStyle='white';ctx.font='14px sans-serif';
+  if(overlay){
+   // 两行短标签；字号按实测宽度收缩，下限 8px，避免窄画布裁切。
+   ctx.fillStyle='white';
+   for(const [n,label] of [[0,`ref ${rt.toFixed(3)}s`],[1,`tgt ${t.toFixed(3)}s alpha ${opacity}`]] as const){
+    let font=12;ctx.font=`${font}px sans-serif`;
+    while(font>8&&ctx.measureText(label).width>w-16){font-=1;ctx.font=`${font}px sans-serif`;}
+    ctx.fillText(label,8,h+18+n*18);
+   }
+  }
+  else {ctx.fillText(`reference ${rt.toFixed(3)}s`,8,h+20);ctx.fillText(`target ${t.toFixed(3)}s`,8,2*h+48);}
+  const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data,palette=quantize(pixels,256);const tNext=n+1<selected.length?frameTimes[selected[n+1]]:target.duration;const delay=Math.max(10,(Math.round(tNext*100)-Math.round(t*100))*10);gif.writeFrame(applyPalette(pixels,palette),canvas.width,canvas.height,{palette,delay,repeat:0});
+ }
+ gif.finish();reportProgress(selected.length,selected.length,'动画对比已编码');const gifPath=`${out}/${overlay?'reference-overlay':'reference-above-target'}.gif`;await writeFile(resolveWorkspacePath(gifPath,c),gif.bytes());const manifestPath=`${out}/animation-comparison.json`,evidence=await evidenceFiles([gifPath,a.targetManifestPath,target.gifPath,a.referenceManifestPath,a.poseManifestPath,...reference.frames.map((f:any)=>f.filePath)],c);const result={ok:true,layout,jsonHash:target.jsonHash,gifPath,originalSpeedGif:target.gifPath,phaseMap:map,evidence,manifestPath,frameCount:selected.length,frameTimes:selected.map(k=>frameTimes[k]),...(overlay?{opacity}:{})};await saveJson(manifestPath,result,c);return result;
 }
 export async function reviewAnimation(a:any,c:ToolContext={}) {
  return withStrict(async()=>{
@@ -32,7 +60,10 @@ export async function reviewAnimation(a:any,c:ToolContext={}) {
  const keyGraphs=await (await import('./referenceRetarget.js')).compareAnimationKeyPoses(record.candidatePath,record.tokenData.animation,motion,record.duration??motion.duration,c);
  if(a.decision==='approved'&&!keyGraphs.ok)throw new Error('插值后实际关键时间的参考骨架关系失败，不能批准完整动画。');
  const m=await readJson(a.manifestPath,c);if(m.jsonHash!==record.candidateHash||!m.gifPath)throw new Error('视觉证据不是当前完整候选动画。');
- if(record.requiresReferenceComparison&&m.layout!=='reference-above-target')throw new Error('有参考的任务需上下同步 GIF 和原速 GIF。');
+ // 有参考的任务必须提供同步对比：上下排列与叠加两种布局都接受，但都必须是真实渲染且绑定证据。
+ // 放宽布局不等于放宽要求——布局名、gifPath 与 evidence 仍缺一不可。
+ if(record.requiresReferenceComparison&&!['reference-above-target','overlay'].includes(m.layout))throw new Error('有参考的任务需同步对比 GIF（上下排列或叠加）和原速 GIF。');
+ if(record.requiresReferenceComparison&&!(m.evidence?.length))throw new Error('同步对比必须绑定证据文件。');
  if(!a.reviewedBy?.trim()||!a.reason?.trim()||!['approved','rejected'].includes(a.decision)||animationChecks.some(k=>!a.checks?.includes(k))||a.decision==='approved'&&a.issues?.length)throw new Error('完整动画审查需确认者、理由、全部检查项，未解决问题不得确认。');
  const evidence=[...m.evidence??[],...await evidenceFiles([a.manifestPath,m.gifPath,...m.originalSpeedGif?[m.originalSpeedGif]:[],...m.frames??[]],c)];await verifyEvidence(evidence,c);
  const review={decision:a.decision,reviewedBy:a.reviewedBy,reason:a.reason,checks:a.checks,issues:a.issues??[],keyGraphsFingerprint:keyGraphs.fingerprint,evidence,at:new Date().toISOString(),baseToken:a.reviewToken,candidateHash:record.candidateHash};const reviewToken=hashObject({base:a.reviewToken,review});

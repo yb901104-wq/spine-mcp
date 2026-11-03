@@ -5,6 +5,10 @@
 
 > **2026-11-03 补注**：本轮未新增、修改、重命名或删除任何 MCP 工具，工具清单正文不变；仅加强 `curve` 入参的维度校验——`rotate` 必须恰好 4 个控制点，`translate`/`scale`/`shear` 必须恰好 8 个（每维度 4 个、按维度顺序排列），长度不符一律报 error 拒绝，不自动补全控制点。依据 4.1 runtime `readCurve()` 的 `i = value << 2`，详见 [官方JSON规范审查](官方JSON规范审查.md) 的 2026-11-03 节。受影响入口：`spine_set_bone_keyframe`、`spine_set_curve`、`spine_apply_pose_keyframes`、`spine_apply_pose_sequence`；pose 级 `curve` 若同时覆盖维度需求不一致的 timeline（如同时含 rotate 与 translate）则拒绝，`stepped` 与维度无关不受影响。
 
+> **2026-11-03 补注二**：本轮同样未新增、修改、重命名或删除任何 MCP 工具，工具清单正文不变；仅为参考链路的两个工具增加 `columns`（1–12，默认 4）与 `maxTiles`（1–32，默认 12）入参，并使它们**直接以图片回传联系表**——此前参考工具只把帧写入磁盘并返回路径清单，模型需自行再读 PNG 才能看到画面。现在 `spine_analyze_reference_gif` 返回去重帧联系表、`spine_extract_reference_keyframes` 返回关键帧联系表，二者均在结果中携带 `__images`（这是该机制的首次启用；`pickImages` 上限 3 张，故刻意合成为单张图而非 N 张，避免 token 成本随帧数线性增长）。依据见 [参考帧回传与叠加对比实施计划](plans/参考帧回传与叠加对比实施计划.md) 第 ① 项与 [方案](参考动态图关键姿态候选方案.md) §7。
+
+> **2026-11-03 补注三**：`spine_render_animation_comparison` 新增 `layout`（`reference-above-target` 默认 / `overlay`）与 `opacity`（0.1–1，默认 0.6）。`overlay` 把目标帧半透明叠在参考帧之上，沿用原有的空间对齐（`rs`/`refX`/`refY`）与 `phaseMap` 时间映射，画布为单幅高加两行标签；`reference-above-target` 行为完全不变。审查门禁相应从「只接受 `reference-above-target`」放宽为「接受两种布局」，但**新增了证据绑定强制校验**——有参考的任务仍必须提供真实渲染的同步对比并绑定证据文件，放宽布局不等于放宽要求。同工具另新增 `times`（秒数组）：只输出指定时间点的对比帧（按最接近的已渲染采样帧取用），不给则整段输出，可减少输出体积与模型查看成本。三项均为参数增强，未增删工具。详见 [实施计划](plans/参考帧回传与叠加对比实施计划.md) 第 ②③ 项。
+
 `spine_calibrate_arm_perspective` 新增 sweepFrames（17–121，默认 33）和 sweepDuration（0.25–10 秒，默认 2），按样本顺序生成诊断 continuity.gif/continuity-sheet.png，返回 numericOk、branchStable、最大归一关节步长。该轨迹不创建正式 pose/motion，不产生批准。校准批准必须核验完整扫掠及产物字节，单靠静态点不能批准。Host 内部回放只对当前已核验校准的三段臂链给出 scaleLimits；该范围不从外部派生结果或浏览器参数接收。
 ## 2026-10-26 续建入口（当前 115 项）
 
