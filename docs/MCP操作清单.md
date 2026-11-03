@@ -1,5 +1,9 @@
 # MCP 操作清单
 
+> **2026-11-02 状态注记**：当前工具总数 **116**（MCP stdio 实测，含 `spine_check_editor_import`）。L1/L2 批 0–3 的协议能力（capabilities / resources / prompts / 工程树 / 会话缓存 / 进度取消 / 结构化错误 / 廉价勘察）主体已实施、待核销，见 [L1/L2 工单](plans/mcp-l1-l2.md) 与 [当前构建证据](plans/l1-l2-closeout-20261102.json)。本轮**未新增、修改、重命名或删除任何 MCP 工具**，工具清单正文不变；动态工具目录 `spine_set_tool_groups` 的目标客户端实测仍待验。下文各节按各自日期追溯，标题中的 115 / 112 等为当时批次数字，保留不改。
+
+
+> **2026-11-03 补注**：本轮未新增、修改、重命名或删除任何 MCP 工具，工具清单正文不变；仅加强 `curve` 入参的维度校验——`rotate` 必须恰好 4 个控制点，`translate`/`scale`/`shear` 必须恰好 8 个（每维度 4 个、按维度顺序排列），长度不符一律报 error 拒绝，不自动补全控制点。依据 4.1 runtime `readCurve()` 的 `i = value << 2`，详见 [官方JSON规范审查](官方JSON规范审查.md) 的 2026-11-03 节。受影响入口：`spine_set_bone_keyframe`、`spine_set_curve`、`spine_apply_pose_keyframes`、`spine_apply_pose_sequence`；pose 级 `curve` 若同时覆盖维度需求不一致的 timeline（如同时含 rotate 与 translate）则拒绝，`stepped` 与维度无关不受影响。
 
 `spine_calibrate_arm_perspective` 新增 sweepFrames（17–121，默认 33）和 sweepDuration（0.25–10 秒，默认 2），按样本顺序生成诊断 continuity.gif/continuity-sheet.png，返回 numericOk、branchStable、最大归一关节步长。该轨迹不创建正式 pose/motion，不产生批准。校准批准必须核验完整扫掠及产物字节，单靠静态点不能批准。Host 内部回放只对当前已核验校准的三段臂链给出 scaleLimits；该范围不从外部派生结果或浏览器参数接收。
 ## 2026-10-26 续建入口（当前 115 项）

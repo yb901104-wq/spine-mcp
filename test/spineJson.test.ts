@@ -42,6 +42,7 @@ import {
   removeKeyframe,
   scaleKeyframeTimes,
   setBoneKeyframe,
+  setCurve,
   setDrawOrderKeyframe,
   setSlotAttachmentKeyframe,
   shiftKeyframes,
@@ -609,7 +610,7 @@ test("apply pose sequence creates a closed animation in one transaction", async 
     poses: [
       {
         time: 0,
-        curve: [0.25, 0, 0.75, 1],
+        curve: "stepped",
         bones: {
           bone2: { translate: { y: 0 }, rotate: 0 },
           bone4: { rotate: -3 },
@@ -617,7 +618,7 @@ test("apply pose sequence creates a closed animation in one transaction", async 
       },
       {
         time: 0.3,
-        curve: [0.25, 0, 0.75, 1],
+        curve: "stepped",
         bones: {
           bone2: { translate: { y: 3 }, rotate: 1 },
           bone4: { rotate: 3 },
@@ -648,6 +649,56 @@ test("apply pose sequence creates a closed animation in one transaction", async 
   assert.deepEqual(pick(bone4Rotate[0], ["value"]), pick(bone4Rotate.at(-1), ["value"]));
   assert.equal(bone2Translate.at(-1).curve, undefined);
   assert.equal(bone4Rotate.at(-1).curve, undefined);
+});
+
+test("curve 控制点数组长度必须匹配 timeline 维度（rotate 4 个、translate/scale/shear 8 个）", async () => {
+  const target = await copyFixture(contentFixture, "curve-dimension.json");
+  const before = await readSpineDocument(target);
+  const curve4 = [0.25, 0, 0.75, 1];
+  const curve8 = [0.25, 0, 0.75, 1, 0.25, 0, 0.75, 1];
+
+  // rotate 是一维 timeline：8 个控制点超出维度需求，必须拒绝。
+  await assert.rejects(
+    () => setBoneKeyframe(target, { animation: "act", bone: "bone2", timeline: "rotate", time: 0.2, value: 5, curve: curve8, dryRun: true, expectedHash: before.hash }, testContext),
+    /恰好 4 个数字/,
+  );
+
+  // translate 是二维 timeline：只给 4 个控制点会让第二个维度读到 undefined，在 runtime 静默产生 NaN。
+  await assert.rejects(
+    () => setBoneKeyframe(target, { animation: "act", bone: "bone2", timeline: "translate", time: 0.2, value: { x: 1, y: 2 }, curve: curve4, dryRun: true, expectedHash: before.hash }, testContext),
+    /恰好 8 个数字/,
+  );
+  await assert.rejects(
+    () => setCurve(target, { animation: "act", bone: "bone2", timeline: "translate", time: 0, curve: curve4, dryRun: true, expectedHash: before.hash }, testContext),
+    /恰好 8 个数字/,
+  );
+
+  // 维度匹配的写入放行，且仍受官方规范审查约束。
+  const ok = await setBoneKeyframe(target, { animation: "act", bone: "bone2", timeline: "translate", time: 0.2, value: { x: 1, y: 2 }, curve: curve8, dryRun: true, expectedHash: before.hash }, testContext);
+  assert.equal(ok.dryRun, true);
+  assert.equal(ok.officialSpecValidation.ok, true);
+
+  // pose 级 curve 同时覆盖 rotate 与 translate 时维度矛盾：必须拒绝，不得自动补全控制点。
+  await assert.rejects(
+    () => applyPoseSequence(target, {
+      animation: "curve-mixed",
+      duration: 0.6,
+      poses: [{ time: 0, curve: curve4, bones: { bone2: { translate: { y: 0 }, rotate: 0 } } }],
+      dryRun: true,
+      expectedHash: before.hash,
+    }, testContext),
+    /无法同时满足不同维度/,
+  );
+
+  // 'stepped' 与维度无关，任何 timeline 都放行。
+  const stepped = await applyPoseSequence(target, {
+    animation: "curve-stepped",
+    duration: 0.6,
+    poses: [{ time: 0, curve: "stepped", bones: { bone2: { translate: { y: 0 }, rotate: 0 } } }],
+    dryRun: true,
+    expectedHash: before.hash,
+  }, testContext);
+  assert.equal(stepped.officialSpecValidation.ok, true);
 });
 
 test("apply pose sequence dry-run does not change hash and invalid input rejects whole batch", async () => {

@@ -1,6 +1,7 @@
 # 执行文档 · 第一层（架构）与第二层（只读勘察）
 
 > 版本：v1.4（2026-10-22 用户确认按任务时长细化通知密度；对齐 Host v1.8、源码 0.2.0）。范围：MCP 侧协议、工具契约与只读勘察；L3–L11 的完整能力不在本文。
+> **状态（2026-11-02 核对）：已实施、待核销。** 批 0–3 的主体源码与验收用例均已落地，逐项核对见下方「2026-11-02 实施状态核对」节。本文 L1.0 / L2.0 的「现状」是 2026-10-21 当时事实，按历史保留不改，**不代表当前状态**；原「冻结待工」表述不再适用。
 > 相关工作单：[宿主演进工单](host-evolution.md)（preview 端点、证据截图、黄金帧、session、写入权、undo、求解器搬迁）。契约只以 HOST §3 为准。
 > 颗粒度：每项按「现状事实（文件:行号）→ 目标 → 接口 → 改动点 → 验收」写，可直接当施工单。
 > 前置共识（来自讨论，两章都受其约束）：
@@ -9,6 +10,61 @@
 > 3. **任何写入都必须让指纹/审查失效**，不允许“JSON 改了但审查还绿”。
 > 4. **先公布真实能力，再增加入口数量**：schema、handler、回读与角色能力必须对应；resources/prompts 为可选协议原语，缺少它们不表示现有服务不是 MCP。
 > 与 Host 的顺序：本工单的 schema 完备性、输入指纹、廉价状态与错误属于 H0/B1 前置；resources/prompts/工程树按批交付，动态工具组发现仍后置。工程模型、readiness 与文档版本只引用 HOST §3.7–§3.9。
+
+## 2026-11-02 实施状态核对（当前构建 17a881c）
+
+本节**不新增能力、不放宽门禁、不改变 HOST §13 任何一行的退出条件**，只把「三批做到哪了」固化成可核销的锚点，并登记两处必须由文档承认的实现演进。原文 L1/L2 的逐项「现状事实 → 目标 → 接口 → 改动点 → 验收」全部保留，不简化。
+
+### 唯一口径
+
+| 说法 | 是否可用 |
+|---|---|
+| 批 0–3 已实施，当前处于待核销/待对齐状态 | ✅ 唯一推荐表述 |
+| 三批已在隔离与真实 MCP stdio 下跑通 | ✅ 限定在已测用例范围内 |
+| 三批已验收、协议侧已完工 | ❌ 当前构建复测证据刚补，且动态工具目录的目标客户端实测未完成 |
+| 三批冻结待工 | ❌ 与源码事实不符 |
+
+### 当前构建实跑（2026-11-02 晚间，提交 17a881c）
+
+| 项目 | 命令 | 结果 |
+|---|---|---|
+| 构建 | `npm run build` | 通过 |
+| 协议专项 | `npx tsx --test test/protocolFeatures.test.ts` | **9 / 9 通过**，6.9 秒 |
+| 全量回归（干净轮） | `npm test` | **238 项 / 237 通过 / 0 失败 / 1 跳过**，退出码 0 |
+| MCP stdio 握手 | `node scripts/verify-l1-l2-closeout.mjs` | 通过：工具 **116** 个且全部 `additionalProperties:false`；capabilities 四项；6 模板 / 3 prompts；`logging/setLevel` 返回 `{}`；`spine://session` 可读；未知字段返回结构化 `VALIDATION_FAILED` |
+
+干净轮之前的若干轮出现 `WRITE_OWNERSHIP_UNCERTAIN` 连锁（最多 18 项失败，另 1 项为 `assert.rejects` 断言偏差），根因均为运行环境批量删除保护留下的 `.spine-mcp/writer.lock` 残留锁；已按项目自身规则 `recoverDeadWriter` 在确认原 PID 不存在后回收，并重跑取得上表干净轮。**这些失败不是代码逻辑失败，也不得记为通过或放宽断言。** 11-02 白天记录的 239 / 213 / 25 / 1 属同一环境现象下的历史一轮，保留不改写；本次干净轮为 238 项（较其少 1 项），未逐项溯源差异，按实跑记录。
+
+完整证据：[l1-l2-closeout-20261102.json](l1-l2-closeout-20261102.json)；验证脚本：`scripts/verify-l1-l2-closeout.mjs`。
+
+### 逐项核对（实现位置 / 验收用例 / 状态）
+
+| 条目 | 实现位置（当前源码） | 验收用例 | 状态 |
+|---|---|---|---|
+| L1.1 capabilities + 3 prompts | `src/server.ts:121-124` 四项声明；`:972-976` 五个 handler；`src/resources.ts:85-98` 三条 prompt | `protocolFeatures.test.ts`「真实 MCP：resources/prompts/logging 声明可兑现」 | ✅ 已实施 |
+| L1.2 128MB LRU 缓存 | `src/runtimeCache.ts`（`cachedDocument` / `cachedRuntime` / `cachedAtlasImage` / `withStrict` / `invalidate` / `cacheStats`）；`motionRuntime.ts`、`poseWorkflow.ts`、`referenceRetarget.ts` 接线 | 「缓存：20 次求解复用 SkeletonData、Skeleton 独立；严格读取抓同尺寸同 mtime 改动」 | ✅ 已实施 |
+| L1.3 roots 不覆盖显式选择 | `src/workspaceTools.ts:7-8,41-53,78-97`（`resolveWorkspace` / `resolvedFrom` / `setActive:false` / `setWorkspaceRoots`） | 「roots 不覆盖显式选择；来源可观测、失效 active 回落 roots/env」 | ✅ 已实施 |
+| L1.4 进度与取消 | `src/taskControl.ts`（ALS、200ms 节流、`checkpoint` / `taskCheckpoint`、`CancelledError`）；`server.ts:978` 取 `extra.signal` | 「任务控制不改变求解结果」「局部修正已取消时零评估」「完整动画异步任务…取消在采样检查点停止」 | ✅ 已实施（v1.4 通知密度另见 10-22 续验） |
+| L1.5 结构化错误 | `src/toolError.ts`（`ToolError` / `toolErrorPayload`、`issueCodes`、`remedies`）；`server.ts` 统一错误出口 | 「结构化错误保留 issues」+ 真实 MCP 未知字段 `VALIDATION_FAILED` 负例 | ✅ 已实施；`remedies` 覆盖 6 码，补齐建议列为可选项 |
+| L1.6 操作 schema 与回读 | `src/poseSchemas.ts`、`src/toolCatalog.ts`、`src/poseOps.ts` | 「姿态输入声明与回读一致；未知字段/原型/非有限数在写入前拒绝」 | ✅ 已实施 |
+| L2.1 廉价勘察 + 显式重算 | `src/poseDigest.ts`（`inputFingerprint` + `dependencyFingerprint`、freshness 三态 `current/unknown/stale`、`stale` 逐项、`digestOk`、`officialOk` 三语义、`solveCount:0`）；`poseWorkflow.ts:97` 落盘写指纹；`server.ts:889` `spine_recheck_pose` | 真实 MCP `spine://metrics/...` 的 `solveCount===0`；`spine_recheck_pose` 返回 `solved` | ✅ 已实施；`unknown` 不作为通过 |
+| L2.2 resources | `src/resources.ts`（6 模板、`spine://session`、4500 字节分页、8MB 原文上限、越权 `IO`）；`server.ts:972-974` | 分页并集无重复遗漏、60 条中文路径、4 例越权拒绝 | ✅ 已实施 |
+| L2.3 工程树 | `src/workspaceTree.ts`；`server.ts:1071` `spine_get_workspace_tree` | 「工程树有界快照分页、生成目录忽略，错误 root/游标拒绝」 | ✅ 已实施 |
+| 批 0 契约先行 | 同 L1.6 + HOST H0-2/H0-3 | 输入 schema 回读用例 | ✅ 已实施 |
+| 批 1 读得准 | 同 L1.2 / L1.5 / L2.1 | 缓存、错误码、零求解 | ✅ 已实施 |
+| 批 2 说得清 | 同 L1.1 / L2.2 / L2.3 | 真实 MCP 协议冒烟 | ✅ 已实施 |
+| 批 3 可长跑 | 同 L1.4 / L1.3 | 取消、roots、工程切换 | ✅ 已实施 |
+
+### 两处必须由文档承认的实现演进
+
+1. **`capabilities.tools.listChanged`**：L1.1 原文写「不声明 `tools.listChanged`（工具表是编译期常量）」。当前 `server.ts:122` 声明 `tools:{listChanged:true}`，且 `src/toolCatalog.ts` 的动态工具组与 `spine_set_tool_groups` 会发送 `notifications/tools/list_changed`，已有实现支撑，属**实现超出原约束**，本次修订工单承认现状，**不回退代码、不把动态目录当既有门禁**。剩余待验项：动态模式下目标客户端实际收到 `list_changed` 并重新发现工具（`toolCatalog.ts` 自身注记已列明）。
+2. **`remedies` 表**：当前仅 6 个码（`TARGET_NOT_PINNED` / `REVISION_CONFLICT` / `REVIEW_STALE` / `NO_SOLUTION` / `WRITE_OWNERSHIP_UNCERTAIN` / `PROJECT_MANIFEST_REQUIRED`）。10-30 对标建议补 `TARGET_STALE` / `REVIEW_REQUIRED` / `CONTROL_REQUIRED` / `DOC_INCOMPLETE` 等，属**可选增强，不是任何批次的退出条件**，本次收尾不做。
+
+### 收尾范围与 C1 关系（2026-11-02 定案）
+
+- 本次收尾 = **核销 + 文档对齐 + 当前构建重跑证据**，不补 `remedies`、不做动态目录客户端实测、不新增 MCP 工具。
+- 批 3 的长任务进度/取消是「C1 使用长任务时不能省略取消/状态观察」的操作前提，核销应优先或并行于 C1 性能收敛；**但不新增为 C1 的前置门禁**，保持 [HOST §17.5](host-evolution.md)「L1/L2 可并行」与 §13 退出条件不变。
+- 10-21～10-23 的批次报告保留为历史证据，**不为当前构建背书**；当前结论只以上表与本轮证据为准。
 
 ## 2026-10-21 实施注记
 
@@ -49,6 +105,8 @@ H0 的姿态工具已各自限定顶层参数，遗漏的 headFromReference/weap
 
 
 本表表示工单已覆盖相应议题，不表示能力已经实现或通过验收。lineage 的宿主事务部分以 Host 为准；动态工具发现不作为 H0/B1 的前置。
+
+**2026-11-02 实现对照（不改写上表）**：#1、#3、#4、#5、#7、#9、#10 已有对应源码与真实 MCP 用例；#2 缓存部分已解决成本，宿主语义仍按 HOST §5 判定；#6 的「盘上 solution 是否对应当前 frame」已由 `solution.inputFingerprint` + `dependencyFingerprint` 补齐；#8、#14 属 HOST 范畴，按 HOST §4/§10 与 ADR 判定；#11 的 schema 覆盖提前已落地，未交付操作仍明确 unsupported；#12 明确划出本文；#13 的 token 成本由 `responseDetail:summary` 与工具组目录缓解，全量 `search_tools` 仍属 L10、不做。上表原「设计覆盖（非实现）」口径按历史保留，当前实现状态以「2026-11-02 实施状态核对」节为准。
 
 ---
 
@@ -302,12 +360,14 @@ L1/L2 只保留两条约束（实现方式见 HOST）：
 
 ## 前置批与三批交付顺序
 
-| 批次 | 内容 | 是否改变现有行为 |
-| --- | --- | --- |
-| **批 0 契约先行** | L1.6 的命令/schema/回读覆盖与 HOST H0-2 对接；领域输入接口采用 HOST H0-3 | 是：修复缺失字段、提示路径与未知参数校验；兼容有效的现有调用，未适配 mode 明确拒绝 |
-| **批 1 读得准** | L1.2 缓存 → L1.5 结构化错误 → `solution.inputFingerprint`（L2.1 前置）→ L2.1 勘察分级 | 是：`get_pose_state` 返回结构破坏性变化（0.1.0→0.2.0）；错误文本变 JSON；solution 增加完整求解输入指纹 |
-| **批 2 说得清** | L1.1 capabilities + 3 条 prompts → L2.2 resources → L2.3 工程树 | 是：协议能力和只读入口增加；新增工具按实际注册表核对，不承诺旧共享 schema 不变 |
-| **批 3 可长跑** | L1.4 进度取消 → L1.3 roots 折中；配套规则文档同步 | 是：长任务反馈和取消；syncRoots 不再覆盖显式选择；C1 前满足其长任务观察条件 |
+| 批次 | 内容 | 是否改变现有行为 | 当前状态（2026-11-02） |
+| --- | --- | --- | --- |
+| **批 0 契约先行** | L1.6 的命令/schema/回读覆盖与 HOST H0-2 对接；领域输入接口采用 HOST H0-3 | 是：修复缺失字段、提示路径与未知参数校验；兼容有效的现有调用，未适配 mode 明确拒绝 | ✅ 已实施，待核销 |
+| **批 1 读得准** | L1.2 缓存 → L1.5 结构化错误 → `solution.inputFingerprint`（L2.1 前置）→ L2.1 勘察分级 | 是：`get_pose_state` 返回结构破坏性变化（0.1.0→0.2.0）；错误文本变 JSON；solution 增加完整求解输入指纹 | ✅ 已实施，待核销 |
+| **批 2 说得清** | L1.1 capabilities + 3 条 prompts → L2.2 resources → L2.3 工程树 | 是：协议能力和只读入口增加；新增工具按实际注册表核对，不承诺旧共享 schema 不变 | ✅ 已实施，待核销 |
+| **批 3 可长跑** | L1.4 进度取消 → L1.3 roots 折中；配套规则文档同步 | 是：长任务反馈和取消；syncRoots 不再覆盖显式选择；C1 前满足其长任务观察条件 | ✅ 已实施，待核销；与 C1 并行，不新增前置门禁 |
+
+> 状态列只表示源码与用例已落地，不表示四批验收汇总已由当前构建重新背书；复测见下节与 [l1-l2-closeout-20261102.json](l1-l2-closeout-20261102.json)。
 
 > 宿主端点、工程 manifest/readiness 的规范、捕获、黄金帧、写入与 undo 见 [主工单](host-evolution.md) 的 H0 / HOST-B1 / HOST-B2 / HOST-C1 / HOST-C2 / HOST-D。本表可用 detached 输入与内存夹具独立验收；attached 集成还必须通过 Host 的快照/失效测试，不能用无宿主测试替代。
 
@@ -324,6 +384,8 @@ L1/L2 只保留两条约束（实现方式见 HOST）：
 - 批 1：get_pose_state/explain_pose 的 solve 次数为 0；solutionFresh 三态；完整求解输入与参考/策略/sequence 变化使相应结果过期；20 次同输入 solve 构造 1 次 SkeletonData；各适用指纹及 stale/unknown 负例齐全；错误 code 含 Host 原码透传；npm test 全绿。性能按 HOST §12 记录。
 - 批 2：capabilities 精确匹配、7 方法零 `-32601`；3 条 prompts 可 `prompts/get`；`resources/list` <5KB/<200ms/readdir<=40；4 例越权 `IO`；工程树 P95<300ms。
 - 批 3：按 L1.4 的时长分层验通知密度、末条等于 total；取消生效与耗时实测；roots 不覆盖 active；已完成 patch 不被取消伪装成回滚，结果缺失/过期状态可观察。300ms 与 <5% 为初始性能预算。
+
+**2026-11-02 当前构建复测（提交 17a881c）**：`npm run build` 通过；`protocolFeatures.test.ts` **9 / 9 通过**；回收死进程残留写入锁后 `npm test` 干净轮 **238 / 237 / 0 / 1**（退出码 0）；MCP stdio 握手实测工具 **116** 个、capabilities 四项、6 模板、3 prompts、`logging/setLevel`、结构化 `VALIDATION_FAILED` 全部可兑现。此前若干轮的 `WRITE_OWNERSHIP_UNCERTAIN` 连锁为运行环境保护的残留锁所致，按项目规则回收后重跑，**不是项目逻辑失败，也未放宽任何断言**。证据与脚本见 [l1-l2-closeout-20261102.json](l1-l2-closeout-20261102.json) 与 `scripts/verify-l1-l2-closeout.mjs`。本段不改写上方各批的历史记录，也不为 10-21～10-23 的旧报告追加背书。
 
 ## 风险与硬约束
 

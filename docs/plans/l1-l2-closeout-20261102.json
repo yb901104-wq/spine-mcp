@@ -1,0 +1,77 @@
+{
+  "kind": "l1-l2-closeout-verification",
+  "generatedAt": "2026-11-02T15:22:41.373Z",
+  "commit": "17a881c",
+  "workspace": "D:\\AI_cc\\spine-mcp",
+  "build": {
+    "command": "npm run build",
+    "result": "pass"
+  },
+  "protocolTest": {
+    "command": "npx tsx --test test/protocolFeatures.test.ts",
+    "result": "9/9"
+  },
+  "fullRegression": {
+    "command": "npm test",
+    "result": "238/237/0/1",
+    "note": "回收死进程残留 writer.lock 后的干净轮，0 失败；此前各轮的 WRITE_OWNERSHIP_UNCERTAIN 连锁均为运行环境保护，非代码逻辑失败"
+  },
+  "note": "当前构建标签；2026-10-21～10-23 的批次验收报告保留为历史，不为本构建背书。",
+  "handshake": {
+    "ok": true,
+    "serverVersion": {
+      "name": "spine-json-mcp",
+      "version": "0.2.0"
+    },
+    "capabilities": {
+      "logging": {},
+      "prompts": {},
+      "resources": {
+        "subscribe": false,
+        "listChanged": false
+      },
+      "tools": {
+        "listChanged": true
+      }
+    },
+    "tools": {
+      "count": 116,
+      "allAdditionalPropertiesFalse": true
+    },
+    "resources": {
+      "firstPageCount": 3,
+      "firstPageBytes": 607,
+      "hasSession": true,
+      "hasNextCursor": true
+    },
+    "resourceTemplates": {
+      "count": 6
+    },
+    "prompts": {
+      "names": [
+        "pose-prepare",
+        "pose-diagnose",
+        "preview-verify"
+      ]
+    },
+    "promptsGet": {
+      "pose-prepare": {
+        "messages": 1
+      },
+      "pose-diagnose": {
+        "messages": 1
+      },
+      "preview-verify": {
+        "messages": 1
+      }
+    },
+    "loggingSetLevel": {},
+    "sessionResource": {
+      "textBytes": 12561
+    },
+    "structuredError": {
+      "isError": true,
+      "code": "VALIDATION_FAILED"
+    }
+  }
+}

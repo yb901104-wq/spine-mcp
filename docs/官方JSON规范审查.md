@@ -1,5 +1,17 @@
 # 官方 JSON 规范审查
 
+## 2026-11-03：curve 控制点数组必须匹配 timeline 维度
+
+4.1 runtime 的 `readCurve()` 使用 `let i = value << 2` 按维度索引取控制点，即数组不是"总共 4 个控制点"，而是**每个维度 4 个控制点、按维度顺序排列**：一维 timeline 只读 `curve[0..3]`，二维 timeline 还要读 `curve[4..7]`。因此审查层新增维度规则：
+
+- `rotate`（一维）→ curve 必须恰好 **4** 个数字。
+- `translate` / `scale` / `shear`（二维）→ curve 必须恰好 **8** 个数字，前 4 个属 x、后 4 个属 y。
+
+该约束官方在线文档未写明（其骨骼 curve 小节只描述"4 元数组"，实际只适用于一维 timeline）。实测后果：把真实样本 `example-json/xiaoren.json` 中 `bone2.translate` 的 6 个 8 元 curve 截成 4 元后，用官方 4.1 runtime 采样 41 帧，**40 帧的 y 分量为 NaN 而 x 分量完全正常、且不报任何错误**——属静默污染，视觉上表现为单方向抽动或不动，难以回溯。故长度不符一律报 error，不放行、不自动补全控制点。
+
+`stepped` 与维度无关，任何 timeline 均放行。pose 级 `curve` 会同时写入该 pose 的多个骨骼 timeline，若这些 timeline 的维度需求不一致（例如同时含 rotate 与 translate），一个数组无法同时满足，直接拒绝并提示改用 `stepped` 或对每个 timeline 单独调用 `spine_set_curve`；不为此新增任何"按维度自动复制/补全控制点"的逻辑。
+
+同轮核对确认：官方在线文档（中文版）为 **3.8 口径**，与 4.1.24 至少两处硬冲突——`rotate` 字段文档写 `angle`、runtime 实际只读 `value`；绘制顺序 timeline 名文档写全小写 `draworder`、runtime 实际读 `map.drawOrder`；curve 的 X 轴文档写"单位是帧"、runtime 实际为 0..1 归一化（cx 不乘 scale，cy 才乘）。本项目在这三处均以 4.1 runtime 与当前样本为准。据此重申：官方文档只作**字段语义参考**，不作**写入校验依据**；一切冲突以 4.1 runtime 源码与当前版本真实样本为准，并按本文件既有策略在版本适配说明中记录。
 
 末端补偿可能需要局部 scale 大于 1，以维持同一世界手部尺寸；仅当前校准的三段臂链内部回放范围可接受，数值仍核验世界段长比、末端方向及投影误差，不能当成世界放大或新视角。未校准诊断和其它骨骼不扩权。motion 根清单校验与资产登记统一：已声明 stageId 必须精确匹配；未绑定参考阶段的普通站姿可作为多个 motion 位置，不能虚构参考阶段绑定。
 ## 2026-10-26：投影校准与 motion 修订
@@ -50,10 +62,12 @@ Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后�
 ## 规范来源
 
 - 官方文档：[Spine JSON export format](https://esotericsoftware.com/spine-json-format#JSON-export-format)
+- 官方中文文档：[Spine: JSON导出文件格式](https://zh.esotericsoftware.com/spine-json-format)（**实测为 3.8 口径**，与 4.1.24 存在字段差异，见 2026-11-03 节）
 - 当前写入版本：`skeleton.spine === "4.1.24"`
 - 当前真实样本：`example-json/skeleton-Empty-4.1.json` 和 `example-json/skeleton-4.1.json`
+- 运行时依据：`node_modules/@esotericsoftware/spine-core` 的 `SkeletonJson.js`（字段名读取）与 `readCurve()`（维度索引）
 
-官方在线文档可能随 Spine 当前版本更新，因此本项目采用“官方文档字段含义 + 4.1.24 样本字段形态”的双重规则。若两者存在差异，必须在版本适配说明中记录，不盲目套用最新网页字段。
+官方在线文档可能随 Spine 当前版本更新，因此本项目采用"官方文档字段含义 + 4.1.24 样本字段形态"的双重规则。若两者存在差异，必须在版本适配说明中记录，不盲目套用最新网页字段。字段的最终判定依据是 4.1 runtime 源码实际读取的键名与读取方式，而非网页描述。
 
 ## 审查边界
 

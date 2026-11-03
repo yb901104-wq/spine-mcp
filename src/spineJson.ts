@@ -8,6 +8,7 @@ import { withFileLock } from './jobTools.js';
 import { withWorkspaceWrite } from './writerOwnership.js';
 import { checkpoint } from './taskControl.js';
 import { cachedDocument,invalidate } from './runtimeCache.js';
+import { ToolError } from './toolError.js';
 
 export const SUPPORTED_SPINE_VERSION = "4.1.24";
 export const OFFICIAL_JSON_SPEC_URL = "https://esotericsoftware.com/spine-json-format#JSON-export-format";
@@ -890,7 +891,7 @@ function normalizePoseInput(pose: PoseKeyframeInput, duration?: number): PoseKey
   if (!pose || typeof pose !== "object" || Array.isArray(pose)) throw new Error("pose 必须是对象。");
   if (!Number.isFinite(pose.time) || pose.time < 0) throw new Error("pose.time 必须是非负数字。");
   if (duration !== undefined && pose.time - EPSILON > duration) throw new Error(`pose.time 不能超过 duration：${pose.time} > ${duration}`);
-  if (pose.curve !== undefined) assertCurveValue(pose.curve);
+  if (pose.curve !== undefined) assertCurveValue(pose.curve, collectPoseBoneTimelines(pose));
 
   for (const [bone, bonePose] of Object.entries(pose.bones ?? {})) {
     if (!bonePose || typeof bonePose !== "object" || Array.isArray(bonePose)) throw new Error(`bones.${bone} 必须是对象。`);
@@ -921,10 +922,44 @@ function normalizePoseInput(pose: PoseKeyframeInput, duration?: number): PoseKey
   };
 }
 
-function assertCurveValue(curve: string | number[]) {
+function assertCurveValue(curve: string | number[], boneTimelines: string[] = []) {
   if (curve === "stepped") return;
-  if (Array.isArray(curve) && curve.length >= 4 && curve.length % 2 === 0 && curve.every((value) => typeof value === "number" && Number.isFinite(value))) return;
-  throw new Error("curve 必须是 'stepped' 或至少 4 个数字组成的偶数长度数组。");
+  if (!Array.isArray(curve) || !curve.every((value) => typeof value === "number" && Number.isFinite(value))) {
+    throw new ToolError("VALIDATION_FAILED", "curve 必须是 'stepped' 或由有限数字组成的数组。");
+  }
+  const required = new Set(
+    boneTimelines.map((timeline) => expectedBoneCurveLength(timeline)).filter((length): length is number => length !== null),
+  );
+  if (required.size > 1) {
+    throw new ToolError(
+      "VALIDATION_FAILED",
+      "curve 数组无法同时满足不同维度的 timeline：rotate 需要 4 个控制点，translate/scale/shear 需要 8 个（每维度 4 个）。" +
+        "请拆分写入或改用 'stepped'；精确贝塞尔曲线请对每个 timeline 单独调用 spine_set_curve。",
+    );
+  }
+  const length = required.size === 1 ? [...required][0] : null;
+  if (length !== null) {
+    if (curve.length !== length) {
+      throw new ToolError(
+        "VALIDATION_FAILED",
+        `当前 timeline 的 curve 必须是恰好 ${length} 个数字组成的数组（每维度 4 个控制点）；长度不符会在 runtime 读取时静默产生 NaN。`,
+      );
+    }
+    return;
+  }
+  if (curve.length >= 4 && curve.length % 2 === 0) return;
+  throw new ToolError("VALIDATION_FAILED", "curve 必须是 'stepped' 或至少 4 个数字组成的偶数长度数组。");
+}
+
+function collectPoseBoneTimelines(pose: PoseKeyframeInput): string[] {
+  const timelines = new Set<string>();
+  for (const bonePose of Object.values(pose.bones ?? {})) {
+    if (!bonePose || typeof bonePose !== "object" || Array.isArray(bonePose)) continue;
+    for (const timeline of BONE_TIMELINES) {
+      if ((bonePose as Record<string, unknown>)[timeline] !== undefined) timelines.add(timeline);
+    }
+  }
+  return [...timelines];
 }
 
 export async function offsetBoneTimelineValues(
@@ -1131,6 +1166,7 @@ export async function setBoneKeyframe(
 ): Promise<WriteResult> {
   return writeTransaction(filePath, args, context, animationOnlyGuard("spine_set_bone_keyframe"), (json, diff) => {
     if (!getWritableTimelineSpec("bone", args.timeline)) throw new Error(`当前 MCP 不支持写入骨骼 timeline '${args.timeline}'。`);
+    if (args.curve !== undefined) assertCurveValue(args.curve, [args.timeline]);
     requireKnownBone(json, args.bone);
     const animation = getAnimation(json, args.animation);
     animation.bones ??= {};
@@ -1153,6 +1189,7 @@ export async function setCurve(filePath: string, args: { animation: string; bone
   return writeTransaction(filePath, args, context, animationOnlyGuard('spine_set_curve'), (json) => {
     const frames = json.animations?.[args.animation]?.bones?.[args.bone]?.[args.timeline];
     if (!Array.isArray(frames)) throw new Error('骨骼 timeline 不存在。');
+    if (args.curve !== null && args.curve !== undefined) assertCurveValue(args.curve, [args.timeline]);
     const index = frames.findIndex(f => sameTime(f.time ?? 0, args.time));
     if (index < 0) throw new Error('关键帧不存在。');
     if (args.curve !== null && index === frames.length - 1) throw new Error('最后一帧不能设置 curve。');
@@ -1811,7 +1848,7 @@ function validateOfficialKeyframe(
         severity: "error",
       });
     } else {
-      validateCurve(pathBase, keyframe.curve, index, issues);
+      validateCurve(pathBase, keyframe.curve, index, issues, spec.targetType, spec.timeline);
     }
   }
 }
@@ -1855,7 +1892,7 @@ function validateSupportedTimelineKeyframe(pathBase: string, keyframe: JsonObjec
       });
     }
   }
-  if (keyframe.curve !== undefined) validateCurve(pathBase, keyframe.curve, index, issues);
+  if (keyframe.curve !== undefined) validateCurve(pathBase, keyframe.curve, index, issues, targetTypeFromTimelinePath(pathBase), timeline);
 }
 
 function getWritableTimelineSpec(targetType: "bone" | "slot" | "drawOrder", timeline: string) {
@@ -1880,8 +1917,29 @@ function validateAllowedKeys(pathBase: string, object: JsonObject, index: number
   }
 }
 
-function validateCurve(pathBase: string, curve: unknown, index: number, issues: ValidationIssue[]) {
+// 4.1 runtime 的 readCurve() 使用 `let i = value << 2` 按维度索引取控制点：
+// 一维 timeline（rotate）读 curve[0..3]，二维 timeline（translate/scale/shear）还要读 curve[4..7]。
+// 因此二维 timeline 的 curve 必须是 8 元；只给 4 元时第二个维度的控制点为 undefined，
+// 静默产生 NaN（x 分量正常、y 分量 NaN，且 runtime 不报错），官方文档未写明此约束。
+const BONE_CURVE_LENGTH: Record<string, number> = { rotate: 4, translate: 8, scale: 8, shear: 8 };
+
+function expectedBoneCurveLength(timeline: string): number | null {
+  return BONE_CURVE_LENGTH[timeline] ?? null;
+}
+
+function validateCurve(pathBase: string, curve: unknown, index: number, issues: ValidationIssue[], targetType?: string, timeline?: string) {
   if (curve === "stepped") return;
+  const required = targetType === "bone" && timeline ? expectedBoneCurveLength(timeline) : null;
+  if (required !== null) {
+    if (!Array.isArray(curve) || curve.length !== required || !curve.every((value) => typeof value === "number" && Number.isFinite(value))) {
+      issues.push({
+        path: `${pathBase}/${index}/curve`,
+        message: `官方规范审查失败：4.1.24 的 ${timeline} 是${required === 8 ? "二维" : "一维"} timeline，curve 必须是恰好 ${required} 个数字组成的数组（每维度 4 个控制点，按维度顺序排列）；长度不符会在 runtime 读取时静默产生 NaN。`,
+        severity: "error",
+      });
+    }
+    return;
+  }
   if (Array.isArray(curve) && curve.length >= 4 && curve.length % 2 === 0 && curve.every((value) => typeof value === "number" && Number.isFinite(value))) return;
   issues.push({ path: `${pathBase}/${index}/curve`, message: "curve 必须是 'stepped' 或至少 4 个数字组成的偶数长度数组。", severity: "error" });
 }
