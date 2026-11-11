@@ -38,6 +38,29 @@ internal static class HostObserverSelfTest
             await Wait(async () => File.Exists(marker + ".release") && await File.ReadAllTextAsync(marker + ".release") == stage, $"MCP 截图检查点 {stage}", args.Contains("--benchmark-host") ? 120 : 20);
             checks.Add($"实际页面完成 MCP 截图检查点：{stage}");
         }
+        async Task<object> CheckAuthoring(CoreWebView2 core)
+        {
+            async Task<bool> Js(string expression) => await core.ExecuteScriptAsync(expression) == "true";
+            await Wait(() => Js("!document.getElementById('authoring').hidden && document.getElementById('authoring-frame').naturalWidth > 0"), "草稿实际预览帧");
+            var label = JsonSerializer.Serialize(Argument("--expected-authoring-animation"));
+            Check(await Js($"document.getElementById('authoring-status').textContent.includes({label})"), "显示草稿动画及修订");
+            Check(await Js("document.getElementById('authoring-status').textContent.includes('预览就绪')"), "读取已渲染的确切草稿");
+            await core.ExecuteScriptAsync("document.getElementById('authoring-play').click()");
+            await Wait(() => Js("Number(document.getElementById('authoring-time').value) > 0"), "原速播放推进");
+            await core.ExecuteScriptAsync("document.getElementById('authoring-play').click()");
+            Check(await Js("document.getElementById('authoring-play').textContent==='播放'"), "草稿可以暂停");
+            await core.ExecuteScriptAsync("const slider=document.getElementById('authoring-time'); slider.value=String(Number(slider.max)/2); slider.dispatchEvent(new Event('input'));");
+            Check(await Js("Number(document.getElementById('authoring-time').value) > 0"), "草稿可以按时间定位");
+            await core.ExecuteScriptAsync("document.getElementById('authoring').scrollIntoView()");
+            await using (var image = new FileStream(screenshotPath, FileMode.CreateNew))
+                await core.CapturePreviewAsync(CoreWebView2CapturePreviewImageFormat.Png, image);
+            return new { ok = true, checks, time = DateTimeOffset.UtcNow, screenshot = screenshotPath, evidenceEligible = false };
+        }
+        async Task Finish(object report)
+        {
+            try { await using var file = new FileStream(reportPath, FileMode.CreateNew); await JsonSerializer.SerializeAsync(file, report, new JsonSerializerOptions { WriteIndented = true }); }
+            finally { form.Close(); }
+        }
         form.Shown += async (_, _) =>
         {
             object report;
@@ -47,6 +70,11 @@ internal static class HostObserverSelfTest
                 form.SelectPreviewTab(1);
                 await Wait(() => Task.FromResult(panel.Browser.CoreWebView2 is not null && panel.Connection is not null && panel.PageReady), "工作台连接");
                 var core = panel.Browser.CoreWebView2!;
+                if (args.Contains("--expected-authoring-animation"))
+                {
+                    await Finish(await CheckAuthoring(core));
+                    return;
+                }
                 async Task<bool> Js(string expression) => await core.ExecuteScriptAsync(expression) == "true";
                 await Wait(() => Js("!!document.getElementById('frame')?.complete && document.getElementById('frame').naturalWidth===480"), "当前实际帧");
                 Check(await Js("document.getElementById('status').textContent.includes('仅观察')"), "当前 Host 为观察模式");
@@ -153,8 +181,7 @@ internal static class HostObserverSelfTest
                 report = new { ok = true, checks, time = DateTimeOffset.UtcNow, screenshot = screenshotPath, browserPid, evidenceEligible = false, performance };
             }
             catch (Exception error) { Environment.ExitCode = 1; report = new { ok = false, checks, error = error.ToString(), time = DateTimeOffset.UtcNow }; }
-            try { await using var file = new FileStream(reportPath, FileMode.CreateNew); await JsonSerializer.SerializeAsync(file, report, new JsonSerializerOptions { WriteIndented = true }); }
-            finally { form.Close(); }
+            await Finish(report);
         };
         Application.Run(form);
     }

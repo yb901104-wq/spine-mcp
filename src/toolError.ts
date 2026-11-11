@@ -18,7 +18,9 @@ export function toolErrorPayload(value:any,tool?:string){
     else if(/缺少|必须|需先|非空|未提供/.test(message))code='MISSING_INPUT';
     else code='VALIDATION_FAILED';
   }
-  const detail=value?.detail??null,remediation=value?.remediation??remedies[code]??null;
+  const authoringRevision=tool==='spine_edit_animation_draft'||tool==='spine_publish_animation_draft';
+  const detail=value?.detail??null,remediation=value?.remediation??(authoringRevision&&code==='REVISION_CONFLICT'
+    ?'使用返回的当前草稿修订重新核对本次操作。':remedies[code])??null;
   // 保留 Host 既有顶层字段；嵌套 error 提供统一的 MCP 机器可读结构。
   return {ok:false,code,message,detail,error:{code,category,message,detail,remediation,tool:tool??null,...issues?{issues}:{}}};
 }

@@ -39,8 +39,8 @@ export async function createPreviewManifest(args: RenderOptions, context: ToolCo
   const width = args.width ?? 384, height = args.height ?? 384;
   if (args.mipmaps) throw new Error('离线 Canvas 预览不使用 mipmaps；请设置 false。');
   if (args.scale !== undefined && (!Number.isFinite(args.scale) || args.scale <= 0 || args.scale > 10)) throw new Error('scale 必须大于0且不超过10。');
-  if (!Number.isInteger(frameCount) || frameCount < 2 || frameCount > 240 || !Number.isFinite(fps) || fps <= 0 || fps > 120 || !Number.isInteger(width) || !Number.isInteger(height) || width < 32 || height < 32 || width > 2048 || height > 2048) throw new Error('采样上限：2–240 帧，画布32–2048，FPS 1–120。');
-  if(args.times && (args.times.length<2 || args.times.some((t,i)=>!Number.isFinite(t)||t<0||t>animation.duration+1e-6||i>0&&t<=args.times![i-1])))throw new Error('显式时间需递增、有限且在动画范围内。');
+  if (!Number.isInteger(frameCount) || frameCount < (args.times ? 1 : 2) || frameCount > 240 || !Number.isFinite(fps) || fps <= 0 || fps > 120 || !Number.isInteger(width) || !Number.isInteger(height) || width < 32 || height < 32 || width > 2048 || height > 2048) throw new Error('采样上限：显式时间1–240 帧，均匀采样2–240 帧，画布32–2048，FPS 1–120。');
+  if(args.times && args.times.some((t,i)=>!Number.isFinite(t)||t<0||t>animation.duration+1e-6||i>0&&t<=args.times![i-1]))throw new Error('显式时间需递增、有限且在动画范围内。');
   const images = [];
   for (const page of runtime.atlas.pages) { const p = path.join(path.dirname(args.atlasPath), page.name); images.push({ path: p, hash: sha(await readFile(resolveWorkspacePath(p, context))) }); }
   const mappingHash = args.mappingPath ? sha(await readFile(resolveWorkspacePath(args.mappingPath, context))) : null;

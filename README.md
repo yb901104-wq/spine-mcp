@@ -1,6 +1,8 @@
 # Spine JSON MCP
 
-常见任务优先使用统一入口 `spine_execute_task`。它会自动核对输入、选择 `workflowProfile`、调用现有工具、生成可观看证据，并在明确停止层返回 `nextAction`。参考动作重定向在进入 IK 前还会检查 keypose 是否落在参考角色前景、visualRig 四肢节点是否仍是骨骼原点候选以及 face 是否具备前脸依据；失败时停在 `binding` 并返回 `artifacts.inputAudit`。参考动作重定向区分 `creative`、`adaptive-preview` 和 `production`；`production` 只有在参考 GIF 阶段覆盖完整、runtime 与视觉证据齐全时才进入正式候选。`retargetMode` 默认 `adaptive`，需要精确结构复现时显式使用 `strict`。统一入口最多自动完成到可提交，真实写入仍需单独使用 Host 提交流程。
+普通创作用自然语言给 Agent 指定参考、角色或需要修改的动画。设置 `SPINE_MCP_TOOL_PROFILE=authoring` 以使用精简工具表。Agent 可按需读取参考和工程，批量编辑草稿，查看实际 runtime 画面，再把指定修订另存为可编辑工程。见 [普通动画创作](docs/普通动画创作.md)。
+
+严格重定向继续使用 `spine_execute_task` 或原有专业入口，沿用输入审查、参考覆盖、runtime 回读及 Host 审批提交协议。以下是原工作流的实现说明和历史验收。
 
 ## 高层工作流的实际边界（2026-11-07）
 

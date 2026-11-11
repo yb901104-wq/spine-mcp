@@ -113,8 +113,12 @@ import { checkEditorImport } from './editorImportAdvisory.js';
 import { animationComparisonLayouts } from './animationAcceptancePolicy.js';
 import { executeTask, taskToolDefinition } from './taskOrchestrator.js';
 import { runtimeBuildIdentity } from './buildIdentity.js';
+import { authoringDefinitions } from './authoringSchemas.js';
+import { callAuthoringTool } from './authoringTools.js';
 
 type ToolArgs = Record<string, any>;
+const authoringProfile = process.env.SPINE_MCP_TOOL_PROFILE === 'authoring';
+const authoringToolNames = new Set(authoringDefinitions.map(tool => tool.name));
 
 const server = new Server(
   {
@@ -124,7 +128,7 @@ const server = new Server(
   {
     capabilities: {
       tools: {listChanged:true},
-      resources:{subscribe:false,listChanged:false},prompts:{},logging:{},
+      ...(authoringProfile ? {} : { resources:{subscribe:false,listChanged:false},prompts:{} }),logging:{},
     },
   },
 );
@@ -953,6 +957,7 @@ tools.push(...creationReferenceDefinitions as any);
 tools.push(...catalogToolDefinitions as any);
 tools.push(...creationControlDefinitions as any);
 tools.push(taskToolDefinition as any);
+tools.push(...authoringDefinitions as any);
 tools.push(...armCalibrationToolDefinitions as any);
 tools.push({name:'spine_get_workspace_tree',description:'有界只读工程树，忽略生成/凭据目录和链接；支持稳定分页，不执行求解。',inputSchema:{type:'object',additionalProperties:false,properties:{projectId:projectIdProperty,root:{type:'string'},depth:{type:'integer',minimum:0,maximum:6,default:3},maxEntries:{type:'integer',minimum:1,maximum:2000,default:500},pageSize:{type:'integer',minimum:1,maximum:500,default:500},cursor:{type:'string'},details:{type:'boolean',default:false},kinds:{type:'array',items:{type:'string'}}}}} as any);
 for (const tool of tools) {
@@ -971,7 +976,10 @@ const toolValidators=new Map(tools.map(tool=>{
   for(const required of schema.required??[])if(!schema.properties?.[required])throw new Error(`工具 schema 缺少必填字段声明：${tool.name}.${required}`);
   return[tool.name,schemaProvider.getValidator(schema)];
 }));
-const toolCatalog=new ToolCatalog(tools);
+const authoringExtras = new Set(['spine_agent_ping', 'spine_get_workspace_tree', 'spine_get_tool_catalog']);
+const toolCatalog = authoringProfile
+  ? new ToolCatalog(tools.filter(tool => authoringToolNames.has(tool.name) || authoringExtras.has(tool.name)), false)
+  : new ToolCatalog(tools);
 server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools:toolCatalog.list() }));
 async function syncRoots() {
   if (!server.getClientCapabilities()?.roots) return;
@@ -990,11 +998,13 @@ server.oninitialized = () => { rootsReady = syncRoots().catch(e => { process.std
 server.onclose=()=>{void connectionMonitor?.stop().catch(()=>{});};
 server.setNotificationHandler(RootsListChangedNotificationSchema, async () => { await syncRoots(); });
 async function protocolRead<T>(fn:()=>Promise<T>|T):Promise<T>{try{await rootsReady;return await fn();}catch(error){const payload=hostFailure(error);throw new McpError(ErrorCode.InvalidParams,payload.message,payload);}}
-server.setRequestHandler(ListResourcesRequestSchema,request=>protocolRead(()=>listResources(request.params?.cursor)));
-server.setRequestHandler(ReadResourceRequestSchema,request=>protocolRead(()=>readResource(request.params.uri)));
-server.setRequestHandler(ListResourceTemplatesRequestSchema,()=>({resourceTemplates}));
-server.setRequestHandler(ListPromptsRequestSchema,()=>({prompts}));
-server.setRequestHandler(GetPromptRequestSchema,request=>protocolRead(()=>getPrompt(request.params.name,request.params.arguments)));
+if (!authoringProfile) {
+  server.setRequestHandler(ListResourcesRequestSchema,request=>protocolRead(()=>listResources(request.params?.cursor)));
+  server.setRequestHandler(ReadResourceRequestSchema,request=>protocolRead(()=>readResource(request.params.uri)));
+  server.setRequestHandler(ListResourceTemplatesRequestSchema,()=>({resourceTemplates}));
+  server.setRequestHandler(ListPromptsRequestSchema,()=>({prompts}));
+  server.setRequestHandler(GetPromptRequestSchema,request=>protocolRead(()=>getPrompt(request.params.name,request.params.arguments)));
+}
 
 server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
   const name = request.params.name;
@@ -1016,7 +1026,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     const invoke=()=>name.includes('workspace') ? callTool(name,args) : runInWorkspace(args.projectId,()=>callTool(name,args,extra.signal,progress));
     const rawResult = await runTask({signal:extra.signal,progress:progressToken===undefined?undefined:(_current,_total,message)=>progress(message??'正在处理')},async()=>{const result=await invoke();checkpoint('工具执行');return result;});
     const result=toolCatalog.projectActions(args.responseDetail==='full'?rawResult:summarizeHostResult(rawResult,name));
-    if(progressToken!==undefined){progressNumber++;await server.notification({method:'notifications/progress',params:{progressToken,progress:progressNumber,total:progressNumber,message:'本次工具执行结束；执行成功不代表视觉批准。'}}).catch(()=>{});}
+    if(progressToken!==undefined){progressNumber++;await server.notification({method:'notifications/progress',params:{progressToken,progress:progressNumber,total:progressNumber,message:authoringToolNames.has(name)?'操作完成。':'本次工具执行结束；执行成功不代表视觉批准。'}}).catch(()=>{});}
     const images = pickImages(result);
     const imageData=(result as any)?.__imageData;
     if (result && typeof result === 'object') delete (result as any).__images;
@@ -1050,6 +1060,7 @@ function pickImages(r: any): string[] {
 async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progress?:(stage:string)=>void) {
   const {responseDetail:_responseDetail,...input}=args;args=input;
   const context = name.includes('workspace') ? {} : getWorkspaceContext(args.projectId);
+  if(authoringToolNames.has(name))return callAuthoringTool(name,args,context);
   if(name==='spine_get_tool_catalog')return toolCatalog.describe(args.group);
   if(name==='spine_set_tool_groups'){const result=toolCatalog.select(args);if(args.dryRun===false)await server.notification({method:'notifications/tools/list_changed'});return result;}
   if(name==='spine_execute_task')return executeTask(args,context);

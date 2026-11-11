@@ -15,6 +15,7 @@ import { HostObservation } from './hostObservation.js';
 import { HostRollout } from './hostRollout.js';
 import { protectHostFile as protect } from './hostFileProtection.js';
 import type { HostEditProfile } from './hostPosePatch.js';
+import { authoringObservationFrame, readAuthoringObservation } from './authoringStore.js';
 const installRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const secret=()=>randomBytes(32).toString('hex');
 const matches=(actual:unknown,expected:string)=>typeof actual==='string'&&actual.length===expected.length&&timingSafeEqual(Buffer.from(actual),Buffer.from(expected));
@@ -56,6 +57,21 @@ export async function startHostServer(context:ToolContext,options:{port?:number;
       const isControl=controlProtected&&matches(request.headers['x-spine-host-control'],control);
       if(controlRoute&&!isControl)throw new HostError('CONTROL_REQUIRED','该端点仅允许受保护的 MCP 控制通道。',403);
       if(request.method==='GET'){
+        if(url.pathname==='/api/authoring'){
+          const state=await readAuthoringObservation(context);
+          json(response,200,{instanceId,state:state?{...state,preview:state.preview?{
+            id:state.preview.id,revision:state.preview.revision,times:state.preview.times,duration:state.preview.duration,
+          }:null}:null});
+          return;
+        }
+        if(url.pathname==='/api/authoring/frame'){
+          const now=Date.now();frames=frames.filter(time=>now-time<1000);
+          if(frames.length>=20){response.setHeader('Retry-After','1');throw new HostError('RATE_LIMITED','frame 每秒最多 20 次。',429);}
+          frames.push(now);
+          const result=await authoringObservationFrame(url.searchParams.get('id')??'',Number(url.searchParams.get('index')??-1),context);
+          response.writeHead(200,{'Content-Type':'image/png','Cache-Control':'no-store','X-Revision':String(result.revision)});
+          response.end(result.bytes);return;
+        }
         if(url.pathname==='/api/state'||url.pathname==='/api/capabilities'){
           const state={...await store.state(url.pathname==='/api/capabilities'||url.searchParams.get('includeCapabilities')!=='false'),application,instanceId,startedAt,security:{mode:securityMode,controlProtected},preview:pageState,
             rollout:rollout.status(),observation:observation.status()};

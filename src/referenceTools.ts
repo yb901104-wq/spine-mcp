@@ -5,6 +5,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { withFileLock } from './jobTools.js';
 
 const CONTACT_CELL_W = 256, CONTACT_CELL_H = 280;
 
@@ -143,6 +144,7 @@ export async function analyzeReferenceGif(args: { filePath: string; outputDir?: 
   const raw = await readFile(resolveWorkspacePath(args.filePath, context));
   if(!raw.subarray(0,6).toString().startsWith('GIF8'))return analyzeRasterReference(args,raw,context);
   const gif = parseGIF(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength)), frames = decompressFrames(gif, true);
+  const delays = (gif.frames as Array<{ image?: unknown; gce?: { delay?: number } }>).filter(frame => frame.image).map(frame => frame.gce?.delay);
   if (!frames.length || frames.length > 1000 || gif.lsd.width * gif.lsd.height > 4194304) throw new Error('参考 GIF 为空或超出处理上限。');
   const dir = args.outputDir ?? `previews/jobs/reference-${randomUUID()}`, absolute = resolveWorkspacePath(dir, context); await mkdir(absolute, { recursive: true });
   const c = createCanvas(gif.lsd.width, gif.lsd.height), ctx = c.getContext('2d');
@@ -157,10 +159,12 @@ export async function analyzeReferenceGif(args: { filePath: string; outputDir?: 
     ctx.drawImage(patch, f.dims.left, f.dims.top);
     const pixels = ctx.getImageData(0, 0, c.width, c.height).data;
     for (let p = 0; p < pixels.length; p += 4) if (pixels[p + 3]) { const x = p / 4 % c.width, y = Math.floor(p / 4 / c.width); minX = Math.min(minX, x); minY = Math.min(minY, y); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); }
-    const hash = createHash('sha256').update(pixels).digest('hex'), delay = f.delay > 0 ? f.delay : (args.fallbackDelay ?? 100);
+    const hash = createHash('sha256').update(pixels).digest('hex');
+    const originalDelay = delays[i] === undefined ? null : delays[i]! * 10;
+    const delay = originalDelay && originalDelay > 0 ? originalDelay : (args.fallbackDelay ?? 100);
     const frameBounds = boundsFromPixels(pixels, c.width, c.height);
     const filePath = `${dir}/frame-${String(i).padStart(4, '0')}.png`; await writeFile(resolveWorkspacePath(filePath, context), c.toBuffer('image/png'));
-    entries.push({ index: i, time: time / 1000, delay, originalDelay: f.delay, delayCorrected: !f.delay, hash, duplicateOf: seen.get(hash) ?? null, filePath, frameBounds, appearanceDelta: calculateAppearanceDelta(previousPixels, pixels, c.width, c.height), bboxMotion: bboxMotion(previous?.frameBounds, frameBounds, c.width, c.height) });
+    entries.push({ index: i, time: time / 1000, delay, originalDelay, delayCorrected: !originalDelay, hash, duplicateOf: seen.get(hash) ?? null, filePath, frameBounds, appearanceDelta: calculateAppearanceDelta(previousPixels, pixels, c.width, c.height), bboxMotion: bboxMotion(previous?.frameBounds, frameBounds, c.width, c.height) });
     if (!seen.has(hash)) seen.set(hash, i); time += delay; previous = { frame: f, saved, frameBounds }; previousPixels = new Uint8ClampedArray(pixels);
   }
   const phases = args.phases ?? [];
@@ -185,12 +189,57 @@ export async function extractReferenceKeyframes(args: { manifestPath: string; co
   return { ok: true, sourceHash: r.sourceHash, candidateMode: args.candidateMode ?? 'uniform', keyframes: keys, phases: r.phases, warnings: [...(r.warnings ?? []), '候选帧不自动批准，仍需逐阶段参考标注与视觉审查。'], keyframeSheet: sheet, __images: [sheet] };
 }
 
+export async function referenceManifest(filePath: string, context: ToolContext) {
+  const sha = async () => createHash('sha256').update(await readFile(resolveWorkspacePath(filePath, context))).digest('hex');
+  const hash = await sha(), dir = `previews/authoring/reference-v1-${hash}`, manifestPath = `${dir}/reference-manifest.json`;
+  return withFileLock(manifestPath, context, async () => {
+    const existing = await readFile(resolveWorkspacePath(manifestPath, context), 'utf8').then(JSON.parse).catch(() => null);
+    if (existing?.sourceHash === hash && Array.isArray(existing.frames)) return { ...existing, manifestPath, filePath };
+    const report = await analyzeReferenceGif({ filePath, outputDir: dir }, context);
+    if (report.sourceHash !== hash || await sha() !== hash) throw new Error('参考文件在解码时发生变化。');
+    return report;
+  });
+}
+
+export async function readReferenceFrames(args: { filePath: string; startFrame?: number; endFrame?: number; start?: number; end?: number;
+  offset?: number; limit?: number; view?: 'sheet' | 'frames' | 'metadata' }, context: ToolContext) {
+  if (args.start !== undefined && args.end !== undefined && args.end < args.start ||
+      args.startFrame !== undefined && args.endFrame !== undefined && args.endFrame < args.startFrame) throw new Error('参考查询的结束范围早于起始范围。');
+  const manifest = await referenceManifest(args.filePath, context);
+  const start = args.start ?? 0, end = args.end ?? manifest.duration;
+  const frames: ReferenceFrameEntry[] = manifest.frames;
+  const match = frames.filter(frame => frame.index >= (args.startFrame ?? 0) && frame.index <= (args.endFrame ?? Infinity) &&
+    frame.time + frame.delay / 1000 > start + 1e-9 && frame.time <= end + 1e-9);
+  const offset = args.offset ?? 0, limit = args.view === 'frames' ? Math.min(3, args.limit ?? 1) : args.limit ?? 12;
+  const page = match.slice(offset, offset + limit);
+  const contactSheet = args.view !== 'frames' && args.view !== 'metadata' && page.length
+    ? await buildReferenceContactSheet({ frames: page, dir: manifestDir(manifest.manifestPath), name: `page-${randomUUID()}.png`,
+      columns: Math.min(4, page.length), maxTiles: limit, context }) : null;
+  return { filePath: args.filePath, sourceHash: manifest.sourceHash, manifestPath: manifest.manifestPath, duration: manifest.duration,
+    frameCount: frames.length, matchedFrames: match.length, nextOffset: offset + page.length < match.length ? offset + page.length : null,
+    frames: page, contactSheet, delayUnit: 'ms', timeUnit: 's',
+    __images: contactSheet ? [contactSheet] : args.view === 'frames' ? page.map(frame => frame.filePath) : [] };
+}
+
+function webpFrameDelays(raw: Buffer) {
+  if (raw.toString('ascii', 0, 4) !== 'RIFF' || raw.toString('ascii', 8, 12) !== 'WEBP') return [];
+  const delays: number[] = [];
+  for (let start = 12; start + 8 <= raw.length;) {
+    const size = raw.readUInt32LE(start + 4), data = start + 8;
+    if (data + size > raw.length) break;
+    if (raw.toString('ascii', start, start + 4) === 'ANMF' && size >= 16) delays.push(raw.readUIntLE(data + 12, 3));
+    start = data + size + (size % 2);
+  }
+  return delays;
+}
+
 async function analyzeRasterReference(args:any,raw:Buffer,context:ToolContext) {
  const meta=await sharp(raw,{animated:true,limitInputPixels:4194304*1000}).metadata();const pages=meta.pages??1,width=meta.width!,height=meta.pageHeight??meta.height!;
  if(pages>1000||width*height>4194304||pages*width*height>64000000)throw new Error('参考图片超出处理上限。');
  const dir=args.outputDir??`previews/jobs/reference-${randomUUID()}`;await mkdir(resolveWorkspacePath(dir,context),{recursive:true});const decoded=await sharp(raw,{animated:true}).ensureAlpha().raw().toBuffer();const bytes=width*height*4;if(decoded.length!==pages*bytes)throw new Error('参考帧解码尺寸不匹配。');
  const frames: ReferenceFrameEntry[]=[],seen=new Map<string,number>();let time=0;let previousPixels: ArrayLike<number>|undefined;let previousBounds:any;
- for(let i=0;i<pages;i++){const pixels=decoded.subarray(i*bytes,(i+1)*bytes),hash=createHash('sha256').update(pixels).digest('hex'),delay=meta.delay?.[i]||args.fallbackDelay||100,filePath=`${dir}/frame-${String(i).padStart(4,'0')}.png`,frameBounds=boundsFromPixels(pixels,width,height);await sharp(pixels,{raw:{width,height,channels:4}}).png().toFile(resolveWorkspacePath(filePath,context));frames.push({index:i,time:time/1000,delay,originalDelay:meta.delay?.[i]??null,delayCorrected:!meta.delay?.[i],hash,duplicateOf:seen.get(hash)??null,filePath,frameBounds,appearanceDelta:calculateAppearanceDelta(previousPixels,pixels,width,height),bboxMotion:bboxMotion(previousBounds,frameBounds,width,height)});if(!seen.has(hash))seen.set(hash,i);time+=delay;previousPixels=new Uint8ClampedArray(pixels);previousBounds=frameBounds;}
+ const delays=webpFrameDelays(raw);
+ for(let i=0;i<pages;i++){const pixels=decoded.subarray(i*bytes,(i+1)*bytes),hash=createHash('sha256').update(pixels).digest('hex'),originalDelay=delays[i]??meta.delay?.[i]??null,delay=originalDelay||args.fallbackDelay||100,filePath=`${dir}/frame-${String(i).padStart(4,'0')}.png`,frameBounds=boundsFromPixels(pixels,width,height);await sharp(pixels,{raw:{width,height,channels:4}}).png().toFile(resolveWorkspacePath(filePath,context));frames.push({index:i,time:time/1000,delay,originalDelay,delayCorrected:!originalDelay,hash,duplicateOf:seen.get(hash)??null,filePath,frameBounds,appearanceDelta:calculateAppearanceDelta(previousPixels,pixels,width,height),bboxMotion:bboxMotion(previousBounds,frameBounds,width,height)});if(!seen.has(hash))seen.set(hash,i);time+=delay;previousPixels=new Uint8ClampedArray(pixels);previousBounds=frameBounds;}
  const columns=args.columns??4,maxTiles=args.maxTiles??12;assertContactSheetOptions(columns,maxTiles);
  const candidateMode=args.candidateMode??'uniform',keyposeCandidates=candidateMode==='keypose'?buildKeyposeCandidates(frames,width,height,args.candidateCount??8,args.minCandidateGap):undefined;
  const result={ok:true,version:2,filePath:args.filePath,sourceHash:createHash('sha256').update(raw).digest('hex'),format:meta.format,width,height,duration:time/1000,estimatedPeriod:time/1000,loop:args.loop??(meta.loop===0),frames,phases:args.phases??[],candidateMode,keyposeCandidates,warnings:['图像关键点需要 Agent 标注；总时长不能直接证明完整动作周期。','候选帧只供人工审查，不自动成为 KEY pose 或阶段。'],manifestPath:`${dir}/reference-manifest.json`,contactSheet:await buildReferenceContactSheet({frames:(keyposeCandidates??frames.filter((e:any)=>e.duplicateOf===null)) as any,dir,name:`frames-${columns}.png`,columns,maxTiles,context})};await writeFile(resolveWorkspacePath(result.manifestPath,context),JSON.stringify(result,null,2));return {...result,__images:[result.contactSheet]};

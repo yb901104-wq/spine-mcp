@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import gifenc from 'gifenc';
 import { createCanvas, loadImage } from '@napi-rs/canvas';
-import { analyzeReferenceGif, extractReferenceKeyframes } from '../src/referenceTools.js';
+import { analyzeReferenceGif, extractReferenceKeyframes, readReferenceFrames } from '../src/referenceTools.js';
 
 const { GIFEncoder, quantize, applyPalette } = gifenc;
 const DIR = 'test-output/reference-contact-sheet';
@@ -28,6 +28,20 @@ async function writeFixtureGif(): Promise<string> {
 }
 
 test.before(async () => { await rm(DIR, { recursive: true, force: true }); });
+
+test('按时间分页保留重复参考帧、原始延迟和原图', async () => {
+  await writeFixtureGif();
+  const context = { workspaceRoot: DIR };
+  const first = await readReferenceFrames({ filePath: 'probe.gif', start: 0.4, end: 0.6, limit: 2 }, context);
+  assert.deepEqual(first.frames.map(frame => frame.index), [4, 5]);
+  assert.equal(first.frames[1].duplicateOf, 4);
+  assert.equal(first.frames[1].originalDelay, 100);
+  assert.equal(first.nextOffset, 2);
+  const next = await readReferenceFrames({ filePath: 'probe.gif', start: 0.4, end: 0.6, offset: 2, view: 'frames' }, context);
+  assert.deepEqual(next.frames.map(frame => frame.index), [6]);
+  assert.deepEqual(next.__images, [next.frames[0].filePath]);
+  assert.equal(next.nextOffset, null);
+});
 
 test('参考 GIF 分析产出联系表，并以图片回传给模型', async () => {
   const gifPath = await writeFixtureGif();

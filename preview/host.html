@@ -6,6 +6,12 @@
 </style></head><body><main><aside><h1>AI Spine 动画工作区</h1><small>Agent 驱动编辑与审查。页面显示明确版本的实际结果；连接状态不代表动作已通过。</small>
 <label for="document">工程内文档路径</label><input id="document" placeholder="例如 poses/standing.json"><button id="open">打开</button><button id="refresh">刷新画面</button>
 <p id="message">等待显式打开工程或文档。</p><h2>创作检查</h2><pre id="quality" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre><details><summary>连接与版本详情</summary><pre id="status"></pre><pre id="debug"></pre></details></aside><section id="stage" style="gap:12px;flex-wrap:wrap"><figure style="margin:0;max-width:30%"><figcaption>参考（原图坐标）</figcaption><img id="reference" alt="当前阶段参考" style="max-width:100%"></figure><figure style="margin:0;max-width:40%"><figcaption id="current-label">当前候选</figcaption><img id="frame" alt="当前文档所选帧的实际渲染"><div id="playback-view" style="width:480px;height:480px;max-width:100%" hidden></div><div id="playback-controls" hidden><button id="play-pause">播放</button><label for="play-time">本地播放时间（不产生批准）</label><input id="play-time" type="range" min="0" step="0.001" value="0"><output id="play-position">0.000s</output><label for="play-stage">关键姿态定位</label><select id="play-stage"><option value="">选择阶段</option></select><p id="play-binding" style="overflow-wrap:anywhere"></p></div></figure><figure style="margin:0;max-width:25%"><figcaption id="previous-label">前次候选（仅诊断对照）</figcaption><img id="previous" alt="前次候选" style="max-width:100%"></figure></section></main><div id="player"></div>
+<section id="authoring" hidden style="max-width:880px;margin:20px auto;padding:20px">
+<h2>动画草稿</h2><p id="authoring-status" role="status"></p>
+<img id="authoring-frame" alt="草稿实际 runtime 预览" style="max-width:100%;max-height:560px">
+<div id="authoring-controls" hidden><button id="authoring-play">播放</button>
+<label for="authoring-time">播放时间</label><input id="authoring-time" type="range" min="0" step="0.001" value="0">
+<output id="authoring-position">0.000s</output></div></section>
 <script src="/vendor/spine-player.js"></script><script>
 const token=document.querySelector('meta[name="x-spine-host-token"]').content,headers={'X-Spine-Host-Token':token};let state=null,player=null,lastEventId='',objectURL=null,pageActive=true;
 const visibility=()=>pageActive?document.visibilityState:'hidden';
@@ -68,4 +74,48 @@ try{
 }catch(e){result.error=e.message;}try{await api('/api/capture',result);}catch(e){message.textContent=e.message;}finally{document.getElementById('player').style.opacity='0';}}
 async function events(){while(true){try{const response=await fetch('/api/events',{headers:{...headers,...(lastEventId?{'Last-Event-ID':lastEventId}:{})}});if(!response.ok)throw Error('事件连接失败');const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='';while(true){const{done,value}=await reader.read();if(done)break;buffer+=decoder.decode(value,{stream:true});let index;while((index=buffer.indexOf('\n\n'))>=0){const block=buffer.slice(0,index);buffer=buffer.slice(index+2);const type=block.match(/^event: (.+)$/m)?.[1],data=block.match(/^data: (.+)$/m)?.[1],id=block.match(/^id: (.+)$/m)?.[1];if(id)lastEventId=id;if(type==='capture-request'&&data)void capture(JSON.parse(data));else if(type)void refresh(!['evaluation-task-updated','observation-updated'].includes(type));}}}catch(e){connectionLost(e);}await new Promise(r=>setTimeout(r,1000));}}
 setInterval(()=>{if(pageActive){void api('/api/state',{heartbeat:true,loaded:!!player,playing:localPlaying,visibilityState:visibility()}).catch(()=>{});if(state?.evaluationTasks?.active?.length)void refresh(false).catch(connectionLost);}},1000);void refresh().catch(connectionLost);void events();
+
+const authoringPanel=document.getElementById('authoring'), authoringStatus=document.getElementById('authoring-status');
+const authoringFrame=document.getElementById('authoring-frame'), authoringTime=document.getElementById('authoring-time');
+const authoringPlay=document.getElementById('authoring-play'), authoringControls=document.getElementById('authoring-controls');
+const authoringPosition=document.getElementById('authoring-position');
+let draftPreview=null,draftFrameUrl=null,draftFrameKey='',draftFrameRequest=0,draftPlaying=false,draftStartedAt=0,draftPosition=0;
+function stopDraftPlayback(){draftPlaying=false;authoringPlay.textContent='播放';}
+async function showDraftFrame(time){
+  const preview=draftPreview;if(!preview)return;
+  authoringPosition.textContent=`${time.toFixed(3)}s`;
+  let index=preview.times.findLastIndex(sample=>sample<=time+1e-8);if(index<0)index=0;
+  const key=`${preview.id}:${index}`;if(key===draftFrameKey)return;
+  const request=++draftFrameRequest;draftFrameKey=key;
+  try{
+    const result=await fetch(`/api/authoring/frame?id=${encodeURIComponent(preview.id)}&index=${index}`,{headers});
+    if(!result.ok)throw new Error('当前画面不可用');
+    const blob=await result.blob();if(request!==draftFrameRequest)return;
+    if(draftFrameUrl)URL.revokeObjectURL(draftFrameUrl);
+    draftFrameUrl=URL.createObjectURL(blob);authoringFrame.src=draftFrameUrl;
+  }catch{if(request===draftFrameRequest)draftFrameKey='';}
+}
+async function refreshAuthoring(){
+  const result=await api('/api/authoring');const draft=result.state;
+  authoringPanel.hidden=!draft;if(!draft)return;
+  if(document.body.firstElementChild!==authoringPanel)document.body.prepend(authoringPanel);
+  authoringStatus.textContent=`${draft.animation} · 修订 ${draft.revision} · ${({edited:'待预览',rendering:'渲染中',ready:'预览就绪',error:'预览失败'})[draft.status]??draft.status}`+
+    (draft.preview&&draft.preview.revision!==draft.revision?` · 画面为修订 ${draft.preview.revision}`:'')+(draft.error?` · ${draft.error}`:'');
+  if(draftPreview?.id===draft.preview?.id)return;
+  draftPreview=draft.preview;draftFrameKey='';draftFrameRequest++;stopDraftPlayback();
+  if(draftFrameUrl){URL.revokeObjectURL(draftFrameUrl);draftFrameUrl=null;}
+  authoringFrame.removeAttribute('src');authoringControls.hidden=!draftPreview;
+  if(draftPreview){
+    draftPosition=draftPreview.times[0]??0;authoringTime.max=String(draftPreview.duration);
+    authoringTime.value=String(draftPosition);authoringPlay.disabled=draftPreview.times.length<2||!draftPreview.duration;
+    await showDraftFrame(draftPosition);
+  }
+}
+authoringTime.addEventListener('input',()=>{stopDraftPlayback();draftPosition=Number(authoringTime.value);void showDraftFrame(draftPosition);});
+authoringPlay.addEventListener('click',()=>{if(draftPlaying){stopDraftPlayback();return;}if(!draftPreview?.duration)return;
+  draftStartedAt=performance.now()-draftPosition*1000;draftPlaying=true;authoringPlay.textContent='暂停';});
+setInterval(()=>{if(pageActive&&draftPlaying&&draftPreview?.duration){
+  draftPosition=((performance.now()-draftStartedAt)/1000)%draftPreview.duration;authoringTime.value=String(draftPosition);void showDraftFrame(draftPosition);
+}},85);
+setInterval(()=>{if(pageActive)void refreshAuthoring().catch(()=>{});},850);void refreshAuthoring().catch(()=>{});
 </script></body></html>
