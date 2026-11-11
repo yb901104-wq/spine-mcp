@@ -1,6 +1,7 @@
 node_modules/
 dist/
 test-output/
+.test-output-*/
 backups/
 .spine-mcp/
 previews/

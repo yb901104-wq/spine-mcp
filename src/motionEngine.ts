@@ -17,9 +17,13 @@ export interface BoneMapping {
   follow?: Array<{ bone: string; driver: string; gain: number; delay?: number; velocityGain?: number; stiffness?: number; damping?: number }>;
   channels?: Record<string, string>;
   slotAttachments?: Record<string, string | null>;
+  /** 段骨骼到点状透视控制骨骼的显式映射。命名约定只能辅助发现，不能替代此字段。 */
+  depthPoints?: Record<string, string>;
+  /** 可选的分组表达；与 depthPoints 互相校验，不改变既有 limb chain。 */
+  perspectiveChains?: Partial<Record<"leftArm" | "rightArm" | "leftLeg" | "rightLeg", Array<{ bone: string; perspectivePoint?: string }>>>;
 }
 
-export interface CharacterMapping { character: string; version: 1 | 2; bones: BoneMapping; notes?: string; semanticChecks?: string[]; status?: "draft" | "validated" | "calibrated" | "confirmed"; atlasPath?: string; skin?: string; sourceHash?: string; rigHash?: string; reportPath?: string; confirmedBy?: string; confirmedAt?: string; calibration?: { scale: number; lengths?: Record<string, [number, number]>; origin?: [number, number] }; }
+export interface CharacterMapping { character: string; version: 1 | 2; bones: BoneMapping; /** 兼容文档约定的顶层透视点表；旧数据也可放在 bones.depthPoints。 */ depthPoints?: Record<string, string>; perspectiveChains?: BoneMapping['perspectiveChains']; notes?: string; semanticChecks?: string[]; status?: "draft" | "validated" | "calibrated" | "confirmed"; atlasPath?: string; skin?: string; sourceHash?: string; rigHash?: string; reportPath?: string; confirmedBy?: string; confirmedAt?: string; calibration?: { scale: number; lengths?: Record<string, [number, number]>; origin?: [number, number] }; }
 export interface MotionEvent { time: number; type: "contact" | "recoil" | "passing" | "high" | "release"; side?: "left" | "right"; }
 export interface MotionDefinition {
   name: string;
@@ -34,7 +38,7 @@ export interface MotionDefinition {
   frames?: Array<{ perspective?: PerspectiveInput; presentation?: {attachments?: Record<string,string|null>;drawOrder?: string[]}; action?: {driver: string | null}; bendDirections?: Partial<Record<"leftLeg"|"rightLeg"|"leftArm"|"rightArm", 1|-1>>; time: number; body: { x: number; y: number; rotate: number }; head?: number; channels?: Record<string, { rotate: number; x: number; y: number }>; targets: Partial<Record<"leftFoot" | "rightFoot" | "leftHand" | "rightHand", { x: number; y: number; angle?: number; contact?: boolean }>> }>;
   groundY?: number;
 }
-export interface MotionBuildOptions extends WriteOptions { filePath: string; mappingPath: string; motionPath?: string; animation: string; duration?: number; overwrite?: boolean; atlasPath?: string; reviewToken?: string; rotationTolerance?: number; translationTolerance?: number; footContactTolerance?: number; handTolerance?: number; vertexTolerance?: number; preview?: boolean; diagnosticPreview?: boolean; }
+export interface MotionBuildOptions extends WriteOptions { filePath: string; mappingPath: string; motionPath?: string; animation: string; duration?: number; overwrite?: boolean; atlasPath?: string; reviewToken?: string; rotationTolerance?: number; translationTolerance?: number; footContactTolerance?: number; handTolerance?: number; vertexTolerance?: number; preview?: boolean; diagnosticPreview?: boolean; retargetMode?: 'adaptive'|'strict'; workflowProfile?: 'creative'|'adaptive-preview'|'production'; }
 
 export async function readCharacterMapping(filePath: string, context: ToolContext = {}): Promise<CharacterMapping> {
   const value = JSON.parse(await readFile(resolveWorkspacePath(filePath, context), "utf8")) as CharacterMapping;
@@ -76,7 +80,23 @@ export function validateMapping(value: CharacterMapping, json?: any) {
     if ((limit.min !== undefined && !Number.isFinite(limit.min)) || (limit.max !== undefined && !Number.isFinite(limit.max)) || (limit.min ?? -Infinity) > (limit.max ?? Infinity)) throw new Error(`${name} 关节限制无效。`);
   }
   if (value.calibration && (!Number.isFinite(value.calibration.scale) || value.calibration.scale <= 0)) throw new Error("角色 scale 必须为正数。");
-  const referenced = [value.bones.body, value.bones.head, value.bones.root, ...(value.bones.leftArm ?? []), ...(value.bones.rightArm ?? []), ...(value.bones.leftLeg ?? []), ...(value.bones.rightLeg ?? []), ...Object.values(value.bones.anchors ?? {}).map(a => a!.bone), ...(value.bones.follow ?? []).flatMap(f => [f.bone, f.driver])].filter(Boolean) as string[];
+  const depthPoints = value.depthPoints ?? value.bones.depthPoints ?? {};
+  const perspectiveChains = value.perspectiveChains ?? value.bones.perspectiveChains ?? {};
+  const referenced = [value.bones.body, value.bones.head, value.bones.root, ...(value.bones.leftArm ?? []), ...(value.bones.rightArm ?? []), ...(value.bones.leftLeg ?? []), ...(value.bones.rightLeg ?? []), ...Object.values(value.bones.anchors ?? {}).map(a => a!.bone), ...(value.bones.follow ?? []).flatMap(f => [f.bone, f.driver]), ...Object.values(depthPoints)].filter(Boolean) as string[];
+  const chainEntries = (Object.entries(perspectiveChains) as Array<[string, Array<{bone:string; perspectivePoint?:string}>]>);
+  for (const [limb, entries] of chainEntries) {
+    if (!Array.isArray(entries) || entries.some(entry => !entry || typeof entry.bone !== "string" || (entry.perspectivePoint !== undefined && typeof entry.perspectivePoint !== "string"))) throw new Error(`mapping.bones.perspectiveChains.${limb} 结构无效。`);
+    const chain = value.bones[limb as keyof BoneMapping] as string[] | undefined;
+    if (!chain || entries.length !== chain.length) throw new Error(`mapping.bones.perspectiveChains.${limb} 必须与对应实体骨骼链等长。`);
+    entries.forEach((entry, index) => {
+      if (entry.bone !== chain[index]) throw new Error(`mapping.bones.perspectiveChains.${limb}[${index}] 必须对应实体骨骼 ${chain[index]}。`);
+      if (entry.perspectivePoint !== undefined && depthPoints[entry.bone] !== entry.perspectivePoint) throw new Error(`perspectiveChains.${limb}[${index}] 与 depthPoints.${entry.bone} 不一致。`);
+    });
+  }
+  for (const [segment, point] of Object.entries(depthPoints)) {
+    const limbBones = [value.bones.leftArm, value.bones.rightArm, value.bones.leftLeg, value.bones.rightLeg].flatMap(chain => chain ?? []);
+    if (!point || segment === point || !limbBones.includes(segment)) throw new Error(`depthPoints.${segment} 必须指向肢体段对应的独立透视点骨骼。`);
+  }
   if (json) {
     const bonesByName = new Map((json.bones ?? []).map((bone: any) => [bone.name, bone]));
     const names = new Set(bonesByName.keys());
@@ -87,13 +107,23 @@ export function validateMapping(value: CharacterMapping, json?: any) {
       if (!chain) continue;
       for (let index = 1; index < chain.length; index++) {
         const parent = (bonesByName.get(chain[index]) as any)?.parent;
-        if (parent !== chain[index - 1]) {
-          throw new Error(`mapping.bones.${name} 不是连续骨骼链：${chain[index]} 的 parent 应为 ${chain[index - 1]}，实际为 ${parent ?? "root"}。`);
+        const expected = chain[index - 1], allowedParent = depthPoints[expected];
+        if (parent !== expected && parent !== allowedParent) {
+          throw new Error(`mapping.bones.${name} 不是连续骨骼链：${chain[index]} 的 parent 应为 ${expected}${allowedParent ? ` 或透视点 ${allowedParent}` : ""}，实际为 ${parent ?? "root"}。`);
         }
       }
     }
+    const seenPoints = new Set<string>();
+    for (const [segment, point] of Object.entries(depthPoints)) {
+      if (!names.has(segment) || !names.has(point)) throw new Error(`depthPoints 引用了不存在的骨骼：${segment} -> ${point}。`);
+      if (seenPoints.has(point)) throw new Error(`透视点骨骼不能被多个段重复使用：${point}。`);
+      seenPoints.add(point);
+      const pointBone = bonesByName.get(point) as any;
+      if (pointBone?.parent !== segment) throw new Error(`透视点 ${point} 必须是段骨骼 ${segment} 的直接子级，实际 parent 为 ${pointBone?.parent ?? "root"}。`);
+      if ([...value.bones.leftArm ?? [], ...value.bones.rightArm ?? [], ...value.bones.leftLeg ?? [], ...value.bones.rightLeg ?? []].includes(point)) throw new Error(`透视点 ${point} 不能同时作为实体肢体段。`);
+    }
   }
-  return { ok: true, character: value.character, referencedBones: [...new Set(referenced)] };
+  return { ok: true, character: value.character, referencedBones: [...new Set(referenced)], depthPoints: Object.entries(depthPoints).map(([bone, perspectivePoint]) => ({ bone, perspectivePoint })) };
 }
 
 export function validateMotion(value: MotionDefinition) {

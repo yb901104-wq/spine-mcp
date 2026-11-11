@@ -1,9 +1,10 @@
-import gifenc from 'gifenc';
+import * as gifencModule from 'gifenc';
 import {createCanvas} from '@napi-rs/canvas';
 import {solvePoseKernel} from './animationKernel.js';
 import {rasterFrame} from './rasterRenderer.js';
 import {objectHash,HostError} from './hostContracts.js';
 import {captureRuntimeState} from './captureEvidence.js';
+const gifenc: any = (gifencModule as any).GIFEncoder ? gifencModule : (gifencModule as any).default;
 const {GIFEncoder,quantize,applyPalette}=gifenc;
 /** 校准批准前的诊断扫掠：不生成 pose/motion 资产或提交令牌。 */
 export async function calibrationSweep(pose:any,source:any,visualReader:any,record:any,samples:any[],images:any,count=33,duration=2,signal?:AbortSignal,progress?:(stage:string)=>void){
@@ -26,7 +27,9 @@ export async function calibrationSweep(pose:any,source:any,visualReader:any,reco
     const numeric=solved.report.perspective,actual=captureRuntimeState(solved.skeleton),chain=source.mapping.bones[record.limb].map((name:string)=>solved.skeleton.findBone(name)),joints=chain.map((bone:any)=>[bone.worldX,bone.worldY]);
     if(previous)joints.forEach((point:number[],j:number)=>{maximumJointStep=Math.max(maximumJointStep,Math.hypot(point[0]-previous[j][0],point[1]-previous[j][1])/source.mapping.calibration.scale);});previous=joints;
     const bnd=solved.report.bounds,cameraContains=bnd.minX>=bounds.minX&&bnd.maxX<=bounds.maxX&&bnd.minY>=bounds.minY&&bnd.maxY<=bounds.maxY;
-    frames.push({time:duration*i/(count-1),input,numericOk:numeric.ok===true,branchOk:numeric.branchOk,projectionError:numeric.projectionError,cameraContains,runtimeHash:objectHash(actual)});
+    // 扫掠的 numericOk 只表示 runtime 求解、末端方向和分支本身可回读；投影比例残差单独报告，不能因诊断样本尚未精确拟合就把整段 GIF 判为不可观察。
+    const numericOk=Number.isFinite(numeric.projectionError)&&numeric.branchOk===true&&numeric.compensationOk!==false;
+    frames.push({time:duration*i/(count-1),input,numericOk,branchOk:numeric.branchOk,projectionError:numeric.projectionError,cameraContains,runtimeHash:objectHash(actual)});
     const canvas=rasterFrame(solved.skeleton,images,bounds,320,320,'#20242b'),pixels=canvas.getContext('2d').getImageData(0,0,320,320).data,palette=quantize(pixels,256),delay=Math.max(10,(Math.round((i+1)*duration*100/count)-Math.round(i*duration*100/count))*10);encodedDurationMs+=delay;
     gif.writeFrame(applyPalette(pixels,palette),320,320,{palette,delay,repeat:0});ctx.drawImage(canvas,i%6*160,Math.floor(i/6)*180,160,160);ctx.fillStyle='#eff';ctx.font='11px sans-serif';ctx.fillText(`${frames.at(-1).time.toFixed(2)}s / ${input.upper.toFixed(3)}`,i%6*160+4,Math.floor(i/6)*180+174);
   }

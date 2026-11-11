@@ -1,5 +1,15 @@
 # MCP 操作清单
 
+> **2026-11-07 施工收口注记**：总体编排仍按“输入核验 → 参考覆盖 → 目标角色求解 → runtime 回读 → 动态证据 → Host 最终裁判”分层。新增的 `depthPoints`/`perspectiveChains` 是 mapping 结构字段，不是新 MCP 工具；点状骨骼必须显式映射、直接挂在对应实体段下，命名后缀只作提示。`spine_run_reference_retarget_flow` 现在返回 `completedSteps`、`blockingReasons`、`nextAction`，未覆盖阶段不会被插值成完整动作。adaptive-preview 的阶段诊断产物按 `stages/<stageId>/` 分目录保存，避免阶段之间覆盖 GIF、姿态和 manifest；动态候选仍必须同时查看覆盖报告、语义失败和 runtime 回读。`spine_validate_json` 使用当前 workspace context 读取文件，避免多工程调用误读。
+
+> **统一入口注记**：常见任务优先调用 `spine_execute_task`。它统一返回 `status`、`workflowProfile`、`retargetMode`、`stopLayer`、`completedSteps`、`blockingReasons`、`nextAction`、`artifacts` 和提交资格字段；默认自动生成视觉证据，最多执行到可提交，真实写入仍需显式 Host 提交。production 现状和遗留问题见 [production现状与遗留问题](production现状与遗留问题.md)，本轮不改变 production 门禁。
+>
+> **真实验证注记**：修改后必须 `npm run build` 并重启 MCP/Host，再用提示词触发统一入口和 MCP 预览工具。`npm run validate:real-mcp` 保存 prompt、tool trace、build identity、Host 会话和 GIF 哈希；旧 `dist`、旧 Host、内部函数直调用或手工 GIF 不计入案例验收。
+
+> **2026-11-08 输入审查注记**：`spine_execute_task` 的参考重定向默认先执行 `inputAudit`。审查包含两部分：参考 pose 的可见 keypose 点是否落在真实角色前景附近；目标 visualRig 的四肢节点是否仍为骨骼原点、髋膝置信度是否过低、face 是否缺少前脸/鼻尖依据。任一失败都在 `binding` 停止，返回 `artifacts.inputAudit`、具体角色/阶段、`spine_calibrate_visual_rig` 或 `spine_render_reference_pose_sheet` 的下一动作；不会继续调用 IK，也不会生成可提交结果。显式 `options.auditInputs:false` 只保留兼容旧调用，不能把该结果解释为 keypose 或 mapping 已解决。
+
+> **2026-11-08 keypose/mapping 修复注记**：输入审查现在另外检查参考 keypose 的 anatomical identity、支撑脚、朝向和前后证据，并检查 visualRig 的语义段、骨骼链和 attachment 是否重复或错绑。错误会分别返回 `KEYPOSE_*`、`VISUAL_RIG_*`、`MAPPING_*` 阻断码；`adaptive` 只能处理合法语义上的体型差异，不能放宽错误关键点或错误映射。
+
 > **2026-11-02 状态注记**：当前工具总数 **116**（MCP stdio 实测，含 `spine_check_editor_import`）。L1/L2 批 0–3 的协议能力（capabilities / resources / prompts / 工程树 / 会话缓存 / 进度取消 / 结构化错误 / 廉价勘察）主体已实施、待核销，见 [L1/L2 工单](plans/mcp-l1-l2.md) 与 [当前构建证据](plans/l1-l2-closeout-20261102.json)。本轮**未新增、修改、重命名或删除任何 MCP 工具**，工具清单正文不变；动态工具目录 `spine_set_tool_groups` 的目标客户端实测仍待验。下文各节按各自日期追溯，标题中的 115 / 112 等为当时批次数字，保留不改。
 
 
@@ -34,6 +44,7 @@
 
 | 工具 | 中文说明及边界 |
 |---|---|
+| `spine_execute_task` | 常用任务统一入口；`taskType` 支持 `inspect`、`create_pose`、`create_motion`、`retarget_reference`、`prepare_review`。默认自动选择 `creative` 或 `adaptive-preview`，显式正式审查可进入 `production`；统一返回 `status`、`stopLayer`、`completedSteps`、`blockingReasons`、`nextAction`、`artifacts` 和提交资格字段。默认 dryRun，自动到可提交，真实写入仍需 Host 提交，不绕过现有安全门禁。 |
 | `spine_start_creation_task` | `characterId/referencePath` 必填；`stages` 可省略以进入 referencePreparation；有阶段时接受根清单或已确认提交的文档。`sequencePath/isolatedDirectory` 可选；默认 dryRun。新、未登记序列仅可在 stages 为空的全新隔离副本中登记，须已通过参考/rig/对应校验且 rig 属于当前角色。不覆盖原清单/冻结记录或复制 Writer/journal。 |
 | `spine_get_creation_task` | `taskId` 必填；事件 `eventOffset/eventLimit` 分页。返回冻结新鲜度、currentStageId、stageContexts 及当前 Host；每阶段至多 20 个提交候选（truncated 表示未列全），逐个标记哈希/绑定验证，顺序不表示时间。计量为已落盘调用/时间/文本字节/图片数；token 为 null。当前阶段已打开时不建议跳回源修订。 |
 | `spine_select_creation_stage` | `taskId/stageId`；当前已有文档时必须完整 expectedRevision。可选 `documentPath` 继续该阶段已提交的后续修订；必须沿 journal 来源链归于冻结原文档，且类型/角色/参考/sequence/stage/standard 绑定不变、字节匹配。省略则打开原文档；默认 dryRun，不自动 pin/批准。 |
@@ -66,7 +77,7 @@
 
 | 工具 | 当前隔离 C2 语义 |
 |---|---|
-| spine_retarget_motion | 只制作当前同名 v2 motion 的精确 4.1.24 拟合候选；默认 dryRun，拒绝 false/旧写入令牌。已有动画必须显式 overwrite:true；不得缩放周期或放宽门限。成功返回完整报告、原速 GIF、联系图和准备 reviewToken，无提交授权 |
+| spine_retarget_motion | 制作当前同名 v2 motion 的目标角色化 4.1.24 候选；默认 `retargetMode:"adaptive"` 与 `dryRun`，显式 `strict` 保留完整结构门禁。握持、接地、不可达和语义硬约束仍阻断；几何适配写入报告。已有动画必须显式 overwrite:true；成功返回完整报告、原速 GIF、联系图和准备 reviewToken，无提交授权 |
 | spine_render_animation_comparison | 新增 expectedRevision；用当前 targetManifestPath/poseManifestPath 和明确参考 phaseMap 生成上下同步对比；仅写当前 live 目录 |
 | spine_review_animation | 新增 expectedRevision、playerManifestPath 和 checkResults；准备令牌绑定当前候选。批准需 transitions/timing/followThrough/keyPoses/loop 各自 pass 及不同具体理由、当前已登记 player 证据，有参考时还需同步对比；默认只预演 |
 | spine_host_pin | intent 新增 animation，仅限隔离 C2 当前 4.1.24 motion 的源动画提交意图；asset 原语义不变 |
@@ -193,7 +204,7 @@ WinForms 源码已嵌入 Host 工作台，读取相同工作区的观察发现�
 
 三态语义：`pass` / `fail` / `unverifiable`。缺标注、缺切片或证据不足一律 `unverifiable`，并使 `ok:false`；不允许用其他指标的低误差抵消。`report.headBox` 与 `report.headIntrusions` 记录手腕进入头部包围盒的重叠量，属硬门禁。
 
-比较报告过期判定改用 `comparisonFingerprint`（只绑定 `version/policyFingerprint/ok/各指纹/指标的 id+required+status+error`），文案或非判据字段变化不再让历史报告失效。
+比较报告过期判定改用 `comparisonFingerprint`，除 `version/policyFingerprint/ok/各指纹` 外绑定每项指标的 `id/required/status/error/constraintTier/blocking/relaxed/preserved`；文案或非判据字段变化不再让历史报告失效。
 
 `spine_analyze_reference_gif` 兼容静态图片、GIF 和动画 WebP；名称为兼容旧客户端保留。渲染帧接口支持显式 `times`，原速 GIF 不接受非均匀指定时间。
 
@@ -446,8 +457,8 @@ v2 重定向的真实写入约定：
 | 工具 | 用途 |
 |---|---|
 | spine_get_preview_report | 摘要读取；detailed:true 返回完整轨迹 |
-| spine_analyze_reference_gif | 拆帧、帧延迟、重复帧与参考 manifest |
-| spine_extract_reference_keyframes | 选取无重复参考姿态 |
+| spine_analyze_reference_gif | 拆帧、帧延迟、重复帧与参考 manifest；`candidateMode:"keypose"` 输出运动变化、保持段和转折候选（只读、待审查） |
+| spine_extract_reference_keyframes | 默认选取无重复代表帧；`candidateMode:"keypose"` 合并均匀覆盖和运动候选，不自动批准姿态 |
 | spine_set_foot_target | 修改 v2 motion 脚目标，重定向时重算 IK |
 | spine_lock_foot_contact | 标记主要姿态接触地面 |
 | spine_set_hand_target | 修改手腕目标，重定向时重算单臂 IK |
@@ -465,8 +476,10 @@ v2 重定向的真实写入约定：
 |---|---|
 | spine_calibrate_visual_rig | 校准视觉节点、骨骼链和真实附件影响；输出全图、分解图、节点图 |
 | spine_review_visual_rig | 绑定确认与证据校验；原点候选不得自动确认 |
-| spine_retarget_reference_pose | 按参考两段方向和目标链长生成诊断草稿；脚参与，冲突停止 |
+| spine_retarget_reference_pose | 按 `retargetMode` 生成目标角色化诊断草稿；adaptive 保留语义并报告几何适配，strict 保留完整结构门禁 |
 | spine_compare_pose_graphs | 比较实际视觉节点；可传 candidatePath/animation/time 复核真正动画 |
+
+跨角色重定向工具支持 `retargetMode:"adaptive"|"strict"`，新请求默认 `adaptive`。adaptive 以目标角色 neutral pose、躯干局部框架和校准骨长重建动作，返回 `status`、`retargetQuality`、`semanticQuality`、`structuralQuality`、`styleQuality`、`preservedConstraints`、`relaxedConstraints` 与 `residuals`，并将失败拆成 `semanticFailures`、`reachabilityFailures`、`structuralResiduals`、`styleResiduals`；strict 保留完整结构门禁。旧资产缺少该字段时按 strict 复核。`semantic-pass` 与 `geometric-adapted` 仍须经过 runtime、visualPoints、同步对比和人工视觉审查，`unresolved` 不生成正式 expected target。
 
 均支持 projectId，默认 dryRun:true；detailed:true 可读取完整附件数据，默认摘要。spine_create_pose_draft/adjust_pose 支持 visualRigPath/correspondence；spine_review_pose 新增 comparisonPath、stageId、逐项 checkResults。真实写入再次核验实际动画关键时间。参数与实例见 [关节切片驱动姿态流程](关节切片驱动姿态流程.md)。
 
@@ -479,6 +492,14 @@ v2 重定向的真实写入约定：
 实际验证脚本：`scripts/acceptance-animation-diagnostic.mjs`。先执行 `references`，Agent 查看参考连线图并填写逐阶段参考判断后执行 `animate`。脚本通过实际 MCP stdio 求解和渲染，仅创建工作流草稿，不自动批准任何目标姿态或完整动画。环境变量 `ANIMATION_DIAGNOSTIC_DIR` 可指定已有实例相对目录。
 
 中文负例：把手目标设到骨骼不可达范围，再请求完整动画诊断。预期得到失败报告及 GIF、原 JSON 哈希未变、无提交令牌；请求真实写入仍应拒绝。不要把 GIF 生成成功描述为动画匹配通过。
+
+### `body.gif → npc1` 单阶段诊断
+
+`spine_generate_reference_retarget_target` 支持 `diagnosticPreview:true`（必须同时 `dryRun:true`）。调用时应绑定同一份 `referenceGifPath`、动作级 `sequencePath`、已批准 `referencePosePath`、目标 `visualRigPath` 和 `standardPosePath`；可传 `referenceGifHash`、`referencePoseHash`、`sequenceHash`、`visualRigHash`、`mappingHash`、`targetCharacterHash` 做输入指纹核对，任一不一致立即返回 `REFERENCE_BINDING_MISMATCH`。
+
+诊断出口会保留 solver 目标帧、`visualPoints`、失败约束、`residuals` 和冲突，并生成文件名含 `body-to-npc1`、参考 GIF 哈希、`retargetMode`、`diagnostic` 的目标 GIF、比较 GIF 和 manifest。比较 GIF 使用简洁双栏布局，顶部明确显示 `DIAGNOSTIC ONLY`、`UNRESOLVED`、`READY ONLY` 和未审查帧数量；详细失败项仍只放在 manifest，避免画面文字遮挡角色。manifest 必须标明 `diagnosticOnly:true`、`formalEligible:false`、`readyToCommit:false`，不生成 `reviewToken`，不写入目标角色。`body.sequence.json` 只有 `ready` 时，`coverageStages` 只能为 `['ready']`，`reviewedFrameIndices` 只包含已审查帧，其余帧列在 `unreviewedFrameIndices` 和 `unreviewedFrameCount` 中，不能插值成完整动作或宣称 5.88 秒动作通过。
+
+为便于人工观察时序，诊断包另外生成 `*-dynamic-diagnostic.gif`。该 GIF 左栏逐帧播放原始参考 GIF，右栏保持当前已审查阶段求解出的目标姿态（`dynamicTargetMode:"stage-hold"`，并记录 `targetStageId`）。它用于查看该阶段的目标外观和参考时序关系，不代表目标角色已经完成整段动作。完整覆盖不足时，GIF 顶部会显示未审查帧数量；它不能替代 runtime actual、完整阶段标注或正式验收。
 
 ## 解剖持杖手、身体视角及切片遮挡检查
 
@@ -546,3 +567,8 @@ resources/list/read/templates 已实现：spine://session、pose/reference/rig/m
 `spine_preview_frame` 的不透明 region 渲染路径已修正四样本覆盖率；`spine_preview_capture` 的 rendererParity 现在携带 scope，登记的三张真实 player 合成 region 基线通过。范围之外不据此推断一致，截图准入与视觉批准仍独立；没有新增公开工具。
 
 `spine_host_open` 等需要连接 Host 的调用由工程生命周期协调器串行切换：旧 Host shutdown→等待事务/锁/发现文件退役→连接新工程；未确认旧写入权时返回 WRITE_OWNERSHIP_UNCERTAIN。`spine://session` 等只读探测不触发关闭或启动。协议版本变更需重新加载 MCP 并刷新 tools/list。
+# 参考动作编排与覆盖校验（2026-11）
+
+- `spine_validate_reference_coverage`：核对参考 GIF、`sequence.json` 与已审查 reference pose 的帧/阶段覆盖，输出 `unreviewedFrameCount`、`coverageStages` 和 `REFERENCE_COVERAGE_INCOMPLETE`，不自动插值未标注帧。
+- `spine_run_reference_retarget_flow`：按 `workflowProfile` 编排参考动作重定向。`adaptive-preview` 只生成已审查阶段的诊断候选；`production` 要求完整覆盖后才允许继续生成目标 motion、runtime 候选、原速 GIF 和同步动态对比 GIF；所有阶段、输入哈希、失败项和 `completedSteps` 写入 flow manifest，默认 `dryRun`，不写入角色。当前 `body.gif` 只有 `ready` 阶段时，入口会在 coverage 门禁停止，不把其余帧插值成完整动作。
+- `workflowProfile`：`creative`、`adaptive-preview`、`production`。`retargetMode` 仍为 `adaptive`（默认）或 `strict`。

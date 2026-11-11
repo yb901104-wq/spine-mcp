@@ -34,10 +34,10 @@ function pose(scale = 1) {
   };
 }
 
-test('v4 策略与 policies/pose-comparison.v4.json 一致', async () => {
-  const file = JSON.parse(await readFile('policies/pose-comparison.v4.json', 'utf8'));
+test('v5 策略与 policies/pose-comparison.v5.json 一致', async () => {
+  const file = JSON.parse(await readFile('policies/pose-comparison.v5.json', 'utf8'));
   assert.deepEqual(file, comparisonPolicy);
-  assert.equal(comparisonPolicy.version, 4);
+  assert.equal(comparisonPolicy.version, 5);
   for (const key of ['lineDegrees', 'twistDegrees', 'silhouetteWidth', 'facingRatio', 'reach', 'torsoHeight', 'torsoOffset', 'footOffset', 'headGap', 'headDegrees']) {
     assert.equal(typeof (comparisonPolicy as any)[key], 'number', `缺少数值门限 ${key}`);
   }
@@ -81,6 +81,21 @@ test('图像坐标镜像与 normalizedGraph 使用同一规则', () => {
   const left = normalizeImagePoints(points, 'left');
   assert.deepEqual([left.head.x, left.head.y], [-3, -4]);
   assert.throws(() => normalizeImagePoints(points, 'up' as any), /朝向/);
+});
+
+test('adaptive 将目标角色几何残差降级为适配而保留语义门禁', () => {
+  const reference:any={points:pose(),facing:'right',support:{left:true,right:true},grip:{points:{left:pose().leftWrist,right:pose().rightWrist}}};
+  const normalized=normalizeImagePoints(pose(),'right');
+  const target:any={points:normalized,facing:'right',support:{left:true,right:true},grip:{points:{left:normalized.leftWrist,right:normalized.rightWrist}}};
+  target.points.leftWrist={x:.25,y:.1};target.points.rightWrist={x:-.25,y:.1};
+  const adaptive=compareGraphs(reference,target,{left:'left',right:'right',basis:'test',anatomicalIdentity:'same',projectedOrder:'fixed'},{retargetMode:'adaptive'});
+  const wrist=adaptive.metrics.find((m:any)=>m.id==='arm.left.wristTorsoHeight');
+  assert.equal(wrist.constraintTier,'structuralSoft');
+  assert.equal(wrist.relaxed,true);
+  assert.equal(adaptive.ok,true);
+  assert.equal(adaptive.metrics.some((m:any)=>m.blocking&&m.status!=='pass'),false);
+  const strict=compareGraphs(reference,target,{left:'left',right:'right',basis:'test',anatomicalIdentity:'same',projectedOrder:'fixed'},{retargetMode:'strict'});
+  assert.equal(strict.ok,false);
 });
 
 // 真实负例：同一份未修改的 v4 目标，v2 策略曾 27 项全 pass 却被真人退回。

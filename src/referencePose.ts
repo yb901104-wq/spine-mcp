@@ -16,6 +16,57 @@ const read = async (p:string,c:ToolContext)=>JSON.parse(await readFile(resolveWo
 const hashFile = async (p:string,c:ToolContext)=>hashObject((await readFile(resolveWorkspacePath(p,c))).toString('base64'));
 
 const depthParts = ['leftArm','rightArm','leftLeg','rightLeg','torso','head'];
+
+/**
+ * 对参考图上的关键点做最小的视觉一致性审查。
+ *
+ * 参考点不是 IK 坐标，但可见点仍必须落在角色前景附近。过去只校验
+ * JSON 结构，导致背景坐标也能被标成 confirmed，随后所有弯曲方向和支撑
+ * 关系都会从错误输入开始。这里不尝试识别关节，只回答一个更基础的问题：
+ * 该点是否真的靠近这张参考图中的角色像素。
+ */
+export async function auditReferenceObservationImage(observation:any,c:ToolContext={}):Promise<any>{
+ const image=await loadImage(await readFile(resolveWorkspacePath(observation.imagePath,c)));
+ const canvas=createCanvas(image.width,image.height),ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);
+ const pixels=ctx.getImageData(0,0,image.width,image.height).data;
+ const sample=(x:number,y:number)=>{const xx=Math.max(0,Math.min(image.width-1,Math.round(x))),yy=Math.max(0,Math.min(image.height-1,Math.round(y))),i=(yy*image.width+xx)*4;return [pixels[i],pixels[i+1],pixels[i+2],pixels[i+3]];};
+ const bgSamples=[sample(0,0),sample(image.width-1,0),sample(0,image.height-1),sample(image.width-1,image.height-1)];
+ const bg=bgSamples[0];
+ const foreground=(x:number,y:number)=>{const p=sample(x,y);if(p[3]===0)return false;const nearestBg=Math.min(...bgSamples.map(b=>Math.abs(p[0]-b[0])+Math.abs(p[1]-b[1])+Math.abs(p[2]-b[2])));return nearestBg>30;};
+ let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+ for(let y=0;y<image.height;y+=2)for(let x=0;x<image.width;x+=2)if(foreground(x,y)){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}
+ const nearest=(x:number,y:number,maxRadius=24)=>{if(foreground(x,y))return 0;for(let r=1;r<=maxRadius;r++){for(let dy=-r;dy<=r;dy++)for(const dx of [-r,r])if(foreground(x+dx,y+dy))return r;for(let dx=-r+1;dx<=r-1;dx++)for(const dy of [-r,r])if(foreground(x+dx,y+dy))return r;}return Infinity;};
+ const points:any[]=[];
+ for(const [role,p] of Object.entries(observation.points??{}) as any){if(!Number.isFinite(p?.x)||!Number.isFinite(p?.y))continue;const distance=nearest(p.x,p.y);const hard=p.visibility==='visible'&&distance>8;const warning=p.visibility==='occluded'&&p.estimated===true&&distance>24;points.push({role,visibility:p.visibility,distance:Number.isFinite(distance)?distance:null,ok:!hard&&!warning,blocking:hard,warning,code:hard?'KEYPOSE_FOREGROUND_MISMATCH':warning?'KEYPOSE_OCCLUDED_FOREGROUND_MISMATCH':undefined,reason:hard?'可见点远离参考角色前景，不能作为已确认关节。':warning?'遮挡推测点也远离角色前景，请重新估计。':'参考点位于角色前景附近。'});}
+ const silhouette:any[]=[];for(const [band,value] of [['shoulder',observation.silhouette?.shoulder],['hip',observation.silhouette?.hip]] as any){for(const [side,p] of Object.entries(value??{}) as any){if(!Number.isFinite(p?.x)||!Number.isFinite(p?.y))continue;const distance=nearest(p.x,p.y);silhouette.push({role:`silhouette.${band}.${side}`,visibility:p.visibility,distance:Number.isFinite(distance)?distance:null,ok:distance<=12,blocking:p.visibility==='visible'&&distance>12,reason:distance>12?'轮廓点远离参考角色前景。':'轮廓点位于角色前景附近。'});}}
+ const blocking=[...points,...silhouette].filter(v=>v.blocking);const warnings=[...points,...silhouette].filter(v=>v.warning);return {ok:blocking.length===0,blocking,warnings,points,silhouette,image:{width:image.width,height:image.height,background:bg.slice(0,3),backgroundSamples:bgSamples.map(v=>v.slice(0,3)),foregroundBounds:Number.isFinite(minX)?{minX,minY,maxX,maxY}:null}};
+}
+
+/**
+ * 对单个 keypose 做语义绑定审查。
+ * 图像前景检查只能回答“点是否落在角色附近”，不能回答左右身份、支撑、朝向
+ * 和遮挡依据是否足够。这里把这些信息单独列出，避免 adaptive 模式把错误标注
+ * 当成可以放宽的几何残差。
+ */
+export function auditReferenceKeypose(observation:any, imageAudit:any){
+ const blocking:any[]=[];
+ const identity=observation?.anatomicalIdentity;
+ if(identity?.status!=='confirmed'||!identity?.basis?.trim())blocking.push({code:'KEYPOSE_IDENTITY_UNCONFIRMED',message:'参考 keypose 缺少已确认的解剖左右身份及依据。'});
+ if(!['left','right'].includes(observation?.facing))blocking.push({code:'KEYPOSE_FACING_MISSING',message:'参考 keypose 缺少 facing(left/right)。'});
+ const support=observation?.support;
+ if(typeof support?.left!=='boolean'||typeof support?.right!=='boolean')blocking.push({code:'KEYPOSE_SUPPORT_UNCONFIRMED',message:'参考 keypose 必须明确左右支撑脚状态。'});
+ const orientation=observation?.orientation;
+ if(!orientation||!['front','threeQuarter','profile','back'].includes(orientation.band)||!orientation.basis?.trim())blocking.push({code:'KEYPOSE_ORIENTATION_UNCONFIRMED',message:'参考 keypose 缺少有效朝向档位和依据。'});
+ const depth=observation?.depth;
+ if(!depth||!Array.isArray(depth.evidence)||depth.evidence.length<1)blocking.push({code:'KEYPOSE_DEPTH_UNCONFIRMED',message:'参考 keypose 缺少前后遮挡/重叠证据。'});
+ const required=['head','body','leftShoulder','rightShoulder','leftHip','rightHip'];
+ for(const role of required){const p=observation?.points?.[role];if(!p||p.visibility==='unknown')blocking.push({code:'KEYPOSE_REQUIRED_POINT_UNKNOWN',role,message:`必要节点 ${role} 未知，不能建立稳定动作语义。`});}
+ for(const [role,p] of Object.entries(observation?.points??{}) as any){
+  if(p?.visibility==='visible'&&Number.isFinite(p.confidence)&&p.confidence<0.6)blocking.push({code:'KEYPOSE_LOW_CONFIDENCE_VISIBLE',role,message:`可见节点 ${role} 的置信度低于 0.6。`});
+  if(p?.visibility==='occluded'&&p?.estimated!==true&&Number.isFinite(p?.x))blocking.push({code:'KEYPOSE_OCCLUDED_ESTIMATE_UNDECLARED',role,message:`遮挡节点 ${role} 带有坐标但未声明 estimated:true。`});
+ }
+ return {ok:!!imageAudit?.ok&&blocking.length===0,blocking,semantic:{identity:identity?.status??'missing',facing:observation?.facing??null,support:support??null,orientation:orientation?.band??null,depthEvidenceCount:depth?.evidence?.length??0}};
+}
 // 单点校验同时用于 15 个关节与 4 个轮廓点；未知点不得带坐标。
 function validateNodePoint(p:any,label:string){
  if(!p||!['visible','occluded','unknown'].includes(p.visibility))throw new Error(`必须声明 ${label} 的可见性；无法确定可填 unknown。`);

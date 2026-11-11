@@ -35,7 +35,8 @@ export const poseOperationArguments:Record<string,string[]>={
   spine_review_visual_rig:['projectId','visualRigPath','decision','reviewedBy','reason','dryRun'],
   spine_validate_pose_sequence:['projectId','sequencePath','posePaths','reportPath','dryRun'],
   spine_refine_reference_pose:['projectId','expectedRevision','posePath','outputPosePath','comparisonPath','reportPath','detailed','dryRun'],
-  spine_retarget_reference_pose:['projectId','expectedRevision','referencePosePath','visualRigPath','standardPosePath','posePath','sequencePath','stageId','correspondence','facing','time','id','weapon','headFromReference','weaponFromReference','diagnosticMode','reportPath','detailed','dryRun'],
+  spine_retarget_reference_pose:['projectId','expectedRevision','referencePosePath','visualRigPath','standardPosePath','posePath','sequencePath','stageId','correspondence','facing','time','id','weapon','headFromReference','weaponFromReference','retargetMode','workflowProfile','diagnosticMode','reportPath','detailed','dryRun'],
+  spine_generate_reference_retarget_target:['projectId','referencePosePath','visualRigPath','standardPosePath','sequencePath','stageId','correspondence','facing','targetTime','retargetMode','workflowProfile','retargetManifestPath','outputPath','referenceGifPath','referenceGifHash','referencePoseHash','sequenceHash','visualRigHash','mappingHash','targetCharacterHash','diagnosticOutputDir','diagnosticPreview','detailed','dryRun'],
   spine_compare_pose_graphs:['projectId','posePath','candidatePath','animation','time','reportPath','detailed','dryRun'],
   spine_create_reference_pose:['projectId','referencePosePath','observation','id','dryRun'],
   spine_render_reference_pose_sheet:['projectId','referencePosePaths','outputDir'],
@@ -49,8 +50,9 @@ export const poseOperationArguments:Record<string,string[]>={
   spine_adjust_pose:['projectId','posePath','outputPosePath','expectedRevision','patch','dryRun'],
   spine_render_pose_comparison:['projectId','posePaths','stageIds','targetTimes','outputDir','width','height','region'],
   spine_build_motion_from_poses:['projectId','expectedRevision','standardPosePath','keyPoses','motionPath','name','duration','loop','dryRun'],
+  spine_retarget_motion:['projectId','expectedRevision','filePath','mappingPath','motionPath','animation','duration','atlasPath','reviewToken','rotationTolerance','translationTolerance','footContactTolerance','handTolerance','vertexTolerance','preview','diagnosticPreview','retargetMode','workflowProfile','overwrite','dryRun','expectedHash','allowUnsupportedVersion'],
   spine_review_animation:['projectId','expectedRevision','reviewToken','manifestPath','playerManifestPath','decision','reviewedBy','reason','checks','checkResults','issues','dryRun'],
-  spine_render_animation_comparison:['projectId','expectedRevision','targetManifestPath','referenceManifestPath','poseManifestPath','phaseMap','outputDir','layout','opacity','times'],
+  spine_render_animation_comparison:['projectId','expectedRevision','targetManifestPath','referenceManifestPath','poseManifestPath','phaseMap','retargetManifestPath','outputDir','layout','opacity','times','visualRigPath','metrics','correspondence','targetFacing','acceptanceMode'],
   spine_review_pose:['projectId','posePath','manifestPath','expectedRevision','comparisonPath','decision','reviewedBy','reason','checks','checkResults','stageId','issues','dryRun'],
   spine_set_pose_target:['projectId','posePath','outputPosePath','expectedRevision','dryRun',...Object.keys(targetProperties)],
   spine_set_pose_channel:['projectId','posePath','outputPosePath','expectedRevision','dryRun',...Object.keys(channelProperties)],
@@ -61,7 +63,7 @@ export function validatePoseOperationArguments(tool:string,args:any,required:rea
   fields(args,allowed);
   for(const key of required)if(args[key]===undefined||args[key]===null)throw new Error(`${key} 必须提供。`);
   for(const key of Object.keys(args).filter(k=>k.endsWith('Path')))if(typeof args[key]!=='string'||!args[key].trim())throw new Error(`${key} 必须是非空路径。`);
-  for(const key of ['dryRun','render'])if(args[key]!==undefined&&typeof args[key]!=='boolean')throw new Error(`${key} 必须为布尔值。`);
+  for(const key of ['dryRun','render','diagnosticPreview'])if(args[key]!==undefined&&typeof args[key]!=='boolean')throw new Error(`${key} 必须为布尔值。`);
   if(tool==='spine_batch_pose_ops'){
     if(!Array.isArray(args.ops)||!args.ops.length||args.ops.length>200)throw new Error('ops 不能为空，且最多 200 项。');
     for(const op of args.ops)validatePoseCommand(op);

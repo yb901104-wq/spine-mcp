@@ -7,14 +7,15 @@
     "spine-json-mcp": "dist/server.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "tsx --test test/*.test.ts",
+    "build": "tsc -p tsconfig.json && node scripts/write-build-stamp.mjs",
+    "test": "tsx --test --test-concurrency=1 test/*.test.ts",
     "preview": "node dist/previewServer.js",
     "host": "node dist/hostServer.js",
     "host:creation": "node dist/creationTrialServer.js",
     "host:benchmark": "tsx scripts/benchmark-host.ts",
     "observer": "powershell -ExecutionPolicy Bypass -File scripts/start-observer.ps1",
-    "observer:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop-observer.ps1"
+    "observer:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop-observer.ps1",
+    "validate:real-mcp": "node scripts/validate-real-mcp-flow.mjs"
   },
   "dependencies": {
     "@esotericsoftware/spine-core": "4.1.56",

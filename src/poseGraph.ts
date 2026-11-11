@@ -1,17 +1,18 @@
 import { hashObject } from './mappingTools.js';
 import { compareActionSemantics, compareDepth } from './actionSemantics.js';
 import { analyzeReferenceParts, referencePartsPolicyVersion } from './referenceParts.js';
+import { constraintTier, isBlockingMetric, resolveRetargetMode, type RetargetMode } from './retargetPolicy.js';
 
 export type GraphPoint = {x:number;y:number;confidence?:number;visibility?:string};
 export const limbNodes:Record<string,string[]> = Object.fromEntries(['left','right'].flatMap(s=>[[s+'Arm',[s+'Shoulder',s+'Elbow',s+'Wrist']],[s+'Leg',[s+'Hip',s+'Knee',s+'Ankle']]]));
 export const graphEdges = [['head','body'], ...Object.values(limbNodes).flatMap(n=>[[n[0],n[1]],[n[1],n[2]]])];
 // 版本升级才可变更；MCP 不接受调用时门限覆盖。
 // v3 增加肩髋线、轮廓宽度、朝向幅度、肢体相对躯干与头部朝向；长度统一以躯干长归一。
-export const comparisonPolicy = Object.freeze({version:4,directionDegrees:15,flexionDegrees:15,stance:0.15,wrist:0.15,grip:0.15,extensionNeutral:0.15,bendNeutralDegrees:2,lineDegrees:12,twistDegrees:12,silhouetteWidth:0.15,facingRatio:0.25,reach:0.15,torsoHeight:0.12,torsoOffset:0.15,footOffset:0.2,headGap:0.2,headDegrees:18,headBandDegrees:[20,60]});
+export const comparisonPolicy = Object.freeze({version:5,directionDegrees:15,flexionDegrees:15,stance:0.15,wrist:0.15,grip:0.15,extensionNeutral:0.15,bendNeutralDegrees:2,lineDegrees:12,twistDegrees:12,silhouetteWidth:0.15,facingRatio:0.25,reach:0.15,torsoHeight:0.12,torsoOffset:0.15,footOffset:0.2,headGap:0.2,headDegrees:18,headBandDegrees:[20,60],constraintTiers:['semanticHard','structuralSoft','styleDiagnostic']});
 export const policyFingerprint = hashObject(comparisonPolicy);
 export const partObservationPolicyFingerprint=hashObject({version:referencePartsPolicyVersion,angularBudget:15,anisotropy:.5,uncertainty:'pixelCirclesAndOutline',fallback:'twoPointEstimated',oldGates:'unchanged'});
 // 只绑定判据本身：文案、uncertainties 或非判据字段变化不应让历史报告整体失效。
-export const comparisonFingerprint=(r:any)=>hashObject({version:r?.version,policyFingerprint:r?.policyFingerprint,...(r?.partObservations?{partObservationPolicyFingerprint:r.partObservationPolicyFingerprint}:{}),ok:r?.ok,poseFingerprint:r?.poseFingerprint,referenceFingerprint:r?.referenceFingerprint,visualRigFingerprint:r?.visualRigFingerprint,sequenceFingerprint:r?.sequenceFingerprint,metrics:(r?.metrics??[]).map((m:any)=>[m.id,m.required,m.status,m.error])});
+export const comparisonFingerprint=(r:any)=>hashObject({version:r?.version,policyFingerprint:r?.policyFingerprint,...(r?.partObservations?{partObservationPolicyFingerprint:r.partObservationPolicyFingerprint}:{}),ok:r?.ok,retargetMode:r?.retargetMode,poseFingerprint:r?.poseFingerprint,referenceFingerprint:r?.referenceFingerprint,visualRigFingerprint:r?.visualRigFingerprint,sequenceFingerprint:r?.sequenceFingerprint,metrics:(r?.metrics??[]).map((m:any)=>[m.id,m.required,m.status,m.error,m.constraintTier,m.blocking,m.relaxed,m.preserved])});
 export function finitePoint(p:any):p is GraphPoint {return !!p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&p.visibility!=='unknown';}
 export const distance=(a:GraphPoint,b:GraphPoint)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const direction=(a:GraphPoint,b:GraphPoint)=>Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
@@ -64,11 +65,15 @@ export function referenceBendDirections(observation:any,correspondence:any,targe
 export function validateCorrespondence(v:any){
  if(!v?.basis?.trim()||!['left','right'].includes(v.left)||!['left','right'].includes(v.right)||v.left===v.right||!v.anatomicalIdentity?.trim()||!v.projectedOrder?.trim())throw new Error('必须明确左右对应、解剖身份、画面前后关系及依据，禁止自动交换。');
 }
-export function compareGraphs(reference:any,target:any,correspondence:any){
+export function compareGraphs(reference:any,target:any,correspondence:any,options?:{retargetMode?:RetargetMode}){
  validateCorrespondence(correspondence);
+ const retargetMode=resolveRetargetMode(options?.retargetMode,true);
  const r=normalizedGraph(reference.points,reference.facing,true),t=normalizedGraph(target.points,target.facing);
- const metrics:any[]=compareActionSemantics(reference,target,correspondence);
- const add=(id:string,nodes:string[],rv:any,tv:any,error:number|null,tolerance:number|null,extra:any={})=>metrics.push({id,nodes,reference:rv,target:tv,error,tolerance,required:true,status:error===null||!Number.isFinite(error)?'unverifiable':error<=(tolerance??0)+1e-8?'pass':'fail',...extra});
+ const metrics:any[]=compareActionSemantics(reference,target,correspondence).map((m:any)=>({...m,constraintTier:constraintTier(m.id),blocking:isBlockingMetric(m,retargetMode)}));
+ const add=(id:string,nodes:string[],rv:any,tv:any,error:number|null,tolerance:number|null,extra:any={})=>{
+  const metric:any={id,nodes,reference:rv,target:tv,error,tolerance,required:true,status:error===null||!Number.isFinite(error)?'unverifiable':error<=(tolerance??0)+1e-8?'pass':'fail',...extra};
+  metric.constraintTier=constraintTier(id);metric.blocking=isBlockingMetric(metric,retargetMode);metrics.push(metric);
+ };
  const len=(p:any,n:string[])=>n.every(k=>finitePoint(p[k]))?distance(p[n[0]],p[n[1]])+distance(p[n[1]],p[n[2]]):NaN;
  const mapped:Record<string,GraphPoint>={};
  const ra=torsoAxis(r),ta=torsoAxis(t),axisKnown=ra&&ta&&distance(ra.hip,ra.shoulder)>1e-8&&distance(ta.hip,ta.shoulder)>1e-8;
@@ -183,6 +188,7 @@ export function compareGraphs(reference:any,target:any,correspondence:any){
   const error=part.usable&&rd!==null&&td!==null?lineError(rd,td)+(part.method==='contour'?part.axis!.sensitivityDegrees!:0):null;
   add(`part.${part.id}.axis`,nodes,rd,td,error,comparisonPolicy.directionDegrees,{required:part.method!=='twoPoint',method:part.method,uncertaintyIncluded:part.method==='contour',uncertaintyKnown:part.uncertaintyKnown,axis:'undirected',note:part.method==='twoPoint'?'回退为两点近似；沿用原 segment 方向门禁，不把缺失的轮廓/误差圆变成新增阻塞或精确匹配。':'参考轮廓主轴对 runtime 视觉关节轴；目标切片可见形状仍需独立审查。'});
  }
- for(const m of metrics){m.targetNodes=m.nodes;m.referenceNodes=m.nodes.map((k:string)=>k.startsWith('left')?correspondence.left+k.slice(4):k.startsWith('right')?correspondence.right+k.slice(5):k);}
- return {version:3,ok:metrics.filter(m=>m.required).every(m=>m.status==='pass'),policy:comparisonPolicy,policyFingerprint,...(partObservations?{partObservations,partObservationPolicyFingerprint}:{}),metrics,uncertainties:Object.entries(reference.points).filter(([,p]:any)=>p.visibility!=='visible'||p.confidence<.7).map(([node,p]:any)=>({node,visibility:p.visibility,confidence:p.confidence,basis:p.basis})),message:'必要指标独立判定；未知必要点、退回及超差阻止确认。头身中心连线仅用于旧数据诊断。'};
+ for(const m of metrics){m.constraintTier??=constraintTier(String(m.id??''));m.blocking=isBlockingMetric(m,retargetMode);m.targetNodes=m.nodes;m.referenceNodes=m.nodes.map((k:string)=>k.startsWith('left')?correspondence.left+k.slice(4):k.startsWith('right')?correspondence.right+k.slice(5):k);m.referenceValue=m.reference;m.targetValue=m.target;m.residual=m.error;m.relaxed=retargetMode==='adaptive'&&!m.blocking&&m.status==='fail';m.preserved=!!m.blocking&&m.status==='pass';}
+ return {version:3,retargetMode,ok:metrics.filter(m=>m.blocking).every(m=>m.status==='pass'),policy:comparisonPolicy,policyFingerprint,...(partObservations?{partObservations,partObservationPolicyFingerprint}:{}),metrics,uncertainties:Object.entries(reference.points).filter(([,p]:any)=>p.visibility!=='visible'||p.confidence<.7).map(([node,p]:any)=>({node,visibility:p.visibility,confidence:p.confidence,basis:p.basis})),message:retargetMode==='adaptive'?'语义硬约束独立判定；结构和风格差异作为适配残差。':'必要指标独立判定；未知必要点、退回及超差阻止确认。头身中心连线仅用于旧数据诊断。'};
 }
+

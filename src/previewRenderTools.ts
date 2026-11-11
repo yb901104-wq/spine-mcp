@@ -3,7 +3,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, open, unlink, access } from 'node:fs/promises';
 import path from 'node:path';
 import { createCanvas, loadImage } from '@napi-rs/canvas';
-import gifenc from 'gifenc';
+import * as gifencModule from 'gifenc';
+const gifenc: any = (gifencModule as any).GIFEncoder ? gifencModule : (gifencModule as any).default;
 const { GIFEncoder, quantize, applyPalette } = gifenc;
 import { loadMotionRuntime, worldVertices } from './motionRuntime.js';
 import { readSpineDocument, resolveWorkspacePath, type ToolContext } from './spineJson.js';
@@ -11,13 +12,14 @@ import { getWorkspaceRoot } from './workspaceTools.js';
 import { loadAtlasImages, rasterFrame, RASTER_RENDERER_VERSION } from './rasterRenderer.js';
 import { readCharacterMapping } from './motionEngine.js';
 import { withFileLock } from './jobTools.js';
+import { sampleVisualPoints } from './visualRig.js';
 
 export interface RenderOptions {
   filePath: string; atlasPath: string; animation: string; skin?: string;
   times?: number[]; fps?: number; frames?: number; width?: number; height?: number; scale?: number;
   background?: string; outputDir?: string; jobId?: string; mappingPath?: string; motionPath?: string;
   premultipliedAlpha?: boolean; mipmaps?: boolean; bounds?: { minX: number; minY: number; maxX: number; maxY: number };
-  jsonOverride?: any;
+  jsonOverride?: any; visualRigPath?: string;
 }
 const sha = (v: string | Buffer) => createHash('sha256').update(v).digest('hex');
 const rootOf = (c: ToolContext) => path.resolve(c.workspaceRoot ?? getWorkspaceRoot(c.projectId));
@@ -43,7 +45,8 @@ export async function createPreviewManifest(args: RenderOptions, context: ToolCo
   for (const page of runtime.atlas.pages) { const p = path.join(path.dirname(args.atlasPath), page.name); images.push({ path: p, hash: sha(await readFile(resolveWorkspacePath(p, context))) }); }
   const mappingHash = args.mappingPath ? sha(await readFile(resolveWorkspacePath(args.mappingPath, context))) : null;
   const motionHash = args.motionPath ? sha(await readFile(resolveWorkspacePath(args.motionPath, context))) : null;
-  const manifest = { version: 2, filePath: args.filePath, atlasPath: args.atlasPath, animation: args.animation, skin: effectiveSkin ?? null, jsonHash: args.jsonOverride ? sha(JSON.stringify(json)) : doc.hash, atlasHash: sha(raw), images, mappingHash, motionHash, runtime: '@esotericsoftware/spine-core@4.1.56', renderer: RASTER_RENDERER_VERSION, fps, frameCount, sampleTimes: args.times ?? null, duration: animation.duration, canvas: { width, height, background: args.background ?? '#20242b', scale: args.scale ?? 1 }, premultipliedAlpha: args.premultipliedAlpha ?? runtime.atlas.pages.some(p => p.pma), mipmaps: false, requestedBounds: args.bounds ?? null };
+  const visualRigHash = args.visualRigPath ? sha(await readFile(resolveWorkspacePath(args.visualRigPath, context))) : null;
+  const manifest = { version: 2, filePath: args.filePath, atlasPath: args.atlasPath, animation: args.animation, skin: effectiveSkin ?? null, jsonHash: args.jsonOverride ? sha(JSON.stringify(json)) : doc.hash, atlasHash: sha(raw), images, mappingHash, motionHash, visualRigPath: args.visualRigPath ?? null, visualRigHash, runtime: '@esotericsoftware/spine-core@4.1.56', renderer: RASTER_RENDERER_VERSION, fps, frameCount, sampleTimes: args.times ?? null, duration: animation.duration, canvas: { width, height, background: args.background ?? '#20242b', scale: args.scale ?? 1 }, premultipliedAlpha: args.premultipliedAlpha ?? runtime.atlas.pages.some(p => p.pma), mipmaps: false, requestedBounds: args.bounds ?? null };
   return { ...manifest, cacheKey: sha(JSON.stringify(manifest)), createdAt: new Date().toISOString() };
 }
 
@@ -61,15 +64,19 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
   try { lock = await open(lockPath, 'wx'); } catch { throw new Error('相同预览任务正在渲染，请稍后重试。'); }
   try {
     await jsonWrite(path.join(jobDir, 'status.json'), { jobId, status: 'rendering', input: manifest });
-    const cached = await readFile(path.join(cacheDir, 'preview-manifest.json'), 'utf8').then(JSON.parse).catch(() => null);
-    let result: any;
-    if (cached) {
-      for (const frame of cached.frames) await access(resolveWorkspacePath(frame, context));
-      result = { ...cached, cached: true, jobId };
+      const cached = await readFile(path.join(cacheDir, 'preview-manifest.json'), 'utf8').then(JSON.parse).catch(() => null);
+      let result: any;
+      const cacheMatchesVisualRig = !args.visualRigPath
+        ? !cached?.visualRigPath && cached?.visualPointsAvailable === false && typeof cached?.visualPointsUnavailableReason === 'string'
+        : cached?.visualRigPath === args.visualRigPath && cached?.visualRigHash === manifest.visualRigHash && cached?.visualPointsAvailable === true;
+      if (cached && cacheMatchesVisualRig) {
+        for (const frame of cached.frames) await access(resolveWorkspacePath(frame, context));
+        result = { ...cached, cached: true, jobId };
     } else {
       const doc = await readSpineDocument(args.filePath, context), rt = await loadMotionRuntime(args.jsonOverride ?? doc.json, args.atlasPath, context);
       const images = await loadAtlasImages(rt.atlas, args.atlasPath, context, manifest.premultipliedAlpha);
       const mapping = args.mappingPath ? await readCharacterMapping(args.mappingPath, context) : null;
+      const visualRig = args.visualRigPath ? JSON.parse(await readFile(resolveWorkspacePath(args.visualRigPath, context), 'utf8')) : null;
       const tracks: any[] = []; let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
       for (let i = 0; i < manifest.frameCount; i++) {
         await taskCheckpoint('动画预览');reportProgress(i,manifest.frameCount,'逐帧生成预览');
@@ -82,7 +89,9 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
           for (const role of ['body', 'head'] as const) { const b = s.findBone(mapping.bones[role] ?? ''); if (b) semantic[role] = { x: (b.worldX - origin[0]) / scale, y: (b.worldY - origin[1]) / scale }; }
           for (const [role, anchor] of Object.entries(mapping.bones.anchors ?? {})) { const b = s.findBone(anchor.bone); if (b) semantic[role] = { x: (b.worldX + b.a * anchor.point[0] + b.b * anchor.point[1] - origin[0]) / scale, y: (b.worldY + b.c * anchor.point[0] + b.d * anchor.point[1] - origin[1]) / scale }; }
         }
-        tracks.push({ time, semantic, bones: Object.fromEntries(s.bones.map(b => [b.data.name, { x: b.worldX, y: b.worldY }])) });
+        const sampledVisual = visualRig ? sampleVisualPoints(s, visualRig) : { points: {}, available: false, unavailableReason: '未提供 visualRigPath' };
+        const visualPoints = Object.fromEntries(Object.entries(sampledVisual.points).map(([role, point]: any) => [role, point.source === 'unavailable' ? point : { ...point, x: (point.x - origin[0]) / scale, y: (point.y - origin[1]) / scale }]));
+        tracks.push({ time, semantic, visualPoints, visualPointsAvailable: sampledVisual.available, visualPointsUnavailableReason: sampledVisual.unavailableReason, bones: Object.fromEntries(s.bones.map(b => [b.data.name, { x: b.worldX, y: b.worldY }])) });
       }
       if (!Number.isFinite(minX)) { minX = -1; minY = -1; maxX = 1; maxY = 1; }
       const pad = Math.max(maxX - minX, maxY - minY) * .08 + 1;
@@ -95,7 +104,10 @@ async function renderAnimationFramesLocked(args: RenderOptions, context: ToolCon
         const canvas = rasterFrame(rt.sample(args.animation, tracks[i].time, manifest.skin ?? undefined), images, bounds, manifest.canvas.width, manifest.canvas.height, manifest.canvas.background);
         const p = path.join(cacheDir, `frame-${String(i).padStart(4, '0')}.png`); await writeFile(p, canvas.toBuffer('image/png')); frames.push(relative(context, p));
       }
-      result = { ...manifest, ok: true, jobId, bounds, frames, trajectories: tracks, outputDir: relative(context, cacheDir), cached: false };
+      const visualPointRoles = [...new Set(tracks.flatMap((track:any) => Object.keys(track.visualPoints ?? {})))].sort();
+      const visualPointsAvailable = !!visualRig && tracks.length > 0 && tracks.every((track:any) => track.visualPointsAvailable === true);
+      const visualPointsUnavailableReason = visualPointsAvailable ? null : (!visualRig ? '未提供 visualRigPath，不能生成 visualPoints' : tracks.map((track:any) => track.visualPointsUnavailableReason).filter(Boolean).at(0) ?? 'visualPoints 不完整');
+      result = { ...manifest, ok: true, jobId, bounds, frames, trajectories: tracks, visualPointRoles, visualPointsAvailable, visualPointsUnavailableReason, outputDir: relative(context, cacheDir), cached: false };
       await jsonWrite(path.join(cacheDir, 'preview-manifest.json'), result);
     }
     await jsonWrite(path.join(jobDir, 'preview-manifest.json'), result);
@@ -124,6 +136,30 @@ export async function renderAnimationGif(args: RenderOptions, context: ToolConte
   gif.finish();reportProgress(r.frames.length,r.frames.length,'动画 GIF 已编码'); const p = resolveWorkspacePath(`${r.outputDir}/animation.gif`, context); await writeFile(p, gif.bytes());
   const stored=await readFile(resolveWorkspacePath(r.manifestPath,context),'utf8').then(JSON.parse);await jsonWrite(resolveWorkspacePath(r.manifestPath,context),{...stored,gifPath:relative(context,p),encodedDurationMs});
   return { ...r, gifPath: relative(context, p), encodedDurationMs, message: '已离线生成动画 GIF（按10ms量化并分配帧延迟）。' };
+}
+
+/** 将已有 PNG 帧编码为只读诊断 GIF。不会读取或修改 Spine 角色文件。 */
+export async function encodePngGif(args: { framePaths: string[]; outputPath: string; delayMs?: number; repeat?: number }, context: ToolContext = {}) {
+  if (!Array.isArray(args.framePaths) || args.framePaths.length < 2) throw new Error('GIF 至少需要两张 PNG 帧。');
+  const delayMs = args.delayMs ?? 500;
+  if (!Number.isFinite(delayMs) || delayMs < 10) throw new Error('GIF 帧延迟必须不少于 10ms。');
+  const gif = GIFEncoder();
+  let width = 0, height = 0;
+  for (const framePath of args.framePaths) {
+    const image = await loadImage(await readFile(resolveWorkspacePath(framePath, context)));
+    if (!width) { width = image.width; height = image.height; }
+    if (image.width !== width || image.height !== height) throw new Error('GIF 帧尺寸必须一致。');
+    const canvas = createCanvas(width, height), ctx = canvas.getContext('2d');
+    ctx.drawImage(image, 0, 0);
+    const pixels = ctx.getImageData(0, 0, width, height).data;
+    const palette = quantize(pixels, 256);
+    gif.writeFrame(applyPalette(pixels, palette), width, height, { palette, delay: Math.max(10, Math.round(delayMs / 10) * 10), repeat: args.repeat ?? 0 });
+  }
+  gif.finish();
+  const outputPath = resolveWorkspacePath(args.outputPath, context);
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, gif.bytes());
+  return { gifPath: relative(context, outputPath), frameCount: args.framePaths.length, width, height, delayMs };
 }
 
 export async function getPreviewReport(args: { manifestPath: string; detailed?: boolean }, context: ToolContext = {}) { const r = JSON.parse(await readFile(resolveWorkspacePath(args.manifestPath, context), 'utf8')); if (args.detailed) return r; const { trajectories, ...summary } = r; return { ...summary, trajectorySamples: trajectories?.length ?? 0 }; }

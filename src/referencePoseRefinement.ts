@@ -41,7 +41,7 @@ export async function refineReferencePose(a:any,c:ToolContext={}){
 }
 export async function refinePoseData(value:any,comparison:any,c:ToolContext){
  if(value.frame?.perspective)throw new Error('单臂透视诊断尚未开放完整参考局部修正；请保留固定躯干与分支进行受控对照。');
- const p=structuredClone(value),old=structuredClone(comparison);
+ const p=structuredClone(value),old=structuredClone(comparison),retargetMode=p.retargetMode??p.adaptation?.retargetMode??'strict';
  return withStrict(async()=>{
 
  const sequence=await sequenceForPose(p,c),reference=await requireReferencePose(p.referencePosePath,c),rig=await requireVisualRig(p.visualRigPath,c),initial=await solvePoseData(p,c);
@@ -52,7 +52,7 @@ export async function refinePoseData(value:any,comparison:any,c:ToolContext){
  for(const [key,t]of Object.entries(seed.targets) as any){if(p.weapon&&key.endsWith('Hand'))continue;for(const field of ['x','y','angle']){if(field==='y'&&t.contact)continue;variables.push({group:'targets',key,field,value:t[field]??0,range:field==='angle'?(key.endsWith('Hand')?90:45):1,step:field==='angle'?.001:.0001});}}
  const frameAt=(x:number[])=>{const f=structuredClone(seed);variables.forEach((v,i)=>{if(v.group==='body')f.body[v.field]=x[i];else f.targets[v.key][v.field]=x[i];});return f;};
  const evaluate=(x:number[])=>{
-  const f=frameAt(x),solved=solveSemanticPose(initial.rt,initial.mapping,f,p.groundY),target=runtimeGraph(solved.skeleton,rig.rig,initial.mapping,{...p,frame:f}),comparison=compareGraphs(reference.observation,target,p.correspondence),residuals=graphResiduals(comparison);
+  const f=frameAt(x),solved=solveSemanticPose(initial.rt,initial.mapping,f,p.groundY),target=runtimeGraph(solved.skeleton,rig.rig,initial.mapping,{...p,frame:f}),comparison=compareGraphs(reference.observation,target,p.correspondence,{retargetMode}),residuals=graphResiduals(comparison);
   const scale=initial.mapping.calibration!.scale,origin=initial.mapping.calibration!.origin!;
   // 同时优化实际锚点误差，防止参考误差下降而 IK/接地被破坏。
   for(const [key,t]of Object.entries(f.targets) as any){const anchor=(initial.mapping.bones.anchors as any)[key],b=solved.skeleton.findBone(anchor.bone)!,q=anchor.point,xw=b.worldX+b.a*q[0]+b.b*q[1];const yw=anchor.solePoints?.length?Math.min(...anchor.solePoints.map((v:number[])=>b.worldY+b.c*v[0]+b.d*v[1])):b.worldY+b.c*q[0]+b.d*q[1];residuals.push((xw-origin[0]-t.x*scale)/(key.endsWith('Foot')?.15:.35),(yw-origin[1]-(t.contact?p.groundY:t.y)*scale)/(t.contact?.01:.35));}
@@ -60,7 +60,7 @@ export async function refinePoseData(value:any,comparison:any,c:ToolContext){
   residuals.push((f.body.x-seed.body.x)/.05);
   return residuals;
  };
- const result=await boundedLeastSquaresTask(variables.map(v=>v.value),evaluate,{bounds:variables.map(v=>[v.value-v.range,v.value+v.range]),steps:variables.map(v=>v.step),iterations:60}),frame=frameAt(result.x),candidate={...p,frame},final=await solvePoseData(candidate,c),graph=compareGraphs(reference.observation,runtimeGraph(final.skeleton,rig.rig,initial.mapping,candidate),p.correspondence),issues:PoseIssue[]=[];
+ const result=await boundedLeastSquaresTask(variables.map(v=>v.value),evaluate,{bounds:variables.map(v=>[v.value-v.range,v.value+v.range]),steps:variables.map(v=>v.step),iterations:60}),frame=frameAt(result.x),candidate={...p,frame},final=await solvePoseData(candidate,c),graph=compareGraphs(reference.observation,runtimeGraph(final.skeleton,rig.rig,initial.mapping,candidate),p.correspondence,{retargetMode}),issues:PoseIssue[]=[];
  for(const metric of graph.metrics)if(metric.required&&metric.status!=='pass')issues.push({category:metric.status==='unverifiable'?'inputMissing':'relationMismatch',metric:metric.id,message:`${metric.id}: ${metric.status}`,stageId:p.stageId});
  if(!final.report.ok)issues.push({category:final.report.unreachable.length?'unreachable':'relationMismatch',message:final.report.issues.join('；'),stageId:p.stageId});
  return {ok:!issues.length,diagnosticOnly:!!issues.length,issues,sequenceFingerprint:sequence.fingerprint,sourcePoseFingerprint:poseFingerprint(p),optimizer:{method:'boundedDampedLeastSquares',...result,x:undefined,residuals:undefined},variables:variables.map((v,i)=>({...v,after:result.x[i]})),comparison:graph,numeric:final.report,solution:{bones:final.bones,...final.report},frame:final.frame,message:issues.length?'局部修正仍有冲突，保留诊断；不宣称全局无解。':'数值与关系通过；仍需出图与逐项视觉审查。'};

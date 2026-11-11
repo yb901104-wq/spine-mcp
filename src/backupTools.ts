@@ -67,18 +67,20 @@ async function restoreBackupUnlocked(args: RestoreBackupOptions, context: ToolCo
   }
 
   const backupAbsolutePath = resolveBackupPath(args.backupPath, context);
-  const backupRaw = await readFile(backupAbsolutePath, "utf8");
+  const backupBytes = await readFile(backupAbsolutePath);
+  const backupRaw = backupBytes.toString("utf8");
   const backupJson = parseBackupJson(backupRaw, args.backupPath);
   const backupValidation = validateSpineJson(backupJson);
   if (!dryRun && !backupValidation.ok) {
     throw new Error("备份 JSON 未通过校验，拒绝真实恢复。请先选择更早的可用备份。");
   }
-  const restoreRaw = backupRaw.endsWith("\n") ? backupRaw : `${backupRaw}\n`;
-  const hashAfter = sha256(restoreRaw);
+  // 恢复保留备份原始字节；JSON 语义校验与字节指纹分开，不能为了换行改写来源。
+  const restoreBytes = backupBytes;
+  const hashAfter = sha256Bytes(restoreBytes);
   const currentBackupPath = dryRun ? null : await backupCurrentTarget(target.absolutePath, context);
 
   if (!dryRun) {
-    await writeFile(target.absolutePath, restoreRaw, "utf8");
+    await writeFile(target.absolutePath, restoreBytes);
   }
 
   return {
@@ -153,11 +155,11 @@ function resolveBackupPath(backupPath: string, context: ToolContext) {
 async function backupCurrentTarget(targetAbsolutePath: string, context: ToolContext) {
   const backupsDir = getBackupsDir(context);
   await mkdir(backupsDir, { recursive: true });
-  const raw = await readFile(targetAbsolutePath, "utf8");
+  const raw = await readFile(targetAbsolutePath);
   const parsed = path.parse(targetAbsolutePath);
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   const currentBackupPath = path.join(backupsDir, `${parsed.name}.before-restore.${stamp}${parsed.ext}`);
-  await writeFile(currentBackupPath, raw.endsWith("\n") ? raw : `${raw}\n`, "utf8");
+  await writeFile(currentBackupPath, raw);
   return toWorkspaceRelative(currentBackupPath, context);
 }
 
@@ -204,5 +206,8 @@ function getWorkspaceRoot(context: ToolContext) {
 }
 
 function sha256(value: string) {
+  return createHash("sha256").update(value).digest("hex");
+}
+function sha256Bytes(value: Uint8Array) {
   return createHash("sha256").update(value).digest("hex");
 }

@@ -1,9 +1,23 @@
 # Spine JSON MCP
 
-## 当前状态（2026-11-02 晚间核对）
+常见任务优先使用统一入口 `spine_execute_task`。它会自动核对输入、选择 `workflowProfile`、调用现有工具、生成可观看证据，并在明确停止层返回 `nextAction`。参考动作重定向在进入 IK 前还会检查 keypose 是否落在参考角色前景、visualRig 四肢节点是否仍是骨骼原点候选以及 face 是否具备前脸依据；失败时停在 `binding` 并返回 `artifacts.inputAudit`。参考动作重定向区分 `creative`、`adaptive-preview` 和 `production`；`production` 只有在参考 GIF 阶段覆盖完整、runtime 与视觉证据齐全时才进入正式候选。`retargetMode` 默认 `adaptive`，需要精确结构复现时显式使用 `strict`。统一入口最多自动完成到可提交，真实写入仍需单独使用 Host 提交流程。
+
+## 高层工作流的实际边界（2026-11-07）
+
+MCP 的目标是接收一条高层任务后自动串联工具，而不是让 Agent 手动猜下一步。当前参考重定向入口 `spine_run_reference_retarget_flow` 已把输入哈希、参考覆盖、阶段求解、失败原因和下一步统一返回；coverage 完整时还会继续生成目标 motion 候选、runtime 回读、原速 GIF 和同步动态对比 GIF，再停在人工视觉审查前。只有参考节点、visualRig、目标角色 runtime 或正式视觉证据确实缺失时才暂停，并说明需要补哪一项。进入 IK 前还会独立审查 keypose 的解剖身份、支撑、朝向和前后证据，以及 visualRig 与 mapping 的切片段绑定；`adaptive` 不会绕过错误输入。
+
+参考 GIF 仍必须先拆帧、标注并审查 reference pose。未标注阶段不会被自动插值成正式动作。`adaptive` 使用目标角色自己的骨长和局部坐标生成 expected target，`strict` 保留精确结构门禁；两者都不能绕过 Host 的 runtime 回读、动态证据和最终写入裁判。
+
+透视点骨骼通过 mapping 的 `depthPoints`/`perspectiveChains` 显式授权。点骨骼的父子关系、唯一性和 runtime 回读必须通过，命名后缀只用于提示，不是写入权限。备份恢复保留原始字节 hash，JSON 规范校验与字节指纹分开。
+
+## 当前状态（2026-11-07 核对）
 
 - 工具总数 **116**（MCP stdio 实测，含 `spine_check_editor_import`）；源码版本 0.2.0。
-- 当前构建：`npm run build` 通过；按项目规则回收残留写入锁后的干净轮 `npm test` 为 **238 项 / 237 通过 / 0 失败 / 1 跳过**，协议专项 `test/protocolFeatures.test.ts` 9/9 通过。此前各轮的 `WRITE_OWNERSHIP_UNCERTAIN` 连锁为运行环境保护，非代码逻辑失败，未放宽断言。
+- 当前构建：`npm run build` 通过；核心重定向、透视映射、Host C2 和真实 stdio 专项测试已通过。完整 `npm test` 仍会受到工作区历史 `.spine-mcp/connections`/锁状态的环境污染影响，出现 `EPERM` 或 `WRITE_OWNERSHIP_UNCERTAIN` 时必须先隔离测试工作区再复跑，不能把这类结果当作业务逻辑通过。
+
+> `dist/`、`test-output/` 和 `backups/` 仍属于生成目录，不作为源码交付内容；需要运行真实 stdio 时先重新执行 `npm run build`。
+
+真实参考重定向验证必须使用新构建的 MCP stdio/Host 会话执行提示词，再由 MCP 预览工具生成目标 GIF 和同步对比 GIF。`adaptive-preview` 默认使用 `keypose-interpolated` 连续诊断预览；`stage-hold` 只表示连续预览失败时的降级。诊断 GIF 会记录 `diagnosticOnly:true`、失败约束和残差，不能当作正式验收或提交。可用 `npm run validate:real-mcp` 复跑 `body.gif → npc1` 的真实验证并保存工具轨迹、构建身份和产物哈希。
 - [L1/L2 批 0–3](docs/plans/mcp-l1-l2.md) 主体已实施、待核销；复测见 [项目进展](docs/项目进展.md) 与 [当前构建证据](docs/plans/l1-l2-closeout-20261102.json)。
 - 下文各段按各自日期追溯：其中的 101 / 102 / 111 / 112 / 115 个工具与 233/233 等回归数字均为**对应批次的历史记录**，保留不改，不代表当前口径。
 
@@ -197,7 +211,7 @@ SPINE_MCP_WORKSPACE = 'D:\AI_cc\spine-mcp'
 
 WinForms 的“一键配置”支持 Codex、Claude Code、opencode；Codex 默认推荐用户级，其他客户端默认项目级。确认路径后自动备份与写入。Codex 桌面需完全退出并重开；项目配置还需项目信任/批准。绿灯由定期 MCP 协议 ping 判定，黄灯表示等待连接/响应，红灯表示离线/过期；历史握手不会维持绿灯。详见 [Agent 一键配置与实时连接](docs/Agent一键配置与实时连接.md)。
 
-完整 MCP 操作列表见 [docs/MCP操作清单.md](D:/AI_cc/spine-mcp/docs/MCP操作清单.md)。
+完整 MCP 操作列表见 [docs/MCP操作清单.md](D:/AI_cc/spine-mcp/docs/MCP操作清单.md)。统一任务入口说明见 [docs/MCP统一任务入口与运行结构.md](D:/AI_cc/spine-mcp/docs/MCP统一任务入口与运行结构.md)，production 当前状态见 [docs/production现状与遗留问题.md](D:/AI_cc/spine-mcp/docs/production现状与遗留问题.md)。
 
 官方 JSON 规范审查说明见 [docs/官方JSON规范审查.md](D:/AI_cc/spine-mcp/docs/官方JSON规范审查.md)。自然语言验证用例见 [docs/自然语言验证用例.md](D:/AI_cc/spine-mcp/docs/自然语言验证用例.md)。标准演示用例见 [docs/标准演示用例.md](D:/AI_cc/spine-mcp/docs/标准演示用例.md)。安全提交流程见 [docs/安全提交流程.md](D:/AI_cc/spine-mcp/docs/安全提交流程.md)。浏览器预览说明见 [docs/浏览器预览系统.md](D:/AI_cc/spine-mcp/docs/浏览器预览系统.md)。WinForms 观察平台设计见 [docs/WinForms观察平台设计.md](D:/AI_cc/spine-mcp/docs/WinForms观察平台设计.md)。
 
@@ -241,7 +255,11 @@ WinForms 的“一键配置”支持 Codex、Claude Code、opencode；Codex 默�
 
 新增 MCP 工具：`spine_inspect_character`、`spine_create_mapping_draft`、`spine_calibrate_mapping`、`spine_confirm_mapping`、`spine_validate_mapping`、`spine_extract_motion`、`spine_validate_motion`、`spine_retarget_motion`、`spine_validate_motion_result`、`spine_fit_animation_curves`、`spine_batch_retarget`。生成、校准和曲线工具默认 `dryRun: true`；v2 真实写入还必须经过 mapping 确认、校准报告、reviewToken、hash、备份、diff 白名单、JSON 规范和官方 runtime 门禁。
 
-当前升级已通过 `npm run build` 和 `npm test`。示例 walk、idle 和 run 可经过 mapping、IK、脚底/手腕约束、曲线压缩、JSON 规范校验和 `@esotericsoftware/spine-core` runtime 验证。新增离线预览工具会生成固定相机 PNG 贴图帧、contact sheet 和 preview manifest；GIF 使用本地编码器生成，参考 GIF 可拆帧、分析时间与重复帧。工作区支持 projectId 登记，同时兼容 `SPINE_MCP_WORKSPACE`。
+跨角色重定向工具支持 `retargetMode: "adaptive" | "strict"`，新生成调用默认 `adaptive`。adaptive 由参考动作提供语义、相对姿态、支撑和握持意图，目标角色按自己的 neutral pose、躯干局部框架、链长和关节范围重新求解；`semantic-pass` 与 `geometric-adapted` 会保留完整适配报告并进入后续 runtime/视觉/人工审查。报告同时区分 `semanticQuality`、`structuralQuality`、`styleQuality`，并拆分 `semanticFailures`、`reachabilityFailures`、`structuralResiduals`、`styleResiduals`。握持断裂、接地失败、不可达或语义硬约束失败返回 `unresolved`，不生成正式 expected target。旧资产缺少模式字段时按 `strict` 复核。
+
+Host 动画候选带有统一 `evidenceEnvelope`：它绑定工程、文档版本、源/候选哈希、执行构建指纹、跨源码/编译版的构建 lineage、retarget 来源指纹和证据文件哈希。Host 会在审查和提交前重新核对这些字段；它是证据追溯对象，不是批准令牌，也不能绕过 Host 提交门禁。
+
+核心升级已通过 `npm run build` 以及重定向、透视映射、Host C2、视觉证据和真实 stdio 专项测试。完整 `npm test` 当前仍会被共享工作区历史连接/写锁污染打断，需在隔离测试工作区复跑。示例 walk、idle 和 run 可经过 mapping、IK、脚底/手腕约束、曲线压缩、JSON 规范校验和 `@esotericsoftware/spine-core` runtime 验证。新增离线预览工具会生成固定相机 PNG 贴图帧、contact sheet 和 preview manifest；GIF 使用本地编码器生成，参考 GIF 可拆帧、分析时间与重复帧。工作区支持 projectId 登记，同时兼容 `SPINE_MCP_WORKSPACE`。
 
 
 ## 离线视觉验证与项目工作区升级

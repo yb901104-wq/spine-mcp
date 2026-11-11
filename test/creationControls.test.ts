@@ -57,7 +57,7 @@ test('比较策略 v4：腕位/站距/握距统一躯干归一，不用自身臂
   for(const side of ['left','right']){target.points[side+'Elbow'].y=-60;target.points[side+'Wrist'].y=-120;target.points[side+'Knee'].y=-180;target.points[side+'Ankle'].y=-260;}
   target.grip={points:{left:target.points.leftWrist,right:target.points.rightWrist}};
   const correspondence={left:'left',right:'right',basis:'机械验证',anatomicalIdentity:'同侧',projectedOrder:'固定'},result=compareGraphs(reference,target,correspondence),metric=(id:string)=>result.metrics.find((m:any)=>m.id===id);
-  assert.equal(comparisonPolicy.version,4);assert.ok(Math.abs(metric('leftArm.wrist').error-.6)<1e-8);assert.equal(metric('leftArm.wrist').status,'fail');assert.equal(metric('stance.width').error,0);assert.equal(metric('grip.spacing').error,0);
+  assert.equal(comparisonPolicy.version,5);assert.ok(Math.abs(metric('leftArm.wrist').error-.6)<1e-8);assert.equal(metric('leftArm.wrist').status,'fail');assert.equal(metric('stance.width').error,0);assert.equal(metric('grip.spacing').error,0);
   delete target.points.leftHip;delete target.points.rightHip;const unknown=compareGraphs(reference,target,correspondence);assert.equal(unknown.metrics.find((m:any)=>m.id==='leftArm.wrist').status,'unverifiable');
 });
 

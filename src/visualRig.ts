@@ -16,30 +16,113 @@ import { validateActionRig } from './actionSemantics.js';
 export function visualSummary(data:any){return {...data,attachments:(data.attachments??[]).map((a:any)=>({slot:a.slot,attachment:a.attachment,type:a.type,bone:a.bone,weighted:a.weighted,vertexCount:a.vertices.length/2,influenceBones:[...new Set(a.influences.map((i:any)=>i.bone))]}))};}
 const read=async(p:string,c:ToolContext)=>JSON.parse(await readFile(resolveWorkspacePath(p,c),'utf8'));
 const evidence=async(p:string,c:ToolContext)=>({filePath:p,hash:hashObject((await readFile(resolveWorkspacePath(p,c))).toString('base64'))});
+function applyMappingAttachments(skeleton:any,mapping:any){
+ for(const [slot,attachment] of Object.entries(mapping?.bones?.slotAttachments??{})){
+  if(attachment===null)skeleton.findSlot(slot)?.setAttachment(null);
+  else skeleton.setAttachment(slot,attachment as string);
+ }
+}
 export function attachmentSnapshot(skeleton:any){
  const vertices=worldVertices(skeleton);
  return skeleton.slots.flatMap((slot:any)=>{
-  const a=slot.getAttachment();if(!(a instanceof MeshAttachment||a instanceof RegionAttachment))return [];
+  const a:any=slot.getAttachment();
+  const isMesh=a instanceof MeshAttachment || (Array.isArray(a?.triangles) && Number.isFinite(a?.worldVerticesLength));
+  const isRegion=a instanceof RegionAttachment || (!isMesh && typeof a?.computeWorldVertices==='function');
+  if(!isMesh&&!isRegion)return [];
   const influences:any[]=[];
-  if(a instanceof MeshAttachment&&a.bones){let v=0,index=0;for(let i=0;i<a.bones.length;){const count=a.bones[i++];for(let j=0;j<count;j++){const b=skeleton.bones[a.bones[i++]];influences.push({vertex:index,bone:b.data.name,local:[a.vertices[v],a.vertices[v+1]],weight:a.vertices[v+2]});v+=3;}index++;}}
+  if(isMesh&&a.bones){let v=0,index=0;for(let i=0;i<a.bones.length;){const count=a.bones[i++];for(let j=0;j<count;j++){const b=skeleton.bones[a.bones[i++]];influences.push({vertex:index,bone:b.data.name,local:[a.vertices[v],a.vertices[v+1]],weight:a.vertices[v+2]});v+=3;}index++;}}
   else influences.push({bone:slot.bone.data.name,weight:1});
-  return [{slot:slot.data.name,attachment:a.name,type:a instanceof MeshAttachment?'mesh':'region',bone:slot.bone.data.name,weighted:a instanceof MeshAttachment&&!!a.bones,influences,localTransform:a instanceof RegionAttachment?{x:a.x,y:a.y,rotation:a.rotation,scaleX:a.scaleX,scaleY:a.scaleY}:null,triangles:a instanceof MeshAttachment?Array.from(a.triangles):[0,1,2,2,3,0],vertices:vertices[slot.data.name+':'+a.name]}];
+  return [{slot:slot.data.name,attachment:a.name,type:isMesh?'mesh':'region',bone:slot.bone.data.name,weighted:isMesh&&!!a.bones,influences,localTransform:isRegion?{x:a.x,y:a.y,rotation:a.rotation,scaleX:a.scaleX,scaleY:a.scaleY}:null,triangles:isMesh?Array.from(a.triangles):[0,1,2,2,3,0],vertices:vertices[slot.data.name+':'+a.name]}];
  });
 }
 export function readVisualNodes(skeleton:any,rig:any){
- const points:any={},snapshot=attachmentSnapshot(skeleton);
- for(const [role,n]of Object.entries(rig.nodes) as any){
-  if(n.type==='boneLocal'){
-   const b=skeleton.findBone(n.bone);if(!b||!n.point?.every(Number.isFinite)||n.point.length!==2)throw new Error(`视觉节点 ${role} 骨骼或局部点无效。`);
-   points[role]={x:b.worldX+b.a*n.point[0]+b.b*n.point[1],y:b.worldY+b.c*n.point[0]+b.d*n.point[1]};
-  }else if(n.type==='meshTriangle'){
-   const a=snapshot.find((a:any)=>a.slot===n.slot&&a.attachment===n.attachment);
-   if(!a||a.type!=='mesh'||!Number.isInteger(n.triangle)||n.triangle<0||n.triangle*3+2>=a.triangles.length||n.weights?.length!==3||!n.weights.every((w:number)=>Number.isFinite(w)&&w>=0)||Math.abs(n.weights.reduce((x:number,y:number)=>x+y,0)-1)>1e-6)throw new Error(`视觉节点 ${role} 网格三角形或重心坐标无效。`);
-   const ids=a.triangles.slice(n.triangle*3,n.triangle*3+3);points[role]={x:ids.reduce((sum:number,k:number,i:number)=>sum+a.vertices[k*2]*n.weights[i],0),y:ids.reduce((sum:number,k:number,i:number)=>sum+a.vertices[k*2+1]*n.weights[i],0)};
-  }else throw new Error(`视觉节点 ${role} 需 boneLocal/meshTriangle。`);
+ const sampled=sampleVisualPoints(skeleton,rig);
+ if(!sampled.available)throw new Error(sampled.unavailableReason??'视觉节点不可用。');
+ return {points:Object.fromEntries(Object.entries(sampled.points).map(([role,p]:any)=>[role,{x:p.x,y:p.y,confidence:p.confidence??null,basis:p.basis??null,anchorType:p.anchorType}])),torsoAxis:torsoAxis(sampled.points),attachments:sampled.attachments,edges:graphEdges,segments:rig.segments};
+}
+
+/**
+ * 按当前 runtime skeleton 采样 visualRig 的视觉点。
+ * 与 readVisualNodes 不同，这个函数不会因为一个节点失效而丢弃整帧，
+ * 而是为该节点输出 source:'unavailable' 与明确 reason，供逐帧预览和 formal 门禁消费。
+ */
+export function sampleVisualPoints(skeleton:any,rig:any){
+ const points:any={},snapshot=attachmentSnapshot(skeleton),reasons:string[]=[];
+ for(const [role,n]of Object.entries(rig?.nodes??{}) as any){
+  const base={confidence:n?.confidence??null,basis:n?.basis??null,anchorType:n?.type??null};
+  if(n?.type==='boneLocal'){
+   const b=skeleton.findBone(n.bone);
+   if(!b||!Array.isArray(n.point)||n.point.length!==2||!n.point.every(Number.isFinite)){
+    const reason=!b?`骨骼 ${n?.bone??'?'} 不存在`: 'boneLocal point 必须是有限二维坐标';
+    points[role]={source:'unavailable',exact:false,reason,...base};reasons.push(`${role}:${reason}`);continue;
+   }
+   points[role]={x:b.worldX+b.a*n.point[0]+b.b*n.point[1],y:b.worldY+b.c*n.point[0]+b.d*n.point[1],source:'boneLocal',bone:n.bone,localPoint:[n.point[0],n.point[1]],exact:true,...base};
+  }else if(n?.type==='meshTriangle'){
+   const a=snapshot.find((v:any)=>v.slot===n.slot&&v.attachment===n.attachment);
+   const valid=!!a&&a.type==='mesh'&&Number.isInteger(n.triangle)&&n.triangle>=0&&n.triangle*3+2<a.triangles.length&&Array.isArray(n.weights)&&n.weights.length===3&&n.weights.every((w:number)=>Number.isFinite(w)&&w>=0)&&Math.abs(n.weights.reduce((x:number,y:number)=>x+y,0)-1)<=1e-6;
+   if(!valid){const reason='meshTriangle 的附件、三角形索引或重心坐标无效';points[role]={source:'unavailable',exact:false,reason,...base};reasons.push(`${role}:${reason}`);continue;}
+   const ids=a.triangles.slice(n.triangle*3,n.triangle*3+3);
+   points[role]={x:ids.reduce((sum:number,k:number,i:number)=>sum+a.vertices[k*2]*n.weights[i],0),y:ids.reduce((sum:number,k:number,i:number)=>sum+a.vertices[k*2+1]*n.weights[i],0),source:'meshTriangle',slot:n.slot,attachment:n.attachment,triangle:n.triangle,weights:[...n.weights],exact:true,...base};
+  }else{const reason='视觉节点类型必须是 boneLocal 或 meshTriangle';points[role]={source:'unavailable',exact:false,reason,...base};reasons.push(`${role}:${reason}`);}
  }
- for(const [role,p]of Object.entries(points) as any){const node=rig.nodes[role];Object.assign(p,{confidence:node.confidence??null,basis:node.basis??null,anchorType:node.type});}
- return {points,torsoAxis:torsoAxis(points),attachments:snapshot,edges:graphEdges,segments:rig.segments};
+ const unavailableReason=reasons.length?reasons.join('；'):Object.keys(points).length?'': 'visualRig 无可用 nodes';
+ return {points,available:Object.keys(points).length>0&&reasons.length===0,unavailableReason:unavailableReason||null,attachments:snapshot,edges:graphEdges,segments:rig?.segments};
+}
+
+/**
+ * 绑定层的“视觉可用性”审查。
+ * confirmed 只说明文件结构和校准证据存在，不能代替检查节点是否仍是
+ * 骨骼原点候选、是否有低置信度关键点，或 face 是否真的提供了前脸方向。
+ * 统一任务入口在正式求解前调用本审查；失败时停在 binding，而不是把
+ * 错误映射继续传给 IK。
+ */
+export function auditVisualMappingBinding(rig:any,mapping:any){
+ const issues:any[]=[],warnings:any[]=[];
+ const limbs:any={leftArm:['leftShoulder','leftElbow','leftWrist'],rightArm:['rightShoulder','rightElbow','rightWrist'],leftLeg:['leftHip','leftKnee','leftAnkle'],rightLeg:['rightHip','rightKnee','rightAnkle']};
+ for(const [limb,nodes] of Object.entries(limbs) as any){
+  const chain=mapping?.bones?.[limb];
+  if(!Array.isArray(chain)||chain.length!==3){issues.push({code:'MAPPING_CHAIN_INCOMPLETE',limb,message:`${limb} 缺少三段骨骼链。`});continue;}
+  for(let i=0;i<2;i++){
+   const id=`${limb}.${i}`,seg=rig?.segments?.[id];
+   if(!seg){issues.push({code:'MAPPING_SEGMENT_MISSING',limb,segment:id,message:`visualRig 缺少 ${id}。`});continue;}
+   if(JSON.stringify(seg.nodes)!==JSON.stringify(nodes.slice(i,i+2)))issues.push({code:'MAPPING_SEGMENT_NODE_MISMATCH',limb,segment:id,message:`${id} 的节点段与语义链不一致。`});
+   if(!Array.isArray(seg.bones)||seg.bones.length===0||seg.bones.some((b:string)=>!chain.includes(b)))issues.push({code:'MAPPING_SEGMENT_BONE_MISMATCH',limb,segment:id,message:`${id} 的骨骼不属于 ${limb} 语义链。`});
+   if(i>0){const prev=rig?.segments?.[`${limb}.${i-1}`];const same=JSON.stringify(prev?.attachments??[])===JSON.stringify(seg.attachments??[]);if(same&&Array.isArray(seg.attachments)&&seg.attachments.length)warnings.push({code:'MAPPING_SEGMENT_ATTACHMENT_REUSED',limb,segment:id,message:`${id} 与上一段复用了同一 attachment 声明；若该 attachment 是跨骨骼加权网格需保留，否则应拆分切片。`});}
+  }
+ }
+ const mappingPath=rig?.mappingPath&&mapping?.filePath;if(mappingPath&&String(mappingPath)!==String(rig.mappingPath))issues.push({code:'MAPPING_PATH_MISMATCH',message:`visualRig.mappingPath=${rig.mappingPath} 与当前 mapping=${mappingPath} 不一致。`});
+ const anatomical=rig?.anatomicalSides;if(!anatomical?.basis||anatomical.left!=='left'||anatomical.right!=='right')issues.push({code:'MAPPING_ANATOMICAL_SIDE_MISMATCH',message:'mapping/visualRig 未明确固定 anatomical left/right。'});
+ return {ok:issues.length===0,issues,warnings};
+}
+
+/** 只读 runtime 回读：确认 visualRig 指向的骨骼和 visualPoints 能实际采样。 */
+export function auditVisualRigRuntimeBinding(rig:any,skeleton:any){
+ const sampled=sampleVisualPoints(skeleton,rig),issues:any[]=[];
+ if(!sampled.available)issues.push({code:'MAPPING_RUNTIME_MISMATCH',message:sampled.unavailableReason??'runtime 无法完整采样 visualPoints。'});
+ for(const [role,p] of Object.entries(sampled.points??{}) as any){
+  if(p?.source==='unavailable')issues.push({code:'MAPPING_RUNTIME_NODE_MISSING',role,message:p.reason??`${role} runtime 节点不可用。`});
+ }
+ return {ok:issues.length===0,issues,visualPointsAvailable:sampled.available,points:sampled.points};
+}
+
+export function auditVisualRigBinding(rig:any,mapping:any){
+ const issues:any[]=[];
+ const limbRoles=['leftShoulder','leftElbow','leftWrist','rightShoulder','rightElbow','rightWrist','leftHip','leftKnee','leftAnkle','rightHip','rightKnee','rightAnkle'];
+ const originOnly=limbRoles.filter(role=>{const n=rig?.nodes?.[role];return n?.type==='boneLocal'&&Array.isArray(n.point)&&n.point.every((v:number)=>Math.abs(v)<=1e-9);});
+ if(originOnly.length>0)issues.push({code:'VISUAL_RIG_ORIGIN_ONLY',message:`${originOnly.length} 个四肢视觉节点仍是骨骼原点候选：${originOnly.join('、')}。需依据切片接缝或 meshTriangle 重新校准；adaptive 不能替代视觉关节。`,roles:originOnly});
+ const lowConfidence=limbRoles.filter(role=>Number(rig?.nodes?.[role]?.confidence??0)<0.7);
+ if(lowConfidence.length)issues.push({code:'VISUAL_RIG_LOW_CONFIDENCE',message:`以下视觉节点置信度低于 0.7：${lowConfidence.join('、')}。它们不能作为正式重定向的可靠关节。`,roles:lowConfidence});
+ const face=rig?.nodes?.face;
+ const faceBasis=String(face?.basis??'');
+ if(!face||face.type!=='meshTriangle'&&(!faceBasis.includes('鼻尖')||faceBasis.includes('不是鼻尖'))){issues.push({code:'FACE_ANCHOR_UNVERIFIED',message:'face 仍是未验证的骨骼/嘴部支点，缺少真正的面部前缘或鼻尖依据；只能诊断，不能确认朝向。'});}
+ const sides=rig?.anatomicalSides?.left&&rig?.anatomicalSides?.right&&rig?.anatomicalSides?.basis;
+ if(!sides)issues.push({code:'ANATOMICAL_SIDE_BASIS_MISSING',message:'visualRig 缺少解剖左右对应依据。'});
+ const segmentIssues:any[]=[];const roleNodes:any={leftArm:['leftShoulder','leftElbow','leftWrist'],rightArm:['rightShoulder','rightElbow','rightWrist'],leftLeg:['leftHip','leftKnee','leftAnkle'],rightLeg:['rightHip','rightKnee','rightAnkle']};
+ for(const limb of Object.keys(roleNodes)){const chain=mapping?.bones?.[limb];if(!Array.isArray(chain)||chain.length!==3)segmentIssues.push(`${limb} 链缺少三段骨骼`);for(let i=0;i<2;i++){const seg=rig?.segments?.[`${limb}.${i}`];const expected=roleNodes[limb].slice(i,i+2);if(!seg||JSON.stringify(seg.nodes)!==JSON.stringify(expected))segmentIssues.push(`${limb}.${i} 节点段与语义链不一致`);}}
+ if(segmentIssues.length)issues.push({code:'VISUAL_RIG_SEGMENT_BINDING',message:segmentIssues.join('；'),details:segmentIssues});
+ const mappingAudit=auditVisualMappingBinding(rig,mapping);
+ issues.push(...mappingAudit.issues);
+ return {ok:issues.length===0,issues,originOnly,lowConfidence,mappingAudit,warnings:mappingAudit.warnings};
 }
 export function drawVisualGraph(ctx:any,data:any,project:(x:number,y:number)=>number[],comparison?:any){
  ctx.font='10px sans-serif';ctx.lineWidth=2;
@@ -58,7 +141,7 @@ export function drawVisualGraph(ctx:any,data:any,project:(x:number,y:number)=>nu
 export async function requireVisualRig(p:string,c:ToolContext,confirmed=true,prepared?:any){
  const rig=await read(p,c),same=prepared&&resolveWorkspacePath(rig.filePath,c)===resolveWorkspacePath(prepared.filePath,c)&&resolveWorkspacePath(rig.mappingPath,c)===resolveWorkspacePath(prepared.mappingPath,c),s=same?prepared:await (await import('./poseWorkflow.js')).characterFingerprint(rig.filePath,rig.mappingPath,c);
  if(rig.version!==2||rig.sourceFingerprint!==s.fingerprint||rig.skin!==s.mapping.skin)throw new Error(`visualRig 需要 v2（含面部朝向锚点 face）：当前版本 v${rig.version??'?'} 或角色、mapping、skin 已失效，请重新校准并审查。`);
- const skeleton=s.rt.sample(undefined,0,rig.skin);for(const [slot,a]of Object.entries(s.mapping.bones.slotAttachments??{}))if(a===null)skeleton.findSlot(slot)!.setAttachment(null);else skeleton.setAttachment(slot,a);
+ const skeleton=s.rt.sample(undefined,0,rig.skin);applyMappingAttachments(skeleton,s.mapping);
  const actual=readVisualNodes(skeleton,rig);
  validateActionRig(rig,skeleton);
  validateRig(rig,actual,s.mapping);
@@ -74,8 +157,7 @@ function validateRig(rig:any,actual:any,mapping:any){
  }
 }
 export async function calibrateVisualRig(a:any,c:ToolContext={}){
- const s=await (await import('./poseWorkflow.js')).characterFingerprint(a.filePath,a.mappingPath,c),sk=s.rt.sample(undefined,0,s.mapping.skin);
- for(const [slot,attachment]of Object.entries(s.mapping.bones.slotAttachments??{}))if(attachment===null)sk.findSlot(slot)!.setAttachment(null);else sk.setAttachment(slot,attachment);
+ const s=await (await import('./poseWorkflow.js')).characterFingerprint(a.filePath,a.mappingPath,c),sk=s.rt.sample(undefined,0,s.mapping.skin);applyMappingAttachments(sk,s.mapping);
  const attachments=attachmentSnapshot(sk),nodes:any={};
  for(const [role,chain]of Object.entries(limbNodes))chain.forEach((node,i)=>nodes[node]={type:'boneLocal',bone:(s.mapping.bones as any)[role][i],point:[0,0],calibrated:false,basis:'仅骨骼原点候选，必须依据切片轮廓校准，不能自动确认。'});
  nodes.body={type:'boneLocal',bone:s.mapping.bones.body,point:[0,0],calibrated:false};nodes.head={type:'boneLocal',bone:s.mapping.bones.head,point:[0,0],calibrated:false};nodes.face={type:'boneLocal',bone:s.mapping.bones.head,point:[0,0],calibrated:false,basis:'面部朝向锚点候选：必须按鼻尖或面部切片校准，头骨原点不能代替。'};Object.assign(nodes,a.nodes??{});

@@ -1,14 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdir, rm, writeFile, readFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import gifenc from 'gifenc';
 import { createCanvas } from '@napi-rs/canvas';
 import { parseGIF, decompressFrames } from 'gifuct-js';
 import { renderAnimationComparison } from '../src/animationReview.js';
 import { animationChecks } from '../src/poseWorkflow.js';
+import { animationComparisonLayouts, skeletonFormalAcceptanceReady } from '../src/animationAcceptancePolicy.js';
 
 const { GIFEncoder, quantize, applyPalette } = gifenc;
-const DIR = 'test-output/reference-overlay';
+const DIR = `.test-output-reference-overlay-${randomUUID()}`;
 const W = 128, H = 128, N = 4;
 const BOUNDS = { minX: 0, minY: 0, maxX: 100, maxY: 100 };
 
@@ -70,6 +72,7 @@ async function buildFixtures(): Promise<{ targetManifestPath: string; referenceM
 const phaseMap = [{ targetTime: 0, referenceTime: 0 }, { targetTime: 1, referenceTime: 1 }];
 
 test.before(async () => { await rm(DIR, { recursive: true, force: true }); });
+test.after(async () => { await rm(DIR, { recursive: true, force: true }); });
 
 test('默认布局保持上下排列，不破坏既有证据', async () => {
   const f = await buildFixtures();
@@ -137,12 +140,15 @@ test('times 越界或为空直接拒绝', async () => {
   await assert.rejects(() => renderAnimationComparison({ ...f, phaseMap, outputDir: `${DIR}/out-t-bad3`, times: [-1] } as any, {}), /times/);
 });
 
-test('审查门禁接受两种布局，且仍强制要求绑定证据', async () => {
+test('审查门禁接受三种布局，且仍强制要求绑定证据', async () => {
   // 直接读取门禁源码所在行的可接受布局集合，防止后续有人只改一处而漏改另一处。
   const src = await readFile(new URL('../src/animationReview.ts', import.meta.url), 'utf8');
   const gateLine = src.split('\n').find(l => l.includes('requiresReferenceComparison') && l.includes('includes(m.layout)'));
   assert.ok(gateLine, '必须存在布局门禁行');
-  assert.ok(gateLine.includes("'reference-above-target'") && gateLine.includes("'overlay'"), '门禁必须同时接受两种布局');
+  assert.ok(gateLine.includes('animationComparisonLayouts.includes(m.layout)'), '门禁必须复用共享布局策略');
+  assert.deepEqual(animationComparisonLayouts, ['reference-above-target', 'overlay', 'skeleton']);
+  assert.equal(skeletonFormalAcceptanceReady({ acceptanceMode: 'diagnostic', acceptanceEligible: true }), false);
+  assert.equal(skeletonFormalAcceptanceReady({ acceptanceMode: 'formal', acceptanceEligible: true }), true);
   const evidenceLine = src.split('\n').find(l => l.includes('requiresReferenceComparison') && l.includes('m.evidence'));
   assert.ok(evidenceLine, '放宽布局后仍须保留证据绑定校验');
   assert.ok(animationChecks.length >= 5, '完整动画审查项不得因本次改动减少');

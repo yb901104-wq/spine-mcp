@@ -11,7 +11,7 @@ export function creationQuality(state:any) {
     const targetCapability=state.capabilities?.editing?.targets?.find((t:any)=>t.role===targetRole&&t.supported);
     const field=/Height/.test(m.id)?'y':'x',target=targetRole?state.editValues?.targets?.[targetRole]:null;
     const examples=!fixed&&patch?.canRun&&target&&targetCapability?.availableFields?.includes(field)?[-.01,.01].map(delta=>({tool:'spine_host_patch',arguments:{expectedRevision:state.version,dryRun:true,ops:[{op:'setPoseTarget',path:`pose/frame/targets/${targetRole}`,role:targetRole,[field]:target[field]+delta}]},note:'预演正/负小步候选，再比较实际结果；不保证该方向改善，不更改固定关系。'})):[];
-    return {id:m.id,status:m.status,error:m.error??null,tolerance:m.tolerance??null,
+    return {id:m.id,status:m.status,constraintTier:m.constraintTier??null,blocking:m.blocking??m.required!==false,relaxed:m.relaxed===true,preserved:m.preserved===true,error:m.error??null,tolerance:m.tolerance??null,
       category:fixed?'stageReview':m.status==='unverifiable'?'observation':'fit',
       instruction:fixed?'复核该阶段的参考、身份、支撑、弯曲分支或层序证据；不在局部优化中改固定关系。':m.status==='unverifiable'?'补充或复核对应观测；未知必要点不能自动通过。':advice.note,
       knob:fixed?null:advice.knob,
@@ -34,7 +34,7 @@ export function summarizeState(state:any):any {
   const numeric=state.numeric??{};
   const {joints,visual,bones,vertices,actualNodes,solverNodes,visualNodes,...smallNumeric}=numeric;
   const comparison=state.reference??{};
-  const metrics=comparison.metrics,smallComparison=Object.fromEntries(['ok','status','message','version','policyFingerprint','referenceFingerprint','poseFingerprint','sequenceFingerprint','partObservationPolicyFingerprint'].filter(key=>comparison[key]!==undefined).map(key=>[key,comparison[key]]));
+  const metrics=comparison.metrics,smallComparison=Object.fromEntries(['ok','status','retargetMode','retargetQuality','preservedConstraints','relaxedConstraints','residuals','message','version','policyFingerprint','referenceFingerprint','poseFingerprint','sequenceFingerprint','partObservationPolicyFingerprint'].filter(key=>comparison[key]!==undefined).map(key=>[key,comparison[key]]));
   const {characters,character,...capabilities}=state.capabilities??{};
   if(capabilities.editing){const {patchOps,...editing}=capabilities.editing;capabilities.editing={...editing,patchSchemaTool:'spine_host_patch'};}
   const {editValues,state:nestedState,...smallState}=state;

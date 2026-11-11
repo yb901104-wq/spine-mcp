@@ -15,6 +15,17 @@ export const perspectiveSchema = { type: 'object', additionalProperties: false, 
   calibrationPath:{type:'string',minLength:1},calibrationHash:{type:'string',pattern:'^[a-f0-9]{64}$'},
   widthUpper:{type:'number',exclusiveMinimum:0,maximum:2},widthLower:{type:'number',exclusiveMinimum:0,maximum:2},
 }, required: ['mode', 'limb', 'upper', 'lower', 'basis'] };
+
+/** 纯数学投影：theta 使用弧度；只表达平面投影，不推断前后深度。 */
+export function projectedSegmentLength(length: number, thetaRadians: number) {
+  if (!Number.isFinite(length) || length < 0 || !Number.isFinite(thetaRadians)) throw new Error('投影长度计算需要有限的非负段长和角度。');
+  return length * Math.cos(thetaRadians);
+}
+export function projectedSegmentDelta(length: number, thetaRadians: number) {
+  if (!Number.isFinite(length) || length < 0 || !Number.isFinite(thetaRadians)) throw new Error('投影位移计算需要有限的非负段长和角度。');
+  return length - projectedSegmentLength(length, thetaRadians);
+}
+export const perspectiveProjection = { length: projectedSegmentLength, delta: projectedSegmentDelta };
 export function validatePerspective(v: any): asserts v is PerspectiveInput {
   if (!v || Array.isArray(v) || Object.keys(v).some(k => !['mode','limb','upper','lower','basis','calibrationPath','calibrationHash','widthUpper','widthLower'].includes(k)) || !['diagnostic','calibration','calibrated'].includes(v.mode) || !['leftArm','rightArm'].includes(v.limb)
     || ![v.upper,v.lower].every(n => Number.isFinite(n) && n > 0 && n <= 1) || typeof v.basis !== 'string' || !v.basis.trim())

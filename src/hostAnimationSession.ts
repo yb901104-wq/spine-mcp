@@ -5,11 +5,17 @@ import {assertVersion,HostError,objectHash,strictHash,type VersionRef} from './h
 import {resolveWorkspacePath,resolveWorkspacePathAsync,type ToolContext,type WorkspaceReadResolver} from './spineJson.js';
 import {hashObject} from './mappingTools.js';
 import {strictFileChecks} from './strictFileChecks.js';
+import {expectedRetargetManifestProblem} from './animationAcceptancePolicy.js';
+import {assertEvidenceEnvelope} from './evidenceEnvelope.js';
+import {runtimeBuildLineage} from './buildIdentity.js';
 
 export interface AnimationSession {
  version:VersionRef;snapshotHash:string;dependencyFingerprint:string;derivedHash:string;candidatePath:string;candidateHash:string;
  sourcePath:string;sourceHash:string;animation:string;baseToken:string;recordPath:string;recordHash:string;
- poseManifestPath:string;previewManifestPath:string;review?:any;reviewHash?:string;
+  poseManifestPath:string;previewManifestPath:string;
+  retargetManifestPath?:string;retargetManifestFingerprint?:string;referenceApprovalFingerprint?:string;
+  targetCharacterFingerprint?:string;actionBindingFingerprint?:string;visualRigFingerprint?:string;
+  review?:any;reviewHash?:string;
 }
 export async function writeAnimationRecord(file:string,value:any,context:ToolContext,replace=false){
  const absolute=resolveWorkspacePath(file,context),bytes=JSON.stringify(value,null,2)+'\n';await mkdir(path.dirname(absolute),{recursive:true});
@@ -28,7 +34,16 @@ export async function assertAnimationSession(session:AnimationSession,doc:any,co
  const record=JSON.parse(raw.toString()),binding=record.tokenData?.hostBinding;
  assertVersion(binding?.version,doc.version);
  if(hashObject(record.tokenData)!==session.baseToken||record.reviewToken!==session.baseToken||objectHash(binding)!==objectHash({version:session.version,snapshotHash:session.snapshotHash,dependencyFingerprint:session.dependencyFingerprint,derivedHash:session.derivedHash,candidateHash:session.candidateHash,sourceHash:session.sourceHash})||record.candidatePath!==session.candidatePath||record.previewManifestPath!==session.previewManifestPath||record.poseManifestPath!==session.poseManifestPath||record.sourcePath!==session.sourcePath||record.sourceHash!==session.sourceHash||record.tokenData.animation!==session.animation||record.numericOk!==true||record.keyGraphsOk!==true)throw new HostError('COMMIT_NOT_AUTHORIZED','动画准备记录未绑定当前通过的完整候选。',409);
+ const sessionRetarget=record.retargetManifestPath??session.retargetManifestPath;
+ if(sessionRetarget!==session.retargetManifestPath||record.retargetManifestFingerprint!==session.retargetManifestFingerprint||record.referenceApprovalFingerprint!==session.referenceApprovalFingerprint||record.targetCharacterFingerprint!==session.targetCharacterFingerprint||record.actionBindingFingerprint!==session.actionBindingFingerprint||record.visualRigFingerprint!==session.visualRigFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','动画准备记录未绑定当前 retarget 来源指纹。',409);
+ if(sessionRetarget){
+  const retarget=JSON.parse(await read(sessionRetarget).then(value=>value.toString()));
+  const problem=expectedRetargetManifestProblem(retarget);
+  if(problem)throw new HostError('COMMIT_NOT_AUTHORIZED',problem,409);
+  if(retarget.retargetManifestFingerprint!==session.retargetManifestFingerprint||retarget.referenceApprovalFingerprint!==session.referenceApprovalFingerprint||retarget.targetCharacterFingerprint!==session.targetCharacterFingerprint||retarget.actionBindingFingerprint!==session.actionBindingFingerprint||retarget.visualRigFingerprint!==session.visualRigFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','retarget manifest 来源指纹与动画 session 不一致。',409);
+ }
  if(!Array.isArray(record.artifacts)||!record.artifacts.length||hashObject(record.artifacts)!==record.tokenData.artifacts)throw new HostError('COMMIT_NOT_AUTHORIZED','完整动画产物未绑定准备令牌。',409);
+ if(record.evidenceEnvelope){try{assertEvidenceEnvelope(record.evidenceEnvelope,{projectId:context.projectId??null,version:doc.version,sourceHash:session.sourceHash,candidateHash:session.candidateHash,buildLineageFingerprint:(await runtimeBuildLineage).lineageFingerprint,retargetManifestFingerprint:session.retargetManifestFingerprint});}catch(error:any){throw new HostError('REVIEW_STALE',error instanceof Error?error.message:String(error),409);}}
  // 同一次核验内合并重叠证据，不跨调用缓存；同路径的冲突哈希直接拒绝。
  const expected=new Map<string,any>();
  for(const item of [{filePath:session.candidatePath,hash:session.candidateHash},{filePath:session.sourcePath,hash:session.sourceHash},...record.artifacts,...includeReview?session.review?.evidence??[]:[]]){

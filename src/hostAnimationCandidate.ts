@@ -14,7 +14,7 @@ import {createHostAnimationBundle} from './hostAnimationBundle.js';
 export async function prepareHostAnimationCandidate(input:any,snapshot:any,context:ToolContext,signal?:AbortSignal,progress?:(stage:string)=>void){
  const args=structuredClone(input);snapshot=structuredClone(snapshot);
  return withStrict(async()=>{
-  rejectFields(args,['projectId','expectedRevision','filePath','mappingPath','motionPath','animation','duration','overwrite','expectedHash','dryRun','reviewToken','allowUnsupportedVersion','atlasPath','rotationTolerance','translationTolerance','footContactTolerance','handTolerance','vertexTolerance','preview','diagnosticPreview']);
+  rejectFields(args,['projectId','expectedRevision','filePath','mappingPath','motionPath','animation','duration','overwrite','expectedHash','dryRun','reviewToken','allowUnsupportedVersion','atlasPath','rotationTolerance','translationTolerance','footContactTolerance','handTolerance','vertexTolerance','preview','diagnosticPreview','retargetMode','workflowProfile']);
   const check=()=>{if(signal?.aborted)throw new HostError('TASK_CANCELLED','动画候选计算已取消，源资源未写入。',409);};check();
   assertVersion(args.expectedRevision,snapshot.version);
   if(snapshot.viewProfile!=='c2-pose'||snapshot.kind!=='motion'||snapshot.project?.mode!=='managed'||snapshot.document.version!==2)throw new HostError('CAPABILITY_MISSING','精确动画候选仅用于隔离 C2 当前受管 v2 motion。',409);
@@ -42,7 +42,7 @@ export async function prepareHostAnimationCandidate(input:any,snapshot:any,conte
   const gate=await poseGateData(snapshot.document,context);
   if(!gate.ok||gate.sourceFingerprint!==(await characterFingerprint(binding.skeletonPath,binding.mappingPath,context)).fingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','标准/关键姿态或目标角色的既有审查未通过。',409,gate);
   progress?.('计算完整拟合候选及 runtime 验证');
-  const prepared=await prepareSemanticAnimationData(source,mapping,snapshot.document,{...args,dryRun:true},context);check();await verify();
+  const prepared=await prepareSemanticAnimationData(source,mapping,snapshot.document,{...args,retargetMode:args.retargetMode??'adaptive',dryRun:true},context);check();await verify();
   const audit=auditGeneratedAnimationCandidate(source,prepared.candidate,args.animation,args.overwrite===true);
   const derived=await evaluateAnimationSnapshot(snapshot,context,verify,signal,progress,{source:prepared.candidate,unreachableCount:prepared.build.unreachable.length});
   const keyGraphs=await compareAnimationKeyPoses(derived.live.path,args.animation,snapshot.document,prepared.build.duration,context);await verify();
@@ -51,7 +51,7 @@ export async function prepareHostAnimationCandidate(input:any,snapshot:any,conte
   const report={schemaVersion:1,purpose:'host-animation-candidate',version:snapshot.version,snapshotHash:snapshot.snapshotHash,dependencyFingerprint:snapshot.dependencyFingerprint,
    sourcePath:binding.skeletonPath,sourceHash,candidateHash:derived.live.hash,candidatePath:derived.live.path,motionPath:snapshot.path,motionHash:snapshot.fileHash,
    animation:args.animation,duration:prepared.build.duration,overwrite:args.overwrite===true,calibration:{path:calibrationPath,hash:calibrationHash,provenance:calibrationProvenance},
-   numericOk,structure:prepared.structure,officialSpec:prepared.spec,operationValidation:audit.operationValidation,changedPaths:audit.diff.map(d=>d.path),
+   retargetMode:args.retargetMode??'adaptive',retargetStatus:prepared.adaptation?.status??(prepared.ok?'semantic-pass':'unresolved'),retargetQuality:prepared.adaptation?.retargetQuality??0,semanticQuality:prepared.adaptation?.semanticQuality??null,structuralQuality:prepared.adaptation?.structuralQuality??null,styleQuality:prepared.adaptation?.styleQuality??null,preservedConstraints:prepared.adaptation?.preservedConstraints??[],relaxedConstraints:prepared.adaptation?.relaxedConstraints??[],retargetResiduals:prepared.adaptation?.residuals??{},semanticFailures:prepared.adaptation?.semanticFailures??[],reachabilityFailures:prepared.adaptation?.reachabilityFailures??[],numericOk,structure:prepared.structure,officialSpec:prepared.spec,operationValidation:audit.operationValidation,changedPaths:audit.diff.map(d=>d.path),
    numeric:prepared.validation,poseGate:gate,keyGraphs,unreachable:prepared.build.unreachable,stats:prepared.build.stats,
    ok,diagnosticOnly:true,readyToCommit:false,authorizationGranted:false,
    note:'精确拟合与当前 runtime 回读不代表完整动画视觉批准，须独立生成审查产物、核验当前 player 证据并授权。'};
@@ -61,6 +61,6 @@ export async function prepareHostAnimationCandidate(input:any,snapshot:any,conte
   await verify();let bundle:Awaited<ReturnType<typeof createHostAnimationBundle>>|undefined,previewError:string|undefined;
   if(ok&&args.preview!==false){try{bundle=await createHostAnimationBundle(snapshot,derived,prepared.candidate,mapping,args,gate,reportPath,context,verify);}catch(error:any){if(error.code==='TASK_CANCELLED'||error.code==='TARGET_DRIFT')throw error;previewError=String(error);}}
   await verify();
-  return {derived,session:bundle?.session,summary:{ok,dryRun:true,wroteFile:false,numericOk,diagnosticOnly:true,readyForAnimationReview:!!bundle,readyToCommit:false,version:snapshot.version,sourceHash,candidateHash:derived.live.hash,candidatePath:derived.live.path,reportPath,reportHash:strictHash(bytes),poseGate:gate,keyGraphs:{ok:keyGraphs.ok,fingerprint:keyGraphs.fingerprint},motionValidation:prepared.validation,stats:prepared.build.stats,reviewToken:bundle?.session.baseToken,posePreview:bundle?.posePreview,animationPreview:bundle?.animationPreview,previewError,message:report.note}};
+  return {derived,session:bundle?.session,summary:{ok,retargetMode:args.retargetMode??'adaptive',retargetStatus:prepared.adaptation?.status??(prepared.ok?'semantic-pass':'unresolved'),retargetQuality:prepared.adaptation?.retargetQuality??0,semanticQuality:prepared.adaptation?.semanticQuality??null,structuralQuality:prepared.adaptation?.structuralQuality??null,styleQuality:prepared.adaptation?.styleQuality??null,preservedConstraints:prepared.adaptation?.preservedConstraints??[],relaxedConstraints:prepared.adaptation?.relaxedConstraints??[],residuals:prepared.adaptation?.residuals??{},semanticFailures:prepared.adaptation?.semanticFailures??[],reachabilityFailures:prepared.adaptation?.reachabilityFailures??[],dryRun:true,wroteFile:false,numericOk,diagnosticOnly:true,readyForAnimationReview:!!bundle,readyToCommit:false,version:snapshot.version,sourceHash,candidateHash:derived.live.hash,candidatePath:derived.live.path,reportPath,reportHash:strictHash(bytes),poseGate:gate,keyGraphs:{ok:keyGraphs.ok,fingerprint:keyGraphs.fingerprint},motionValidation:prepared.validation,stats:prepared.build.stats,reviewToken:bundle?.session.baseToken,posePreview:bundle?.posePreview,animationPreview:bundle?.animationPreview,previewError,message:report.note}};
  });
 }

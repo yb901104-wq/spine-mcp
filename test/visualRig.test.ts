@@ -3,18 +3,19 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,readFile,readdir,rm,rename} from 'node:fs/promises';
 import os from 'node:os';import path from 'node:path';
 import {createCanvas} from '@napi-rs/canvas';
+import {encodePngGif} from '../src/previewRenderTools.js';
 import {comparisonPolicy,compareGraphs,graphEdges,torsoFrame,torsoCoordinate} from '../src/poseGraph.js';
-import {calibrateVisualRig,reviewVisualRig,requireVisualRig,readVisualNodes,attachmentSnapshot,visualRigFingerprint} from '../src/visualRig.js';
+import {calibrateVisualRig,reviewVisualRig,requireVisualRig,readVisualNodes,sampleVisualPoints,attachmentSnapshot,visualRigFingerprint,auditVisualRigBinding} from '../src/visualRig.js';
 import {createMappingDraft,calibrateMapping,confirmMapping,saveJson} from '../src/mappingTools.js';
 import {createPoseDraft,createPoseDraftData,solvePose,renderPoseComparison,reviewPose,poseChecks,requireReviewedPose,adjustPose} from '../src/poseWorkflow.js';
 import {createReferencePose,renderReferencePoseSheet,reviewReferencePose,referenceChecks} from '../src/referencePose.js';
-import {comparePoseGraphs,retargetReferencePose,retargetReferencePoseData,compareAnimationKeyPoses,prepareReferenceRetargetInputs} from '../src/referenceRetarget.js';
+import {comparePoseGraphs,retargetReferencePose,retargetReferencePoseData,compareAnimationKeyPoses,prepareReferenceRetargetInputs,generateReferenceRetargetTarget} from '../src/referenceRetarget.js';
 import {retargetReferencePoseKernel} from '../src/referenceRetargetKernel.js';
 import {requireReferencePose,referenceFingerprint} from '../src/referencePose.js';
 import {validatePoseSequence} from '../src/poseSequence.js';
 import {createPoseSequence} from '../src/creationReference.js';
 import {refineReferencePose} from '../src/referencePoseRefinement.js';
-import { withV2 } from './helpers/referenceV2.js';
+import { withV2, silhouetteBlock, depthBlock } from './helpers/referenceV2.js';
 import { HostEditorStore } from '../src/hostEditorStore.js';
 import { HostCapture } from '../src/hostCapture.js';
 import { evaluateHostSnapshot } from '../src/hostEvaluator.js';
@@ -31,6 +32,16 @@ import {strictHash,objectHash} from '../src/hostContracts.js';
 import {releaseWriter} from '../src/writerOwnership.js';
 import {callCreationTool} from '../src/creationTasks.js';
 const correspondence={left:'left',right:'right',basis:'测试已知左右链',anatomicalIdentity:'同侧',projectedOrder:'左前右后'};
+
+test('真实 npc1 visualRig 的骨骼原点和面部锚点问题被单独报告', async () => {
+ const rig=JSON.parse(await readFile('diagnostic-fixture/trial/npc1.visual-rig.json','utf8'));
+ const mapping=JSON.parse(await readFile('diagnostic-fixture/previews/pose-workflow-20261009/npc1.mapping.json','utf8'));
+ const audit=auditVisualRigBinding(rig,mapping);
+ assert.equal(audit.ok,false);
+ assert.ok(audit.issues.some((item:any)=>item.code==='VISUAL_RIG_ORIGIN_ONLY'));
+ assert.ok(audit.issues.some((item:any)=>item.code==='FACE_ANCHOR_UNVERIFIED'));
+ assert.ok(audit.warnings.some((item:any)=>item.code==='MAPPING_SEGMENT_ATTACHMENT_REUSED'));
+});
 async function fixture(factor=1,prefix='a',soleHeight=0){
  const root=await mkdtemp(path.join(os.tmpdir(),'spine-visual-')),c={workspaceRoot:root},n=(s:string)=>prefix+s;
  const bones:any[]=[{name:n('root')},{name:n('body'),parent:n('root'),y:80*factor},{name:n('head'),parent:n('body'),y:25*factor}],slots:any[]=[],attachments:any={},mapping:any={version:2,character:prefix,skin:'default',atlasPath:'test.atlas',bones:{root:n('root'),body:n('body'),head:n('head'),anchors:{},bendDirections:{}}};
@@ -58,7 +69,22 @@ async function fixture(factor=1,prefix='a',soleHeight=0){
  await createPoseDraft({filePath:'character.json',mappingPath:'mapping.json',posePath:'standing.json',kind:'standing',frame,dryRun:false},c);await solvePose({posePath:'standing.json',dryRun:false},c);const sheet=await renderPoseComparison({posePaths:['standing.json']},c);await reviewPose({posePath:'standing.json',manifestPath:sheet.manifestPath,decision:'approved',reviewedBy:'test-stub',reason:'测试门禁',checks:poseChecks,dryRun:false},c);
  return {root,c,rig,frame,factor,prefix};
 }
-test('版本化默认比较策略与文件一致',async()=>{assert.deepEqual(JSON.parse(await readFile('policies/pose-comparison.v4.json','utf8')),comparisonPolicy);});
+test('版本化默认比较策略与文件一致',async()=>{assert.deepEqual(JSON.parse(await readFile('policies/pose-comparison.v5.json','utf8')),comparisonPolicy);});
+test('visualPoints：逐帧保留非原点 boneLocal 的精确局部点与 unavailable 原因',async()=>{
+ const f=await fixture();try{
+  const v=await requireVisualRig('rig.json',f.c),sk=v.rt.sample(undefined,0,'default'),sample=sampleVisualPoints(sk,v.rig);
+  assert.equal(sample.available,true);
+  assert.equal(sample.points.head.source,'boneLocal');
+  assert.deepEqual(sample.points.head.localPoint,[8*f.factor,3*f.factor]);
+  assert.equal(sample.points.head.exact,true);
+  const broken=structuredClone(v.rig);broken.nodes.head={...broken.nodes.head,bone:'missing-bone'};
+  const degraded=sampleVisualPoints(sk,broken);
+  assert.equal(degraded.available,false);
+  assert.equal(degraded.points.head.source,'unavailable');
+  assert.equal(degraded.points.head.exact,false);
+  assert.match(degraded.points.head.reason,/不存在/);
+ }finally{await rm(f.root,{recursive:true,force:true});}
+});
 test('刚性、多附件、加权三角锚点使用实际 runtime 顶点；原点候选不能确认',async()=>{
  const f=await fixture();try{
   const v=await requireVisualRig('rig.json',f.c),sk=v.rt.sample(undefined,0,'default'),actual=readVisualNodes(sk,v.rig),head=sk.findBone(v.mapping.bones.head!)!;assert.ok(Math.hypot(actual.points.head.x-head.worldX,actual.points.head.y-head.worldY)>1);
@@ -116,6 +142,24 @@ test('不同长度角色实际视觉节点比较、逐项门禁和修改后失�
   const pose=solved.pose;Object.assign(pose,{sequencePath:'sequence.json',stageId:'ready'});pose.referencePosePath='reference.json';pose.reference=ref.observation;await saveJson('action.json',pose,f.c);
   const cmp=await comparePoseGraphs({posePath:'action.json',dryRun:false},f.c);assert.equal(cmp.ok,true,JSON.stringify(cmp.metrics));pose.comparisonPath=cmp.reportPath;await saveJson('action.json',pose,f.c);const sheet=await renderPoseComparison({posePaths:['action.json']},f.c);
   await retargetReferencePose({referencePosePath:'reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',posePath:'retarget.json',correspondence,sequencePath:'sequence.json',stageId:'ready',dryRun:false},f.c);
+  if(prefix==='a'){
+   const expectedTarget=await generateReferenceRetargetTarget({referencePosePath:'reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'sequence.json',stageId:'ready',facing:'right',targetTime:0},f.c);
+   assert.equal(expectedTarget.comparisonMode,'retargeted');assert.equal(expectedTarget.acceptanceMode,'diagnostic');assert.equal(expectedTarget.acceptanceEligible,false);assert.equal(expectedTarget.formalEligible,false);
+   assert.equal(expectedTarget.referenceApprovalDecision,'approved');assert.equal(expectedTarget.expectedTargetSource,'reference-retarget-kernel');assert.equal(expectedTarget.expectedTarget.visualPointsAvailable,true);assert.ok(expectedTarget.expectedTargetManifestHash);assert.equal(expectedTarget.actualTargetSource,null);assert.equal(expectedTarget.actualTargetManifestHash,null);assert.equal(expectedTarget.kernelInternalActualTarget.source,'reference-retarget-kernel.runtimeGraph');
+   const persisted=await generateReferenceRetargetTarget({referencePosePath:'reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'sequence.json',stageId:'ready',facing:'right',targetTime:0,retargetManifestPath:'expected-target.json',dryRun:false},f.c);
+   assert.equal(persisted.dryRun,false);assert.equal(persisted.retargetManifestPath,'expected-target.json');const persistedManifest=JSON.parse(await readFile(path.join(f.root,'expected-target.json'),'utf8'));assert.equal(persistedManifest.expectedTargetManifestHash,expectedTarget.expectedTargetManifestHash);assert.equal(persistedManifest.actualTargetSource,null);assert.equal(persistedManifest.actualTargetManifestHash,null);
+   const rejected=structuredClone(JSON.parse(await readFile(path.join(f.root,'reference.json'),'utf8')));rejected.status='rejected';rejected.review={...(rejected.review??{}),decision:'rejected'};await saveJson('rejected.reference.json',rejected,f.c);await assert.rejects(()=>generateReferenceRetargetTarget({referencePosePath:'rejected.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'sequence.json',stageId:'ready',facing:'right',targetTime:0},f.c),/rejected/);
+   const diagnosticGif=await encodePngGif({framePaths:['ref.png','ref.png'],outputPath:'reference.gif'},f.c);
+   const unreachable=structuredClone(JSON.parse(await readFile(path.join(f.root,'reference.json'),'utf8')));unreachable.observation.points.leftWrist={...unreachable.observation.points.leftWrist,x:390,y:40};unreachable.review.fingerprint=referenceFingerprint(unreachable);await saveJson('unreachable.reference.json',unreachable,f.c);
+   const unreachableSequence=structuredClone(JSON.parse(await readFile(path.join(f.root,'sequence.json'),'utf8')));unreachableSequence.stages[0].referencePosePath='unreachable.reference.json';unreachableSequence.stages[0].referenceFingerprint=referenceFingerprint(unreachable);await saveJson('unreachable-sequence.json',unreachableSequence,f.c);
+   const diagnostic=await generateReferenceRetargetTarget({referencePosePath:'unreachable.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'unreachable-sequence.json',stageId:'ready',facing:'right',targetTime:0,retargetMode:'strict',referenceGifPath:diagnosticGif.gifPath,diagnosticPreview:true,diagnosticOutputDir:'diagnostic-retarget'},f.c);
+   assert.equal(diagnostic.diagnosticOnly,true);assert.equal(diagnostic.formalEligible,false);assert.equal(diagnostic.acceptanceEligible,false);assert.equal(diagnostic.readyToCommit,false);assert.equal(diagnostic.reviewToken,undefined);assert.equal(diagnostic.coverageStages?.[0],'ready');assert.deepEqual(diagnostic.reviewedFrameIndices,[0]);assert.equal(diagnostic.unreviewedFrameCount,1);assert.deepEqual(diagnostic.unreviewedFrameIndices,[1]);assert.ok(diagnostic.referenceDiagnosticGifPath);assert.ok(diagnostic.targetDiagnosticGifPath);assert.ok(diagnostic.comparisonDiagnosticGifPath);assert.ok(diagnostic.dynamicComparisonDiagnosticGifPath);assert.equal(diagnostic.dynamicTargetMode,'stage-hold');assert.equal(diagnostic.dynamicComparisonFrameCount,diagnostic.referenceFrameCount);assert.ok(diagnostic.dynamicComparisonFrameCount>1);assert.ok(Array.isArray(diagnostic.semanticFailures));assert.ok(Array.isArray(diagnostic.reachabilityFailures));assert.ok((diagnostic.semanticFailures.length+diagnostic.reachabilityFailures.length)>0);assert.ok(diagnostic.conflicts?.length||diagnostic.previewIssues?.length);assert.ok(diagnostic.residuals&&Object.keys(diagnostic.residuals).length>0);for(const key of ['referenceGifHash','sequenceHash','referenceApprovalFingerprint','visualRigFingerprint','mappingFingerprint','targetCharacterHash'])assert.match(diagnostic[key],/^[0-9a-f]{64}$/);assert.match(diagnostic.sourceAssetHashes.atlas,/^[0-9a-f]{64}$/);assert.ok(Object.keys(diagnostic.sourceAssetHashes.atlasPages).length>0);assert.equal((await readFile(path.join(f.root,diagnostic.referenceDiagnosticGifPath))).length>0,true);assert.equal((await readFile(path.join(f.root,diagnostic.targetDiagnosticGifPath))).length>0,true);assert.equal((await readFile(path.join(f.root,diagnostic.dynamicComparisonDiagnosticGifPath))).length>0,true);
+   await assert.rejects(()=>generateReferenceRetargetTarget({referencePosePath:'unreachable.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'unreachable-sequence.json',stageId:'ready',facing:'right',targetTime:0,retargetMode:'strict'},f.c));
+   await assert.rejects(()=>generateReferenceRetargetTarget({referencePosePath:'unreachable.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'unreachable-sequence.json',stageId:'ready',facing:'right',targetTime:0,referenceGifPath:diagnosticGif.gifPath,referenceGifHash:'0'.repeat(64),diagnosticPreview:true},f.c),/REFERENCE_BINDING_MISMATCH/);
+   await assert.rejects(()=>generateReferenceRetargetTarget({referencePosePath:'unreachable.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'unreachable-sequence.json',stageId:'ready',facing:'right',targetTime:0,referenceGifPath:diagnosticGif.gifPath,sequenceHash:'0'.repeat(64),diagnosticPreview:true},f.c),/REFERENCE_BINDING_MISMATCH/);
+   const mismatchedSequence={...unreachableSequence,referenceGifPath:'other-reference.gif'};await saveJson('mismatched-sequence.json',mismatchedSequence,f.c);
+   await assert.rejects(()=>generateReferenceRetargetTarget({referencePosePath:'unreachable.reference.json',visualRigPath:'rig.json',standardPosePath:'standing.json',sequencePath:'mismatched-sequence.json',stageId:'ready',facing:'right',targetTime:0,retargetMode:'strict',referenceGifPath:diagnosticGif.gifPath,diagnosticPreview:true},f.c),/REFERENCE_BINDING_MISMATCH/);
+  }
   const refinement=await refineReferencePose({posePath:'retarget.json',outputPosePath:'refined.json',dryRun:false},f.c);assert.equal(refinement.ok,true,JSON.stringify(refinement.issues));
   const mixed=structuredClone(pose);mixed.correspondence={...correspondence,left:'right',right:'left'};await saveJson('mixed.json',mixed,f.c);assert.equal((await validatePoseSequence({sequencePath:'sequence.json',posePaths:['mixed.json']},f.c)).ok,false);
   await assert.rejects(()=>refineReferencePose({posePath:'mixed.json',outputPosePath:'not-written.json'},f.c),/身份/);
@@ -258,3 +302,4 @@ test('真实 npc1 旧准备帧：低 IK 误差不抵消窄站、手位失败，A
  await assert.rejects(()=>reviewPose({posePath,manifestPath:base+'/ready-comparison-v2/pose-comparison.json',comparisonPath:base+'/old-ready.pose.comparison.json',decision:'approved',reviewedBy:'test-fake-agent',reason:'模拟错误批准',stageId:'ready',checks:poseChecks,checkResults:Object.fromEntries(poseChecks.map(k=>[k,{status:'pass',reason:k+' 模拟错误判断'}])),dryRun:false},c),/比较失败|动作级身份|需要 v2/);
  assert.deepEqual(await readFile(path.join(workspaceRoot,'目标/npc1.json')),before);
 });
+

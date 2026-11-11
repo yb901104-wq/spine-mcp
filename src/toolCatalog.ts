@@ -4,6 +4,7 @@ export type ToolGroup=keyof typeof toolGroups;
 const core:ToolGroup[]=['project','observe','workflow','discovery'];
 export function toolGroup(name:string):ToolGroup{
   if(['spine_get_tool_catalog','spine_set_tool_groups'].includes(name))return 'discovery';
+  if(name==='spine_execute_task')return 'workflow';
   if(/creation_task|creation_stage/.test(name))return 'workflow';
   if(name==='spine_check_editor_import')return 'review';
   if(/workspace|project|agent_/.test(name))return 'project';

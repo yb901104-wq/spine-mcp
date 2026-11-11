@@ -22,6 +22,7 @@ import type { ToolContext } from './spineJson.js';
 import { hostPoseCommandCapabilities } from './hostPoseCommands.js';
 import { managedDocumentBinding, assetDependencies, validateAssetBinding, type AssetBinding } from './hostAssetBinding.js';
 import {assertAnimationSession,assertHostAnimationReviewFresh,validateHostAnimationReview,writeAnimationRecord,type AnimationSession} from './hostAnimationSession.js';
+import { comparisonManifestProblem,expectedRetargetManifestProblem } from './animationAcceptancePolicy.js';
 import {auditGeneratedAnimationCandidate,createWorkspaceReadResolver,resolveWorkspacePathAsync,type WorkspaceReadResolver} from './spineJson.js';
 import {invalidate} from './runtimeCache.js';
 import {withFileCheckBatch} from './strictFileChecks.js';
@@ -439,7 +440,7 @@ export class HostEditorStore extends HostDocumentStore {
       const doc=this.requireDoc();assertVersion(args.expectedRevision,doc.version);await this.assertFresh(doc);
       if(this.editProfile!=='c2-pose'||doc.kind!=='motion'||this.mode!=='host')throw new HostError('CAPABILITY_MISSING','动画审查会话仅限隔离 C2 当前 motion。',409);
       const session=args.session as AnimationSession;
-      rejectFields(session,['version','snapshotHash','dependencyFingerprint','derivedHash','candidatePath','candidateHash','sourcePath','sourceHash','animation','baseToken','recordPath','recordHash','poseManifestPath','previewManifestPath']);
+      rejectFields(session,['version','snapshotHash','dependencyFingerprint','derivedHash','candidatePath','candidateHash','sourcePath','sourceHash','animation','baseToken','recordPath','recordHash','poseManifestPath','previewManifestPath','retargetManifestPath','retargetManifestFingerprint','referenceApprovalFingerprint','targetCharacterFingerprint','actionBindingFingerprint','visualRigFingerprint']);
       const binding=this.project?.mode==='managed'?this.project.manifest.characters[doc.characterId!]:null;
       if(!binding||session.sourcePath!==binding.skeletonPath||session.animation!==doc.value.name)throw new HostError('PROJECT_BINDING_CONFLICT','动画候选角色来源或名称不符。',409);
       const record=await assertAnimationSession(session,doc,this.context),source=JSON.parse(await readFile(this.resolve(session.sourcePath),'utf8')),candidate=JSON.parse(await readFile(this.resolve(session.candidatePath),'utf8'));
@@ -460,6 +461,12 @@ export class HostEditorStore extends HostDocumentStore {
       const doc=this.requireDoc();assertVersion(args.expectedRevision,doc.version);await this.assertFresh(doc);
       const session=this.animationSessionValue;if(!session||args.baseToken!==session.baseToken)throw new HostError('COMMIT_NOT_AUTHORIZED','动画审查缺少当前准备令牌。',409);
       const record=await assertAnimationSession(session,doc,this.context),result=args.reviewRecord,review=result?.review;
+      if(session.retargetManifestPath){
+        const retarget=JSON.parse(await readFile(this.resolve(session.retargetManifestPath),'utf8'));
+        const retargetProblem=expectedRetargetManifestProblem(retarget);
+        if(retargetProblem)throw new HostError('COMMIT_NOT_AUTHORIZED',retargetProblem,409);
+        if(retarget.retargetManifestFingerprint!==session.retargetManifestFingerprint||retarget.referenceApprovalFingerprint!==session.referenceApprovalFingerprint||retarget.targetCharacterFingerprint!==session.targetCharacterFingerprint||retarget.actionBindingFingerprint!==session.actionBindingFingerprint||retarget.visualRigFingerprint!==session.visualRigFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','retarget manifest 与 session 来源指纹不一致。',409);
+      }
       validateHostAnimationReview(review);assertVersion(review.hostBinding?.version,doc.version);
       if(hashObject({base:session.baseToken,review})!==result.reviewToken||review.baseToken!==session.baseToken||review.candidateHash!==record.candidateHash||objectHash(review.hostBinding)!==objectHash({...record.tokenData.hostBinding,baseToken:session.baseToken}))throw new HostError('COMMIT_NOT_AUTHORIZED','动画审查未绑定精确候选和当前完整版本。',409);
       if(!Array.isArray(result.evidence)||result.evidence.length!==review.evidence?.length||new Set(result.evidence.map((e:any)=>e.filePath)).size!==result.evidence.length)throw new HostError('CAPTURE_UNVERIFIED','动画审查证据集合不完整或重复。',409);
@@ -476,7 +483,14 @@ export class HostEditorStore extends HostDocumentStore {
       }
       if(review.decision==='approved'&&!player)throw new HostError('CAPTURE_UNVERIFIED','完整动画批准缺少当前可信 player 证据。',409);
       const manifest=JSON.parse(await readFile(this.resolve(review.manifestPath),'utf8'));
-      if(manifest.jsonHash!==record.candidateHash||!manifest.gifPath||record.requiresReferenceComparison&&manifest.layout!=='reference-above-target')throw new HostError('COMMIT_NOT_AUTHORIZED','缺少当前完整 GIF 或适用参考对比。',409);
+      if(manifest.jsonHash!==record.candidateHash)throw new HostError('COMMIT_NOT_AUTHORIZED','对比证据不是当前完整候选动画。',409);
+      if(session.retargetManifestPath){
+        if(manifest.retargetManifestPath!==session.retargetManifestPath||manifest.retargetManifestFingerprint!==session.retargetManifestFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','对比证据未绑定当前 retarget manifest。',409);
+        if(manifest.referenceApprovalFingerprint!==session.referenceApprovalFingerprint||manifest.targetCharacterFingerprint!==session.targetCharacterFingerprint||manifest.actionBindingFingerprint!==session.actionBindingFingerprint||manifest.visualRigFingerprint!==session.visualRigFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','对比证据的 retarget 来源指纹与 session 不一致。',409);
+      }
+      // 与 detached 审查共用同一套证据校验：按骨架证据特征判定，不信任可编辑的 layout 字段。
+      const comparisonProblem=comparisonManifestProblem(manifest,review.decision,!!record.requiresReferenceComparison);
+      if(comparisonProblem)throw new HostError('COMMIT_NOT_AUTHORIZED',comparisonProblem,409);
       await this.assertFresh(doc);await assertAnimationSession(session,doc,this.context);
       const reviewHash=objectHash(result);
       if(args.dryRun!==false)return {ok:true,dryRun:true,version:doc.version,reviewHash,reviewToken:result.reviewToken,review};

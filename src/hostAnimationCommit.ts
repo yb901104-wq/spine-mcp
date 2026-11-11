@@ -8,6 +8,7 @@ import {verifySnapshotDependencies} from './hostEvaluator.js';
 import {assertHostAnimationMapping} from './hostAnimationMapping.js';
 import {createMotionRuntime} from './motionRuntime.js';
 import {assertCaptureReadback,captureRuntimeState} from './captureEvidence.js';
+import {expectedRetargetManifestProblem} from './animationAcceptancePolicy.js';
 
 /** MCP 在授权前复验精确候选、不可变完整数值报告与当前参考/视觉证据；不写源资产。 */
 export async function verifyHostAnimationCommit(snapshot:any,session:AnimationSession,args:any,context:ToolContext){
@@ -17,6 +18,12 @@ export async function verifyHostAnimationCommit(snapshot:any,session:AnimationSe
  const read=(file:string)=>readFile(resolveWorkspacePath(file,context)),sourceRaw=await read(session.sourcePath),candidateRaw=await read(session.candidatePath);
  if(strictHash(sourceRaw)!==session.sourceHash||strictHash(candidateRaw)!==session.candidateHash)throw new HostError('TARGET_DRIFT','源动画或候选字节已变化。',409);
  const source=JSON.parse(sourceRaw.toString()),candidate=JSON.parse(candidateRaw.toString());auditGeneratedAnimationCandidate(source,candidate,session.animation,record.tokenData.overwrite===true);
+ if(session.retargetManifestPath){
+  const retarget=JSON.parse((await read(session.retargetManifestPath)).toString());
+  const retargetProblem=expectedRetargetManifestProblem(retarget);
+  if(retargetProblem)throw new HostError('COMMIT_NOT_AUTHORIZED',retargetProblem,409);
+  if(retarget.retargetManifestFingerprint!==session.retargetManifestFingerprint||retarget.referenceApprovalFingerprint!==session.referenceApprovalFingerprint||retarget.targetCharacterFingerprint!==session.targetCharacterFingerprint||retarget.actionBindingFingerprint!==session.actionBindingFingerprint||retarget.visualRigFingerprint!==session.visualRigFingerprint)throw new HostError('COMMIT_NOT_AUTHORIZED','提交前 retarget manifest 来源指纹与 session 不一致。',409);
+ }
  const approved=await assertAnimationReview(session.baseToken,args.reviewToken,context);
  if(objectHash(approved)!==objectHash({review:session.review.review,reviewToken:session.review.reviewToken}))throw new HostError('REVIEW_STALE','完整动画批准记录与当前 Host 登记不符。',409);
  const mapping=JSON.parse((await read(record.mappingPath)).toString()),provenance=await assertHostAnimationMapping(mapping,source,session.sourceHash,session.sourcePath,record.mappingPath,context),report=JSON.parse((await read(record.reportPath)).toString());

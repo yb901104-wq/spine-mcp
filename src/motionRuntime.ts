@@ -42,12 +42,19 @@ export function forkMotionRuntime({data,atlas}:{data:ReturnType<SkeletonJson['re
 export function worldVertices(skeleton: Skeleton) {
   const result: Record<string, number[]> = {};
   for (const slot of skeleton.slots) {
-    const attachment = slot.getAttachment();
-    if (attachment instanceof VertexAttachment) {
+    const attachment: any = slot.getAttachment();
+    // Runtime modules can be loaded through different ESM/CJS boundaries. Keep
+    // the nominal instanceof checks, but also accept Spine's stable runtime
+    // shape so cross-boundary attachments are not silently dropped.
+    const isVertex = attachment instanceof VertexAttachment ||
+      (Number.isFinite(attachment?.worldVerticesLength) && typeof attachment?.computeWorldVertices === 'function');
+    const isRegion = attachment instanceof RegionAttachment ||
+      (!isVertex && typeof attachment?.computeWorldVertices === 'function');
+    if (isVertex) {
       const vertices = new Array<number>(attachment.worldVerticesLength).fill(0);
       attachment.computeWorldVertices(slot, 0, vertices.length, vertices, 0, 2);
       result[slot.data.name + ":" + attachment.name] = vertices;
-    } else if (attachment instanceof RegionAttachment) {
+    } else if (isRegion) {
       const vertices = new Array<number>(8).fill(0);
       attachment.computeWorldVertices(slot, vertices, 0, 2);
       result[slot.data.name + ":" + attachment.name] = vertices;

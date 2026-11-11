@@ -8,7 +8,8 @@ import { fitCubicBezierTimeline, lockFootContact, sampleTimeline, solveTwoBoneIK
 
 import {applyPosePresentation,presentationTimelines} from './posePresentation.js';
 import { taskCheckpoint,reportProgress } from './taskControl.js';
-import { solvePerspectiveArm, solveCalibratedArm, validatePerspective, assertFormalPerspectiveAbsent } from './perspective.js';
+import { solvePerspectiveArm, solveCalibratedArm, validatePerspective, assertFormalPerspectiveAbsent, projectedSegmentDelta } from './perspective.js';
+import { classifyMotionValidation, resolveRetargetMode } from './retargetPolicy.js';
 type SemanticFrame = NonNullable<MotionDefinition["frames"]>[number];
 const roles = ["leftFoot", "rightFoot", "leftHand", "rightHand"] as const;
 const angle = (bone: any) => Math.atan2(bone.c, bone.a) * 180 / Math.PI;
@@ -118,9 +119,10 @@ export function applyFollowThrough(mapping: CharacterMapping, motion: MotionDefi
 export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionRuntime>>, mapping: CharacterMapping, f: SemanticFrame, groundY = 0, follows: Array<{bone:string; value:number}> = [],perspectiveCalibration?:any) {
   if(f.perspective!==undefined)validatePerspective(f.perspective);
   if(f.perspective&&!f.targets?.[f.perspective.limb==='leftArm'?'leftHand':'rightHand'])throw new Error('透视诊断缺少对应手目标。');
-  const channels = [...new Set([mapping.bones.body, mapping.bones.head, ...Object.values(mapping.bones.channels ?? {}), ...[mapping.bones.leftLeg, mapping.bones.rightLeg, mapping.bones.leftArm, mapping.bones.rightArm].flatMap(c => c ?? []), ...(mapping.bones.follow ?? []).map(f => f.bone)].filter(Boolean) as string[])];
+  const depthPointNames=Object.values((mapping.depthPoints??mapping.bones.depthPoints??{}) as Record<string,string>);
+  const channels = [...new Set([mapping.bones.body, mapping.bones.head, ...Object.values(mapping.bones.channels ?? {}), ...[mapping.bones.leftLeg, mapping.bones.rightLeg, mapping.bones.leftArm, mapping.bones.rightArm].flatMap(c => c ?? []), ...depthPointNames, ...(mapping.bones.follow ?? []).map(f => f.bone)].filter(Boolean) as string[])];
   const skeleton = runtime.sample(undefined, 0, mapping.skin);
-  const unreachable: any[] = []; let perspective:any;
+  const unreachable: any[] = []; const branchAdjustments: any[] = []; const depthPointAdjustments: any[] = []; let perspective:any;
   const scale = mapping.calibration!.scale, origin = mapping.calibration!.origin!;
   const time = f.time;
     applyAttachments(skeleton, mapping);
@@ -144,7 +146,24 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
         if(!bend)throw new Error(`${limb} 未确认弯曲方向。`);
         if((mapping.bones.follow??[]).some(v=>chain.includes(v.bone)))throw new Error('透视诊断臂链被 follow 接管。');
         if(f.perspective.mode!=='diagnostic'){if(!perspectiveCalibration)throw new Error('正式/校准样本缺少已核验校准数据。');assertCalibrationFrame(perspectiveCalibration,f);}
+        const originalScales=chain.slice(0,2).map(name=>{const bone=skeleton.findBone(name)!;return {name,x:bone.scaleX,y:bone.scaleY};});
         perspective=f.perspective.mode==='diagnostic'?solvePerspectiveArm(skeleton,mapping,f.perspective,target,bend):solveCalibratedArm(skeleton,mapping,f.perspective,target,bend,perspectiveCalibration);
+        // 有显式点状骨骼时，透视缩短由点骨骼承载；实体段保持原 scale，避免把 2D 投影误写成普通骨骼缩放。
+        const depthPoints=(mapping.depthPoints??mapping.bones.depthPoints??{}) as Record<string,string>;
+        const ratios=[f.perspective.upper,f.perspective.lower];
+        for(let i=0;i<2;i++){
+          const segment=chain[i], pointName=depthPoints[segment]; if(!pointName) continue;
+          const pointBone=skeleton.findBone(pointName); if(!pointBone) continue;
+          const length=mapping.calibration?.lengths?.[limb]?.[i] ?? Math.abs((skeleton.findBone(segment) as any)?.data?.length ?? 0);
+          const ratio=ratios[i]; const delta=projectedSegmentDelta(length,Math.acos(Math.max(-1,Math.min(1,ratio))));
+          pointBone.x-=delta; skeleton.updateWorldTransform();
+          depthPointAdjustments.push({limb,segment,perspectivePoint:pointName,ratio,delta,source:'explicit-depthPoints'});
+        }
+        // 没有显式 depthPoints 时保留旧 diagnostic 的实体段 scale 行为；
+        // 只有已声明点骨骼承载透视缩短时，才把实体段 scale 恢复为 setup 值。
+        const hasDepthPoint = chain.slice(0, 2).some(segment => !!depthPoints[segment]);
+        if (hasDepthPoint) for(const original of originalScales){const bone=skeleton.findBone(original.name)!;bone.scaleX=original.x;bone.scaleY=original.y;}
+        skeleton.updateWorldTransform();
         if(!perspective.ok)unreachable.push({time,role,error:perspective.error,branchOk:perspective.branchOk});
         continue;
       }
@@ -159,8 +178,28 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
       }
       const lengths = mapping.calibration!.lengths?.[limb]; if (!lengths) throw new Error(`${limb} 未校准长度。`);
       const bend = f.bendDirections?.[limb] ?? mapping.bones.bendDirections?.[limb]; if (!bend) throw new Error(`${limb} 未确认弯曲方向。`);
+      // 跨体型适配时，脚目标可能恰好落在两段腿的最大伸展圆上，
+      // 这会让 IK 即使收到固定 bend 分支也产生视觉上的 straight。
+      // 对腿链保留一个很小但可见的最小屈曲，优先维护语义分支，
+      // 并把被放宽的脚位距离作为诊断残差留给上层报告。
+      if (limb.endsWith('Leg')) {
+        const dx = endpoint[0] - a.worldX, dy = endpoint[1] - a.worldY, d = Math.hypot(dx, dy);
+        const minVisibleFlex = 3 * Math.PI / 180;
+        const maxDistanceWithFlex = Math.sqrt(lengths[0] * lengths[0] + lengths[1] * lengths[1] + 2 * lengths[0] * lengths[1] * Math.cos(minVisibleFlex));
+        if (d > maxDistanceWithFlex + 1e-6 && d > 1e-8) {
+          const dyFromHip = endpoint[1] - a.worldY, horizontalSq = maxDistanceWithFlex * maxDistanceWithFlex - dyFromHip * dyFromHip;
+          if (target.contact && horizontalSq > 0) {
+            // 接地目标保持原地面高度，只缩短髋到踝的水平距离。
+            endpoint[0] = a.worldX + Math.sign(dx || 1) * Math.sqrt(horizontalSq);
+          } else {
+            endpoint[0] = a.worldX + dx / d * maxDistanceWithFlex;
+            endpoint[1] = a.worldY + dy / d * maxDistanceWithFlex;
+          }
+          branchAdjustments.push({ role: limb, requestedDistance: d, adjustedDistance: maxDistanceWithFlex, minVisibleFlexion: 3, reason: '目标脚位接近最大伸展，保留可见弯曲分支。' });
+        }
+      }
       const ik = solveTwoBoneIK([a.worldX, a.worldY], endpoint, lengths[0], lengths[1], bend);
-      if (!ik.reachable) unreachable.push({ time, role, error: ik.error });
+      if (!ik.reachable) unreachable.push({ time, role, error: ik.error, distance: ik.distance, minReach: ik.minReach, maxReach: ik.maxReach, tolerance: ik.tolerance });
       setWorldAngle(a, ik.upperAngle - Math.atan2(b.data.y, b.data.x) * 180 / Math.PI); skeleton.updateWorldTransform();
       setWorldAngle(b, ik.lowerAngle - Math.atan2(c.data.y, c.data.x) * 180 / Math.PI); skeleton.updateWorldTransform();
       setWorldAngle(c, desiredAngle); skeleton.updateWorldTransform();
@@ -172,9 +211,24 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
       const limit = mapping.bones.jointLimits?.[name]; rotation = Math.max(limit?.min ?? -Infinity, Math.min(limit?.max ?? Infinity, rotation));
       b.rotation = b.data.rotation + rotation;
       bones[name] = { rotate: rotation, translate: { x: b.x - b.data.x, y: b.y - b.data.y } };
-      if(f.perspective&&mapping.bones[f.perspective.limb]?.slice(0,f.perspective.mode==='diagnostic'?2:3).includes(name))bones[name].scale={x:b.scaleX/b.data.scaleX,y:b.scaleY/b.data.scaleY};
+      if(f.perspective&&mapping.bones[f.perspective.limb]?.slice(0,f.perspective.mode==='diagnostic'?2:3).includes(name) && !((mapping.depthPoints??mapping.bones.depthPoints??{}) as Record<string,string>)[name])bones[name].scale={x:b.scaleX/b.data.scaleX,y:b.scaleY/b.data.scaleY};
+      const pointEntry=depthPointAdjustments.find((entry:any)=>entry.perspectivePoint===name);
+      if(pointEntry) bones[name]={...bones[name],translate:{x:b.x-b.data.x,y:b.y-b.data.y},depthPoint:{segment:pointEntry.segment,ratio:pointEntry.ratio,delta:pointEntry.delta}};
     }
   skeleton.updateWorldTransform();
+  if (branchAdjustments.length) {
+    for (const adjustment of branchAdjustments) {
+      const side = adjustment.role.startsWith('left') ? 'left' : 'right';
+      const role = `${side}Foot` as const, target = f.targets[role], anchor = mapping.bones.anchors?.[role];
+      const bone = anchor ? skeleton.findBone(anchor.bone) : null;
+      if (!target || !anchor || !bone) continue;
+      const px = bone.worldX + bone.a * anchor.point[0] + bone.b * anchor.point[1];
+      const py = bone.worldY + bone.c * anchor.point[0] + bone.d * anchor.point[1];
+      target.x = (px - origin[0]) / scale;
+      if (!target.contact) target.y = (py - origin[1]) / scale;
+      adjustment.actualTarget = { x: target.x, y: target.contact ? target.y : (py - origin[1]) / scale };
+    }
+  }
   if(perspective&&f.perspective){
     const role=f.perspective.limb==='leftArm'?'leftHand':'rightHand',target=f.targets[role]!,chain=mapping.bones[f.perspective.limb]!;
     const [a,b,c]=chain.map(n=>skeleton.findBone(n)!),anchor=mapping.bones.anchors![role]!;
@@ -188,7 +242,7 @@ export function solveSemanticPose(runtime: Awaited<ReturnType<typeof loadMotionR
     perspective.ok=perspective.error<=.01&&perspective.angleError<=1e-4&&perspective.branchOk&&(perspective.projectionError??0)<=1e-4&&perspective.compensationOk!==false;
     if(!perspective.ok&&!unreachable.some(v=>v.role===role))unreachable.push({time,role,error:perspective.error,branchOk:perspective.branchOk});
   }
-  return { skeleton, bones, unreachable, ...(perspective?{perspective}:{}) };
+  return { skeleton, bones, unreachable, branchAdjustments, depthPointAdjustments, ...(perspective?{perspective}:{}) };
 }
 
 function ensureAnimationDuration(animation:any,body:string,duration:number) {
@@ -332,26 +386,31 @@ export async function prepareSemanticAnimationData(json:any,mapping:CharacterMap
     validation=await evaluateResult(candidate,mapping,motion,args.animation,{...args,duration:build.duration},context,build.dense);
   }
   if(build.unreachable.length){validation.ok=false;validation.issues.push(`存在 ${build.unreachable.length} 个不可达手脚目标。`);}
-  return {candidate,build,structure,spec,validation,ok:structure.ok&&spec.ok&&validation.ok};
+  const adaptation=classifyMotionValidation(validation,args.retargetMode ?? 'adaptive',build.unreachable);
+  return {candidate,build,structure,spec,validation,adaptation,ok:structure.ok&&spec.ok&&adaptation.ok};
 }
 
 export async function retargetSemanticMotion(args: MotionBuildOptions, context: ToolContext = {}) {
   return (await import('./jobTools.js')).withFileLock(args.filePath, context, () => retargetSemanticMotionLocked(args, context));
 }
 async function retargetSemanticMotionLocked(args: MotionBuildOptions, context: ToolContext = {}) {
+  const retargetMode=resolveRetargetMode(args.retargetMode,false);
+  args={...args,retargetMode,workflowProfile:args.workflowProfile??'creative'};
   if (args.diagnosticPreview && args.dryRun === false) throw new Error('diagnosticPreview 仅支持 dryRun，不能提交诊断动画。');
   const document = await readSpineDocument(args.filePath, context), mapping = await readCharacterMapping(args.mappingPath, context), motion = await readMotionDefinition(args.motionPath!, context);
   validateMapping(mapping, document.json); validateMotion(motion);
   const calibrationReport = await assertConfirmedMapping(mapping, document.json, document.hash, context);
   if (args.expectedHash && args.expectedHash !== document.hash) throw new Error("expectedHash mismatch。");
   if (args.dryRun === false && !args.expectedHash) throw new Error("真实写入必须传入 dryRun 返回的 expectedHash 和 reviewToken。");
-  const {candidate,build,structure,spec,validation,ok}=await prepareSemanticAnimationData(document.json,mapping,motion,args,context);
+  const {candidate,build,structure,spec,validation,adaptation,ok}=await prepareSemanticAnimationData(document.json,mapping,motion,args,context);
+  const {ok: adaptationOk, ...adaptationReport}=adaptation;
+  (adaptationReport as any).workflowProfile=args.workflowProfile;
   const workflow=await (await import('./poseWorkflow.js')).poseGate(motion,context);
   if(workflow.ok&&workflow.sourceFingerprint!==(await (await import('./poseWorkflow.js')).characterFingerprint(args.filePath,args.mappingPath,context)).fingerprint){workflow.ok=false;workflow.issues.push('姿态审查与当前目标角色不匹配。');}
-  const tokenData = { poseReview:workflow.fingerprint, fileHash: document.hash, mapping: mappingFingerprint(mapping), motion: hashObject(motion), animation: args.animation, value: hashObject(build.animation), thresholds: [args.footContactTolerance, args.handTolerance, args.vertexTolerance], overwrite: args.overwrite ?? false };
+  const tokenData = { retargetMode, poseReview:workflow.fingerprint, fileHash: document.hash, mapping: mappingFingerprint(mapping), motion: hashObject(motion), animation: args.animation, value: hashObject(build.animation), thresholds: [args.footContactTolerance, args.handTolerance, args.vertexTolerance], overwrite: args.overwrite ?? false };
   const reviewToken = hashObject(tokenData), reviewPath = `.spine-mcp/reviews/${reviewToken}.json`;
   const resultReportPath = `previews/reports/motion-${reviewToken}.json`;
-  await saveJson(resultReportPath, { ok, sourceHash: document.hash, mappingFingerprint: mappingFingerprint(mapping), motionHash: hashObject(motion), animation: args.animation, thresholds: tokenData.thresholds, calibrationReport: mapping.reportPath, validation, structure, spec, unreachable: build.unreachable, stats: build.stats }, context);
+  await saveJson(resultReportPath, { ok, retargetMode, ...adaptationReport, sourceHash: document.hash, mappingFingerprint: mappingFingerprint(mapping), motionHash: hashObject(motion), animation: args.animation, thresholds: tokenData.thresholds, calibrationReport: mapping.reportPath, validation, structure, spec, unreachable: build.unreachable, stats: build.stats }, context);
   let preview: any = null;
   if (ok && args.preview !== false) {
     try { preview = await (await import('./previewRenderTools.js')).renderContactSheet({ filePath: args.filePath, atlasPath: args.atlasPath ?? mapping.atlasPath!, mappingPath: args.mappingPath, motionPath: args.motionPath, skin: mapping.skin, animation: args.animation, jsonOverride: candidate, frames: 8 }, context); }
@@ -368,11 +427,11 @@ async function retargetSemanticMotionLocked(args: MotionBuildOptions, context: T
       animationPreview=await (await import('./previewRenderTools.js')).renderAnimationGif({filePath:args.filePath,atlasPath:mapping.atlasPath!,skin:mapping.skin,animation:args.animation,jsonOverride:candidate,frames:Math.min(240,Math.max(2,Math.ceil(build.duration*30))),fps:30,width:320,height:320,bounds:posePreview?.bounds,outputDir:`${outputDir}/animation`},context);
     } catch(e) { previewIssues.push(String(e)); }
     const keyGraphs=await (await import('./referenceRetarget.js')).compareAnimationKeyPoses(candidatePath,args.animation,motion,build.duration,context);
-    const result={ok:false,diagnosticOnly:true,dryRun:true,wroteFile:false,readyToCommit:false,readyForAnimationReview:false,numericOk:ok,motionValidation:validation,structure,spec,unreachable:build.unreachable.slice(0,20),stats:build.stats,poseGate:workflow,keyGraphs,posePreview,animationPreview,previewIssues,candidatePath,reportPath:resultReportPath,message:'完整诊断候选：保留全部失败项，无 reviewToken，不批准或写入原角色。'};
+    const result={ok:false,retargetMode,status:'unresolved',retargetQuality:0,preservedConstraints:[],relaxedConstraints:adaptationReport.relaxedConstraints,residuals:adaptationReport.residuals,diagnosticOnly:true,dryRun:true,wroteFile:false,readyToCommit:false,readyForAnimationReview:false,numericOk:ok,motionValidation:validation,structure,spec,unreachable:build.unreachable.slice(0,20),stats:build.stats,poseGate:workflow,keyGraphs,posePreview,animationPreview,previewIssues,candidatePath,reportPath:resultReportPath,message:'完整诊断候选：保留全部失败项，无 reviewToken，不批准或写入原角色。'};
     await saveJson(`${outputDir}/diagnostic-report.json`,result,context);
     return result;
   }
-  if (!ok) return { ok: false, dryRun: true, wroteFile: false, validation, structure, spec, unreachable: build.unreachable.slice(0, 20), stats: build.stats, reportPath: resultReportPath, message: "动作门禁未通过，未写入角色文件。" };
+  if (!ok) return { ok: false, retargetMode, ...adaptationReport, dryRun: true, wroteFile: false, validation, structure, spec, unreachable: build.unreachable.slice(0, 20), stats: build.stats, reportPath: resultReportPath, message: "动作语义或 runtime 门禁未通过，未写入角色文件。" };
   if (args.dryRun !== false) {
     const candidatePath=`previews/jobs/candidate-${reviewToken}/candidate.json`;
     await saveJson(candidatePath,candidate,context);
@@ -385,7 +444,7 @@ async function retargetSemanticMotionLocked(args: MotionBuildOptions, context: T
     const keyGraphs=workflow.ok?await (await import('./referenceRetarget.js')).compareAnimationKeyPoses(candidatePath,args.animation,motion,build.duration,context):{ok:false,reports:[],issues:workflow.issues};
     await saveJson(`${candidatePath}.key-graphs.json`,keyGraphs,context);
     await saveJson(reviewPath, { tokenData, reviewToken, candidatePath, duration:build.duration,candidateHash:hashObject(candidate), motionPath:args.motionPath, requiresReferenceComparison:!!posePreview?.reference }, context);
-    return { ...result, ok: true, readyToCommit:false,readyForAnimationReview:workflow.ok&&keyGraphs.ok,reviewToken, poseGate:workflow, keyGraphs,posePreview, animationPreview, candidatePath, motionValidation: validation, stats: build.stats, preview, reportPath: resultReportPath,message:'ok 仅表示候选数值生成成功；提交还需姿态关系及完整动画审查。' };
+    return { ...result, ok: true, retargetMode, ...adaptationReport, readyToCommit:false,readyForAnimationReview:workflow.ok&&keyGraphs.ok,reviewToken, poseGate:workflow, keyGraphs,posePreview, animationPreview, candidatePath, motionValidation: validation, stats: build.stats, preview, reportPath: resultReportPath,message:'候选已按目标角色生成；提交仍需 runtime、视觉和人工审查。' };
   }
   if(!workflow.ok)throw new Error(workflow.issues.join('；'));
   await (await import('./animationReview.js')).assertAnimationReview(reviewToken,args.reviewToken,context);
@@ -395,5 +454,5 @@ async function retargetSemanticMotionLocked(args: MotionBuildOptions, context: T
   const result = await writeGeneratedAnimation(args.filePath, { ...args, value: build.animation, expectedHash: document.hash, dryRun: false }, context);
   mapping.sourceHash = result.hashAfter!; calibrationReport.sourceHash = result.hashAfter!;
   await saveJson(mapping.reportPath!, calibrationReport, context); await saveJson(args.mappingPath, mapping, context);
-  return { ...result, ok: true, reviewToken, motionValidation: validation, stats: build.stats, preview, reportPath: resultReportPath };
+  return { ...result, ok: true, retargetMode, ...adaptationReport, reviewToken, motionValidation: validation, stats: build.stats, preview, reportPath: resultReportPath };
 }

@@ -33,7 +33,11 @@ export function solveTwoBoneIK(hip: Point, target: Point, l1: number, l2: number
   if (![...hip, ...target, l1, l2].every(Number.isFinite) || l1 <= 0 || l2 <= 0) throw new Error("IK 输入或骨骼长度无效。");
   const dx = target[0] - hip[0], dy = target[1] - hip[1], distance = Math.hypot(dx, dy);
   const min = Math.abs(l1 - l2), max = l1 + l2;
-  const reachable = distance >= min - 1e-8 && distance <= max + 1e-8;
+  // IK 的边界比较允许极小的浮点误差，但不能把明显超出腿链可达环的目标吞掉。
+  // 目标角色化重定向中，端点通常经过多次坐标换算；固定 1e-8 会把 1e-7 量级
+  // 的舍入误差误报成“不可达”，导致诊断报告掩盖真正的语义冲突。
+  const tolerance = Math.max(1e-6, max * 1e-7);
+  const reachable = distance >= min - tolerance && distance <= max + tolerance;
   const d = Math.max(min + 1e-10, Math.min(max - 1e-10, distance));
   const phi = distance > 1e-12 ? Math.atan2(dy, dx) : -Math.PI / 2;
   const theta = Math.acos(Math.max(-1, Math.min(1, (d * d + l1 * l1 - l2 * l2) / (2 * d * l1))));
@@ -41,7 +45,7 @@ export function solveTwoBoneIK(hip: Point, target: Point, l1: number, l2: number
   const knee: Point = [hip[0] + l1 * Math.cos(thigh), hip[1] + l1 * Math.sin(thigh)];
   const endpoint: Point = [hip[0] + d * Math.cos(phi), hip[1] + d * Math.sin(phi)];
   const shin = Math.atan2(endpoint[1] - knee[1], endpoint[0] - knee[0]);
-  return { upperAngle: thigh * 180 / Math.PI, lowerAngle: shin * 180 / Math.PI, knee, endpoint, reachable, error: Math.abs(d - distance) };
+  return { upperAngle: thigh * 180 / Math.PI, lowerAngle: shin * 180 / Math.PI, knee, endpoint, reachable, error: Math.abs(d - distance), distance, minReach: min, maxReach: max, tolerance };
 }
 export const solveArmIK = solveTwoBoneIK;
 export function lockFootContact(target: Point, anchor: Point, angle: number): Point {

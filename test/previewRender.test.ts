@@ -22,6 +22,27 @@ test('PNG/GIF rendering, cache, fixed camera, reference decoding and comparison'
     const png = await readFile(resolveWorkspacePath(result.frames[0], context)); assert.equal(png.subarray(1, 4).toString(), 'PNG');
     const cached = await renderAnimationFrames(args, context); assert.equal(cached.cached, true); assert.notEqual(cached.jobId, result.jobId);
     const gif = await renderAnimationGif(args, context); assert.equal((await readFile(resolveWorkspacePath(gif.gifPath, context))).subarray(0, 6).toString(), 'GIF89a');
+    const visualRigPath = 'visual-rig.json';
+    await writeFile(resolveWorkspacePath(visualRigPath, context), JSON.stringify({ version: 2, nodes: {
+      body: { type: 'boneLocal', bone: 'bone2', point: [8, 3], calibrated: true, basis: 'preview test' },
+    } }));
+    const withVisualPoints = await renderAnimationFrames({ ...args, visualRigPath, outputDir: 'with-visual-points' }, context);
+    assert.equal(withVisualPoints.visualPointsAvailable, true);
+    assert.deepEqual(withVisualPoints.visualPointRoles, ['body']);
+    const persistedWithVisualPoints = JSON.parse(await readFile(resolveWorkspacePath(withVisualPoints.manifestPath, context), 'utf8'));
+    assert.equal(persistedWithVisualPoints.trajectories[0].visualPoints.body.source, 'boneLocal');
+    assert.deepEqual(persistedWithVisualPoints.trajectories[0].visualPoints.body.localPoint, [8, 3]);
+    assert.equal(persistedWithVisualPoints.trajectories[0].visualPoints.body.exact, true);
+    const badVisualRigPath = 'bad-visual-rig.json';
+    await writeFile(resolveWorkspacePath(badVisualRigPath, context), JSON.stringify({ version: 2, nodes: {
+      body: { type: 'boneLocal', bone: 'missing-bone', point: [8, 3], calibrated: true, basis: 'preview test' },
+    } }));
+    const unavailable = await renderAnimationFrames({ ...args, visualRigPath: badVisualRigPath, outputDir: 'unavailable-visual-points' }, context);
+    assert.equal(unavailable.visualPointsAvailable, false);
+    const persistedUnavailable = JSON.parse(await readFile(resolveWorkspacePath(unavailable.manifestPath, context), 'utf8'));
+    assert.equal(persistedUnavailable.trajectories[0].visualPoints.body.source, 'unavailable');
+    assert.equal(persistedUnavailable.trajectories[0].visualPoints.body.exact, false);
+    assert.match(persistedUnavailable.trajectories[0].visualPoints.body.reason, /不存在/);
     const ref = await analyzeReferenceGif({ filePath: gif.gifPath }, context); assert.equal(ref.frames.length, 4); assert.ok(ref.duration > 0);
     assert.ok(Math.abs(ref.duration - result.duration) <= .01);
     assert.ok((await extractReferenceKeyframes({ manifestPath: ref.manifestPath }, context)).keyframes.length > 0);

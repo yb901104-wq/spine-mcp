@@ -40,6 +40,9 @@
 - 修改 TypeScript 代码后运行 `npm run build`。
 - 修改核心 JSON 操作逻辑后运行 `npm test`。
 - 不要提交或保留 `node_modules/`、`dist/`、`test-output/`、`backups/` 等生成目录。
+- 每个修改工单结束前必须重新执行 `npm run build`，并用新生成的 `dist` 启动 MCP；源码修改不能以旧 MCP/旧 Host 的结果作为验证结论。
+- 修改后的验证必须通过真实 MCP Host 或 MCP stdio 会话，以提示词发起高层任务，经过 MCP 工具调用、runtime 回读和 MCP 预览工具生成动态 GIF；直接导入内部 TypeScript 函数或手工拼 GIF 只能作为单元测试，不能作为案例验收依据。
+- 真实验证记录必须保存 prompt、工具调用轨迹、构建身份、Host 会话、输入/产物哈希和 `formalEligible`；诊断 GIF 可用于人工观察，但不等于正式验收或提交。
 
 
 ## 关节与切片驱动规则
