@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "id": "clipboard-action-to-npc1",
+  "basis": "附加 GIF 关键帧诊断重定向；只覆盖 6 个已审查阶段，未标注帧不参与正式验收。",
+  "confirmedBy": "Agent 本轮附加 GIF 关键帧诊断审查",
+  "confirmedAt": "2026-11-08T06:00:14.035Z",
+  "referenceGifPath": "clipboard-reference/reference.gif",
+  "sourceGifPath": "clipboard-reference/reference.gif",
+  "visualRigPath": "trial/npc1.visual-rig.json",
+  "visualRigFingerprint": "aca3918a04b52adfb38324ebc6bfe8cc6da2064b65d488f482714cbc49129e82",
+  "correspondence": {
+    "left": "left",
+    "right": "right",
+    "basis": "按角色自身左右保持身份；附加 GIF 中画面右侧抬臂仍记录为解剖左，画面左侧下垂/后摆臂为解剖右。",
+    "anatomicalIdentity": "沿头—胸—袖口—腿部连续性固定左右，不按画面位置临时交换。",
+    "projectedOrder": "右臂/左臂前后关系仅作为阶段诊断证据。"
+  },
+  "weaponHand": null,
+  "stages": [
+    {
+      "stageId": "stage-jump",
+      "referencePosePath": "clipboard-reference/poses2/stage-jump.reference.json",
+      "referenceFingerprint": "5c7664d574a83b238d07db4dae52b95fa15bf6b53ef234cafcd2cc74ee9969ac",
+      "time": 0,
+      "referenceTime": 0,
+      "targetTime": 0
+    },
+    {
+      "stageId": "stage-flight",
+      "referencePosePath": "clipboard-reference/poses2/stage-flight.reference.json",
+      "referenceFingerprint": "f66744397043e692eddba98609dac8cf7e173c3ca311170f29e609aa8c83d572",
+      "time": 0.98,
+      "referenceTime": 0.98,
+      "targetTime": 0.98
+    },
+    {
+      "stageId": "stage-collapse",
+      "referencePosePath": "clipboard-reference/poses2/stage-collapse.reference.json",
+      "referenceFingerprint": "2ef898b4086ca75802fc591f4af10a8468616357047f8808d0aac2f9a8d9a21a",
+      "time": 1.42,
+      "referenceTime": 1.42,
+      "targetTime": 1.42
+    },
+    {
+      "stageId": "stage-stand-slash",
+      "referencePosePath": "clipboard-reference/poses2/stage-stand-slash.reference.json",
+      "referenceFingerprint": "9f982e3f5868d7dcd2eb78fc4dd4d1887074b70c35d55f6a4d98f805e3106dcb",
+      "time": 1.9,
+      "referenceTime": 1.9,
+      "targetTime": 1.9
+    },
+    {
+      "stageId": "stage-recover",
+      "referencePosePath": "clipboard-reference/poses2/stage-recover.reference.json",
+      "referenceFingerprint": "db7fe83cb97a39f0ca96edb9dd2ece31f8c54d148a0915781766b7ec050f8755",
+      "time": 2.06,
+      "referenceTime": 2.06,
+      "targetTime": 2.06
+    },
+    {
+      "stageId": "stage-lunge",
+      "referencePosePath": "clipboard-reference/poses2/stage-lunge.reference.json",
+      "referenceFingerprint": "9260698772ade5bc268e57b666458a7f4fb6f97d1e886947c3d983b4255a9feb",
+      "time": 2.34,
+      "referenceTime": 2.34,
+      "targetTime": 2.34
+    }
+  ]
+}

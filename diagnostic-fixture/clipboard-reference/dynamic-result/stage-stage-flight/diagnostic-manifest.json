@@ -1,0 +1,3130 @@
+{
+  "version": 1,
+  "kind": "reference-retarget-generation",
+  "retargetMode": "adaptive",
+  "workflowProfile": "adaptive-preview",
+  "status": "unresolved",
+  "retargetQuality": 0.5208333333333333,
+  "semanticQuality": 0.8333333333333334,
+  "structuralQuality": 0.40625,
+  "styleQuality": 0,
+  "preservedConstraints": [
+    "body.torsoDirection",
+    "body.twist",
+    "leftArm.extension",
+    "leftLeg.bendSide",
+    "rightArm.extension",
+    "rightLeg.bendSide",
+    "left.support",
+    "right.support",
+    "depth.arm-torso",
+    "depth.left-torso"
+  ],
+  "relaxedConstraints": [
+    "body.shoulderSilhouette",
+    "body.hipSilhouette",
+    "head.orientation",
+    "head.turnBand",
+    "arm.left.wristTorsoOffset",
+    "arm.left.wristHeadGap",
+    "arm.right.wristReach",
+    "arm.right.wristTorsoHeight",
+    "arm.right.wristTorsoOffset",
+    "leg.left.ankleTorsoOffset",
+    "leg.right.ankleTorsoOffset",
+    "leftArm.segment0",
+    "leftArm.flexion",
+    "leftArm.wrist",
+    "leftLeg.segment0",
+    "leftLeg.flexion",
+    "rightArm.segment1",
+    "rightArm.flexion",
+    "rightArm.wrist",
+    "rightLeg.segment0",
+    "rightLeg.segment1",
+    "rightLeg.flexion",
+    "stance.width"
+  ],
+  "residuals": {
+    "body.torsoDirection": 13.876112741603947,
+    "body.headDirection": 1.3660086639796418,
+    "body.shoulderLine": 1.7622369341552258e-8,
+    "body.hipLine": 1.1031842155796312,
+    "body.twist": 1.1031842332020005,
+    "body.shoulderSilhouette": 0.24832999761647723,
+    "body.hipSilhouette": 1.2499779945775427,
+    "head.orientation": 71.0962008401757,
+    "head.turnBand": 1,
+    "arm.left.wristReach": 0.07249979690101516,
+    "arm.left.wristTorsoHeight": 0.031265986511666566,
+    "arm.left.wristTorsoOffset": 0.6287567613020406,
+    "arm.left.wristOutsideTorso": 0,
+    "arm.left.wristHeadGap": 0.5446924514709648,
+    "arm.right.wristReach": 0.364274423697976,
+    "arm.right.wristTorsoHeight": 0.5652622695178172,
+    "arm.right.wristTorsoOffset": 0.16377658334525558,
+    "arm.right.wristOutsideTorso": 0,
+    "arm.right.wristHeadGap": 0.16532276276490077,
+    "leg.left.ankleTorsoOffset": 0.2519482452015829,
+    "leg.right.ankleTorsoOffset": 0.7330049625449967,
+    "leftArm.segment0": 49.0807814852007,
+    "leftArm.segment1": 13.566933390716258,
+    "leftArm.flexion": 62.647714875916904,
+    "leftArm.bendSide": 1,
+    "leftArm.wrist": 0.38690130475518764,
+    "leftArm.extension": 0,
+    "leftLeg.segment0": 46.58369128846584,
+    "leftLeg.segment1": 10.989730442788755,
+    "leftLeg.flexion": 57.5734217312546,
+    "leftLeg.bendSide": 0,
+    "rightArm.segment0": 7.9496311981076815,
+    "rightArm.segment1": 21.42034050824941,
+    "rightArm.flexion": 29.369971706357205,
+    "rightArm.bendSide": 1,
+    "rightArm.wrist": 0.40054062373906335,
+    "rightArm.extension": 0,
+    "rightLeg.segment0": 32.23057882976673,
+    "rightLeg.segment1": 17.430467145446755,
+    "rightLeg.flexion": 49.66104597521348,
+    "rightLeg.bendSide": 0,
+    "stance.width": 0.9849532077465799,
+    "stance.order": 0,
+    "stance.relation": 0,
+    "left.support": 0,
+    "right.support": 0,
+    "depth.arm-torso": 0,
+    "depth.left-torso": 0
+  },
+  "semanticFailures": [
+    "leftArm.bendSide",
+    "rightArm.bendSide",
+    "缺少明确支撑关系；第一版需至少一只支撑脚。"
+  ],
+  "semanticFailureDetails": [
+    {
+      "id": "leftArm.bendSide",
+      "referenceValue": "positive",
+      "targetValue": "straight",
+      "residual": 1,
+      "status": "fail",
+      "blocking": true,
+      "nodes": [
+        "leftShoulder",
+        "leftElbow",
+        "leftWrist"
+      ]
+    },
+    {
+      "id": "rightArm.bendSide",
+      "referenceValue": "positive",
+      "targetValue": "straight",
+      "residual": 1,
+      "status": "fail",
+      "blocking": true,
+      "nodes": [
+        "rightShoulder",
+        "rightElbow",
+        "rightWrist"
+      ]
+    }
+  ],
+  "reachabilityFailures": [],
+  "structuralResiduals": {
+    "arm.left.wristTorsoOffset": 0.6287567613020406,
+    "arm.left.wristHeadGap": 0.5446924514709648,
+    "arm.right.wristReach": 0.364274423697976,
+    "arm.right.wristTorsoHeight": 0.5652622695178172,
+    "arm.right.wristTorsoOffset": 0.16377658334525558,
+    "leg.left.ankleTorsoOffset": 0.2519482452015829,
+    "leg.right.ankleTorsoOffset": 0.7330049625449967,
+    "leftArm.segment0": 49.0807814852007,
+    "leftArm.flexion": 62.647714875916904,
+    "leftArm.wrist": 0.38690130475518764,
+    "leftLeg.segment0": 46.58369128846584,
+    "leftLeg.flexion": 57.5734217312546,
+    "rightArm.segment1": 21.42034050824941,
+    "rightArm.flexion": 29.369971706357205,
+    "rightArm.wrist": 0.40054062373906335,
+    "rightLeg.segment0": 32.23057882976673,
+    "rightLeg.segment1": 17.430467145446755,
+    "rightLeg.flexion": 49.66104597521348,
+    "stance.width": 0.9849532077465799
+  },
+  "styleResiduals": {
+    "body.shoulderSilhouette": 0.24832999761647723,
+    "body.hipSilhouette": 1.2499779945775427,
+    "head.orientation": 71.0962008401757,
+    "head.turnBand": 1
+  },
+  "localProjections": {
+    "leftArm": {
+      "requestedLocal": {
+        "a": 0.8813502298979474,
+        "n": 1.726148761855211
+      },
+      "requestedWorld": {
+        "x": 79.79326670133243,
+        "y": 113.56672745618232
+      },
+      "solvedWorld": {
+        "x": 50.030797773063625,
+        "y": 110.66412784523726
+      },
+      "requestedDistance": 76.45687463233864,
+      "solvedDistance": 46.553201928009756,
+      "residual": 29.903672704328883,
+      "relaxed": true,
+      "reason": "targetChainTooShort"
+    },
+    "leftLeg": {
+      "requestedLocal": {
+        "a": -1.216216216216216,
+        "n": 1.1754755372142847
+      },
+      "requestedWorld": {
+        "x": 53.726914510246374,
+        "y": 9.346609842199854
+      },
+      "solvedWorld": {
+        "x": 41.800835877057835,
+        "y": 21.83618680685226
+      },
+      "requestedDistance": 68.88035547973594,
+      "solvedDistance": 51.61128242062323,
+      "residual": 17.269073059112706,
+      "relaxed": true,
+      "reason": "targetChainTooShort"
+    },
+    "rightArm": {
+      "requestedLocal": {
+        "a": -0.5034204328810137,
+        "n": -0.8577794460752889
+      },
+      "requestedWorld": {
+        "x": -42.51807819530212,
+        "y": 29.229331842700528
+      },
+      "solvedWorld": {
+        "x": -34.76564375887029,
+        "y": 57.422654907220725
+      },
+      "requestedDistance": 79.77097190951838,
+      "solvedDistance": 50.531209511174914,
+      "residual": 29.239762398343466,
+      "relaxed": true,
+      "reason": "targetChainTooShort"
+    },
+    "rightLeg": {
+      "requestedLocal": {
+        "a": -1.078053156891331,
+        "n": -1.5778905859903463
+      },
+      "requestedWorld": {
+        "x": -76.60484644518388,
+        "y": -3.3043751855755232
+      },
+      "solvedWorld": {
+        "x": -41.90774470938764,
+        "y": 29.393218632247187
+      },
+      "requestedDistance": 91.53703191909214,
+      "solvedDistance": 43.86081656657583,
+      "residual": 47.676215352516316,
+      "relaxed": true,
+      "reason": "targetChainTooShort"
+    }
+  },
+  "comparisonMode": "retargeted",
+  "acceptanceMode": "diagnostic",
+  "acceptanceEligible": false,
+  "formalEligible": false,
+  "rawDiagnosticOnly": true,
+  "diagnosticOnly": true,
+  "readyToCommit": false,
+  "referencePosePath": "clipboard-reference/poses2/stage-flight.reference.json",
+  "referenceApprovalDecision": "approved",
+  "referenceApprovalFingerprint": "f66744397043e692eddba98609dac8cf7e173c3ca311170f29e609aa8c83d572",
+  "referenceTime": 0.98,
+  "targetTime": 0.98,
+  "stageId": "stage-flight",
+  "sequencePath": "clipboard-reference/clipboard-action.sequence.json",
+  "sequenceFingerprint": "0739898482e657621f1dfc76d1110f5fcfc3ce9520a47d30e44680dc0b10fb73",
+  "sequenceHash": "a18bce62856a16f1833c9c8ab1787dab198878d499beec5055b7019d8485c348",
+  "standardPosePath": "trial/neutral-stand-v2.pose.json",
+  "expectedTargetSource": "reference-retarget-kernel",
+  "expectedTargetManifestHash": "c8784d0da267aa8e7818314562c583cc67233eb7dc05cbbf44a109babc80a427",
+  "expectedSampleFingerprint": "2da93519aeffc97abb2f17764cf78ed0ae127f525806a17b80fe70ffb658cf88",
+  "actualTargetSource": null,
+  "actualTargetManifestHash": null,
+  "targetCharacterPath": "目标/npc1.json",
+  "targetCharacterFingerprint": "84363ddcf80a3048f78fd3870f80bba279b95549a6828fd308a445b8936a6c76",
+  "targetCharacterHash": "28714168e6396a4bce640a084f8d1162940ce57d779c844f63f02403abbd7af3",
+  "mappingPath": "previews/pose-workflow-20261009/npc1.mapping.json",
+  "mappingFingerprint": "b4e7bc93868669e1329c0aaaa4b1558080c4ee0a275511bedfd941f6feec5604",
+  "sourceAssetHashes": {
+    "targetCharacter": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83",
+    "atlas": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "atlasPages": {
+      "npc1.png": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251"
+    }
+  },
+  "visualRigPath": "trial/npc1.visual-rig.json",
+  "visualRigFingerprint": "aca3918a04b52adfb38324ebc6bfe8cc6da2064b65d488f482714cbc49129e82",
+  "actionBindingFingerprint": "42ce69f46a5a6e6157086c0d3fdcdaecbef771903d52883c973268cd168374a4",
+  "correspondenceFingerprint": "7833d7db46cdd7535495487ca5a1d02e2c89f6f7e2063643a016956efe3bf93c",
+  "correspondence": {
+    "left": "left",
+    "right": "right",
+    "basis": "按角色自身左右保持身份；附加 GIF 中画面右侧抬臂仍记录为解剖左，画面左侧下垂/后摆臂为解剖右。",
+    "anatomicalIdentity": "沿头—胸—袖口—腿部连续性固定左右，不按画面位置临时交换。",
+    "projectedOrder": "右臂/左臂前后关系仅作为阶段诊断证据。"
+  },
+  "targetFacing": "right",
+  "referenceGifPath": "clipboard-reference/reference.gif",
+  "referenceGifHash": "5361e631748d2bb37b3ade71e5eb640d19ae022eadb0461e54fef3f196fefbff",
+  "visualPointsAvailable": true,
+  "expectedTarget": {
+    "source": "reference-retarget-kernel",
+    "coordinateSystem": "normalizedSkeleton",
+    "targetTime": 0.98,
+    "referenceTime": 0.98,
+    "frame": {
+      "time": 0.98,
+      "body": {
+        "x": 0,
+        "y": 0.67,
+        "rotate": -18.13548026599551
+      },
+      "head": 0,
+      "channels": {
+        "torso": {
+          "rotate": 24.480291482122766,
+          "x": 0,
+          "y": 0
+        },
+        "chest": {
+          "rotate": 0,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "targets": {
+        "leftFoot": {
+          "x": 0.9940480607059677,
+          "y": 0.42469325549321063,
+          "angle": -15.46,
+          "contact": false
+        },
+        "rightFoot": {
+          "x": -0.7767467184539022,
+          "y": 0.550478144706633,
+          "angle": -32.8296,
+          "contact": false
+        },
+        "leftHand": {
+          "x": 1.04806940450385,
+          "y": 2.318245795255755,
+          "angle": -80
+        },
+        "rightHand": {
+          "x": -0.728287558332112,
+          "y": 1.2029176110008613,
+          "angle": -100
+        }
+      },
+      "bendDirections": {
+        "leftArm": -1,
+        "rightArm": -1,
+        "leftLeg": 1,
+        "rightLeg": -1
+      }
+    },
+    "bones": {
+      "bone2": {
+        "rotate": -18.13548026599551,
+        "translate": {
+          "x": 0,
+          "y": 31.983220160711696
+        }
+      },
+      "tou": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone3": {
+        "rotate": 24.480291482122766,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone4": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zt1": {
+        "rotate": 72.9573570117027,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zt2": {
+        "rotate": 81.48312674238696,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zt3": {
+        "rotate": -16.065004820113927,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "yt1": {
+        "rotate": -64.72339104694453,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "yt2": {
+        "rotate": 172.29356370539767,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "yt3": {
+        "rotate": 1.855704989102719,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zs1": {
+        "rotate": 90.38309729672164,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zs2": {
+        "rotate": 5.465747539450263,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "zs3": {
+        "rotate": -101.49884551719094,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "ys1": {
+        "rotate": 27.814740846815084,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "ys2": {
+        "rotate": -16.101603234027607,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "ys3": {
+        "rotate": -9.933136886804846,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bd1": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou3": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou4": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou5": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou7": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou8": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou10": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou11": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou13": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou14": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou17": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou18": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou21": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "tou22": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone6": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone7": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone9": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "bone11": {
+        "rotate": 0,
+        "translate": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "visualPoints": {
+      "leftShoulder": {
+        "x": 0.07745530329803599,
+        "y": 2.2235861714413514,
+        "source": "boneLocal",
+        "bone": "zs1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftElbow": {
+        "x": 0.6830326120087967,
+        "y": 2.281661562042279,
+        "source": "boneLocal",
+        "bone": "zs2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftWrist": {
+        "x": 1.0480693875897806,
+        "y": 2.3182458031266266,
+        "source": "boneLocal",
+        "bone": "zs3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftHip": {
+        "x": 0.12899897899642832,
+        "y": 1.2393795948661581,
+        "source": "boneLocal",
+        "bone": "zt1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftKnee": {
+        "x": 0.6929851570894161,
+        "y": 1.16755023459645,
+        "source": "boneLocal",
+        "bone": "zt2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftAnkle": {
+        "x": 0.8756641916256077,
+        "y": 0.6885653969857499,
+        "source": "boneLocal",
+        "bone": "zt3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightShoulder": {
+        "x": -0.4476301105817328,
+        "y": 2.2235861712798517,
+        "source": "boneLocal",
+        "bone": "ys1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightElbow": {
+        "x": -0.601549466128774,
+        "y": 1.6677822470673758,
+        "source": "boneLocal",
+        "bone": "ys2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightWrist": {
+        "x": -0.728287557107062,
+        "y": 1.202917600399046,
+        "source": "boneLocal",
+        "bone": "ys3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightHip": {
+        "x": -0.2092200239680414,
+        "y": 1.245892534971289,
+        "source": "boneLocal",
+        "bone": "yt1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightKnee": {
+        "x": -0.6788846302513061,
+        "y": 1.3038052028811649,
+        "source": "boneLocal",
+        "bone": "yt2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightAnkle": {
+        "x": -0.8779037279050866,
+        "y": 0.905121047009636,
+        "source": "boneLocal",
+        "bone": "yt3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "body": {
+        "x": -0.04987733724539004,
+        "y": 1.8501586331221782,
+        "source": "boneLocal",
+        "bone": "bone2",
+        "localPoint": [
+          0.2700029161853355,
+          11.67000000000003
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "head": {
+        "x": -0.008142918556046926,
+        "y": 3.0450057626503755,
+        "source": "boneLocal",
+        "bone": "tou",
+        "localPoint": [
+          32.16751571248424,
+          -2.767297098290246
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "face": {
+        "x": 0.04866231660723852,
+        "y": 2.536572410154928,
+        "source": "boneLocal",
+        "bone": "zui",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.7,
+        "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。",
+        "anchorType": "boneLocal"
+      }
+    },
+    "visualPointsAvailable": true,
+    "visualPointRoles": [
+      "body",
+      "face",
+      "head",
+      "leftAnkle",
+      "leftElbow",
+      "leftHip",
+      "leftKnee",
+      "leftShoulder",
+      "leftWrist",
+      "rightAnkle",
+      "rightElbow",
+      "rightHip",
+      "rightKnee",
+      "rightShoulder",
+      "rightWrist"
+    ],
+    "comparison": {
+      "version": 3,
+      "retargetMode": "adaptive",
+      "ok": false,
+      "policy": {
+        "version": 5,
+        "directionDegrees": 15,
+        "flexionDegrees": 15,
+        "stance": 0.15,
+        "wrist": 0.15,
+        "grip": 0.15,
+        "extensionNeutral": 0.15,
+        "bendNeutralDegrees": 2,
+        "lineDegrees": 12,
+        "twistDegrees": 12,
+        "silhouetteWidth": 0.15,
+        "facingRatio": 0.25,
+        "reach": 0.15,
+        "torsoHeight": 0.12,
+        "torsoOffset": 0.15,
+        "footOffset": 0.2,
+        "headGap": 0.2,
+        "headDegrees": 18,
+        "headBandDegrees": [
+          20,
+          60
+        ],
+        "constraintTiers": [
+          "semanticHard",
+          "structuralSoft",
+          "styleDiagnostic"
+        ]
+      },
+      "policyFingerprint": "96c6202153586a9754f33306da1313c8b9c4e7e3d6478460b169a5d69fff7583",
+      "metrics": [
+        {
+          "id": "body.torsoDirection",
+          "nodes": [
+            "leftHip",
+            "rightHip",
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "reference": 84.53090502988807,
+          "target": 98.40701777149205,
+          "error": 13.876112741603947,
+          "tolerance": 15,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftHip",
+            "rightHip",
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "rightHip",
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceValue": 84.53090502988807,
+          "targetValue": 98.40701777149205,
+          "residual": 13.876112741603947,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "body.headDirection",
+          "nodes": [
+            "body",
+            "head"
+          ],
+          "reference": 86.63353933657021,
+          "target": 87.9995480005499,
+          "error": 1.3660086639796418,
+          "tolerance": 15,
+          "required": false,
+          "status": "pass",
+          "diagnostic": "头身中心位置连线不是躯干轴，也不是头部自身朝向；仅保留旧报告诊断。",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "body",
+            "head"
+          ],
+          "referenceNodes": [
+            "body",
+            "head"
+          ],
+          "referenceValue": 86.63353933657021,
+          "targetValue": 87.9995480005499,
+          "residual": 1.3660086639796418,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "body.shoulderLine",
+          "nodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "reference": 180,
+          "target": -179.9999999823776,
+          "error": 1.7622369341552258e-8,
+          "tolerance": 12,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceValue": 180,
+          "targetValue": -179.9999999823776,
+          "residual": 1.7622369341552258e-8,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "body.hipLine",
+          "nodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "reference": 180,
+          "target": 178.89681578442043,
+          "error": 1.1031842155796312,
+          "tolerance": 12,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceValue": 180,
+          "targetValue": 178.89681578442043,
+          "residual": 1.1031842155796312,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "body.twist",
+          "nodes": [
+            "leftShoulder",
+            "rightShoulder",
+            "leftHip",
+            "rightHip"
+          ],
+          "reference": 0,
+          "target": 1.1031842332020005,
+          "error": 1.1031842332020005,
+          "tolerance": 12,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftShoulder",
+            "rightShoulder",
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "rightShoulder",
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceValue": 0,
+          "targetValue": 1.1031842332020005,
+          "residual": 1.1031842332020005,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "body.shoulderSilhouette",
+          "nodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "reference": 0.7624706187335901,
+          "target": 1.0108006163500673,
+          "error": 0.24832999761647723,
+          "tolerance": 0.15,
+          "required": false,
+          "status": "fail",
+          "diagnostic": "绝对轮廓宽度含体型差异（chibi 与正常比例躯干长不同），只作诊断；姿态判定用 wristOutsideTorso 等各用自身轮廓的指标。",
+          "constraintTier": "styleDiagnostic",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "rightShoulder"
+          ],
+          "referenceValue": 0.7624706187335901,
+          "targetValue": 1.0108006163500673,
+          "residual": 0.24832999761647723,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "body.hipSilhouette",
+          "nodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "reference": 0.10589869704633197,
+          "target": 1.3558766916238747,
+          "error": 1.2499779945775427,
+          "tolerance": 0.15,
+          "required": false,
+          "status": "fail",
+          "diagnostic": "绝对轮廓宽度含体型差异（chibi 与正常比例躯干长不同），只作诊断；姿态判定用 wristOutsideTorso 等各用自身轮廓的指标。",
+          "constraintTier": "styleDiagnostic",
+          "blocking": false,
+          "targetNodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "rightHip"
+          ],
+          "referenceValue": 0.10589869704633197,
+          "targetValue": 1.3558766916238747,
+          "residual": 1.2499779945775427,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "head.orientation",
+          "nodes": [
+            "head",
+            "face"
+          ],
+          "reference": -12.528807709151465,
+          "target": -83.62500854932716,
+          "error": 71.0962008401757,
+          "tolerance": 18,
+          "required": false,
+          "status": "fail",
+          "diagnostic": "参考锚点是面部前缘（鼻唇区），目标侧 zui 为嘴部旋转支点，两者语义不等价；等 visualRig 支持头部切片前缘锚点后再升级为必要项。",
+          "referenceAmplitude": 0.13920897454612738,
+          "targetAmplitude": 0.9291667616591907,
+          "declaredBand": "threeQuarter",
+          "declaredAmplitude": 0.35,
+          "constraintTier": "styleDiagnostic",
+          "blocking": false,
+          "targetNodes": [
+            "head",
+            "face"
+          ],
+          "referenceNodes": [
+            "head",
+            "face"
+          ],
+          "referenceValue": -12.528807709151465,
+          "targetValue": -83.62500854932716,
+          "residual": 71.0962008401757,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "head.turnBand",
+          "nodes": [
+            "head",
+            "face"
+          ],
+          "reference": "forward",
+          "target": "sharp",
+          "error": 1,
+          "tolerance": 0,
+          "required": false,
+          "status": "fail",
+          "diagnostic": "参考锚点是面部前缘（鼻唇区），目标侧 zui 为嘴部旋转支点，两者语义不等价；等 visualRig 支持头部切片前缘锚点后再升级为必要项。",
+          "declaredBand": "threeQuarter",
+          "constraintTier": "styleDiagnostic",
+          "blocking": false,
+          "targetNodes": [
+            "head",
+            "face"
+          ],
+          "referenceNodes": [
+            "head",
+            "face"
+          ],
+          "referenceValue": "forward",
+          "targetValue": "sharp",
+          "residual": 1,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.left.wristReach",
+          "nodes": [
+            "leftShoulder",
+            "leftWrist"
+          ],
+          "reference": 0.9109750373485539,
+          "target": 0.983474834249569,
+          "error": 0.07249979690101516,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftWrist"
+          ],
+          "referenceValue": 0.9109750373485539,
+          "targetValue": 0.983474834249569,
+          "residual": 0.07249979690101516,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "arm.left.wristTorsoHeight",
+          "nodes": [
+            "leftWrist"
+          ],
+          "reference": 0.8813502298979474,
+          "target": 0.912616216409614,
+          "error": 0.031265986511666566,
+          "tolerance": 0.12,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftWrist"
+          ],
+          "referenceValue": 0.8813502298979474,
+          "targetValue": 0.912616216409614,
+          "residual": 0.031265986511666566,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "arm.left.wristTorsoOffset",
+          "nodes": [
+            "leftWrist"
+          ],
+          "reference": 1.726148761855211,
+          "target": 1.0973920005531703,
+          "error": 0.6287567613020406,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftWrist"
+          ],
+          "referenceValue": 1.726148761855211,
+          "targetValue": 1.0973920005531703,
+          "residual": 0.6287567613020406,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.left.wristOutsideTorso",
+          "nodes": [
+            "leftWrist"
+          ],
+          "reference": true,
+          "target": true,
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftWrist"
+          ],
+          "referenceValue": true,
+          "targetValue": true,
+          "residual": 0,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "arm.left.wristHeadGap",
+          "nodes": [
+            "leftWrist",
+            "head"
+          ],
+          "reference": 1.8376399236394718,
+          "target": 1.292947472168507,
+          "error": 0.5446924514709648,
+          "tolerance": 0.2,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftWrist",
+            "head"
+          ],
+          "referenceNodes": [
+            "leftWrist",
+            "head"
+          ],
+          "referenceValue": 1.8376399236394718,
+          "targetValue": 1.292947472168507,
+          "residual": 0.5446924514709648,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.right.wristReach",
+          "nodes": [
+            "rightShoulder",
+            "rightWrist"
+          ],
+          "reference": 1.4317879807433274,
+          "target": 1.0675135570453513,
+          "error": 0.364274423697976,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightShoulder",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightWrist"
+          ],
+          "referenceValue": 1.4317879807433274,
+          "targetValue": 1.0675135570453513,
+          "residual": 0.364274423697976,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.right.wristTorsoHeight",
+          "nodes": [
+            "rightWrist"
+          ],
+          "reference": -0.5034204328810137,
+          "target": 0.06184183663680349,
+          "error": 0.5652622695178172,
+          "tolerance": 0.12,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightWrist"
+          ],
+          "referenceValue": -0.5034204328810137,
+          "targetValue": 0.06184183663680349,
+          "residual": 0.5652622695178172,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.right.wristTorsoOffset",
+          "nodes": [
+            "rightWrist"
+          ],
+          "reference": -0.8577794460752889,
+          "target": -0.6940028627300333,
+          "error": 0.16377658334525558,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightWrist"
+          ],
+          "referenceValue": -0.8577794460752889,
+          "targetValue": -0.6940028627300333,
+          "residual": 0.16377658334525558,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "arm.right.wristOutsideTorso",
+          "nodes": [
+            "rightWrist"
+          ],
+          "reference": true,
+          "target": true,
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightWrist"
+          ],
+          "referenceValue": true,
+          "targetValue": true,
+          "residual": 0,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "arm.right.wristHeadGap",
+          "nodes": [
+            "rightWrist",
+            "head"
+          ],
+          "reference": 2.159918090813189,
+          "target": 1.9945953280482884,
+          "error": 0.16532276276490077,
+          "tolerance": 0.2,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightWrist",
+            "head"
+          ],
+          "referenceNodes": [
+            "rightWrist",
+            "head"
+          ],
+          "referenceValue": 2.159918090813189,
+          "targetValue": 1.9945953280482884,
+          "residual": 0.16532276276490077,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "leg.left.ankleTorsoOffset",
+          "nodes": [
+            "leftAnkle"
+          ],
+          "reference": 1.1754755372142847,
+          "target": 0.9235272920127018,
+          "error": 0.2519482452015829,
+          "tolerance": 0.2,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftAnkle"
+          ],
+          "referenceNodes": [
+            "leftAnkle"
+          ],
+          "referenceValue": 1.1754755372142847,
+          "targetValue": 0.9235272920127018,
+          "residual": 0.2519482452015829,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leg.right.ankleTorsoOffset",
+          "nodes": [
+            "rightAnkle"
+          ],
+          "reference": -1.5778905859903463,
+          "target": -0.8448856234453496,
+          "error": 0.7330049625449967,
+          "tolerance": 0.2,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "rightAnkle"
+          ],
+          "referenceValue": -1.5778905859903463,
+          "targetValue": -0.8448856234453496,
+          "residual": 0.7330049625449967,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.segment0",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow"
+          ],
+          "reference": -43.602818972703616,
+          "target": 5.477962512497072,
+          "error": 49.0807814852007,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow"
+          ],
+          "referenceValue": -43.602818972703616,
+          "targetValue": 5.477962512497072,
+          "residual": 49.0807814852007,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.segment1",
+          "nodes": [
+            "leftElbow",
+            "leftWrist"
+          ],
+          "reference": 19.290046219188735,
+          "target": 5.723112828472509,
+          "error": 13.566933390716258,
+          "tolerance": 15,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceValue": 19.290046219188735,
+          "targetValue": 5.723112828472509,
+          "residual": 13.566933390716258,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.flexion",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "reference": 62.89286519189238,
+          "target": 0.24515031597547932,
+          "error": 62.647714875916904,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceValue": 62.89286519189238,
+          "targetValue": 0.24515031597547932,
+          "residual": 62.647714875916904,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.bendSide",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "reference": "positive",
+          "target": "straight",
+          "error": 1,
+          "tolerance": 0,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceValue": "positive",
+          "targetValue": "straight",
+          "residual": 1,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.wrist",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "reference": [
+            0.868369315779922,
+            -0.2753366123204631
+          ],
+          "target": [
+            0.9788309100946497,
+            0.09546098179621275
+          ],
+          "error": 0.38690130475518764,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceValue": [
+            0.868369315779922,
+            -0.2753366123204631
+          ],
+          "targetValue": [
+            0.9788309100946497,
+            0.09546098179621275
+          ],
+          "residual": 0.38690130475518764,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftArm.extension",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "reference": "forward",
+          "target": "forward",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist"
+          ],
+          "referenceValue": "forward",
+          "targetValue": "forward",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "leftLeg.segment0",
+          "nodes": [
+            "leftHip",
+            "leftKnee"
+          ],
+          "reference": -53.84181456019167,
+          "target": -7.25812327172586,
+          "error": 46.58369128846584,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftHip",
+            "leftKnee"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "leftKnee"
+          ],
+          "referenceValue": -53.84181456019167,
+          "targetValue": -7.25812327172586,
+          "residual": 46.58369128846584,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftLeg.segment1",
+          "nodes": [
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "reference": -58.13402230639633,
+          "target": -69.12375274918513,
+          "error": 10.989730442788755,
+          "tolerance": 15,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceNodes": [
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceValue": -58.13402230639633,
+          "targetValue": -69.12375274918513,
+          "residual": 10.989730442788755,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "leftLeg.flexion",
+          "nodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "reference": 4.292207746204667,
+          "target": 61.865629477459265,
+          "error": 57.5734217312546,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceValue": 4.292207746204667,
+          "targetValue": 61.865629477459265,
+          "residual": 57.5734217312546,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "leftLeg.bendSide",
+          "nodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "reference": "negative",
+          "target": "negative",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceNodes": [
+            "leftHip",
+            "leftKnee",
+            "leftAnkle"
+          ],
+          "referenceValue": "negative",
+          "targetValue": "negative",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "rightArm.segment0",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow"
+          ],
+          "reference": -113.42869280874541,
+          "target": -105.4790616106377,
+          "error": 7.9496311981076815,
+          "tolerance": 15,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow"
+          ],
+          "referenceValue": -113.42869280874541,
+          "targetValue": -105.4790616106377,
+          "residual": 7.9496311981076815,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "rightArm.segment1",
+          "nodes": [
+            "rightElbow",
+            "rightWrist"
+          ],
+          "reference": -83.8298249049704,
+          "target": -105.25016541321985,
+          "error": 21.42034050824941,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceValue": -83.8298249049704,
+          "targetValue": -105.25016541321985,
+          "residual": 21.42034050824941,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightArm.flexion",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "reference": 29.598867903775044,
+          "target": 0.22889619741783918,
+          "error": 29.369971706357205,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceValue": 29.598867903775044,
+          "targetValue": 0.22889619741783918,
+          "residual": 29.369971706357205,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightArm.bendSide",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "reference": "positive",
+          "target": "straight",
+          "error": 1,
+          "tolerance": 0,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceValue": "positive",
+          "targetValue": "straight",
+          "residual": 1,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "rightArm.wrist",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "reference": [
+            -0.19061765468339753,
+            -1.4190425404208482
+          ],
+          "target": [
+            -0.28303337881985124,
+            -1.0293091376984067
+          ],
+          "error": 0.40054062373906335,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceValue": [
+            -0.19061765468339753,
+            -1.4190425404208482
+          ],
+          "targetValue": [
+            -0.28303337881985124,
+            -1.0293091376984067
+          ],
+          "residual": 0.40054062373906335,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightArm.extension",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "reference": "backward",
+          "target": "backward",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist"
+          ],
+          "referenceValue": "backward",
+          "targetValue": "backward",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "rightLeg.segment0",
+          "nodes": [
+            "rightHip",
+            "rightKnee"
+          ],
+          "reference": -154.79887635452494,
+          "target": 172.9705448157083,
+          "error": 32.23057882976673,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightHip",
+            "rightKnee"
+          ],
+          "referenceNodes": [
+            "rightHip",
+            "rightKnee"
+          ],
+          "referenceValue": -154.79887635452494,
+          "targetValue": 172.9705448157083,
+          "residual": 32.23057882976673,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightLeg.segment1",
+          "nodes": [
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "reference": -133.95837332399003,
+          "target": -116.52790617854329,
+          "error": 17.430467145446755,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceValue": -133.95837332399003,
+          "targetValue": -116.52790617854329,
+          "residual": 17.430467145446755,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightLeg.flexion",
+          "nodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "reference": 20.840503030534933,
+          "target": 70.50154900574842,
+          "error": 49.66104597521348,
+          "tolerance": 15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceValue": 20.840503030534933,
+          "targetValue": 70.50154900574842,
+          "residual": 49.66104597521348,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "rightLeg.bendSide",
+          "nodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "reference": "positive",
+          "target": "positive",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ],
+          "referenceValue": "positive",
+          "targetValue": "positive",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "stance.width",
+          "nodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "reference": 2.753366123204631,
+          "target": 1.7684129154580512,
+          "error": 0.9849532077465799,
+          "tolerance": 0.15,
+          "required": true,
+          "status": "fail",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceValue": 2.753366123204631,
+          "targetValue": 1.7684129154580512,
+          "residual": 0.9849532077465799,
+          "relaxed": true,
+          "preserved": false
+        },
+        {
+          "id": "stance.order",
+          "nodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "reference": "leftAhead",
+          "target": "leftAhead",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceValue": "leftAhead",
+          "targetValue": "leftAhead",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "stance.relation",
+          "nodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "reference": "spread",
+          "target": "spread",
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "structuralSoft",
+          "blocking": false,
+          "targetNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "leftAnkle",
+            "rightAnkle"
+          ],
+          "referenceValue": "spread",
+          "targetValue": "spread",
+          "residual": 0,
+          "relaxed": false,
+          "preserved": false
+        },
+        {
+          "id": "left.support",
+          "nodes": [
+            "leftAnkle"
+          ],
+          "reference": false,
+          "target": false,
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftAnkle"
+          ],
+          "referenceNodes": [
+            "leftAnkle"
+          ],
+          "referenceValue": false,
+          "targetValue": false,
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "right.support",
+          "nodes": [
+            "rightAnkle"
+          ],
+          "reference": false,
+          "target": false,
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "rightAnkle"
+          ],
+          "referenceNodes": [
+            "rightAnkle"
+          ],
+          "referenceValue": false,
+          "targetValue": false,
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "depth.arm-torso",
+          "nodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist",
+            "body"
+          ],
+          "reference": {
+            "a": "rightArm",
+            "b": "torso",
+            "relation": "front",
+            "kind": "overlap"
+          },
+          "target": {
+            "aSlots": [
+              "ys1",
+              "ys2"
+            ],
+            "bSlots": [
+              "st"
+            ],
+            "orderA": [
+              19,
+              20
+            ],
+            "orderB": [
+              10,
+              10
+            ],
+            "interleaved": false
+          },
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist",
+            "body"
+          ],
+          "referenceNodes": [
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist",
+            "body"
+          ],
+          "referenceValue": {
+            "a": "rightArm",
+            "b": "torso",
+            "relation": "front",
+            "kind": "overlap"
+          },
+          "targetValue": {
+            "aSlots": [
+              "ys1",
+              "ys2"
+            ],
+            "bSlots": [
+              "st"
+            ],
+            "orderA": [
+              19,
+              20
+            ],
+            "orderB": [
+              10,
+              10
+            ],
+            "interleaved": false
+          },
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        },
+        {
+          "id": "depth.left-torso",
+          "nodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist",
+            "body"
+          ],
+          "reference": {
+            "a": "leftArm",
+            "b": "torso",
+            "relation": "back",
+            "kind": "occlusion"
+          },
+          "target": {
+            "aSlots": [
+              "zs1",
+              "zs2"
+            ],
+            "bSlots": [
+              "st"
+            ],
+            "orderA": [
+              2,
+              3
+            ],
+            "orderB": [
+              10,
+              10
+            ],
+            "interleaved": false
+          },
+          "error": 0,
+          "tolerance": 0,
+          "required": true,
+          "status": "pass",
+          "constraintTier": "semanticHard",
+          "blocking": true,
+          "targetNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist",
+            "body"
+          ],
+          "referenceNodes": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist",
+            "body"
+          ],
+          "referenceValue": {
+            "a": "leftArm",
+            "b": "torso",
+            "relation": "back",
+            "kind": "occlusion"
+          },
+          "targetValue": {
+            "aSlots": [
+              "zs1",
+              "zs2"
+            ],
+            "bSlots": [
+              "st"
+            ],
+            "orderA": [
+              2,
+              3
+            ],
+            "orderB": [
+              10,
+              10
+            ],
+            "interleaved": false
+          },
+          "residual": 0,
+          "relaxed": false,
+          "preserved": true
+        }
+      ],
+      "uncertainties": [
+        {
+          "node": "leftElbow",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "左臂折转处"
+        },
+        {
+          "node": "rightElbow",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "右臂折转处"
+        },
+        {
+          "node": "leftHip",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "左髋沿大腿连接估计"
+        },
+        {
+          "node": "leftKnee",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "左膝转折"
+        },
+        {
+          "node": "rightHip",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "右髋沿大腿连接估计"
+        },
+        {
+          "node": "rightKnee",
+          "visibility": "occluded",
+          "confidence": 0.5,
+          "basis": "右膝转折"
+        }
+      ],
+      "message": "语义硬约束独立判定；结构和风格差异作为适配残差。"
+    },
+    "retargetMode": "adaptive",
+    "workflowProfile": "adaptive-preview",
+    "status": "unresolved",
+    "retargetQuality": 0.5208333333333333,
+    "semanticQuality": 0.8333333333333334,
+    "structuralQuality": 0.40625,
+    "styleQuality": 0,
+    "preservedConstraints": [
+      "body.torsoDirection",
+      "body.twist",
+      "leftArm.extension",
+      "leftLeg.bendSide",
+      "rightArm.extension",
+      "rightLeg.bendSide",
+      "left.support",
+      "right.support",
+      "depth.arm-torso",
+      "depth.left-torso"
+    ],
+    "relaxedConstraints": [
+      "body.shoulderSilhouette",
+      "body.hipSilhouette",
+      "head.orientation",
+      "head.turnBand",
+      "arm.left.wristTorsoOffset",
+      "arm.left.wristHeadGap",
+      "arm.right.wristReach",
+      "arm.right.wristTorsoHeight",
+      "arm.right.wristTorsoOffset",
+      "leg.left.ankleTorsoOffset",
+      "leg.right.ankleTorsoOffset",
+      "leftArm.segment0",
+      "leftArm.flexion",
+      "leftArm.wrist",
+      "leftLeg.segment0",
+      "leftLeg.flexion",
+      "rightArm.segment1",
+      "rightArm.flexion",
+      "rightArm.wrist",
+      "rightLeg.segment0",
+      "rightLeg.segment1",
+      "rightLeg.flexion",
+      "stance.width"
+    ],
+    "residuals": {
+      "body.torsoDirection": 13.876112741603947,
+      "body.headDirection": 1.3660086639796418,
+      "body.shoulderLine": 1.7622369341552258e-8,
+      "body.hipLine": 1.1031842155796312,
+      "body.twist": 1.1031842332020005,
+      "body.shoulderSilhouette": 0.24832999761647723,
+      "body.hipSilhouette": 1.2499779945775427,
+      "head.orientation": 71.0962008401757,
+      "head.turnBand": 1,
+      "arm.left.wristReach": 0.07249979690101516,
+      "arm.left.wristTorsoHeight": 0.031265986511666566,
+      "arm.left.wristTorsoOffset": 0.6287567613020406,
+      "arm.left.wristOutsideTorso": 0,
+      "arm.left.wristHeadGap": 0.5446924514709648,
+      "arm.right.wristReach": 0.364274423697976,
+      "arm.right.wristTorsoHeight": 0.5652622695178172,
+      "arm.right.wristTorsoOffset": 0.16377658334525558,
+      "arm.right.wristOutsideTorso": 0,
+      "arm.right.wristHeadGap": 0.16532276276490077,
+      "leg.left.ankleTorsoOffset": 0.2519482452015829,
+      "leg.right.ankleTorsoOffset": 0.7330049625449967,
+      "leftArm.segment0": 49.0807814852007,
+      "leftArm.segment1": 13.566933390716258,
+      "leftArm.flexion": 62.647714875916904,
+      "leftArm.bendSide": 1,
+      "leftArm.wrist": 0.38690130475518764,
+      "leftArm.extension": 0,
+      "leftLeg.segment0": 46.58369128846584,
+      "leftLeg.segment1": 10.989730442788755,
+      "leftLeg.flexion": 57.5734217312546,
+      "leftLeg.bendSide": 0,
+      "rightArm.segment0": 7.9496311981076815,
+      "rightArm.segment1": 21.42034050824941,
+      "rightArm.flexion": 29.369971706357205,
+      "rightArm.bendSide": 1,
+      "rightArm.wrist": 0.40054062373906335,
+      "rightArm.extension": 0,
+      "rightLeg.segment0": 32.23057882976673,
+      "rightLeg.segment1": 17.430467145446755,
+      "rightLeg.flexion": 49.66104597521348,
+      "rightLeg.bendSide": 0,
+      "stance.width": 0.9849532077465799,
+      "stance.order": 0,
+      "stance.relation": 0,
+      "left.support": 0,
+      "right.support": 0,
+      "depth.arm-torso": 0,
+      "depth.left-torso": 0
+    },
+    "semanticFailures": [
+      "leftArm.bendSide",
+      "rightArm.bendSide",
+      "缺少明确支撑关系；第一版需至少一只支撑脚。"
+    ],
+    "semanticFailureDetails": [
+      {
+        "id": "leftArm.bendSide",
+        "referenceValue": "positive",
+        "targetValue": "straight",
+        "residual": 1,
+        "status": "fail",
+        "blocking": true,
+        "nodes": [
+          "leftShoulder",
+          "leftElbow",
+          "leftWrist"
+        ]
+      },
+      {
+        "id": "rightArm.bendSide",
+        "referenceValue": "positive",
+        "targetValue": "straight",
+        "residual": 1,
+        "status": "fail",
+        "blocking": true,
+        "nodes": [
+          "rightShoulder",
+          "rightElbow",
+          "rightWrist"
+        ]
+      }
+    ],
+    "reachabilityFailures": [],
+    "structuralResiduals": {
+      "arm.left.wristTorsoOffset": 0.6287567613020406,
+      "arm.left.wristHeadGap": 0.5446924514709648,
+      "arm.right.wristReach": 0.364274423697976,
+      "arm.right.wristTorsoHeight": 0.5652622695178172,
+      "arm.right.wristTorsoOffset": 0.16377658334525558,
+      "leg.left.ankleTorsoOffset": 0.2519482452015829,
+      "leg.right.ankleTorsoOffset": 0.7330049625449967,
+      "leftArm.segment0": 49.0807814852007,
+      "leftArm.flexion": 62.647714875916904,
+      "leftArm.wrist": 0.38690130475518764,
+      "leftLeg.segment0": 46.58369128846584,
+      "leftLeg.flexion": 57.5734217312546,
+      "rightArm.segment1": 21.42034050824941,
+      "rightArm.flexion": 29.369971706357205,
+      "rightArm.wrist": 0.40054062373906335,
+      "rightLeg.segment0": 32.23057882976673,
+      "rightLeg.segment1": 17.430467145446755,
+      "rightLeg.flexion": 49.66104597521348,
+      "stance.width": 0.9849532077465799
+    },
+    "styleResiduals": {
+      "body.shoulderSilhouette": 0.24832999761647723,
+      "body.hipSilhouette": 1.2499779945775427,
+      "head.orientation": 71.0962008401757,
+      "head.turnBand": 1
+    },
+    "localProjections": {
+      "leftArm": {
+        "requestedLocal": {
+          "a": 0.8813502298979474,
+          "n": 1.726148761855211
+        },
+        "requestedWorld": {
+          "x": 79.79326670133243,
+          "y": 113.56672745618232
+        },
+        "solvedWorld": {
+          "x": 50.030797773063625,
+          "y": 110.66412784523726
+        },
+        "requestedDistance": 76.45687463233864,
+        "solvedDistance": 46.553201928009756,
+        "residual": 29.903672704328883,
+        "relaxed": true,
+        "reason": "targetChainTooShort"
+      },
+      "leftLeg": {
+        "requestedLocal": {
+          "a": -1.216216216216216,
+          "n": 1.1754755372142847
+        },
+        "requestedWorld": {
+          "x": 53.726914510246374,
+          "y": 9.346609842199854
+        },
+        "solvedWorld": {
+          "x": 41.800835877057835,
+          "y": 21.83618680685226
+        },
+        "requestedDistance": 68.88035547973594,
+        "solvedDistance": 51.61128242062323,
+        "residual": 17.269073059112706,
+        "relaxed": true,
+        "reason": "targetChainTooShort"
+      },
+      "rightArm": {
+        "requestedLocal": {
+          "a": -0.5034204328810137,
+          "n": -0.8577794460752889
+        },
+        "requestedWorld": {
+          "x": -42.51807819530212,
+          "y": 29.229331842700528
+        },
+        "solvedWorld": {
+          "x": -34.76564375887029,
+          "y": 57.422654907220725
+        },
+        "requestedDistance": 79.77097190951838,
+        "solvedDistance": 50.531209511174914,
+        "residual": 29.239762398343466,
+        "relaxed": true,
+        "reason": "targetChainTooShort"
+      },
+      "rightLeg": {
+        "requestedLocal": {
+          "a": -1.078053156891331,
+          "n": -1.5778905859903463
+        },
+        "requestedWorld": {
+          "x": -76.60484644518388,
+          "y": -3.3043751855755232
+        },
+        "solvedWorld": {
+          "x": -41.90774470938764,
+          "y": 29.393218632247187
+        },
+        "requestedDistance": 91.53703191909214,
+        "solvedDistance": 43.86081656657583,
+        "residual": 47.676215352516316,
+        "relaxed": true,
+        "reason": "targetChainTooShort"
+      }
+    }
+  },
+  "kernelInternalActualTarget": {
+    "source": "reference-retarget-kernel.runtimeGraph",
+    "coordinateSystem": "runtimeWorld",
+    "points": {
+      "leftShoulder": {
+        "x": 3.697417937307139,
+        "y": 106.145441891825,
+        "confidence": 0.8,
+        "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftElbow": {
+        "x": 32.60534687585569,
+        "y": 108.91773741945006,
+        "confidence": 0.8,
+        "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftWrist": {
+        "x": 50.030796965651085,
+        "y": 110.66412822096235,
+        "confidence": 0.8,
+        "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftHip": {
+        "x": 6.157914545895209,
+        "y": 59.16320961984775,
+        "confidence": 0.55,
+        "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftKnee": {
+        "x": 33.080443055665924,
+        "y": 55.73435253998334,
+        "confidence": 0.55,
+        "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftAnkle": {
+        "x": 41.800836757632,
+        "y": 32.869460726631466,
+        "confidence": 0.8,
+        "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightShoulder": {
+        "x": -21.368137876566088,
+        "y": 106.14544188411561,
+        "confidence": 0.8,
+        "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightElbow": {
+        "x": -28.715655242918146,
+        "y": 79.6135026687796,
+        "confidence": 0.8,
+        "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightWrist": {
+        "x": -34.76564370039112,
+        "y": 57.422654401130885,
+        "confidence": 0.8,
+        "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightHip": {
+        "x": -9.987358341192902,
+        "y": 59.47411230234914,
+        "confidence": 0.55,
+        "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightKnee": {
+        "x": -32.40733819858339,
+        "y": 62.23864007526815,
+        "confidence": 0.55,
+        "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightAnkle": {
+        "x": -41.90774359626555,
+        "y": 43.20699360985532,
+        "confidence": 0.8,
+        "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "body": {
+        "x": -2.380952027088619,
+        "y": 88.31944909759407,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "head": {
+        "x": -0.38871157750566177,
+        "y": 145.3568502947504,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "face": {
+        "x": 2.322951620268009,
+        "y": 121.08619977249572,
+        "confidence": 0.7,
+        "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。",
+        "anchorType": "boneLocal"
+      }
+    },
+    "support": {
+      "left": false,
+      "right": false
+    },
+    "grip": {
+      "points": {
+        "left": {
+          "x": 51.81183872654033,
+          "y": 104.65206602505677
+        },
+        "right": {
+          "x": -34.532509989195155,
+          "y": 47.227280562459796
+        }
+      },
+      "angle": -146.37342829404307
+    },
+    "actionState": {
+      "driver": null,
+      "anatomicalSides": {
+        "left": "left",
+        "right": "right",
+        "basis": "沿用角色切片 zs=左臂、ys=右臂，zt=左腿、yt=右腿；按躯干和切片连接确认。本动作不使用武器或握持约束，解剖身份不随画面投影交换。"
+      },
+      "observedView": "frontThreeQuarter",
+      "viewEvidence": [
+        {
+          "basis": "已检查 npc1.png 与切片分解：st 为正面斜视连衣裙、tou配面部/前发；当前资源没有已校准侧背躯干替换。",
+          "bodySlots": [
+            "st"
+          ],
+          "bodyView": "frontThreeQuarter",
+          "attachments": {
+            "st": "st",
+            "tf1": "tf1",
+            "tou": "tou",
+            "yj2": "yj2",
+            "yj1": "yj1"
+          }
+        }
+      ],
+      "attachments": {
+        "tf2": "tf2",
+        "bb": "bb",
+        "zs1": "zs1",
+        "zs2": "zs2",
+        "zs3": "zs3",
+        "st2": "st2",
+        "zt1": "zt1",
+        "zt2": "zt2",
+        "yt1": "yt1",
+        "yt2": "yt2",
+        "st": "st",
+        "tou": "tou",
+        "zui": "zui",
+        "mm2": "mm2",
+        "yj2": "yj2",
+        "mm1": "mm1",
+        "yj1": "yj1",
+        "tf1": "tf1",
+        "ys3": "ys3",
+        "ys1": "ys1",
+        "ys2": "ys2",
+        "bd1": "bd1"
+      },
+      "drawOrder": [
+        "tf2",
+        "bb",
+        "zs1",
+        "zs2",
+        "zs3",
+        "st2",
+        "zt1",
+        "zt2",
+        "yt1",
+        "yt2",
+        "st",
+        "tou",
+        "zui",
+        "mm2",
+        "yj2",
+        "mm1",
+        "yj1",
+        "tf1",
+        "ys3",
+        "ys1",
+        "ys2",
+        "bd1"
+      ],
+      "torsoSlots": [
+        "st"
+      ],
+      "headSlot": "tou"
+    },
+    "visualPointsWorld": {
+      "leftShoulder": {
+        "x": 3.697417937307139,
+        "y": 106.145441891825,
+        "source": "boneLocal",
+        "bone": "zs1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftElbow": {
+        "x": 32.60534687585569,
+        "y": 108.91773741945006,
+        "source": "boneLocal",
+        "bone": "zs2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftWrist": {
+        "x": 50.030796965651085,
+        "y": 110.66412822096235,
+        "source": "boneLocal",
+        "bone": "zs3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftHip": {
+        "x": 6.157914545895209,
+        "y": 59.16320961984775,
+        "source": "boneLocal",
+        "bone": "zt1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftKnee": {
+        "x": 33.080443055665924,
+        "y": 55.73435253998334,
+        "source": "boneLocal",
+        "bone": "zt2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "leftAnkle": {
+        "x": 41.800836757632,
+        "y": 32.869460726631466,
+        "source": "boneLocal",
+        "bone": "zt3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightShoulder": {
+        "x": -21.368137876566088,
+        "y": 106.14544188411561,
+        "source": "boneLocal",
+        "bone": "ys1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightElbow": {
+        "x": -28.715655242918146,
+        "y": 79.6135026687796,
+        "source": "boneLocal",
+        "bone": "ys2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightWrist": {
+        "x": -34.76564370039112,
+        "y": 57.422654401130885,
+        "source": "boneLocal",
+        "bone": "ys3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightHip": {
+        "x": -9.987358341192902,
+        "y": 59.47411230234914,
+        "source": "boneLocal",
+        "bone": "yt1",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightKnee": {
+        "x": -32.40733819858339,
+        "y": 62.23864007526815,
+        "source": "boneLocal",
+        "bone": "yt2",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.55,
+        "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "rightAnkle": {
+        "x": -41.90774359626555,
+        "y": 43.20699360985532,
+        "source": "boneLocal",
+        "bone": "yt3",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "body": {
+        "x": -2.380952027088619,
+        "y": 88.31944909759407,
+        "source": "boneLocal",
+        "bone": "bone2",
+        "localPoint": [
+          0.2700029161853355,
+          11.67000000000003
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "head": {
+        "x": -0.38871157750566177,
+        "y": 145.3568502947504,
+        "source": "boneLocal",
+        "bone": "tou",
+        "localPoint": [
+          32.16751571248424,
+          -2.767297098290246
+        ],
+        "exact": true,
+        "confidence": 0.8,
+        "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+        "anchorType": "boneLocal"
+      },
+      "face": {
+        "x": 2.322951620268009,
+        "y": 121.08619977249572,
+        "source": "boneLocal",
+        "bone": "zui",
+        "localPoint": [
+          0,
+          0
+        ],
+        "exact": true,
+        "confidence": 0.7,
+        "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。",
+        "anchorType": "boneLocal"
+      }
+    }
+  },
+  "retargetManifestFingerprint": "e849e7837f17ea576a75627ea7bb6d928483ca2b94f0b8dd1afaf8c97bf0f3bc",
+  "createdAt": "2026-11-08T06:06:55.758Z",
+  "conflicts": [
+    "缺少明确支撑关系；第一版需至少一只支撑脚。",
+    "leftArm.bendSide: fail",
+    "rightArm.bendSide: fail"
+  ],
+  "previewIssues": [],
+  "diagnosticOutputDir": "clipboard-reference/dynamic-result/stage-stage-flight",
+  "referenceDiagnosticGifPath": "clipboard-reference/dynamic-result/stage-stage-flight/body-to-npc1-5361e631748d-adaptive-reference-diagnostic.gif",
+  "diagnosticPosePath": "clipboard-reference/dynamic-result/stage-stage-flight/ready.diagnostic.pose.json",
+  "targetDiagnosticGifPath": "clipboard-reference/dynamic-result/stage-stage-flight/body-to-npc1-5361e631748d-adaptive-target-diagnostic.gif",
+  "comparisonDiagnosticGifPath": "clipboard-reference/dynamic-result/stage-stage-flight/body-to-npc1-5361e631748d-adaptive-comparison-diagnostic.gif",
+  "dynamicComparisonDiagnosticGifPath": "clipboard-reference/dynamic-result/stage-stage-flight/body-to-npc1-5361e631748d-adaptive-dynamic-diagnostic.gif",
+  "dynamicComparisonFrameCount": 59,
+  "dynamicTargetMode": "ready-hold",
+  "diagnosticSummaryPng": "clipboard-reference/dynamic-result/stage-stage-flight/body-to-npc1-5361e631748d-adaptive-comparison-diagnostic.png",
+  "posePreviewManifestPath": "clipboard-reference/dynamic-result/stage-stage-flight/pose-comparison/pose-comparison.json",
+  "referenceAnalysisManifestPath": "clipboard-reference/dynamic-result/stage-stage-flight/reference-analysis/reference-manifest.json",
+  "referenceFrameCount": 59,
+  "coverageStages": [
+    "stage-flight"
+  ],
+  "reviewedFrameIndices": [
+    0
+  ],
+  "reviewedFrameCount": 1,
+  "unreviewedFrameCount": 58,
+  "unreviewedFrameIndices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58
+  ],
+  "unreviewedStageIds": [
+    "stage-jump",
+    "stage-collapse",
+    "stage-stand-slash",
+    "stage-recover",
+    "stage-lunge"
+  ]
+}

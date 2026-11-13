@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "bounds": {
+    "minX": -82.23272607658672,
+    "minY": -17.465256485352,
+    "maxX": 88.80265338169474,
+    "maxY": 223.28094565145057
+  },
+  "reference": {
+    "imagePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0000.png",
+    "crop": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "height": 384,
+    "groundY": 384,
+    "time": 0,
+    "facing": "right"
+  }
+}

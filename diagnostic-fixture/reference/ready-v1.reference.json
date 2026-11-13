@@ -1,0 +1,274 @@
+{
+  "version": 2,
+  "id": "body-ready",
+  "status": "confirmed",
+  "observation": {
+    "imagePath": "reference/frames/frame-0000.png",
+    "time": 0,
+    "facing": "right",
+    "crop": [
+      130,
+      230,
+      270,
+      275
+    ],
+    "height": 205,
+    "groundY": 495,
+    "basis": "本轮只观察身体主体；忽略法杖、耳饰和特效。按脸、领口和两侧袖口追踪，画面左侧下垂臂对应解剖右，画面右侧抬起臂对应解剖左；衣摆下髋膝用袖口至足部的连接连续性推测，保留低置信度。图像点只用于参考比较，不直接传给目标 IK。",
+    "anatomicalIdentity": {
+      "status": "confirmed",
+      "basis": "正面斜视朝画面右：画面左侧可见下垂袖臂为自身右侧，画面右侧外展袖臂为自身左侧；按同侧领口—袖口—手连续跟踪，腿沿对应半侧衣摆与鞋保持标签。武器不参与身份或握持约束。"
+    },
+    "support": {
+      "left": true,
+      "right": true
+    },
+    "points": {
+      "head": {
+        "x": 247,
+        "y": 344,
+        "visibility": "visible",
+        "confidence": 0.8,
+        "basis": "面部及头发整体可见中心，耳和蝴蝶结不计入"
+      },
+      "face": {
+        "x": 260,
+        "y": 351,
+        "visibility": "visible",
+        "confidence": 0.65,
+        "basis": "双眼间偏右的鼻面前缘；低分辨率鼻尖不清晰，保留定位不确定性"
+      },
+      "body": {
+        "x": 249,
+        "y": 416,
+        "visibility": "visible",
+        "confidence": 0.8,
+        "basis": "领口下至腰部衣片中心"
+      },
+      "leftShoulder": {
+        "x": 280,
+        "y": 384,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.55,
+        "basis": "画面右侧外展袖口与胸衣接缝内侧，衣物遮挡肩关节"
+      },
+      "leftElbow": {
+        "x": 298,
+        "y": 402,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.5,
+        "basis": "外展袖子折转处，按袖口至手的连接估计"
+      },
+      "leftWrist": {
+        "x": 310,
+        "y": 398,
+        "visibility": "visible",
+        "confidence": 0.8,
+        "basis": "画面右侧白色手与蓝袖口接缝，忽略法杖"
+      },
+      "rightShoulder": {
+        "x": 221,
+        "y": 384,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.6,
+        "basis": "画面左侧袖口上端与胸衣接缝"
+      },
+      "rightElbow": {
+        "x": 208,
+        "y": 416,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.5,
+        "basis": "下垂袖子外缘折转，长袖内估计肘点"
+      },
+      "rightWrist": {
+        "x": 207,
+        "y": 440,
+        "visibility": "visible",
+        "confidence": 0.8,
+        "basis": "画面左下白色手与袖口接缝"
+      },
+      "leftHip": {
+        "x": 253,
+        "y": 449,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.4,
+        "basis": "衣摆内画面右侧大腿延长线与腰髋高度交点"
+      },
+      "leftKnee": {
+        "x": 251,
+        "y": 468,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.4,
+        "basis": "画面右侧长袜上方腿部折线，衣物遮挡"
+      },
+      "leftAnkle": {
+        "x": 246,
+        "y": 484,
+        "visibility": "visible",
+        "confidence": 0.75,
+        "basis": "画面右侧鞋帮与袜子连接，不取鞋底"
+      },
+      "rightHip": {
+        "x": 234,
+        "y": 449,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.4,
+        "basis": "衣摆内画面左侧大腿延长线与腰髋高度交点"
+      },
+      "rightKnee": {
+        "x": 225,
+        "y": 468,
+        "visibility": "occluded",
+        "estimated": true,
+        "confidence": 0.45,
+        "basis": "画面左侧白袜膝部弯折上端，保留衣摆遮挡估计"
+      },
+      "rightAnkle": {
+        "x": 220,
+        "y": 484,
+        "visibility": "visible",
+        "confidence": 0.75,
+        "basis": "画面左侧鞋帮与袜子连接，不取鞋底"
+      }
+    },
+    "silhouette": {
+      "version": 1,
+      "basis": "在同一肩线和髋线高度取身体衣物外缘，不把头发或法杖计入身体轮廓。",
+      "shoulder": {
+        "left": {
+          "x": 214,
+          "y": 384,
+          "visibility": "visible",
+          "confidence": 0.7,
+          "basis": "肩线同高的画面左衣袖外缘"
+        },
+        "right": {
+          "x": 291,
+          "y": 384,
+          "visibility": "visible",
+          "confidence": 0.7,
+          "basis": "肩线同高的画面右衣袖外缘"
+        }
+      },
+      "hip": {
+        "left": {
+          "x": 220,
+          "y": 449,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "髋线同高的画面左衣摆外缘"
+        },
+        "right": {
+          "x": 272,
+          "y": 449,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "髋线同高的画面右衣摆外缘"
+        }
+      }
+    },
+    "orientation": {
+      "version": 1,
+      "band": "threeQuarter",
+      "amplitude": 0.35,
+      "basis": "双眼均可见，脸朝画面右的正面斜视；仅标相对朝向，不声称绝对转角"
+    },
+    "depth": {
+      "version": 1,
+      "basis": "只记录可见遮挡证据，目标须读回 drawOrder。",
+      "evidence": [
+        {
+          "id": "near-right-arm",
+          "a": "rightArm",
+          "b": "torso",
+          "relation": "front",
+          "kind": "overlap",
+          "basis": "画面左侧下垂袖口压住胸衣左边缘，白手在衣摆外轮廓可见"
+        },
+        {
+          "id": "far-left-arm",
+          "a": "leftArm",
+          "b": "torso",
+          "relation": "back",
+          "kind": "occlusion",
+          "basis": "画面右侧外展臂近肩一段被胸衣外缘遮住，远端袖和手伸出轮廓"
+        }
+      ]
+    },
+    "edges": [
+      [
+        "head",
+        "body"
+      ],
+      [
+        "leftShoulder",
+        "leftElbow"
+      ],
+      [
+        "leftElbow",
+        "leftWrist"
+      ],
+      [
+        "leftHip",
+        "leftKnee"
+      ],
+      [
+        "leftKnee",
+        "leftAnkle"
+      ],
+      [
+        "rightShoulder",
+        "rightElbow"
+      ],
+      [
+        "rightElbow",
+        "rightWrist"
+      ],
+      [
+        "rightHip",
+        "rightKnee"
+      ],
+      [
+        "rightKnee",
+        "rightAnkle"
+      ]
+    ]
+  },
+  "imageHash": "db52f52b26182e0da4d9d8af6bb3469d823d76ec29eb4815c939798ab6940e0f",
+  "review": {
+    "decision": "approved",
+    "reason": "已查看原图在上、节点在下的本轮审查图：头/脸分开，左右按领口—袖口—手连续性记录，抬臂一侧为左、下垂一侧为右；髋、膝和肩肘均保留遮挡及 0.4–0.6 的估计置信度。足踝取鞋帮而非鞋底，身体轮廓排除头发和武器。前后用袖口压住衣缘和肩段遮挡作证据，后续仍须目标 drawOrder 验证。鼻面前缘定位不确定性保留，不声称精确绝对转角。",
+    "reviewedBy": "Agent 新参考起始帧标注检查",
+    "checks": [
+      "jointLocations",
+      "visibility",
+      "connections",
+      "facing",
+      "support",
+      "uncertainty",
+      "orientation",
+      "depth",
+      "silhouette"
+    ],
+    "issues": [],
+    "fingerprint": "f887e23543c27824771cec8f9f45f33aff27cea37c9586cb2fc08db51477e24d",
+    "evidence": [
+      {
+        "filePath": "reference/ready-v1-sheet/reference-page-1.png",
+        "hash": "14f9c47b108c6e6da9527efc8b33f2d155af9f59376493275343ecff3cadb43f"
+      },
+      {
+        "filePath": "reference/ready-v1-sheet/reference-pose-sheet.json",
+        "hash": "5479015a47bdbe50dc25a2b7c2be1e6d60d671695c554091cf201889644f82a0"
+      }
+    ],
+    "at": "2026-10-24T16:07:11.283Z"
+  }
+}

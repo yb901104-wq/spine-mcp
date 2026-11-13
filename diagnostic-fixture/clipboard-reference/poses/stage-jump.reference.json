@@ -1,0 +1,243 @@
+{
+  "version": 2,
+  "id": "diagnostic-fixture/clipboard-reference/poses/stage-jump.reference.json",
+  "status": "draft",
+  "observation": {
+    "imagePath": "diagnostic-fixture/clipboard-reference/analysis/frame-0000.png",
+    "time": 0,
+    "facing": "right",
+    "crop": [
+      130,
+      80,
+      290,
+      280
+    ],
+    "height": 190,
+    "groundY": 320,
+    "basis": "本轮附加 GIF 的关键帧人工诊断标注；图像点只用于提取动作意图，不直接传入目标 IK。",
+    "anatomicalIdentity": {
+      "status": "confirmed",
+      "basis": "按头部、胸口、左右袖口和腿部连续性固定解剖左右；不按画面左右临时交换。"
+    },
+    "support": {
+      "left": false,
+      "right": true
+    },
+    "points": {
+      "head": {
+        "x": 250,
+        "y": 180,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "头发与头部主体中心"
+      },
+      "face": {
+        "x": 268,
+        "y": 184,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "面部前缘/鼻尖方向"
+      },
+      "body": {
+        "x": 246,
+        "y": 232,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "胸口与腰部衣片中心"
+      },
+      "leftShoulder": {
+        "x": 286,
+        "y": 205,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面右侧肩袖接缝"
+      },
+      "leftElbow": {
+        "x": 312,
+        "y": 221,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左臂折转处",
+        "estimated": true
+      },
+      "leftWrist": {
+        "x": 329,
+        "y": 214,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "左手与袖口接缝"
+      },
+      "rightShoulder": {
+        "x": 214,
+        "y": 205,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面左侧肩袖接缝"
+      },
+      "rightElbow": {
+        "x": 201,
+        "y": 232,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右臂折转处",
+        "estimated": true
+      },
+      "rightWrist": {
+        "x": 205,
+        "y": 274,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右手与袖口接缝"
+      },
+      "leftHip": {
+        "x": 258,
+        "y": 253,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左髋沿大腿连接估计",
+        "estimated": true
+      },
+      "leftKnee": {
+        "x": 276,
+        "y": 280,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左膝转折",
+        "estimated": true
+      },
+      "leftAnkle": {
+        "x": 303,
+        "y": 316,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "左踝与鞋帮连接"
+      },
+      "rightHip": {
+        "x": 232,
+        "y": 253,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右髋沿大腿连接估计",
+        "estimated": true
+      },
+      "rightKnee": {
+        "x": 202,
+        "y": 270,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右膝转折",
+        "estimated": true
+      },
+      "rightAnkle": {
+        "x": 174,
+        "y": 300,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右踝与鞋帮连接"
+      }
+    },
+    "silhouette": {
+      "version": 1,
+      "basis": "在肩线和髋线高度取角色衣物外缘，不把头发和特效计入轮廓。",
+      "shoulder": {
+        "left": {
+          "x": 268,
+          "y": 205,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "左肩线外缘"
+        },
+        "right": {
+          "x": 232,
+          "y": 205,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "右肩线外缘"
+        }
+      },
+      "hip": {
+        "left": {
+          "x": 242,
+          "y": 253,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "左髋线衣摆外缘"
+        },
+        "right": {
+          "x": 248,
+          "y": 253,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "右髋线衣摆外缘"
+        }
+      }
+    },
+    "orientation": {
+      "version": 1,
+      "band": "threeQuarter",
+      "amplitude": 0.35,
+      "basis": "由双眼/面部前缘和胸口相对朝向判断，只记录相对朝向档位。"
+    },
+    "depth": {
+      "version": 1,
+      "basis": "依据袖口与躯干的遮挡关系记录前后，不声称绝对深度。",
+      "evidence": [
+        {
+          "id": "arm-torso",
+          "a": "rightArm",
+          "b": "torso",
+          "relation": "front",
+          "kind": "overlap",
+          "basis": "右臂轮廓压过躯干外缘"
+        },
+        {
+          "id": "left-torso",
+          "a": "leftArm",
+          "b": "torso",
+          "relation": "back",
+          "kind": "occlusion",
+          "basis": "左肩段部分被躯干遮挡"
+        }
+      ]
+    },
+    "edges": [
+      [
+        "head",
+        "body"
+      ],
+      [
+        "leftShoulder",
+        "leftElbow"
+      ],
+      [
+        "leftElbow",
+        "leftWrist"
+      ],
+      [
+        "leftHip",
+        "leftKnee"
+      ],
+      [
+        "leftKnee",
+        "leftAnkle"
+      ],
+      [
+        "rightShoulder",
+        "rightElbow"
+      ],
+      [
+        "rightElbow",
+        "rightWrist"
+      ],
+      [
+        "rightHip",
+        "rightKnee"
+      ],
+      [
+        "rightKnee",
+        "rightAnkle"
+      ]
+    ]
+  },
+  "imageHash": "529d68c2e67f6ab64ec6a3c96ef5d22ad2190b5c716219ef939a5f943745f9fd"
+}

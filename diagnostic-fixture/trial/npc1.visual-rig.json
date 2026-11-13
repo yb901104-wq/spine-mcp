@@ -1,0 +1,349 @@
+{
+  "version": 2,
+  "status": "confirmed",
+  "filePath": "目标/npc1.json",
+  "mappingPath": "previews/pose-workflow-20261009/npc1.mapping.json",
+  "skin": "default",
+  "sourceFingerprint": "84363ddcf80a3048f78fd3870f80bba279b95549a6828fd308a445b8936a6c76",
+  "nodes": {
+    "leftShoulder": {
+      "type": "boneLocal",
+      "bone": "zs1",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "leftElbow": {
+      "type": "boneLocal",
+      "bone": "zs2",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "leftWrist": {
+      "type": "boneLocal",
+      "bone": "zs3",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "leftHip": {
+      "type": "boneLocal",
+      "bone": "zt1",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.55
+    },
+    "leftKnee": {
+      "type": "boneLocal",
+      "bone": "zt2",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.55
+    },
+    "leftAnkle": {
+      "type": "boneLocal",
+      "bone": "zt3",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "左踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "rightShoulder": {
+      "type": "boneLocal",
+      "bone": "ys1",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右肩按上臂袖口近端和躯干接缝检查，节点位于现有旋转连接处。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "rightElbow": {
+      "type": "boneLocal",
+      "bone": "ys2",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右肘按前臂切片近端与上臂远端的接缝检查。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "rightWrist": {
+      "type": "boneLocal",
+      "bone": "ys3",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右腕按手切片近端与前臂末端接缝检查，握持中心另存 mapping。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "rightHip": {
+      "type": "boneLocal",
+      "bone": "yt1",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右髋在衣摆遮挡下，以大腿切片旋转支点及上下段连接为估计，非直接可见；需要保留不确定性。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.55
+    },
+    "rightKnee": {
+      "type": "boneLocal",
+      "bone": "yt2",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右膝按膝下切片近端与大腿末端旋转接缝检查，衣摆遮挡不表示膝点可见。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.55
+    },
+    "rightAnkle": {
+      "type": "boneLocal",
+      "bone": "yt3",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "basis": "右踝按鞋切片旋转支点与小腿连接检查，不使用鞋底代替踝。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "body": {
+      "type": "boneLocal",
+      "bone": "bone2",
+      "point": [
+        0.2700029161853355,
+        11.67000000000003
+      ],
+      "calibrated": true,
+      "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "head": {
+      "type": "boneLocal",
+      "bone": "tou",
+      "point": [
+        32.16751571248424,
+        -2.767297098290246
+      ],
+      "calibrated": true,
+      "basis": "检查头部中心/躯干中心，不用骨骼原点自动代替。；本轮复核切片分解与关节叠加：保留接缝锚点及遮挡不确定性；不靠偏移迎合参考。",
+      "confidence": 0.8
+    },
+    "face": {
+      "type": "boneLocal",
+      "bone": "zui",
+      "point": [
+        0,
+        0
+      ],
+      "calibrated": true,
+      "confidence": 0.7,
+      "basis": "面部特征切片（zui 嘴部）旋转支点作为朝向锚点，不是鼻尖；头骨原点或头身连线都不能代替头部朝向。"
+    }
+  },
+  "segments": {
+    "leftArm.0": {
+      "nodes": [
+        "leftShoulder",
+        "leftElbow"
+      ],
+      "bones": [
+        "zs1"
+      ],
+      "attachments": [
+        {
+          "slot": "zs1",
+          "attachment": "zs1"
+        }
+      ]
+    },
+    "leftArm.1": {
+      "nodes": [
+        "leftElbow",
+        "leftWrist"
+      ],
+      "bones": [
+        "zs2"
+      ],
+      "attachments": [
+        {
+          "slot": "zs2",
+          "attachment": "zs2"
+        }
+      ]
+    },
+    "leftLeg.0": {
+      "nodes": [
+        "leftHip",
+        "leftKnee"
+      ],
+      "bones": [
+        "zt1"
+      ],
+      "attachments": [
+        {
+          "slot": "zt1",
+          "attachment": "zt1"
+        }
+      ]
+    },
+    "leftLeg.1": {
+      "nodes": [
+        "leftKnee",
+        "leftAnkle"
+      ],
+      "bones": [
+        "zt2"
+      ],
+      "attachments": [
+        {
+          "slot": "zt1",
+          "attachment": "zt1"
+        }
+      ]
+    },
+    "rightArm.0": {
+      "nodes": [
+        "rightShoulder",
+        "rightElbow"
+      ],
+      "bones": [
+        "ys1"
+      ],
+      "attachments": [
+        {
+          "slot": "ys1",
+          "attachment": "ys1"
+        }
+      ]
+    },
+    "rightArm.1": {
+      "nodes": [
+        "rightElbow",
+        "rightWrist"
+      ],
+      "bones": [
+        "ys2"
+      ],
+      "attachments": [
+        {
+          "slot": "ys2",
+          "attachment": "ys2"
+        }
+      ]
+    },
+    "rightLeg.0": {
+      "nodes": [
+        "rightHip",
+        "rightKnee"
+      ],
+      "bones": [
+        "yt1"
+      ],
+      "attachments": [
+        {
+          "slot": "yt1",
+          "attachment": "yt1"
+        }
+      ]
+    },
+    "rightLeg.1": {
+      "nodes": [
+        "rightKnee",
+        "rightAnkle"
+      ],
+      "bones": [
+        "yt2"
+      ],
+      "attachments": [
+        {
+          "slot": "yt1",
+          "attachment": "yt1"
+        }
+      ]
+    }
+  },
+  "anatomicalSides": {
+    "left": "left",
+    "right": "right",
+    "basis": "沿用角色切片 zs=左臂、ys=右臂，zt=左腿、yt=右腿；按躯干和切片连接确认。本动作不使用武器或握持约束，解剖身份不随画面投影交换。"
+  },
+  "viewProfiles": [
+    {
+      "basis": "已检查 npc1.png 与切片分解：st 为正面斜视连衣裙、tou配面部/前发；当前资源没有已校准侧背躯干替换。",
+      "bodySlots": [
+        "st"
+      ],
+      "bodyView": "frontThreeQuarter",
+      "attachments": {
+        "st": "st",
+        "tf1": "tf1",
+        "tou": "tou",
+        "yj2": "yj2",
+        "yj1": "yj1"
+      }
+    }
+  ],
+  "torsoAxis": {
+    "version": 1,
+    "method": "shoulderHipCenters",
+    "basis": "由已校准左右肩和左右髋计算；不使用头部中心作为躯干方向。"
+  },
+  "manifestPath": "trial/calibration/visual-rig-calibration.json",
+  "review": {
+    "decision": "approved",
+    "reviewedBy": "Agent 本轮切片与节点检查",
+    "reason": "已查看本轮 character、nodes 和 slices：zs/ys 袖口、前臂和手的接缝与对应节点一致，zt/yt 腿链沿现有加权切片；保持同侧解剖身份。髋与膝受衣摆遮挡，保留原 0.55 置信度及推测依据，不将其当作直接可见点。头部与面部锚点独立，只有正面斜视切片能力，本次不批准侧背视角或新动作。",
+    "fingerprint": "aca3918a04b52adfb38324ebc6bfe8cc6da2064b65d488f482714cbc49129e82",
+    "evidence": [
+      {
+        "filePath": "trial/calibration/character.png",
+        "hash": "bddb387ec1c642515523d1d0cdeaadc9aef3a800775f1d91a72a27a74b94a5ed"
+      },
+      {
+        "filePath": "trial/calibration/nodes.png",
+        "hash": "242917f30d9f110aaf888622bf816c562ab6d3116ef11d8838a3e3ecca4fb31d"
+      },
+      {
+        "filePath": "trial/calibration/slices.png",
+        "hash": "2cbdcf96199ae7f69122f58e85988f10e9d1bfd000ebbf4aff68e25c6bf52193"
+      },
+      {
+        "filePath": "trial/calibration/visual-rig-calibration.json",
+        "hash": "841ec573715674db3824ac2429209a60ccc6934f61326bc752a55adcd5a9a17a"
+      }
+    ],
+    "at": "2026-10-24T16:04:25.997Z"
+  }
+}

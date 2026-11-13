@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "id": "body-collapse-reference",
+  "basis": "仅先检查起始帧；其余身体动作在此帧通过后追加明确阶段。不设置武器和握持约束。",
+  "confirmedBy": "Agent 本轮原图及标注对照",
+  "confirmedAt": "2026-10-24T16:07:11.578Z",
+  "correspondence": {
+    "left": "left",
+    "right": "right",
+    "basis": "角色自身同侧对应，参考画面左侧下垂臂为右、右侧抬臂为左；武器不参与驱动。",
+    "anatomicalIdentity": "npc1 zs 左臂、ys 右臂、zt 左腿、yt 右腿；按领口、袖口和半侧衣摆至鞋保持固定身份。",
+    "projectedOrder": "近侧右臂投影在躯干前，远侧左上臂被躯干遮挡；之后不按画面位置临时交换。"
+  },
+  "weaponHand": null,
+  "visualRigPath": "trial/npc1.visual-rig.json",
+  "visualRigFingerprint": "aca3918a04b52adfb38324ebc6bfe8cc6da2064b65d488f482714cbc49129e82",
+  "stages": [
+    {
+      "stageId": "ready",
+      "referencePosePath": "reference/ready-v1.reference.json",
+      "referenceFingerprint": "f887e23543c27824771cec8f9f45f33aff27cea37c9586cb2fc08db51477e24d"
+    }
+  ]
+}

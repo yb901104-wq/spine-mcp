@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "version": 1,
+  "layout": "reference-raw-above-annotated",
+  "records": [
+    {
+      "path": "reference/ready-v1.reference.json",
+      "fingerprint": "f887e23543c27824771cec8f9f45f33aff27cea37c9586cb2fc08db51477e24d"
+    }
+  ],
+  "pages": [
+    "reference/ready-v1-sheet/reference-page-1.png"
+  ],
+  "evidence": [
+    {
+      "filePath": "reference/ready-v1-sheet/reference-page-1.png",
+      "hash": "14f9c47b108c6e6da9527efc8b33f2d155af9f59376493275343ecff3cadb43f"
+    }
+  ],
+  "legend": "左绿右橙；实线=两端可见，虚线/空心点=遮挡推测，未知点不连线。左右按角色自身定义。",
+  "warnings": [
+    "body-ready: leftShoulder occluded",
+    "body-ready: leftElbow occluded",
+    "body-ready: rightShoulder occluded",
+    "body-ready: rightElbow occluded",
+    "body-ready: leftHip occluded",
+    "body-ready: leftKnee occluded",
+    "body-ready: rightHip occluded",
+    "body-ready: rightKnee occluded"
+  ]
+}

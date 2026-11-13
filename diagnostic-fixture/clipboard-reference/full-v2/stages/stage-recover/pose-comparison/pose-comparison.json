@@ -1,0 +1,285 @@
+{
+  "ok": true,
+  "version": 1,
+  "layout": "reference-above-target",
+  "poses": [
+    {
+      "posePath": "clipboard-reference/full-v2/stages/stage-recover/stage-recover.diagnostic.pose.json",
+      "time": 2.06,
+      "stageId": "stage-recover",
+      "referenceTime": 2.06,
+      "fingerprint": "a2d05f429cfee7b400ecb4c2abd1372c3702154e22e6457fe987eaf3e2b7a583"
+    }
+  ],
+  "pages": [
+    {
+      "clean": "clipboard-reference/full-v2/stages/stage-recover/pose-comparison/page-1-clean.png",
+      "diagnostic": "clipboard-reference/full-v2/stages/stage-recover/pose-comparison/page-1-diagnostic.png"
+    }
+  ],
+  "bounds": {
+    "minX": -155.5839915191054,
+    "maxX": 139.9981780109624,
+    "minY": -29.55821695300678,
+    "maxY": 266.02395257706104
+  },
+  "standardHeight": 206.90751867104746,
+  "targetScale": 1.0826092808938812,
+  "reference": {
+    "imagePath": "clipboard-reference/analysis/frame-0050.png",
+    "time": 2.06,
+    "facing": "right",
+    "crop": [
+      130,
+      80,
+      290,
+      280
+    ],
+    "height": 190,
+    "groundY": 320,
+    "basis": "本轮附加 GIF 的关键帧人工诊断标注；图像点只用于提取动作意图，不直接传入目标 IK。",
+    "anatomicalIdentity": {
+      "status": "confirmed",
+      "basis": "按头部、胸口、左右袖口和腿部连续性固定解剖左右；不按画面左右临时交换。"
+    },
+    "support": {
+      "left": true,
+      "right": false
+    },
+    "points": {
+      "head": {
+        "x": 269,
+        "y": 177,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "头发与头部主体中心"
+      },
+      "face": {
+        "x": 286,
+        "y": 181,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "面部前缘/鼻尖方向"
+      },
+      "body": {
+        "x": 263,
+        "y": 218,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "胸口与腰部衣片中心"
+      },
+      "leftShoulder": {
+        "x": 292,
+        "y": 205,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面右侧肩袖接缝"
+      },
+      "leftElbow": {
+        "x": 322,
+        "y": 196,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左臂折转处",
+        "estimated": true
+      },
+      "leftWrist": {
+        "x": 310,
+        "y": 190,
+        "visibility": "occluded",
+        "confidence": 0.35,
+        "basis": "leftWrist 在该帧被身体/特效部分遮挡，按相邻轮廓与连续帧估计；不作为直接可见点。",
+        "estimated": true
+      },
+      "rightShoulder": {
+        "x": 235,
+        "y": 205,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面左侧肩袖接缝"
+      },
+      "rightElbow": {
+        "x": 226,
+        "y": 228,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右臂折转处",
+        "estimated": true
+      },
+      "rightWrist": {
+        "x": 227,
+        "y": 259,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右手与袖口接缝"
+      },
+      "leftHip": {
+        "x": 271,
+        "y": 243,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左髋沿大腿连接估计",
+        "estimated": true
+      },
+      "leftKnee": {
+        "x": 279,
+        "y": 270,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左膝转折",
+        "estimated": true
+      },
+      "leftAnkle": {
+        "x": 290,
+        "y": 320,
+        "visibility": "occluded",
+        "confidence": 0.35,
+        "basis": "leftAnkle 在该帧被身体/特效部分遮挡，按相邻轮廓与连续帧估计；不作为直接可见点。",
+        "estimated": true
+      },
+      "rightHip": {
+        "x": 240,
+        "y": 245,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右髋沿大腿连接估计",
+        "estimated": true
+      },
+      "rightKnee": {
+        "x": 234,
+        "y": 271,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右膝转折",
+        "estimated": true
+      },
+      "rightAnkle": {
+        "x": 218,
+        "y": 300,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右踝与鞋帮连接"
+      }
+    },
+    "silhouette": {
+      "version": 1,
+      "basis": "在肩线和髋线高度取角色衣物外缘，不把头发和特效计入轮廓。",
+      "shoulder": {
+        "left": {
+          "x": 274,
+          "y": 205,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "左肩线外缘"
+        },
+        "right": {
+          "x": 253,
+          "y": 205,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "右肩线外缘"
+        }
+      },
+      "hip": {
+        "left": {
+          "x": 255,
+          "y": 243,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "左髋线衣摆外缘"
+        },
+        "right": {
+          "x": 256,
+          "y": 245,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "右髋线衣摆外缘"
+        }
+      }
+    },
+    "orientation": {
+      "version": 1,
+      "band": "threeQuarter",
+      "amplitude": 0.35,
+      "basis": "由双眼/面部前缘和胸口相对朝向判断，只记录相对朝向档位。"
+    },
+    "depth": {
+      "version": 1,
+      "basis": "依据袖口与躯干的遮挡关系记录前后，不声称绝对深度。",
+      "evidence": [
+        {
+          "id": "arm-torso",
+          "a": "rightArm",
+          "b": "torso",
+          "relation": "front",
+          "kind": "overlap",
+          "basis": "右臂轮廓压过躯干外缘"
+        },
+        {
+          "id": "left-torso",
+          "a": "leftArm",
+          "b": "torso",
+          "relation": "back",
+          "kind": "occlusion",
+          "basis": "左肩段部分被躯干遮挡"
+        }
+      ]
+    },
+    "edges": [
+      [
+        "head",
+        "body"
+      ],
+      [
+        "leftShoulder",
+        "leftElbow"
+      ],
+      [
+        "leftElbow",
+        "leftWrist"
+      ],
+      [
+        "leftHip",
+        "leftKnee"
+      ],
+      [
+        "leftKnee",
+        "leftAnkle"
+      ],
+      [
+        "rightShoulder",
+        "rightElbow"
+      ],
+      [
+        "rightElbow",
+        "rightWrist"
+      ],
+      [
+        "rightHip",
+        "rightKnee"
+      ],
+      [
+        "rightKnee",
+        "rightAnkle"
+      ]
+    ]
+  },
+  "evidence": [
+    {
+      "filePath": "clipboard-reference/full-v2/stages/stage-recover/pose-comparison/page-1-clean.png",
+      "hash": "a344a8d584ca8bf01534eba09e91684038b27733a206fe1e338f37ae0ecb2db9"
+    },
+    {
+      "filePath": "clipboard-reference/full-v2/stages/stage-recover/pose-comparison/page-1-diagnostic.png",
+      "hash": "168db56fa3b044b44962f3cc399654dd51b4d52066bf6268a1efa6781ef3eadd"
+    },
+    {
+      "filePath": "clipboard-reference/analysis/frame-0050.png",
+      "hash": "ebd436e7f74f36242eeefe84f06f08f5aa5460c3afdde95d15d69f0b387681ca"
+    }
+  ],
+  "legend": "左=绿色，右=橙色，肩线/髋线=灰虚线，面部朝向=黄虚线，实际关节=圆点，预期目标=紫色方框，握轴/假想杆=黄色；诊断图另列未通过指标。",
+  "warnings": [
+    "遮挡需 Agent 判断，不自动判为失败。"
+  ]
+}

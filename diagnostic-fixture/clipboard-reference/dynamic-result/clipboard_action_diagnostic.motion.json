@@ -1,0 +1,192 @@
+{
+  "version": 2,
+  "name": "clipboard_action_diagnostic",
+  "duration": 2.42,
+  "loop": false,
+  "coordinateSystem": "normalizedSkeleton",
+  "groundY": 0,
+  "frames": [
+    {
+      "time": 0,
+      "body": {
+        "x": 0,
+        "y": 0.67,
+        "rotate": -18.13548026599551
+      },
+      "head": 0,
+      "channels": {
+        "torso": {
+          "rotate": 24.480291482122766,
+          "x": 0,
+          "y": 0
+        },
+        "chest": {
+          "rotate": 0,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "targets": {
+        "leftFoot": {
+          "x": 0.9940480607059677,
+          "y": 0.42469325549321063,
+          "angle": -15.46,
+          "contact": false
+        },
+        "rightFoot": {
+          "x": -0.7767467184539022,
+          "y": 0.550478144706633,
+          "angle": -32.8296,
+          "contact": false
+        },
+        "leftHand": {
+          "x": 1.04806940450385,
+          "y": 2.318245795255755,
+          "angle": -80
+        },
+        "rightHand": {
+          "x": -0.728287558332112,
+          "y": 1.2029176110008613,
+          "angle": -100
+        }
+      },
+      "bendDirections": {
+        "leftArm": -1,
+        "rightArm": -1,
+        "leftLeg": 1,
+        "rightLeg": -1
+      }
+    },
+    {
+      "time": 1.42,
+      "body": {
+        "x": 0,
+        "y": 0.67,
+        "rotate": -15.26894749838334
+      },
+      "head": 0,
+      "channels": {
+        "torso": {
+          "rotate": 24.103311689972884,
+          "x": 0,
+          "y": 0
+        },
+        "chest": {
+          "rotate": 0,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "targets": {
+        "leftFoot": {
+          "x": 1.1205871057668637,
+          "y": 0.5577518241189623,
+          "angle": -15.46,
+          "contact": false
+        },
+        "rightFoot": {
+          "x": -0.6922583079592407,
+          "y": 0.48391898795124044,
+          "angle": -32.8296,
+          "contact": false
+        },
+        "leftHand": {
+          "x": 1.0101233349560323,
+          "y": 2.4070314840850298,
+          "angle": -80
+        },
+        "rightHand": {
+          "x": -0.6655278661141305,
+          "y": 1.1684579590513535,
+          "angle": -100
+        }
+      },
+      "bendDirections": {
+        "leftArm": -1,
+        "rightArm": -1,
+        "leftLeg": -1,
+        "rightLeg": -1
+      }
+    },
+    {
+      "time": 2.42,
+      "body": {
+        "x": 0,
+        "y": 0.67,
+        "rotate": -27.492865266239164
+      },
+      "head": 0,
+      "channels": {
+        "torso": {
+          "rotate": 37.85185194809287,
+          "x": 0,
+          "y": 0
+        },
+        "chest": {
+          "rotate": 0,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "targets": {
+        "leftFoot": {
+          "x": 1.0760154451994228,
+          "y": 0.5612068344437552,
+          "angle": -15.46,
+          "contact": false
+        },
+        "rightFoot": {
+          "x": -0.796753004909316,
+          "y": 0.5284640616938672,
+          "angle": -32.8296,
+          "contact": false
+        },
+        "leftHand": {
+          "x": 0.87821013328484,
+          "y": 2.7352517379518817,
+          "angle": -80
+        },
+        "rightHand": {
+          "x": -0.8089280075527734,
+          "y": 1.184751596268883,
+          "angle": -100
+        }
+      },
+      "bendDirections": {
+        "leftArm": 1,
+        "rightArm": -1,
+        "leftLeg": -1,
+        "rightLeg": 1
+      }
+    }
+  ],
+  "referenceRetarget": {
+    "referenceGifPath": "clipboard-reference/reference.gif",
+    "sequencePath": "clipboard-reference/clipboard-action.sequence.json",
+    "retargetMode": "adaptive",
+    "workflowProfile": "adaptive-preview",
+    "diagnosticOnly": true,
+    "coverageStages": [
+      "stage-flight",
+      "stage-collapse",
+      "stage-lunge"
+    ],
+    "stages": [
+      {
+        "stageId": "stage-flight",
+        "targetTime": 0.98,
+        "status": "unresolved"
+      },
+      {
+        "stageId": "stage-collapse",
+        "targetTime": 1.42,
+        "status": "unresolved"
+      },
+      {
+        "stageId": "stage-lunge",
+        "targetTime": 2.34,
+        "status": "unresolved"
+      }
+    ]
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "kind": "body-gif-to-npc1-diagnostic-run",
+  "createdAt": "2026-11-08T06:18:43.616Z",
+  "status": "preview-ready",
+  "workflowProfile": "adaptive-preview",
+  "retargetMode": "adaptive",
+  "diagnosticOnly": true,
+  "formalEligible": false,
+  "readyToCommit": false,
+  "stopLayer": "coverage",
+  "reference": {
+    "gifPath": "clipboard-reference/reference.gif",
+    "gifHash": "5361e631748d2bb37b3ade71e5eb640d19ae022eadb0461e54fef3f196fefbff",
+    "frameCount": 59,
+    "duration": 2.42,
+    "sequencePath": "clipboard-reference/clipboard-action.sequence.json",
+    "sequenceHash": "2091fa21494bf7444a985825dd3a54dd16418842cb100bcdbc6be7119d0de11d",
+    "coverageStages": [
+      "stage-jump",
+      "stage-flight",
+      "stage-collapse",
+      "stage-stand-slash",
+      "stage-recover",
+      "stage-lunge"
+    ],
+    "reviewedStageCount": 6,
+    "unreviewedFrameCount": 53
+  },
+  "target": {
+    "characterPath": "目标/npc1.json",
+    "characterHash": "6117da1ea8090c5014a89a144129bedf230c8ee59efa0846c40616ef58a24e83",
+    "atlasPath": "目标/npc1.atlas",
+    "atlasHash": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "pngPath": "目标/npc1.png",
+    "pngHash": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251",
+    "visualRigPath": "trial/npc1.visual-rig.json",
+    "visualRigHash": "0c4f3f3686299c04bba66cfcc9a36327f1bd36738a5bba8522eecdffe5368b88",
+    "mappingPath": "previews/pose-workflow-20261009/npc1.mapping.json",
+    "mappingHash": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e",
+    "standardPosePath": "trial/neutral-stand-v2.pose.json",
+    "standardPoseHash": "ba115c2c20bfdcd001b30a6c21ece6f48391e8e8725038132e2ebf747f59f7dd"
+  },
+  "stages": [
+    {
+      "stageId": "stage-jump",
+      "referenceTime": 0,
+      "targetTime": 0,
+      "status": "unresolved",
+      "retargetQuality": 0.5625,
+      "semanticFailures": [
+        "leftArm.bendSide",
+        "rightArm.bendSide"
+      ],
+      "reachabilityFailures": [],
+      "conflicts": [
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail"
+      ],
+      "manifestPath": "clipboard-reference/result-unified2/stages/stage-jump/stage-jump.diagnostic-manifest.json"
+    },
+    {
+      "stageId": "stage-flight",
+      "referenceTime": 0.98,
+      "targetTime": 0.98,
+      "status": "unresolved",
+      "retargetQuality": 0.5208333333333333,
+      "semanticFailures": [
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "缺少明确支撑关系；第一版需至少一只支撑脚。"
+      ],
+      "reachabilityFailures": [],
+      "conflicts": [
+        "缺少明确支撑关系；第一版需至少一只支撑脚。",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail"
+      ],
+      "manifestPath": "clipboard-reference/result-unified2/stages/stage-flight/stage-flight.diagnostic-manifest.json"
+    },
+    {
+      "stageId": "stage-collapse",
+      "referenceTime": 1.42,
+      "targetTime": 1.42,
+      "status": "unresolved",
+      "retargetQuality": 0.5,
+      "semanticFailures": [
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "rightArm.extension",
+        "缺少明确支撑关系；第一版需至少一只支撑脚。"
+      ],
+      "reachabilityFailures": [],
+      "conflicts": [
+        "缺少明确支撑关系；第一版需至少一只支撑脚。",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail",
+        "rightArm.extension: fail"
+      ],
+      "manifestPath": "clipboard-reference/result-unified2/stages/stage-collapse/stage-collapse.diagnostic-manifest.json"
+    },
+    {
+      "stageId": "stage-stand-slash",
+      "referenceTime": 1.9,
+      "targetTime": 1.9,
+      "status": "unresolved",
+      "retargetQuality": 0.5833333333333333,
+      "semanticFailures": [
+        "body.torsoDirection",
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "rightArm.extension"
+      ],
+      "reachabilityFailures": [],
+      "conflicts": [
+        "body.torsoDirection: fail",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail",
+        "rightArm.extension: fail"
+      ],
+      "manifestPath": "clipboard-reference/result-unified2/stages/stage-stand-slash/stage-stand-slash.diagnostic-manifest.json"
+    },
+    {
+      "stageId": "stage-recover",
+      "referenceTime": 2.06,
+      "targetTime": 2.06,
+      "status": "unresolved",
+      "error": "Error: ENOENT: no such file or directory, open 'D:\\AI_cc\\spine-mcp\\diagnostic-fixture\\clipboard-reference\\result-unified2\\stages\\stage-recover\\stage-recover.diagnostic-manifest.json'"
+    },
+    {
+      "stageId": "stage-lunge",
+      "referenceTime": 2.34,
+      "targetTime": 2.34,
+      "status": "unresolved",
+      "error": "Error: ENOENT: no such file or directory, open 'D:\\AI_cc\\spine-mcp\\diagnostic-fixture\\clipboard-reference\\result-unified2\\stages\\stage-lunge\\stage-lunge.diagnostic-manifest.json'"
+    }
+  ],
+  "generatedMotion": {
+    "motionPath": "clipboard-reference/dynamic-result2/motion.json",
+    "candidatePath": "clipboard-reference/dynamic-result2/candidate.json",
+    "runtimeManifestPath": "clipboard-reference/dynamic-result2/runtime/preview-manifest.json",
+    "runtimeValidationPath": "clipboard-reference/dynamic-result2/report.json",
+    "runtimeValidationOk": false,
+    "validationIssues": [
+      "脚底接触误差超过阈值"
+    ],
+    "runtimeGifPath": "clipboard-reference/dynamic-result2/body-to-npc1-npc1-diagnostic.gif",
+    "comparisonGifPath": "clipboard-reference/dynamic-result2/body-to-npc1-comparison-diagnostic.gif",
+    "referenceGifPath": "clipboard-reference/dynamic-result2/body-to-npc1-reference.gif",
+    "comparisonManifestPath": "clipboard-reference/dynamic-result2/comparison/animation-comparison.json"
+  },
+  "blockingReasons": [
+    {
+      "code": "REFERENCE_COVERAGE_INCOMPLETE",
+      "message": "59 帧中只建立并审查了 6 个关键阶段，53 帧仍未标注；当前不能作为完整动作正式验收。"
+    },
+    {
+      "code": "RUNTIME_VALIDATION_FAILED",
+      "message": "目标候选 GIF 已生成，但脚底接触误差超过当前验证阈值，需修正支撑/腿部阶段。"
+    },
+    {
+      "code": "SEMANTIC_STAGE_FAILURES",
+      "message": "多个阶段的弯曲方向、支撑关系或伸展关系未通过语义门禁。"
+    }
+  ],
+  "nextAction": {
+    "tool": "spine_execute_task",
+    "instruction": "先修正参考阶段的左右弯曲和支撑标注，再补齐未标注帧；重新执行 adaptive-preview，确认动态 GIF 后再考虑 production。"
+  },
+  "preservedConstraints": [
+    "目标角色 runtime 可加载",
+    "目标 visualPoints 可采样",
+    "目标角色源 JSON 未写入"
+  ],
+  "relaxedConstraints": [
+    "wrist/limb geometry",
+    "部分腿部高度与站距",
+    "参考角色绝对轮廓"
+  ],
+  "artifacts": {
+    "referenceGif": "clipboard-reference/dynamic-result2/body-to-npc1-reference.gif",
+    "targetGif": "clipboard-reference/dynamic-result2/body-to-npc1-npc1-diagnostic.gif",
+    "comparisonGif": "clipboard-reference/dynamic-result2/body-to-npc1-comparison-diagnostic.gif",
+    "report": "clipboard-reference/dynamic-result2/diagnostic-report.json",
+    "targetContactSheet": "clipboard-reference/dynamic-result2/target-contact.png"
+  }
+}

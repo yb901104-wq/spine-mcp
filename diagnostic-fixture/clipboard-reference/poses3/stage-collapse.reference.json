@@ -1,0 +1,274 @@
+{
+  "version": 2,
+  "id": "clipboard-reference/poses3/stage-collapse.reference.json",
+  "status": "confirmed",
+  "observation": {
+    "imagePath": "clipboard-reference/analysis/frame-0034.png",
+    "time": 1.42,
+    "facing": "right",
+    "crop": [
+      130,
+      80,
+      290,
+      280
+    ],
+    "height": 190,
+    "groundY": 320,
+    "basis": "本轮附加 GIF 的关键帧人工诊断标注；图像点只用于提取动作意图，不直接传入目标 IK。",
+    "anatomicalIdentity": {
+      "status": "confirmed",
+      "basis": "按头部、胸口、左右袖口和腿部连续性固定解剖左右；不按画面左右临时交换。"
+    },
+    "support": {
+      "left": false,
+      "right": false
+    },
+    "points": {
+      "head": {
+        "x": 244,
+        "y": 162,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "头发与头部主体中心"
+      },
+      "face": {
+        "x": 260,
+        "y": 166,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "面部前缘/鼻尖方向"
+      },
+      "body": {
+        "x": 242,
+        "y": 210,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "胸口与腰部衣片中心"
+      },
+      "leftShoulder": {
+        "x": 279,
+        "y": 188,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面右侧肩袖接缝"
+      },
+      "leftElbow": {
+        "x": 306,
+        "y": 202,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左臂折转处",
+        "estimated": true
+      },
+      "leftWrist": {
+        "x": 326,
+        "y": 196,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "左手与袖口接缝"
+      },
+      "rightShoulder": {
+        "x": 210,
+        "y": 191,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "画面左侧肩袖接缝"
+      },
+      "rightElbow": {
+        "x": 195,
+        "y": 215,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右臂折转处",
+        "estimated": true
+      },
+      "rightWrist": {
+        "x": 210,
+        "y": 250,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右手与袖口接缝"
+      },
+      "leftHip": {
+        "x": 257,
+        "y": 232,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左髋沿大腿连接估计",
+        "estimated": true
+      },
+      "leftKnee": {
+        "x": 273,
+        "y": 256,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "左膝转折",
+        "estimated": true
+      },
+      "leftAnkle": {
+        "x": 300,
+        "y": 320,
+        "visibility": "occluded",
+        "confidence": 0.35,
+        "basis": "leftAnkle 在该帧被身体/特效部分遮挡，按相邻轮廓与连续帧估计；不作为直接可见点。",
+        "estimated": true
+      },
+      "rightHip": {
+        "x": 228,
+        "y": 235,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右髋沿大腿连接估计",
+        "estimated": true
+      },
+      "rightKnee": {
+        "x": 203,
+        "y": 258,
+        "visibility": "occluded",
+        "confidence": 0.5,
+        "basis": "右膝转折",
+        "estimated": true
+      },
+      "rightAnkle": {
+        "x": 180,
+        "y": 281,
+        "visibility": "visible",
+        "confidence": 0.72,
+        "basis": "右踝与鞋帮连接"
+      }
+    },
+    "silhouette": {
+      "version": 1,
+      "basis": "在肩线和髋线高度取角色衣物外缘，不把头发和特效计入轮廓。",
+      "shoulder": {
+        "left": {
+          "x": 261,
+          "y": 188,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "左肩线外缘"
+        },
+        "right": {
+          "x": 228,
+          "y": 191,
+          "visibility": "visible",
+          "confidence": 0.65,
+          "basis": "右肩线外缘"
+        }
+      },
+      "hip": {
+        "left": {
+          "x": 241,
+          "y": 232,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "左髋线衣摆外缘"
+        },
+        "right": {
+          "x": 244,
+          "y": 235,
+          "visibility": "visible",
+          "confidence": 0.6,
+          "basis": "右髋线衣摆外缘"
+        }
+      }
+    },
+    "orientation": {
+      "version": 1,
+      "band": "threeQuarter",
+      "amplitude": 0.35,
+      "basis": "由双眼/面部前缘和胸口相对朝向判断，只记录相对朝向档位。"
+    },
+    "depth": {
+      "version": 1,
+      "basis": "依据袖口与躯干的遮挡关系记录前后，不声称绝对深度。",
+      "evidence": [
+        {
+          "id": "arm-torso",
+          "a": "rightArm",
+          "b": "torso",
+          "relation": "front",
+          "kind": "overlap",
+          "basis": "右臂轮廓压过躯干外缘"
+        },
+        {
+          "id": "left-torso",
+          "a": "leftArm",
+          "b": "torso",
+          "relation": "back",
+          "kind": "occlusion",
+          "basis": "左肩段部分被躯干遮挡"
+        }
+      ]
+    },
+    "edges": [
+      [
+        "head",
+        "body"
+      ],
+      [
+        "leftShoulder",
+        "leftElbow"
+      ],
+      [
+        "leftElbow",
+        "leftWrist"
+      ],
+      [
+        "leftHip",
+        "leftKnee"
+      ],
+      [
+        "leftKnee",
+        "leftAnkle"
+      ],
+      [
+        "rightShoulder",
+        "rightElbow"
+      ],
+      [
+        "rightElbow",
+        "rightWrist"
+      ],
+      [
+        "rightHip",
+        "rightKnee"
+      ],
+      [
+        "rightKnee",
+        "rightAnkle"
+      ]
+    ],
+    "supportMode": "airborne"
+  },
+  "imageHash": "5114350a1603a38556c3ffb041e81d156f46ecd774d2b3889a52ec1c5b9e4288",
+  "review": {
+    "decision": "approved",
+    "reason": "逐帧查看原图与节点叠加；被遮挡腕踝均标记 estimated，未将特效或背景当作可见关节。",
+    "reviewedBy": "Codex 2026-11-08",
+    "checks": [
+      "jointLocations",
+      "visibility",
+      "connections",
+      "facing",
+      "support",
+      "uncertainty",
+      "orientation",
+      "depth",
+      "silhouette"
+    ],
+    "issues": [],
+    "fingerprint": "1f27417edd7f7dba20f260adfddb44cadad92609ac1e3169a6a3035bc64967dc",
+    "evidence": [
+      {
+        "filePath": "clipboard-reference/poses3/review-sheet/reference-page-1.png",
+        "hash": "03f82c7c576881436206fb7f7453bdeaac1d3573a61995c28cc6b07cd1790eed"
+      },
+      {
+        "filePath": "clipboard-reference/poses3/review-sheet/reference-pose-sheet.json",
+        "hash": "be1172d96d5ef0822c95325dcf8e96c8dcf516defc78facd07f842369f539972"
+      }
+    ],
+    "at": "2026-11-08T16:00:00.000Z"
+  }
+}

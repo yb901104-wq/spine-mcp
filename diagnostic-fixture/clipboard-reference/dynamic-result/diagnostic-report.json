@@ -1,0 +1,803 @@
+{
+  "version": 1,
+  "kind": "clipboard-reference-to-npc1",
+  "diagnosticOnly": true,
+  "formalEligible": false,
+  "readyToCommit": false,
+  "status": "geometric-adapted",
+  "workflowProfile": "adaptive-preview",
+  "retargetMode": "adaptive",
+  "referenceGifPath": "clipboard-reference/reference.gif",
+  "referenceGifHash": "5361e631748d2bb37b3ade71e5eb640d19ae022eadb0461e54fef3f196fefbff",
+  "sequencePath": "clipboard-reference/clipboard-action.sequence.json",
+  "coverageStages": [
+    "stage-flight",
+    "stage-collapse",
+    "stage-lunge"
+  ],
+  "reviewedStageCount": 3,
+  "referenceFrameCount": 59,
+  "unreviewedFrameCount": 56,
+  "stages": [
+    {
+      "stageId": "stage-jump",
+      "targetTime": 0,
+      "status": "unresolved"
+    },
+    {
+      "stageId": "stage-flight",
+      "targetTime": 0.98,
+      "status": "unresolved",
+      "retargetQuality": 0.5208333333333333,
+      "conflicts": [
+        "缺少明确支撑关系；第一版需至少一只支撑脚。",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail"
+      ],
+      "semanticFailures": [
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "缺少明确支撑关系；第一版需至少一只支撑脚。"
+      ],
+      "reachabilityFailures": []
+    },
+    {
+      "stageId": "stage-collapse",
+      "targetTime": 1.42,
+      "status": "unresolved",
+      "retargetQuality": 0.5,
+      "conflicts": [
+        "缺少明确支撑关系；第一版需至少一只支撑脚。",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail",
+        "rightArm.extension: fail"
+      ],
+      "semanticFailures": [
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "rightArm.extension",
+        "缺少明确支撑关系；第一版需至少一只支撑脚。"
+      ],
+      "reachabilityFailures": []
+    },
+    {
+      "stageId": "stage-stand-slash",
+      "targetTime": 1.9,
+      "status": "unresolved"
+    },
+    {
+      "stageId": "stage-recover",
+      "targetTime": 2.06,
+      "status": "unresolved"
+    },
+    {
+      "stageId": "stage-lunge",
+      "targetTime": 2.34,
+      "status": "unresolved",
+      "retargetQuality": 0.5,
+      "conflicts": [
+        "缺少明确支撑关系；第一版需至少一只支撑脚。",
+        "body.torsoDirection: fail",
+        "body.twist: fail",
+        "leftArm.bendSide: fail",
+        "rightArm.bendSide: fail"
+      ],
+      "semanticFailures": [
+        "body.torsoDirection",
+        "body.twist",
+        "leftArm.bendSide",
+        "rightArm.bendSide",
+        "缺少明确支撑关系；第一版需至少一只支撑脚。"
+      ],
+      "reachabilityFailures": []
+    }
+  ],
+  "motionPath": "clipboard-reference/dynamic-result/clipboard_action_diagnostic.motion.json",
+  "candidatePath": "clipboard-reference/dynamic-result/clipboard_action_diagnostic.candidate.json",
+  "runtimePreview": {
+    "version": 2,
+    "filePath": "目标/npc1.json",
+    "atlasPath": "目标/npc1.atlas",
+    "animation": "clipboard_action_diagnostic",
+    "skin": "default",
+    "jsonHash": "fe11eebe54961237f2a9d7af0b2e0b5d50748c2cdeb6598c30ae40080073ed38",
+    "atlasHash": "569ef36f8f4f0511c554313bb12dbd06cb8b9996c35cbf7f46d090581e472fad",
+    "images": [
+      {
+        "path": "目标\\npc1.png",
+        "hash": "945a829ba90814adec44bfe4ecc18dbdef0bd4247ee6586fda57a32751535251"
+      }
+    ],
+    "mappingHash": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e",
+    "motionHash": null,
+    "visualRigPath": "trial/npc1.visual-rig.json",
+    "visualRigHash": "0c4f3f3686299c04bba66cfcc9a36327f1bd36738a5bba8522eecdffe5368b88",
+    "runtime": "@esotericsoftware/spine-core@4.1.56",
+    "renderer": "canvas-region-msaa4-v4",
+    "fps": 25,
+    "frameCount": 60,
+    "sampleTimes": null,
+    "duration": 2.4200000762939453,
+    "canvas": {
+      "width": 384,
+      "height": 384,
+      "background": "#20242b",
+      "scale": 1
+    },
+    "premultipliedAlpha": false,
+    "mipmaps": false,
+    "requestedBounds": null,
+    "cacheKey": "73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218",
+    "createdAt": "2026-11-08T06:07:50.811Z",
+    "ok": true,
+    "jobId": "preview-3e5fce7e-34fe-4c5c-95ed-790722120545",
+    "bounds": {
+      "minX": -82.5823234835154,
+      "minY": 4.429717439637031,
+      "maxX": 87.42011090192914,
+      "maxY": 221.66051332814652
+    },
+    "frames": [
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0000.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0001.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0002.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0003.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0004.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0005.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0006.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0007.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0008.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0009.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0010.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0011.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0012.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0013.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0014.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0015.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0016.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0017.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0018.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0019.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0020.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0021.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0022.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0023.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0024.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0025.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0026.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0027.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0028.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0029.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0030.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0031.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0032.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0033.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0034.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0035.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0036.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0037.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0038.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0039.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0040.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0041.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0042.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0043.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0044.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0045.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0046.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0047.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0048.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0049.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0050.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0051.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0052.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0053.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0054.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0055.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0056.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0057.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0058.png",
+      "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/frame-0059.png"
+    ],
+    "visualPointRoles": [
+      "body",
+      "face",
+      "head",
+      "leftAnkle",
+      "leftElbow",
+      "leftHip",
+      "leftKnee",
+      "leftShoulder",
+      "leftWrist",
+      "rightAnkle",
+      "rightElbow",
+      "rightHip",
+      "rightKnee",
+      "rightShoulder",
+      "rightWrist"
+    ],
+    "visualPointsAvailable": true,
+    "visualPointsUnavailableReason": null,
+    "outputDir": "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218",
+    "cached": false,
+    "trajectorySamples": 60,
+    "manifestPath": "clipboard-reference/dynamic-result/target-runtime/preview-manifest.json",
+    "message": "已离线生成动画 GIF（按10ms量化并分配帧延迟）。",
+    "gifPath": "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/animation.gif",
+    "encodedDurationMs": 2420
+  },
+  "evidence": {
+    "targetGif": "previews/cache/73ae651580714f7e344fc174cbb1bc4290f05632923c02189c17391b982ce218/animation.gif",
+    "comparisonGif": "clipboard-reference/dynamic-result/comparison/reference-above-target.gif",
+    "referenceManifest": "clipboard-reference/dynamic-result/reference-analysis/reference-manifest.json",
+    "targetManifest": "clipboard-reference/dynamic-result/target-runtime/preview-manifest.json",
+    "comparisonManifest": "clipboard-reference/dynamic-result/comparison/animation-comparison.json"
+  },
+  "prepared": {
+    "ok": true,
+    "validation": {
+      "ok": true,
+      "issues": [],
+      "samples": 583,
+      "loopError": 0,
+      "maxFootError": 0,
+      "maxHandError": 0.07242923443562345,
+      "worstHandTime": 1.6411015490533563,
+      "worstHandRole": "leftHand",
+      "worstFootTime": 0,
+      "maxTargetError": 8.775125359250437,
+      "maxRotationError": 0.09037499447715902,
+      "maxTranslationError": 0,
+      "maxVertexError": 0.11788352335300901,
+      "runtime": "spine-core 4.1.56",
+      "meshComparison": "压缩结果与同角色稠密求解结果"
+    },
+    "unreachable": [],
+    "stats": [
+      {
+        "bone": "bone2",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 3,
+        "maxError": 5.638156608256395e-12,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone2",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 3,
+        "maxError": 6.345146630337695e-12,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone4",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone4",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt1",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.00043684616503014695,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt1",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt2",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.0011147885302875693,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt2",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.0006779424220511032,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zt3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt1",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.00004459701833781082,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt1",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt2",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.0002054894677030461,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt2",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 4,
+        "maxError": 0.00016089245113715123,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "yt3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs1",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 13,
+        "maxError": 0.07005213345794914,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs1",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs2",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 19,
+        "maxError": 0.06032991016154554,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs2",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 17,
+        "maxError": 0.05682586122759403,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "zs3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys1",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 11,
+        "maxError": 0.06054464737820453,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys1",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys2",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 16,
+        "maxError": 0.06923924419050564,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys2",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 12,
+        "maxError": 0.051200150227464825,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "ys3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bd1",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.022135227108931232,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bd1",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou3",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou3",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou4",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.017024870561185068,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou4",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou5",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.008723862414582229,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou5",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou7",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou7",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou8",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.016863133571515476,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou8",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou10",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou10",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou11",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.016863133571515476,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou11",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou13",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou13",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou14",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.017024870561185068,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou14",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou17",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou17",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou18",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.016863133571515476,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou18",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou21",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.013279514069695075,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou21",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou22",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.016863133571515476,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "tou22",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone6",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.012919578261060494,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone6",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone7",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 7,
+        "maxError": 0.01670139658181391,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone7",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone9",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 8,
+        "maxError": 0.010308985013433691,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone9",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone11",
+        "timeline": "rotate",
+        "originalCount": 355,
+        "compressedCount": 8,
+        "maxError": 0.010308985013433691,
+        "runtimeRefitAttempt": 1
+      },
+      {
+        "bone": "bone11",
+        "timeline": "translate",
+        "originalCount": 355,
+        "compressedCount": 1,
+        "maxError": 0,
+        "runtimeRefitAttempt": 1
+      }
+    ]
+  }
+}

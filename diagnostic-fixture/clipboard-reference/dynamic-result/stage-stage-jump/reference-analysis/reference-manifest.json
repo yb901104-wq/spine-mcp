@@ -1,0 +1,1091 @@
+{
+  "ok": true,
+  "version": 2,
+  "sourceHash": "5361e631748d2bb37b3ade71e5eb640d19ae022eadb0461e54fef3f196fefbff",
+  "filePath": "clipboard-reference/reference.gif",
+  "width": 658,
+  "height": 411,
+  "duration": 2.42,
+  "estimatedPeriod": 2.42,
+  "loop": true,
+  "loopEvidence": "GIF NETSCAPE 扩展",
+  "frames": [
+    {
+      "index": 0,
+      "time": 0,
+      "delay": 100,
+      "delayCorrected": true,
+      "hash": "df346215e1df25c203f791d4ea9ff00643e4bfc587cae57b5cc8a69eaafa7bab",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0000.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0,
+      "bboxMotion": 0
+    },
+    {
+      "index": 1,
+      "time": 0.1,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "66a172c0b66b6d02b6d3db4740f6ffdfa4b2a0823aa0b7b120c55c5a076fcf13",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0001.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.005559958934024727,
+      "bboxMotion": 0
+    },
+    {
+      "index": 2,
+      "time": 0.14,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "a319c01c959056d7cef352c7b622653b557b284a5d850b16896d209c4c6b3c3e",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0002.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.00663235801642059,
+      "bboxMotion": 0
+    },
+    {
+      "index": 3,
+      "time": 0.18,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "6c23afc6be482f8e9aa9c32e271b73913112d0bcd232801ea94931ffe0c9791e",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0003.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007603339220616512,
+      "bboxMotion": 0
+    },
+    {
+      "index": 4,
+      "time": 0.22,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "f5defd16473a7dd4164ba903cb0496d0986aaadb57f30c1acdc4cf17bd6f61a2",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0004.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006960856817212908,
+      "bboxMotion": 0
+    },
+    {
+      "index": 5,
+      "time": 0.26,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "92eaf64076b92da8d7b89946aed1383159cf94eef0e05f02417c04389d71f277",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0005.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007459782315529377,
+      "bboxMotion": 0
+    },
+    {
+      "index": 6,
+      "time": 0.3,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "f9e21209d51a6ef2dc325fbb8877deac1e231203ee96196dc6b769276c092093",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0006.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006408887767501617,
+      "bboxMotion": 0
+    },
+    {
+      "index": 7,
+      "time": 0.34,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "3fac99cd40c2293dd1d5a77e56387b17e08db974dd183061f76883a1121cb601",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0007.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.00631991148774256,
+      "bboxMotion": 0
+    },
+    {
+      "index": 8,
+      "time": 0.38,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "316d4950e6fc12fd3ba5fb8933f443dd745e2058a81be0cafa8cae1db9c7b362",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0008.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008448758885302382,
+      "bboxMotion": 0
+    },
+    {
+      "index": 9,
+      "time": 0.42,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "46a5f84b23a031a964f2bda37116d380ec72f6589059eac9489d9c2443eaa2f5",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0009.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008272676915759648,
+      "bboxMotion": 0
+    },
+    {
+      "index": 10,
+      "time": 0.46,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "6e593a65411c2c623db258d7a81502448bd2fa78da9a2d5833ae3bc18bdbea58",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0010.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008039607205106566,
+      "bboxMotion": 0
+    },
+    {
+      "index": 11,
+      "time": 0.5,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "86e842b82f58f1b19795461af994cfe2592d59ef26b14fd5616b7997c093350a",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0011.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008166357801810267,
+      "bboxMotion": 0
+    },
+    {
+      "index": 12,
+      "time": 0.54,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "a62d5d56d5c39cfd0e583179467a3b21fa4ae013e2476e65a3d0dcbfe69b8436",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0012.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006949923291310312,
+      "bboxMotion": 0
+    },
+    {
+      "index": 13,
+      "time": 0.58,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "3587fe9e09d9871931c9d3c76c9aaac2e88d10ea8014a39f2101b031e374e551",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0013.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.005657128107861988,
+      "bboxMotion": 0
+    },
+    {
+      "index": 14,
+      "time": 0.62,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "89a50d23f32518a9ce0f44a175e1ea4830959d053962d8609faf95f9ac227cc1",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0014.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.00675567194782069,
+      "bboxMotion": 0
+    },
+    {
+      "index": 15,
+      "time": 0.66,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "8bca1c8f84ef20bf1a622f004bc0a8e1894b0c4425894ce0cb6f6845ac54dab7",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0015.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007686950242306655,
+      "bboxMotion": 0
+    },
+    {
+      "index": 16,
+      "time": 0.7,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "25d66e4527785bd58a981e8ddc4357509f14d2eb758b5a05c460f946be5480db",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0016.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.00694525406672061,
+      "bboxMotion": 0
+    },
+    {
+      "index": 17,
+      "time": 0.74,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "8f561cd0c47bb68d304a8c0d616dd50d3b2cca47aa4dd40b850ae58e80720e90",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0017.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007451284906804017,
+      "bboxMotion": 0
+    },
+    {
+      "index": 18,
+      "time": 0.78,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "871329f0d3fdaf85b9d670803e8577c6c18e22dfa79f37f2a826b3ec09c60d0d",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0018.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006425346059145445,
+      "bboxMotion": 0
+    },
+    {
+      "index": 19,
+      "time": 0.82,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2fde169727a1a632e198a78eb2c015a073562b85fdfbb746c14dd41971ca2c96",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0019.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.0063490868910794605,
+      "bboxMotion": 0
+    },
+    {
+      "index": 20,
+      "time": 0.86,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2ddff42b7dec58c02e57bcb134ccbf51dfcc8137c0a3afc1a386fb507300ec5b",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0020.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008498800792318111,
+      "bboxMotion": 0
+    },
+    {
+      "index": 21,
+      "time": 0.9,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "81d45e50428dc9d630ed7f50a5cd07e79092cf704f5ef35e50ac600a130a5eff",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0021.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008212455519110469,
+      "bboxMotion": 0
+    },
+    {
+      "index": 22,
+      "time": 0.94,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "f032b9b5b3827d062b8b803e6fae89a5c0550c152b252861fae6cbf64e805b4d",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0022.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008050091209387171,
+      "bboxMotion": 0
+    },
+    {
+      "index": 23,
+      "time": 0.98,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "bd39d79a4e340919893ec480707309f663d39dee5050f6cac2bc02316d3af937",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0023.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008136863383128728,
+      "bboxMotion": 0
+    },
+    {
+      "index": 24,
+      "time": 1.02,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "059ba33a265eb78d94db681f4eda35171124d9c09dd861f31211100ce9185b17",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0024.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.014099666193943929,
+      "bboxMotion": 0
+    },
+    {
+      "index": 25,
+      "time": 1.06,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "0e4e8e0ec2c284a6948ab5c5e213b67d44550b53edabf55c7a5f569c57a567c4",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0025.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.015701659749833966,
+      "bboxMotion": 0
+    },
+    {
+      "index": 26,
+      "time": 1.1,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "1051bc6593e45049465cb38cccbb1113ccb52b90500999544027f56aa9369ca6",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0026.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008258147216881132,
+      "bboxMotion": 0
+    },
+    {
+      "index": 27,
+      "time": 1.14,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "dec738a6be597ea4f8a4be21a3309e5d6fcfe7c1231f38410a8284a0c64c4252",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0027.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006702338382476197,
+      "bboxMotion": 0
+    },
+    {
+      "index": 28,
+      "time": 1.18,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "081f3f7a9d193e0838b5c3f7615a56064c272640cc4ddb79806abc47d8096d20",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0028.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.0037108009895275964,
+      "bboxMotion": 0
+    },
+    {
+      "index": 29,
+      "time": 1.22,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "ade691708930d7cdac3afd62216468bd009447c74e9781e7da02dec9f1189280",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0029.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.005701674250531451,
+      "bboxMotion": 0
+    },
+    {
+      "index": 30,
+      "time": 1.26,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "1cbc0a767ad6432d9ae986861644de5da98237caa00ec46be8e50d7addb84589",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0030.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008842394819190804,
+      "bboxMotion": 0
+    },
+    {
+      "index": 31,
+      "time": 1.3,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "4e0e05609ce9f9f357b7fb5d3ccd115e65b50547bc1e0bb046988c203f195a58",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0031.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.014278039273689064,
+      "bboxMotion": 0
+    },
+    {
+      "index": 32,
+      "time": 1.34,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "4112788169cc861aed45815bb132a3a48709c254e97f5d2a14eca5785308fdeb",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0032.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.015591657458723764,
+      "bboxMotion": 0
+    },
+    {
+      "index": 33,
+      "time": 1.38,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "7cb64f94a4e206d8237144ba7cd82091c27d78ffce43c8dad8350edd4e3f2d15",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0033.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007328913520740348,
+      "bboxMotion": 0
+    },
+    {
+      "index": 34,
+      "time": 1.42,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "8ece2253b484658c2e6859736de3ee093856aa3e4ea6c700d6f29b1f873d4be4",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0034.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.003941333078121057,
+      "bboxMotion": 0
+    },
+    {
+      "index": 35,
+      "time": 1.46,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "14010e8c65642f2536528f57b16f8da2fff8a9346d1192a2a482c330f1ccf6bb",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0035.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.0028518811754845406,
+      "bboxMotion": 0
+    },
+    {
+      "index": 36,
+      "time": 1.5,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "06ada6cf1a1db99c8999dbbdcc5942f1601caa66d82be4f7a7a1c5b0b17f51d9",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0036.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.004373787379172938,
+      "bboxMotion": 0
+    },
+    {
+      "index": 37,
+      "time": 1.54,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "c849345111763bb1589b02f5790dee1348b395a42d200d278c43a07769f54697",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0037.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.009208334420885644,
+      "bboxMotion": 0
+    },
+    {
+      "index": 38,
+      "time": 1.58,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "acfcb7d976bc0aa1a09bb4de7d55520b71206215dee723e3c14bdcd95d48334f",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0038.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008408852965827657,
+      "bboxMotion": 0
+    },
+    {
+      "index": 39,
+      "time": 1.62,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "d4e974a2a1cbda80b5b67bd814c965244e43d1f3e1f3770a0f5200faaed152fe",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0039.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.008821049792495018,
+      "bboxMotion": 0
+    },
+    {
+      "index": 40,
+      "time": 1.66,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "ff40fd8c8f16bed9acba553bc61c0ecfe712ad19c8b37b51dc642c4b9099c8bf",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0040.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.00827316993947409,
+      "bboxMotion": 0
+    },
+    {
+      "index": 41,
+      "time": 1.7,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "f67da44b06998d92f5694ed9c6c64242cb99f7980eaf8692879a1a5562be787c",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0041.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.005980595166627515,
+      "bboxMotion": 0
+    },
+    {
+      "index": 42,
+      "time": 1.74,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "af662ea53770f348781e79d36860ed86ab0b2e259109d467b027fb773d1fc60d",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0042.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006067976369663381,
+      "bboxMotion": 0
+    },
+    {
+      "index": 43,
+      "time": 1.78,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2e63d126d0a78d526496cd9cdcd78e03eea417e48df4fe89272385d2e5d9b20b",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0043.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.0020925521517584996,
+      "bboxMotion": 0
+    },
+    {
+      "index": 44,
+      "time": 1.82,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "0c40534abd001c0be353b9f4643b5f59daee046b0890ac0505c0612d69578c5f",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0044.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.016842052602730192,
+      "bboxMotion": 0
+    },
+    {
+      "index": 45,
+      "time": 1.86,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2652365ec14f6a6f79d9ad4da0faf6d385f1e02142f856fe0b5fdd71a6def49e",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0045.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.03590353846019993,
+      "bboxMotion": 0
+    },
+    {
+      "index": 46,
+      "time": 1.9,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "6ecdc6ad756a838ea32e8cd33356c1557bae2598714c659058eda71f98ed57f9",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0046.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.039512443048510634,
+      "bboxMotion": 0
+    },
+    {
+      "index": 47,
+      "time": 1.94,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "a0ed6e8e1906f8bc35c2d9dc7d2d88dec744ee0e9ae3411b9032d16c707a458d",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0047.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.025525998300518254,
+      "bboxMotion": 0
+    },
+    {
+      "index": 48,
+      "time": 1.98,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2a79628410094d075f8032807fc568184da07c2fea48c95e4c8764c996053db8",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0048.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.012093117678960357,
+      "bboxMotion": 0
+    },
+    {
+      "index": 49,
+      "time": 2.02,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "a380c6a0dd62b024c1b12f644ef1709aa380a20fbd0464d62f6f22e5e1527c67",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0049.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006147701204427933,
+      "bboxMotion": 0
+    },
+    {
+      "index": 50,
+      "time": 2.06,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "6bce8a094dc62855dcaebad5bd55785ba6b6fc04358fc5769b0b9713db16fd30",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0050.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.005429322150395434,
+      "bboxMotion": 0
+    },
+    {
+      "index": 51,
+      "time": 2.1,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "8a18f68437c5e03f2b2567ac7773376a9c869277be0ebdb7edc577bcd6849fc6",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0051.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.0059174881311791095,
+      "bboxMotion": 0
+    },
+    {
+      "index": 52,
+      "time": 2.14,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "01319bd5dabbe1ab015141c0dfaae88551cddb7134b367899c179511fdb47adf",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0052.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.03645441995759996,
+      "bboxMotion": 0
+    },
+    {
+      "index": 53,
+      "time": 2.18,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "3a68b7ee6c0eb2bdc7bb4625ca145f8f0a98ce359fbf153a90b0125e1440c1c4",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0053.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.03203440435484947,
+      "bboxMotion": 0
+    },
+    {
+      "index": 54,
+      "time": 2.22,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "6746bccb4fec5118b69051c1c2e7a669e691a103b0c717d6dde60f0804aa1c9f",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0054.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.009200373537967176,
+      "bboxMotion": 0
+    },
+    {
+      "index": 55,
+      "time": 2.26,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2c575765de7662c09859517ec7a2f77066d48183650979a5e304f1d4d4eb205a",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0055.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.004802427996786645,
+      "bboxMotion": 0
+    },
+    {
+      "index": 56,
+      "time": 2.3,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "35e1d02fc9a0c77e170629ac68ba566dd8039e0c5b75fc54a3c01f8bcaff4e34",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0056.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.004649416636940237,
+      "bboxMotion": 0
+    },
+    {
+      "index": 57,
+      "time": 2.34,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "2b534e487f7c1b93c1e08bfe295d080fe5c03f2f8893ab819d8d9b2ec60ed73b",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0057.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.006353335595442141,
+      "bboxMotion": 0
+    },
+    {
+      "index": 58,
+      "time": 2.38,
+      "delay": 40,
+      "originalDelay": 40,
+      "delayCorrected": false,
+      "hash": "9979ba1ceaa3f77178dc9de307bed81fbc5ca9d20042597ed01c594e4fddc7a5",
+      "duplicateOf": null,
+      "filePath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frame-0058.png",
+      "frameBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 657,
+        "maxY": 410
+      },
+      "appearanceDelta": 0.007321547166418705,
+      "bboxMotion": 0
+    }
+  ],
+  "bounds": {
+    "minX": 0,
+    "minY": 0,
+    "maxX": 657,
+    "maxY": 410
+  },
+  "phases": [],
+  "phaseSource": "未标注",
+  "candidateMode": "uniform",
+  "warnings": [
+    "GIF 只用于姿态和节奏参考；相机运动与角色运动不能仅凭拆帧自动区分。",
+    "候选帧只供人工审查，不自动成为 KEY pose 或阶段。",
+    "estimatedPeriod 为文件总时长，需 Agent 确认是否完整循环。"
+  ],
+  "manifestPath": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/reference-manifest.json",
+  "contactSheet": "clipboard-reference/dynamic-result/stage-stage-jump/reference-analysis/frames-4.png"
+}

@@ -1,0 +1,1577 @@
+{
+  "version": 1,
+  "kind": "unified-task",
+  "createdAt": "2026-11-08T06:49:45.103Z",
+  "taskId": "65de05ae-c64d-4a4a-aa54-29af248c3a57",
+  "taskType": "retarget_reference",
+  "status": "blocked",
+  "workflowProfile": "adaptive-preview",
+  "retargetMode": "adaptive",
+  "stopLayer": "binding",
+  "completedSteps": [
+    "task-validated",
+    "mode-selected",
+    "input-visual-audit-blocked"
+  ],
+  "blockingReasons": [
+    {
+      "code": "VISUAL_RIG_ORIGIN_ONLY",
+      "message": "12 个四肢视觉节点仍是骨骼原点候选：leftShoulder、leftElbow、leftWrist、rightShoulder、rightElbow、rightWrist、leftHip、leftKnee、leftAnkle、rightHip、rightKnee、rightAnkle。需依据切片接缝或 meshTriangle 重新校准。",
+      "roles": [
+        "leftShoulder",
+        "leftElbow",
+        "leftWrist",
+        "rightShoulder",
+        "rightElbow",
+        "rightWrist",
+        "leftHip",
+        "leftKnee",
+        "leftAnkle",
+        "rightHip",
+        "rightKnee",
+        "rightAnkle"
+      ]
+    },
+    {
+      "code": "VISUAL_RIG_LOW_CONFIDENCE",
+      "message": "以下视觉节点置信度低于 0.7：leftHip、leftKnee、rightHip、rightKnee。它们不能作为正式重定向的可靠关节。",
+      "roles": [
+        "leftHip",
+        "leftKnee",
+        "rightHip",
+        "rightKnee"
+      ]
+    },
+    {
+      "code": "FACE_ANCHOR_UNVERIFIED",
+      "message": "face 仍是未验证的骨骼/嘴部支点，缺少真正的面部前缘或鼻尖依据；只能诊断，不能确认朝向。"
+    },
+    {
+      "role": "rightWrist",
+      "visibility": "visible",
+      "distance": 15,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "rightAnkle",
+      "visibility": "visible",
+      "distance": null,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftAnkle",
+      "visibility": "visible",
+      "distance": 12,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "rightAnkle",
+      "visibility": "visible",
+      "distance": 24,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftAnkle",
+      "visibility": "visible",
+      "distance": null,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftAnkle",
+      "visibility": "visible",
+      "distance": null,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "rightAnkle",
+      "visibility": "visible",
+      "distance": 15,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftWrist",
+      "visibility": "visible",
+      "distance": 11,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftAnkle",
+      "visibility": "visible",
+      "distance": null,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    },
+    {
+      "role": "leftAnkle",
+      "visibility": "visible",
+      "distance": 14,
+      "ok": false,
+      "blocking": true,
+      "warning": false,
+      "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+    }
+  ],
+  "nextAction": {
+    "tool": "spine_calibrate_visual_rig",
+    "instruction": "先重新生成 visualRig 校准图，确认四肢视觉节点不是骨骼原点，并补齐 face 前缘/鼻尖依据；同时修正被背景命中的参考关键点后重新审查。"
+  },
+  "nextActions": [
+    {
+      "tool": "spine_render_reference_pose_sheet",
+      "instruction": "生成参考帧放大联系表，逐阶段重标注 head/face/肩肘腕/髋膝踝和支撑脚。"
+    },
+    {
+      "tool": "spine_validate_mapping",
+      "instruction": "重新核对解剖左右、三段骨骼链和 visualRig 与 mapping 的指纹绑定。"
+    }
+  ],
+  "artifacts": {
+    "inputAudit": {
+      "ok": false,
+      "binding": {
+        "ok": false,
+        "issues": [
+          {
+            "code": "VISUAL_RIG_ORIGIN_ONLY",
+            "message": "12 个四肢视觉节点仍是骨骼原点候选：leftShoulder、leftElbow、leftWrist、rightShoulder、rightElbow、rightWrist、leftHip、leftKnee、leftAnkle、rightHip、rightKnee、rightAnkle。需依据切片接缝或 meshTriangle 重新校准。",
+            "roles": [
+              "leftShoulder",
+              "leftElbow",
+              "leftWrist",
+              "rightShoulder",
+              "rightElbow",
+              "rightWrist",
+              "leftHip",
+              "leftKnee",
+              "leftAnkle",
+              "rightHip",
+              "rightKnee",
+              "rightAnkle"
+            ]
+          },
+          {
+            "code": "VISUAL_RIG_LOW_CONFIDENCE",
+            "message": "以下视觉节点置信度低于 0.7：leftHip、leftKnee、rightHip、rightKnee。它们不能作为正式重定向的可靠关节。",
+            "roles": [
+              "leftHip",
+              "leftKnee",
+              "rightHip",
+              "rightKnee"
+            ]
+          },
+          {
+            "code": "FACE_ANCHOR_UNVERIFIED",
+            "message": "face 仍是未验证的骨骼/嘴部支点，缺少真正的面部前缘或鼻尖依据；只能诊断，不能确认朝向。"
+          }
+        ],
+        "originOnly": [
+          "leftShoulder",
+          "leftElbow",
+          "leftWrist",
+          "rightShoulder",
+          "rightElbow",
+          "rightWrist",
+          "leftHip",
+          "leftKnee",
+          "leftAnkle",
+          "rightHip",
+          "rightKnee",
+          "rightAnkle"
+        ],
+        "lowConfidence": [
+          "leftHip",
+          "leftKnee",
+          "rightHip",
+          "rightKnee"
+        ]
+      },
+      "keyposes": [
+        {
+          "stageId": "stage-jump",
+          "referencePosePath": "clipboard-reference/poses2/stage-jump.reference.json",
+          "referenceFingerprint": "529d68c2e67f6ab64ec6a3c96ef5d22ad2190b5c716219ef939a5f943745f9fd",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 15,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 7,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 7,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 15,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 12,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 4,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 7,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        },
+        {
+          "stageId": "stage-flight",
+          "referencePosePath": "clipboard-reference/poses2/stage-flight.reference.json",
+          "referenceFingerprint": "38442d804728e9900a83d8144129c69aecd85311906362ee307a9c0fd56055d1",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": 12,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 24,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 3,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 9,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 4,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 8,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 6,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 7,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": 12,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 3,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 24,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 3,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 6,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        },
+        {
+          "stageId": "stage-collapse",
+          "referencePosePath": "clipboard-reference/poses2/stage-collapse.reference.json",
+          "referenceFingerprint": "5114350a1603a38556c3ffb041e81d156f46ecd774d2b3889a52ec1c5b9e4288",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 5,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 3,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        },
+        {
+          "stageId": "stage-stand-slash",
+          "referencePosePath": "clipboard-reference/poses2/stage-stand-slash.reference.json",
+          "referenceFingerprint": "692251fd6431dd2bc4f067d674b59866213ae181f297c119f7e4fe880840ed44",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 15,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 5,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 5,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 4,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 11,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 8,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 15,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        },
+        {
+          "stageId": "stage-recover",
+          "referencePosePath": "clipboard-reference/poses2/stage-recover.reference.json",
+          "referenceFingerprint": "ebd436e7f74f36242eeefe84f06f08f5aa5460c3afdde95d15d69f0b387681ca",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 11,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 11,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 3,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 16,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": null,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        },
+        {
+          "stageId": "stage-lunge",
+          "referencePosePath": "clipboard-reference/poses2/stage-lunge.reference.json",
+          "referenceFingerprint": "06c1aad3ac8854fb56b19892e9c4b6c55e0c1d6b87634e0e539cc8ee9be050da",
+          "ok": false,
+          "blocking": [
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": 14,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            }
+          ],
+          "warnings": [],
+          "points": [
+            {
+              "role": "head",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "face",
+              "visibility": "visible",
+              "distance": 4,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "body",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftShoulder",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftElbow",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftWrist",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightShoulder",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightElbow",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightWrist",
+              "visibility": "visible",
+              "distance": 4,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftHip",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftKnee",
+              "visibility": "occluded",
+              "distance": 1,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "leftAnkle",
+              "visibility": "visible",
+              "distance": 14,
+              "ok": false,
+              "blocking": true,
+              "warning": false,
+              "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+            },
+            {
+              "role": "rightHip",
+              "visibility": "occluded",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightKnee",
+              "visibility": "occluded",
+              "distance": 5,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            },
+            {
+              "role": "rightAnkle",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "warning": false,
+              "reason": "参考点位于角色前景附近。"
+            }
+          ],
+          "silhouette": [
+            {
+              "role": "silhouette.shoulder.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.shoulder.right",
+              "visibility": "visible",
+              "distance": 2,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.left",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            },
+            {
+              "role": "silhouette.hip.right",
+              "visibility": "visible",
+              "distance": 0,
+              "ok": true,
+              "blocking": false,
+              "reason": "轮廓点位于角色前景附近。"
+            }
+          ],
+          "image": {
+            "width": 658,
+            "height": 411,
+            "background": [
+              110,
+              125,
+              145
+            ]
+          }
+        }
+      ],
+      "blockingReasons": [
+        {
+          "code": "VISUAL_RIG_ORIGIN_ONLY",
+          "message": "12 个四肢视觉节点仍是骨骼原点候选：leftShoulder、leftElbow、leftWrist、rightShoulder、rightElbow、rightWrist、leftHip、leftKnee、leftAnkle、rightHip、rightKnee、rightAnkle。需依据切片接缝或 meshTriangle 重新校准。",
+          "roles": [
+            "leftShoulder",
+            "leftElbow",
+            "leftWrist",
+            "rightShoulder",
+            "rightElbow",
+            "rightWrist",
+            "leftHip",
+            "leftKnee",
+            "leftAnkle",
+            "rightHip",
+            "rightKnee",
+            "rightAnkle"
+          ]
+        },
+        {
+          "code": "VISUAL_RIG_LOW_CONFIDENCE",
+          "message": "以下视觉节点置信度低于 0.7：leftHip、leftKnee、rightHip、rightKnee。它们不能作为正式重定向的可靠关节。",
+          "roles": [
+            "leftHip",
+            "leftKnee",
+            "rightHip",
+            "rightKnee"
+          ]
+        },
+        {
+          "code": "FACE_ANCHOR_UNVERIFIED",
+          "message": "face 仍是未验证的骨骼/嘴部支点，缺少真正的面部前缘或鼻尖依据；只能诊断，不能确认朝向。"
+        },
+        {
+          "role": "rightWrist",
+          "visibility": "visible",
+          "distance": 15,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "visibility": "visible",
+          "distance": null,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "visibility": "visible",
+          "distance": 12,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "visibility": "visible",
+          "distance": 24,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "visibility": "visible",
+          "distance": null,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "visibility": "visible",
+          "distance": null,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "visibility": "visible",
+          "distance": 15,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftWrist",
+          "visibility": "visible",
+          "distance": 11,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "visibility": "visible",
+          "distance": null,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "visibility": "visible",
+          "distance": 14,
+          "ok": false,
+          "blocking": true,
+          "warning": false,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ],
+      "keyposeBlockedSheetPath": "clipboard-reference/input-audit/keypose-blocked-sheet.png"
+    }
+  },
+  "inputHashes": {
+    "referenceGifPath": "5361e631748d2bb37b3ade71e5eb640d19ae022eadb0461e54fef3f196fefbff",
+    "sequencePath": "2091fa21494bf7444a985825dd3a54dd16418842cb100bcdbc6be7119d0de11d",
+    "standardPosePath": "ba115c2c20bfdcd001b30a6c21ece6f48391e8e8725038132e2ebf747f59f7dd",
+    "visualRigPath": "0c4f3f3686299c04bba66cfcc9a36327f1bd36738a5bba8522eecdffe5368b88",
+    "mappingPath": "093846f68745d7deef543bff9f2ef60b80dd288f478235181e09d440176fc38e"
+  },
+  "diagnosticOnly": true,
+  "formalEligible": false,
+  "readyToCommit": false
+}

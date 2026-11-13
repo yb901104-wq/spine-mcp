@@ -1,0 +1,4 @@
+{
+  "error": "Error: motion frames 必须覆盖完整周期。",
+  "stack": "Error: motion frames 必须覆盖完整周期。\n    at validateMotion (file:///D:/AI_cc/spine-mcp/dist/motionEngine.js:139:19)\n    at buildSemanticAnimationSteps (file:///D:/AI_cc/spine-mcp/dist/retargetEngine.js:360:5)\n    at buildSemanticAnimationSteps.next (<anonymous>)\n    at buildSemanticAnimation (file:///D:/AI_cc/spine-mcp/dist/retargetEngine.js:341:25)\n    at async prepareSemanticAnimationData (file:///D:/AI_cc/spine-mcp/dist/retargetEngine.js:528:19)\n    at async file:///D:/AI_cc/spine-mcp/.tmp-buildmotion2.mjs:3:377"
+}

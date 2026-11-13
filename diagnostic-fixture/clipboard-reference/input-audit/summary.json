@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "kind": "keypose-mapping-input-audit",
+  "status": "blocked",
+  "stopLayer": "binding",
+  "workflowProfile": "adaptive-preview",
+  "retargetMode": "adaptive",
+  "diagnosticOnly": true,
+  "formalEligible": false,
+  "readyToCommit": false,
+  "visualRigIssues": [
+    {
+      "code": "VISUAL_RIG_ORIGIN_ONLY",
+      "message": "12 个四肢视觉节点仍是骨骼原点候选：leftShoulder、leftElbow、leftWrist、rightShoulder、rightElbow、rightWrist、leftHip、leftKnee、leftAnkle、rightHip、rightKnee、rightAnkle。需依据切片接缝或 meshTriangle 重新校准。",
+      "roles": [
+        "leftShoulder",
+        "leftElbow",
+        "leftWrist",
+        "rightShoulder",
+        "rightElbow",
+        "rightWrist",
+        "leftHip",
+        "leftKnee",
+        "leftAnkle",
+        "rightHip",
+        "rightKnee",
+        "rightAnkle"
+      ]
+    },
+    {
+      "code": "VISUAL_RIG_LOW_CONFIDENCE",
+      "message": "以下视觉节点置信度低于 0.7：leftHip、leftKnee、rightHip、rightKnee。它们不能作为正式重定向的可靠关节。",
+      "roles": [
+        "leftHip",
+        "leftKnee",
+        "rightHip",
+        "rightKnee"
+      ]
+    },
+    {
+      "code": "FACE_ANCHOR_UNVERIFIED",
+      "message": "face 仍是未验证的骨骼/嘴部支点，缺少真正的面部前缘或鼻尖依据；只能诊断，不能确认朝向。",
+      "roles": null
+    }
+  ],
+  "keyposeIssues": [
+    {
+      "stageId": "stage-jump",
+      "referencePosePath": "clipboard-reference/poses2/stage-jump.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "rightWrist",
+          "distance": 15,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "distance": null,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    },
+    {
+      "stageId": "stage-flight",
+      "referencePosePath": "clipboard-reference/poses2/stage-flight.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "leftAnkle",
+          "distance": 12,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "distance": 24,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    },
+    {
+      "stageId": "stage-collapse",
+      "referencePosePath": "clipboard-reference/poses2/stage-collapse.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "leftAnkle",
+          "distance": null,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    },
+    {
+      "stageId": "stage-stand-slash",
+      "referencePosePath": "clipboard-reference/poses2/stage-stand-slash.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "leftAnkle",
+          "distance": null,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "rightAnkle",
+          "distance": 15,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    },
+    {
+      "stageId": "stage-recover",
+      "referencePosePath": "clipboard-reference/poses2/stage-recover.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "leftWrist",
+          "distance": 11,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        },
+        {
+          "role": "leftAnkle",
+          "distance": null,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    },
+    {
+      "stageId": "stage-lunge",
+      "referencePosePath": "clipboard-reference/poses2/stage-lunge.reference.json",
+      "ok": false,
+      "blocking": [
+        {
+          "role": "leftAnkle",
+          "distance": 14,
+          "reason": "可见点远离参考角色前景，不能作为已确认关节。"
+        }
+      ]
+    }
+  ],
+  "nextAction": {
+    "tool": "spine_calibrate_visual_rig",
+    "instruction": "先重新生成 visualRig 校准图，确认四肢视觉节点不是骨骼原点，并补齐 face 前缘/鼻尖依据；同时修正被背景命中的参考关键点后重新审查。"
+  }
+}

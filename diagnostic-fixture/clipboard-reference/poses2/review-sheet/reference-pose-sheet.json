@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "version": 1,
+  "partsPolicyVersion": 2,
+  "layout": "reference-raw-above-annotated",
+  "records": [
+    {
+      "path": "clipboard-reference/poses2/stage-jump.reference.json",
+      "fingerprint": "5c7664d574a83b238d07db4dae52b95fa15bf6b53ef234cafcd2cc74ee9969ac"
+    },
+    {
+      "path": "clipboard-reference/poses2/stage-flight.reference.json",
+      "fingerprint": "f66744397043e692eddba98609dac8cf7e173c3ca311170f29e609aa8c83d572"
+    },
+    {
+      "path": "clipboard-reference/poses2/stage-collapse.reference.json",
+      "fingerprint": "2ef898b4086ca75802fc591f4af10a8468616357047f8808d0aac2f9a8d9a21a"
+    },
+    {
+      "path": "clipboard-reference/poses2/stage-stand-slash.reference.json",
+      "fingerprint": "9f982e3f5868d7dcd2eb78fc4dd4d1887074b70c35d55f6a4d98f805e3106dcb"
+    },
+    {
+      "path": "clipboard-reference/poses2/stage-recover.reference.json",
+      "fingerprint": "db7fe83cb97a39f0ca96edb9dd2ece31f8c54d148a0915781766b7ec050f8755"
+    },
+    {
+      "path": "clipboard-reference/poses2/stage-lunge.reference.json",
+      "fingerprint": "9260698772ade5bc268e57b666458a7f4fb6f97d1e886947c3d983b4255a9feb"
+    }
+  ],
+  "pages": [
+    "clipboard-reference/poses2/review-sheet/reference-page-1.png"
+  ],
+  "evidence": [
+    {
+      "filePath": "clipboard-reference/poses2/review-sheet/reference-page-1.png",
+      "hash": "ae4fc848508dd8c83b99d3c83762192c22ab731c00e205d198aaea340878fd27"
+    }
+  ],
+  "legend": "左绿右橙；实线=两端可见，虚线/空心点=遮挡推测；轮廓不可用时以黄色两点连线估计，未知坐标不编造。左右按角色自身定义。",
+  "warnings": [
+    "clipboard-reference/poses2/stage-jump.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-jump.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-jump.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-jump.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-jump.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-jump.reference.json: rightKnee occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-flight.reference.json: rightKnee occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-collapse.reference.json: rightKnee occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-stand-slash.reference.json: rightKnee occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-recover.reference.json: rightKnee occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: leftElbow occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: rightElbow occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: leftHip occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: leftKnee occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: rightHip occluded",
+    "clipboard-reference/poses2/stage-lunge.reference.json: rightKnee occluded"
+  ]
+}

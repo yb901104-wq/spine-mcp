@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "bounds": {
+    "minX": -82.5823234835154,
+    "minY": 4.429717439637031,
+    "maxX": 87.42011090192914,
+    "maxY": 221.66051332814652
+  },
+  "reference": {
+    "imagePath": "clipboard-reference/dynamic-result/reference-analysis/frame-0000.png",
+    "crop": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "height": 384,
+    "groundY": 384,
+    "time": 0,
+    "facing": "right"
+  }
+}

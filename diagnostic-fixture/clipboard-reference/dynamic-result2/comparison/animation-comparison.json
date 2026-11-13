@@ -1,0 +1,348 @@
+{
+  "ok": true,
+  "layout": "reference-above-target",
+  "jsonHash": "e1362bd9a32f19dfacef809a02bbd9d1c08c5aff611c3909d6c24c637b6223cc",
+  "gifPath": "clipboard-reference/dynamic-result2/comparison/reference-above-target.gif",
+  "originalSpeedGif": "previews/cache/86f6bdd392f7fbdc3529658b5a2df7029aaa1b1d954ad8b09bcf89da80dd4f95/animation.gif",
+  "phaseMap": [
+    {
+      "targetTime": 0,
+      "referenceTime": 0
+    },
+    {
+      "targetTime": 0.98,
+      "referenceTime": 0.98
+    },
+    {
+      "targetTime": 1.42,
+      "referenceTime": 1.42
+    },
+    {
+      "targetTime": 2,
+      "referenceTime": 1.9
+    }
+  ],
+  "evidence": [
+    {
+      "filePath": "clipboard-reference/dynamic-result2/comparison/reference-above-target.gif",
+      "hash": "30853d7a3ddeeaddbdc1aae9394682fb1e32d52c344f565b917a67d17ad3b653"
+    },
+    {
+      "filePath": "clipboard-reference/dynamic-result2/runtime/preview-manifest.json",
+      "hash": "19125b15f423aeca47eb2582f4f0c7d2f7e57032bc6efed0dfb40836de90582c"
+    },
+    {
+      "filePath": "previews/cache/86f6bdd392f7fbdc3529658b5a2df7029aaa1b1d954ad8b09bcf89da80dd4f95/animation.gif",
+      "hash": "56890640c22ee254f621b0fc498cc08f5864d185f8c247e092015ac1a0f1a4c1"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/reference-manifest.json",
+      "hash": "c4ec297991c3aa2a980d6a9b79da021eeae1004fd746495620063aa9bda23d6d"
+    },
+    {
+      "filePath": "clipboard-reference/dynamic-result2/pose-manifest.json",
+      "hash": "7d4891f2e0ccb67af936570413cccb19b9389f86f136d852ed948f8a110280d0"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0000.png",
+      "hash": "529d68c2e67f6ab64ec6a3c96ef5d22ad2190b5c716219ef939a5f943745f9fd"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0001.png",
+      "hash": "084a0057561c79e4bde8ba2a5434480becb31ca4ece1d9ca6e875d5c7af589b0"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0002.png",
+      "hash": "310d28e67854881e94b1b382145a41545848a8281b43ea27eb153f95aa6b73e7"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0003.png",
+      "hash": "dfc4cd20a78ad176f6d7e0f5a674353ae866f2f5a731c36e955068ea6c39a672"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0004.png",
+      "hash": "9911eae2ad159e7229d7d659208edfcbf0c1631a7e5ca4683cca231527a1e2d2"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0005.png",
+      "hash": "39070f37edd025a6e755711dc092c42105b594e41013c405f885d6ce30bcd0da"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0006.png",
+      "hash": "f1a6b7e9a7f7eb694673e5fb2acce04221b3afc92e70f20a19687ebf3976f880"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0007.png",
+      "hash": "c52222773bed13c4f85e3751ede9d62793c51637beb5716828e63224ef7e4467"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0008.png",
+      "hash": "d42525cd45f39baaf3543ff5e830e15f9653176b5757014c6c9da9147996817f"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0009.png",
+      "hash": "d7bbafbaf9adc0b655543fed398ec73136b95e64d250c1493063863d68ea4d10"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0010.png",
+      "hash": "c2c81454c2a8bcf93ce9d7c1479c852316c03428e07ba08e723bdbd29fc19087"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0011.png",
+      "hash": "39df5254d5428453656cb82b43d6b91fbfefebd2b43b67a0b19a452781628b1e"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0012.png",
+      "hash": "6f95944667ba786dc825943973da908268b3419226050e10a51cab0cb9983817"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0013.png",
+      "hash": "d2020877575d06850948358f974895c92a8221e35a36ef711004412894a4c1d5"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0014.png",
+      "hash": "a9d467f97ff460798e86305588b648c939de724fe9c7d7a4c06ac288e6fa73f4"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0015.png",
+      "hash": "c0bd69f05b6578838a0fd222e565afefd17283687b34e1da6f5a377324290efb"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0016.png",
+      "hash": "87a0fb3e7366f52242550b5df8e8af95b2e9d3e570141322d7d6b42fd0b7b70c"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0017.png",
+      "hash": "c0f7a40ed28568e773beaf84b77b7db279897588bd4143ee8e93615f94ee7744"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0018.png",
+      "hash": "d5708247744f55eea71cf2f48181689df0253ce915885b1ee4d3233a948106bb"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0019.png",
+      "hash": "564abec600e373b5d0e232c1215bd8261f6a4b0862c45ba9a2ffd71fc366cced"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0020.png",
+      "hash": "caba7c4464a346217edbf33036cba3d12801257e7d2df7173fa0faeb03e96596"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0021.png",
+      "hash": "2fdaecdd069de50328e47c9de0facc386b4b19ee157276a0999663f5ef78327d"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0022.png",
+      "hash": "3f223f08e153a3cfb928ba8daf51c8cf805d1469297e6ee96b40388bccf2757c"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0023.png",
+      "hash": "38442d804728e9900a83d8144129c69aecd85311906362ee307a9c0fd56055d1"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0024.png",
+      "hash": "ee5aa099f9eb3387605266f4c641bea0266bf8c5b1578951022a86456b1db2a1"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0025.png",
+      "hash": "136a8f625b636b5265e1c9759d7f98b3f004d5efa719bf04c62a5b02a6813b7a"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0026.png",
+      "hash": "94e86750167103eadf5b9efa1616248d8c6775a8116904b700088fe3f373752f"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0027.png",
+      "hash": "bdc60f31b395630506acc4242d4248253425340a2738987f72415748e4cb61a3"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0028.png",
+      "hash": "aae6325464d5974f68227fe462058b1faf4b121a6dd408556ba1a9ab3241164d"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0029.png",
+      "hash": "7789c794f27e97339b00de1e88b3f9392300fdda0ec19cf11de13c494ab6c276"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0030.png",
+      "hash": "6b1c3db5d719e88c9bfee174eaa0941d874a9b63f10ae28200604f7a92b7ef19"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0031.png",
+      "hash": "9bec06d3a4cc9b321d2fc3144b9e1375a39c78785e8366ad0c94a3b6dfa9294b"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0032.png",
+      "hash": "40a3c066ac7e1d554eada23d0fa415d9f89e2b57a78414cef39b69718f079ca6"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0033.png",
+      "hash": "4c6cc7ecc46b52eb79f6372c8c1a2b72187f63dd2caf3d796ec6f886884513bf"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0034.png",
+      "hash": "5114350a1603a38556c3ffb041e81d156f46ecd774d2b3889a52ec1c5b9e4288"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0035.png",
+      "hash": "daf271ec81c71757cc29066f92f9f6403bbb528c0164b3c644228ded6ae3b087"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0036.png",
+      "hash": "4815aa34eb49e5caeac9db8075740e4eb14b49683f2ddceaaa4b2e985db435f2"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0037.png",
+      "hash": "3d443c15db3c136ff33c8b31b451bcba2c0d8527e279aadf6376202556797d10"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0038.png",
+      "hash": "95b9b576c88524d23033e3e3b0036133c309a0ab483a9f8d901c3766a279a388"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0039.png",
+      "hash": "a28daf336214d6e93ae0336021832ada1c749056a37f3f80da0f078cadd24331"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0040.png",
+      "hash": "72f16df66c4e099d54448e03071abd2b5ae0b486d9cb63616e5cfec3ff3d7046"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0041.png",
+      "hash": "0a688f79af63e2c517a2b162f477e0a3786743e1b9b8c8bd5f847961346e0d2d"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0042.png",
+      "hash": "e87e62e8668175b64493331924235322814f6074451506bff8016393f8206318"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0043.png",
+      "hash": "8cad54712e32cb515b8028ed211ed40dc65de0321b2b3a9580362be5eff5a92a"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0044.png",
+      "hash": "dc0ad4b09589f098c91dbbe3dadae5f72b0bf38bf1324f9c4387149ae4930ea9"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0045.png",
+      "hash": "08dee1ed435ff16e5446436b6123a1dc8ecc327d54997beba6956fe6c6dde81c"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0046.png",
+      "hash": "692251fd6431dd2bc4f067d674b59866213ae181f297c119f7e4fe880840ed44"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0047.png",
+      "hash": "87c713bf9838968f2f433d34ab42c760bdeea5b6ad7e3513a94ff9bdc310882c"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0048.png",
+      "hash": "a99bd411205201923b9a845c310c8d8db37fe3475c5a9ede5830fff734d326b2"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0049.png",
+      "hash": "108233f079249a34fe223b3e842ead9540f15ef33b99399a18ca03bd696a44e8"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0050.png",
+      "hash": "ebd436e7f74f36242eeefe84f06f08f5aa5460c3afdde95d15d69f0b387681ca"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0051.png",
+      "hash": "ee3d5427ac9979466fae4ee6398618d0f7f6688d63ef1707dbc4cf9b8a551fd0"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0052.png",
+      "hash": "870c4920240e4a3d351889b657c468c120d6a16f735c472dc4bca760eec586a6"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0053.png",
+      "hash": "807e0233c0765689eae77899eb743d86b4ad25c30cbf46c90b83843a082f279b"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0054.png",
+      "hash": "e538ef04bdf58daece7891eab9a3321ad64fe5a2fb898e4bde1fd0de69791dd9"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0055.png",
+      "hash": "cc118c01aa1ea523c6907c5cd26749ead878cf6eea691733b1c3d69fe5b7a5f8"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0056.png",
+      "hash": "3b78554f13e2a5c33bb65df8636b69de9ca65a8e643d9cf8cf5827237ed035ed"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0057.png",
+      "hash": "06c1aad3ac8854fb56b19892e9c4b6c55e0c1d6b87634e0e539cc8ee9be050da"
+    },
+    {
+      "filePath": "clipboard-reference/result-unified2/stages/stage-jump/reference-analysis/frame-0058.png",
+      "hash": "3117e660ec8ff2f7b18323d95a947dce94e97bc5f6f1e82312757b1173ef479b"
+    }
+  ],
+  "manifestPath": "clipboard-reference/dynamic-result2/comparison/animation-comparison.json",
+  "frameCount": 60,
+  "frameTimes": [
+    0,
+    0.03333333333333333,
+    0.06666666666666667,
+    0.1,
+    0.13333333333333333,
+    0.16666666666666666,
+    0.2,
+    0.23333333333333334,
+    0.26666666666666666,
+    0.3,
+    0.3333333333333333,
+    0.36666666666666664,
+    0.4,
+    0.43333333333333335,
+    0.4666666666666667,
+    0.5,
+    0.5333333333333333,
+    0.5666666666666667,
+    0.6,
+    0.6333333333333333,
+    0.6666666666666666,
+    0.7,
+    0.7333333333333333,
+    0.7666666666666667,
+    0.8,
+    0.8333333333333334,
+    0.8666666666666667,
+    0.9,
+    0.9333333333333333,
+    0.9666666666666667,
+    1,
+    1.0333333333333334,
+    1.0666666666666667,
+    1.1,
+    1.1333333333333333,
+    1.1666666666666667,
+    1.2,
+    1.2333333333333334,
+    1.2666666666666666,
+    1.3,
+    1.3333333333333333,
+    1.3666666666666667,
+    1.4,
+    1.4333333333333333,
+    1.4666666666666666,
+    1.5,
+    1.5333333333333334,
+    1.5666666666666667,
+    1.6,
+    1.6333333333333333,
+    1.6666666666666667,
+    1.7,
+    1.7333333333333334,
+    1.7666666666666666,
+    1.8,
+    1.8333333333333333,
+    1.8666666666666667,
+    1.9,
+    1.9333333333333333,
+    1.9666666666666666
+  ],
+  "layoutFingerprint": "891511bc2f2965dad43b3f58f74927965f1cca34e0435851d99a773064adf6de"
+}

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "version": 1,
+  "layout": "reference-above-target",
+  "poses": [
+    {
+      "posePath": "trial/neutral-stand-v2.pose.json",
+      "id": "cd1bbb5e-7235-441f-8848-7098fe7d4d31",
+      "time": 0,
+      "stageId": "cd1bbb5e-7235-441f-8848-7098fe7d4d31",
+      "referenceTime": null,
+      "fingerprint": "33500f8719d3c8780da8ef1e1db097dffdce59760d46164f861bcbe346eebb8e"
+    }
+  ],
+  "pages": [
+    {
+      "clean": "trial/neutral-stand-v2-sheet/page-1-clean.png",
+      "diagnostic": "trial/neutral-stand-v2-sheet/page-1-diagnostic.png"
+    }
+  ],
+  "bounds": {
+    "minX": -154.60253640088075,
+    "maxX": 140.97963312918705,
+    "minY": -29.55821695300678,
+    "maxY": 266.02395257706104
+  },
+  "standardHeight": 206.90751867104746,
+  "targetScale": 2.0298924016760274,
+  "reference": null,
+  "evidence": [
+    {
+      "filePath": "trial/neutral-stand-v2-sheet/page-1-clean.png",
+      "hash": "3da21a5be363e9e2c1a1e46167e1c661f7479fc4dd663534a23db423a85eb89e"
+    },
+    {
+      "filePath": "trial/neutral-stand-v2-sheet/page-1-diagnostic.png",
+      "hash": "ec619a9de79ded5c8fcb48b78d935329db0b2e5661afdd6a2ab2661297694174"
+    }
+  ],
+  "legend": "左=绿色，右=橙色，肩线/髋线=灰虚线，面部朝向=黄虚线，实际关节=圆点，预期目标=紫色方框，握轴/假想杆=黄色；诊断图另列未通过指标。",
+  "warnings": [
+    "遮挡需 Agent 判断，不自动判为失败。"
+  ]
+}
