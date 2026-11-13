@@ -7,11 +7,13 @@
 | `spine_read_reference_frames` | 按帧号或时间读取动态图原帧、帧延迟和联系表。 |
 | `spine_inspect_project` | 查询 .spine 或 JSON 工程的骨架、皮肤、对象、时间线或播放证据。 |
 | `spine_open_animation_draft` | 建立独立草稿，返回标识、修订、哈希。 |
-| `spine_edit_animation_draft` | 批量设置、删除、复制或调整时间线，追加骨骼、插槽和附件，支持撤销重做。 |
+| `spine_edit_animation_draft` | 批量设置、删除、复制或调整时间线，追加骨骼、插槽和附件，或用 `replaceAttachment` 按皮肤、插槽和名称替换附件的贴图及网格，支持撤销重做。 |
 | `spine_preview_animation_draft` | 查询当前或历史修订，按需生成实际 runtime 单帧、原速 GIF、联系表、叠加和同步比较。 |
 | `spine_publish_animation_draft` | 绑定修订和哈希，交付可编辑 .spine 副本或 JSON 运行时包。 |
 
 接口与配置见 [普通动画创作](普通动画创作.md)。
+
+草稿打开、实际编辑、预览和实际发布会同步同工作区的 WinForms「动画预览」状态。当前修订预览就绪后更新播放器资源。编辑和发布的 dryRun 及历史修订回看保留当前播放会话。
 
 > **2026-11-07 施工收口注记**：总体编排仍按“输入核验 → 参考覆盖 → 目标角色求解 → runtime 回读 → 动态证据 → Host 最终裁判”分层。新增的 `depthPoints`/`perspectiveChains` 是 mapping 结构字段，不是新 MCP 工具；点状骨骼必须显式映射、直接挂在对应实体段下，命名后缀只作提示。`spine_run_reference_retarget_flow` 现在返回 `completedSteps`、`blockingReasons`、`nextAction`，未覆盖阶段不会被插值成完整动作。adaptive-preview 的阶段诊断产物按 `stages/<stageId>/` 分目录保存，避免阶段之间覆盖 GIF、姿态和 manifest；动态候选仍必须同时查看覆盖报告、语义失败和 runtime 回读。`spine_validate_json` 使用当前 workspace context 读取文件，避免多工程调用误读。
 

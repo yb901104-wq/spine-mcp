@@ -12,6 +12,7 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
   const root = await mkdtemp(path.join(tmpdir(), 'spine-authoring-test-'));
   await cp('example-json', root, { recursive: true });
   const source = path.join(root, 'xiaoren.json'), bytes = await readFile(source);
+  const session = async () => JSON.parse(await readFile(path.join(root, '.spine-mcp', 'preview-session.json'), 'utf8'));
   const rig = JSON.parse(bytes.toString()), bone = rig.bones[0].name;
   const client = () => new Client({ name: 'authoring-test', version: '1' });
   const transport = () => new StdioClientTransport({ command: process.execPath, args: [path.resolve('dist/server.js')],
@@ -31,6 +32,8 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
     assert.ok(!listed.tools.some(tool => tool.name === 'spine_execute_task'));
     assert.ok(listed.tools.some(tool => tool.name === 'spine_inspect_project'));
     const draft = await tool('spine_open_animation_draft', { filePath: 'xiaoren.json', animation: 'authoring_test', mode: 'create' });
+    const opened = await session();
+    assert.equal(opened.operation.toolName, 'spine_open_animation_draft');
     const draftId = draft.draftId;
     const track = { kind: 'bone', name: bone, timeline: 'translate' };
     const ops = [
@@ -43,6 +46,8 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
         crop: { left: 0, top: 0, width: 8, height: 8 }, attachment: { type: 'mesh', uvs: [0, 0, 1, 0, 1, 1, 0, 1],
           hull: 4, triangles: [0, 1, 2, 2, 3, 0], vertices: [[-4, 4], [4, 4], [4, -4], [-4, -4]]
             .flatMap(([x, y]) => [1, rig.bones.length, x, y, 1]) } },
+      { op: 'replaceAttachment', name: 'futou', slot: 'futou', skin: 'default', region: 'authoring/futou', imagePath: 'xiaoren.png',
+        crop: { left: 0, top: 0, width: 9, height: 6 }, attachment: { type: 'region', x: 7 } },
       { op: 'setFrames', track: { kind: 'slot', name: 'extra', timeline: 'attachment' },
         frames: [{ time: 0, name: null }, { time: 0.2, name: 'piece' }, { time: 0.6, name: 'mesh' }, { time: 0.9, name: null }] },
     ];
@@ -51,7 +56,9 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
     const dry = await edit(0, { ops, dryRun: true });
     assert.equal(dry.revision, 0);
     assert.equal(dry.proposedRevision, 1);
+    assert.deepEqual(await session(), opened);
     const first = await edit(0, { ops });
+    assert.equal((await session()).operation.toolName, 'spine_edit_animation_draft');
     assert.equal(first.candidateHash, dry.proposedHash);
     await edit(0, { ops }, 'REVISION_CONFLICT');
     await edit(1, { ops: [{ op: 'retimeFrames', track, start: 0.5, end: 0.5, toStart: 1, toEnd: 1 }] }, 'KEYFRAME_CONFLICT');
@@ -70,6 +77,14 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
     assert.equal(view.revision, 4);
     assert.equal(view.formalEligible, null);
     assert.equal((await readFile(path.join(root, view.gifPath))).subarray(0, 3).toString(), 'GIF');
+    const ready = await session();
+    assert.equal(ready.operation.toolName, 'spine_preview_animation_draft');
+    assert.equal(ready.context.animation, 'authoring_test');
+    assert.equal(ready.context.autoload, true);
+    await readFile(path.join(root, ready.context.atlasPath));
+    await readFile(path.join(root, ready.context.filePath));
+    await tool('spine_preview_animation_draft', { draftId, revision: 1, view: 'frame', time: 0.5 });
+    assert.deepEqual(await session(), ready);
     const single = await tool('spine_preview_animation_draft', { draftId, view: 'debug', time: 0.65 });
     assert.deepEqual(single.times, [0.65]);
     assert.ok(single.coordinates.extra);
@@ -86,8 +101,16 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
       assert.equal(frame.headers.get('x-revision'), '4');
     } finally { await host.stop(); }
     const publish = { draftId, expectedRevision: 4, candidateHash: fourth.candidateHash, outputPath: 'delivery', format: 'json', dryRun: false };
+    const beforePublish = await session();
+    await tool('spine_publish_animation_draft', { ...publish, dryRun: true });
+    assert.deepEqual(await session(), beforePublish);
     await tool('spine_publish_animation_draft', { ...publish, outputPath: 'missing-cli', format: 'spine' }, 'CLI_UNAVAILABLE');
+    assert.equal((await session()).operation.status, 'failed');
     const receipt = await tool('spine_publish_animation_draft', publish);
+    const published = await session();
+    assert.equal(published.operation.status, 'done');
+    assert.equal(published.operation.toolName, 'spine_publish_animation_draft');
+    assert.deepEqual(published.context, beforePublish.context);
     const result = await readFile(path.join(root, receipt.filePath));
     assert.equal(receipt.sha256, strictHash(result));
     const parsed = JSON.parse(result.toString());
@@ -95,6 +118,11 @@ test('普通创作真实 stdio：可跳过参考读取，批量补骨与编辑�
     assert.deepEqual(parsed.animations[Object.keys(rig.animations)[0]], rig.animations[Object.keys(rig.animations)[0]]);
     assert.equal(parsed.bones.at(-1).name, 'extra');
     assert.equal(parsed.skins.find((skin: { name: string }) => skin.name === 'default').attachments.extra.mesh.type, 'mesh');
+    const replaced = parsed.skins.find((skin: { name: string }) => skin.name === 'default').attachments.futou.futou;
+    assert.equal(replaced.path, 'authoring/futou');
+    assert.equal(replaced.width, 9);
+    assert.equal(replaced.height, 6);
+    assert.deepEqual(parsed.slots.find((slot: { name: string }) => slot.name === 'futou'), rig.slots.find((slot: { name: string }) => slot.name === 'futou'));
     assert.deepEqual(await readFile(source), bytes);
     await tool('spine_publish_animation_draft', publish, 'OUTPUT_EXISTS');
     await tool('spine_publish_animation_draft', { ...publish, outputPath: '../escape' }, 'PATH_FORBIDDEN');

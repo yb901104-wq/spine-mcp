@@ -99,7 +99,7 @@ async function refreshAuthoring(){
   const result=await api('/api/authoring');const draft=result.state;
   authoringPanel.hidden=!draft;if(!draft)return;
   if(document.body.firstElementChild!==authoringPanel)document.body.prepend(authoringPanel);
-  authoringStatus.textContent=`${draft.animation} · 修订 ${draft.revision} · ${({edited:'待预览',rendering:'渲染中',ready:'预览就绪',error:'预览失败'})[draft.status]??draft.status}`+
+  authoringStatus.textContent=`${draft.animation} · 修订 ${draft.revision} · ${({edited:'待预览',rendering:'渲染中',ready:'预览就绪',error:'预览失败',publishing:'发布中',published:'已发布',publishError:'发布失败'})[draft.status]??draft.status}`+
     (draft.preview&&draft.preview.revision!==draft.revision?` · 画面为修订 ${draft.preview.revision}`:'')+(draft.error?` · ${draft.error}`:'');
   if(draftPreview?.id===draft.preview?.id)return;
   draftPreview=draft.preview;draftFrameKey='';draftFrameRequest++;stopDraftPlayback();

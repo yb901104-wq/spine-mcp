@@ -5,6 +5,7 @@ import { HostError, objectHash } from './hostContracts.js';
 import { withFileLock } from './jobTools.js';
 import { readJson, within, type Json, type ProjectSource } from './authoringProject.js';
 import { resolveWorkspacePath, type ToolContext } from './spineJson.js';
+import { setPreviewSession, type PreviewSessionContext, type PreviewSessionOperation } from './sessionTools.js';
 import type { DraftAsset } from './authoringEdits.js';
 
 export const authoringRoot = '.spine-mcp/authoring';
@@ -18,8 +19,21 @@ export type Draft = {
 };
 export type AuthoringPreview = { id: string; revision: number; frames: string[]; times: number[]; duration: number; gifPath?: string };
 type Observation = {
-  draftId: string; revision: number; animation: string; status: 'edited' | 'rendering' | 'ready' | 'error';
+  draftId: string; revision: number; animation: string;
+  status: 'edited' | 'rendering' | 'ready' | 'error' | 'publishing' | 'published' | 'publishError';
   preview?: AuthoringPreview; jobId?: string; error?: string;
+};
+
+type Playback = Pick<PreviewSessionContext, 'filePath' | 'atlasPath' | 'skin' | 'premultipliedAlpha'>;
+
+const stages: Record<Observation['status'], { title: string; status: PreviewSessionOperation['status']; toolName: string }> = {
+  edited: { title: '动画草稿已更新', status: 'writing', toolName: 'spine_edit_animation_draft' },
+  rendering: { title: '正在生成草稿预览', status: 'previewing', toolName: 'spine_preview_animation_draft' },
+  ready: { title: '动画草稿预览已就绪', status: 'done', toolName: 'spine_preview_animation_draft' },
+  error: { title: '动画草稿预览失败', status: 'failed', toolName: 'spine_preview_animation_draft' },
+  publishing: { title: '正在发布动画工程', status: 'validating', toolName: 'spine_publish_animation_draft' },
+  published: { title: '动画工程已发布', status: 'done', toolName: 'spine_publish_animation_draft' },
+  publishError: { title: '动画工程发布失败', status: 'failed', toolName: 'spine_publish_animation_draft' },
 };
 
 export function draftDir(id: string) {
@@ -72,14 +86,26 @@ export async function readAuthoringObservation(context: ToolContext): Promise<Ob
   });
 }
 
-export async function observeDraft(next: Observation, context: ToolContext) {
-  // 观察状态不参与工程事务。并发观察时只接受当前渲染任务的完成通知。
+export async function observeDraft(next: Observation, context: ToolContext, options: {
+  playback?: Playback; opened?: boolean; detail?: string;
+} = {}) {
+  // 观察状态不参与工程事务。旧任务的终态不能覆盖较新的观察操作。
   try {
     await withFileLock(observerFile, context, async () => {
       const last = await readAuthoringObservation(context);
-      if (['ready', 'error'].includes(next.status) && (last?.jobId !== next.jobId || last?.draftId !== next.draftId || last?.revision !== next.revision)) return;
+      if (['ready', 'error', 'published', 'publishError'].includes(next.status) &&
+          (last?.jobId !== next.jobId || last?.draftId !== next.draftId || last?.revision !== next.revision)) return;
       if (last?.draftId === next.draftId && last.revision > next.revision) return;
       await atomicRecord(observerFile, { ...next, preview: next.preview ?? (last?.draftId === next.draftId ? last.preview : undefined) }, context);
+      const stage = options.opened
+        ? { title: '已打开动画草稿', status: 'planning' as const, toolName: 'spine_open_animation_draft' }
+        : stages[next.status];
+      const detail = [`动画 ${next.animation} · 修订 ${next.revision}`, options.detail, next.error].filter(Boolean).join(' · ');
+      await setPreviewSession({
+        ...(options.playback ? { ...options.playback, animation: next.animation, autoload: true, mipmaps: false } : {}),
+        operation: { ...stage, detail, dryRun: false },
+        log: { level: stage.status === 'failed' ? 'error' : 'info', message: `${stage.title} · ${detail}`, toolName: stage.toolName },
+      }, context);
     });
   } catch (error) {
     process.stderr.write(`草稿观察状态更新失败：${String(error)}\n`);

@@ -13,6 +13,7 @@ public sealed class MainForm : Form
     private readonly System.Windows.Forms.Timer pollTimer = new();
     private readonly TextBox previewServerInput = new();
     private readonly Label connectionLabel = new();
+    private readonly Label workspaceLabel = new();
     private readonly Label runtimeStatusLabel = new();
     private readonly TextBox runtimeBox = new();
     private readonly Button refreshRuntimeButton = new();
@@ -36,9 +37,11 @@ public sealed class MainForm : Form
     private readonly WebView2 webView = new();
     private readonly TabControl previewTabs = new() { Dock = DockStyle.Fill };
     private readonly HostObserverPanel hostPanel = new();
-    private int? lastRevision;
     private string? lastPreviewUrl;
+    private string? embeddedPreviewUrl;
     private string? lastValidationKey;
+    private bool refreshingSession;
+    private bool pendingNavigation;
     private string? lastStopCommand;
     private string? lastLogDirectory;
     private readonly bool hostSelfTest;
@@ -95,31 +98,14 @@ public sealed class MainForm : Form
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         Controls.Add(root);
 
-        var side = new TableLayoutPanel
-        {
-            Dock = DockStyle.Fill,
-            Padding = new Padding(12),
-            ColumnCount = 1,
-            RowCount = 17,
-        };
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        side.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        root.Controls.Add(side, 0, 0);
+        var sideTabs = new TabControl { Dock = DockStyle.Fill };
+        var sessionPage = new TabPage("会话");
+        var connectionPage = new TabPage("连接");
+        var logsPage = new TabPage("日志") { Padding = new Padding(8) };
+        sideTabs.TabPages.AddRange([sessionPage, connectionPage, logsPage]);
+        var side = CreateInformationColumn(sessionPage);
+        var connection = CreateInformationColumn(connectionPage);
+        root.Controls.Add(sideTabs, 0, 0);
 
         var title = new Label
         {
@@ -130,10 +116,10 @@ public sealed class MainForm : Form
         };
         side.Controls.Add(title);
 
-        side.Controls.Add(new Label { Text = "Preview server", AutoSize = true });
+        connection.Controls.Add(new Label { Text = "预览服务地址", AutoSize = true });
         previewServerInput.Text = previewServerUrl;
         previewServerInput.Dock = DockStyle.Top;
-        side.Controls.Add(previewServerInput);
+        connection.Controls.Add(previewServerInput);
 
         refreshButton.Text = "刷新会话";
         refreshButton.Dock = DockStyle.Top;
@@ -145,8 +131,11 @@ public sealed class MainForm : Form
         connectionLabel.AutoSize = true;
         connectionLabel.MaximumSize = new Size(340, 0);
         side.Controls.Add(connectionLabel);
+        workspaceLabel.Text = "工作区：等待连接";
+        workspaceLabel.AutoSize = true;
+        side.Controls.Add(workspaceLabel);
 
-        side.Controls.Add(new Label
+        connection.Controls.Add(new Label
         {
             Text = "运行状态",
             AutoSize = true,
@@ -176,13 +165,13 @@ public sealed class MainForm : Form
         runtimeButtonRow.Controls.Add(refreshRuntimeButton);
         runtimeButtonRow.Controls.Add(copyStopCommandButton);
         runtimeButtonRow.Controls.Add(openLogDirectoryButton);
-        side.Controls.Add(runtimeButtonRow);
+        connection.Controls.Add(runtimeButtonRow);
 
         runtimeStatusLabel.Text = "运行：等待检测";
         runtimeStatusLabel.AutoSize = true;
         runtimeStatusLabel.MaximumSize = new Size(360, 0);
         runtimeStatusLabel.Margin = new Padding(0, 4, 0, 0);
-        side.Controls.Add(runtimeStatusLabel);
+        connection.Controls.Add(runtimeStatusLabel);
 
         runtimeBox.Dock = DockStyle.Top;
         runtimeBox.Height = 92;
@@ -190,9 +179,9 @@ public sealed class MainForm : Form
         runtimeBox.ReadOnly = true;
         runtimeBox.ScrollBars = ScrollBars.Vertical;
         runtimeBox.Margin = new Padding(0, 6, 0, 0);
-        side.Controls.Add(runtimeBox);
+        connection.Controls.Add(runtimeBox);
 
-        side.Controls.Add(new Label
+        connection.Controls.Add(new Label
         {
             Text = "Agent 连接",
             AutoSize = true,
@@ -232,7 +221,7 @@ public sealed class MainForm : Form
         agentRow.Controls.Add(agentTypeCombo);
         agentRow.Controls.Add(refreshAgentButton);
         agentRow.Controls.Add(copyAgentConfigButton);
-        side.Controls.Add(agentRow);
+        connection.Controls.Add(agentRow);
         var installRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Top };
         agentConfigScopeCombo.DropDownStyle = ComboBoxStyle.DropDownList;
         agentConfigScopeCombo.Items.AddRange(["当前项目", "用户级（Codex 桌面推荐）"]);
@@ -243,7 +232,7 @@ public sealed class MainForm : Form
         installAgentConfigButton.Click += async (_, _) => await InstallAgentConfigAsync();
         installRow.Controls.Add(agentConfigScopeCombo);
         installRow.Controls.Add(installAgentConfigButton);
-        side.Controls.Add(installRow);
+        connection.Controls.Add(installRow);
 
         agentConnectionLabel.Text = "Agent：等待检测";
         agentConnectionLabel.AutoSize = true;
@@ -257,7 +246,7 @@ public sealed class MainForm : Form
         agentConfigBox.ReadOnly = true;
         agentConfigBox.ScrollBars = ScrollBars.Vertical;
         agentConfigBox.Margin = new Padding(0, 6, 0, 0);
-        side.Controls.Add(agentConfigBox);
+        connection.Controls.Add(agentConfigBox);
 
         contextLabel.Text = "上下文：等待 Agent 设置";
         contextLabel.AutoSize = true;
@@ -281,8 +270,7 @@ public sealed class MainForm : Form
         logBox.Multiline = true;
         logBox.ReadOnly = true;
         logBox.ScrollBars = ScrollBars.Vertical;
-        logBox.Margin = new Padding(0, 12, 0, 8);
-        side.Controls.Add(logBox);
+        logsPage.Controls.Add(logBox);
 
         urlBox.Dock = DockStyle.Top;
         urlBox.ReadOnly = true;
@@ -320,6 +308,7 @@ public sealed class MainForm : Form
             if (previewTabs.SelectedTab == hostPage)
             {
                 webView.CoreWebView2?.Navigate("about:blank");
+                embeddedPreviewUrl = null;
                 await hostPanel.RefreshFromPreviewAsync();
             }
             await RefreshSessionAsync(forceNavigate: true);
@@ -331,6 +320,28 @@ public sealed class MainForm : Form
             if (visible) await hostPanel.RefreshFromPreviewAsync();
         };
         root.Controls.Add(previewTabs, 1, 0);
+    }
+
+    private static TableLayoutPanel CreateInformationColumn(TabPage page)
+    {
+        var scroll = new Panel { Dock = DockStyle.Fill, AutoScroll = true };
+        var column = new TableLayoutPanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(12), ColumnCount = 1, GrowStyle = TableLayoutPanelGrowStyle.AddRows,
+        };
+        column.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        void WrapLabels()
+        {
+            var width = Math.Max(1, scroll.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - column.Padding.Horizontal);
+            foreach (var label in column.Controls.OfType<Label>())
+                label.MaximumSize = new Size(Math.Max(1, width - label.Margin.Horizontal), 0);
+        }
+        scroll.ClientSizeChanged += (_, _) => WrapLabels();
+        column.ControlAdded += (_, _) => WrapLabels();
+        scroll.Controls.Add(column);
+        page.Controls.Add(scroll);
+        return column;
     }
 
     private void ConfigureTimer()
@@ -359,38 +370,52 @@ public sealed class MainForm : Form
 
     private async Task RefreshSessionAsync(bool forceNavigate)
     {
-        PreviewSessionResponse? session = null;
+        pendingNavigation |= forceNavigate;
+        if (refreshingSession) return;
+        refreshingSession = true;
         try
         {
+            var navigate = pendingNavigation;
+            pendingNavigation = false;
             RefreshRuntimeState();
             var baseUrl = NormalizeBaseUrl(previewServerInput.Text);
-            var response = await httpClient.GetAsync($"{baseUrl}api/session");
-            response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            session = JsonSerializer.Deserialize<PreviewSessionResponse>(json, jsonOptions);
+            var sessionRequest = httpClient.GetStringAsync($"{baseUrl}api/session");
+            var configRequest = httpClient.GetStringAsync($"{baseUrl}api/config");
+            await Task.WhenAll(sessionRequest, configRequest);
+            var session = JsonSerializer.Deserialize<PreviewSessionResponse>(await sessionRequest, jsonOptions);
             if (session is null || !session.Ok) throw new InvalidOperationException("会话返回为空或 ok=false。");
+            using var config = JsonDocument.Parse(await configRequest);
+            workspaceLabel.Text = $"工作区：{config.RootElement.GetProperty("workspaceRoot").GetString()}";
 
             connectionLabel.Text = session.Revision == 0 ? "预览服务：正常；尚无 Agent 制作记录。Agent 连接见下方状态灯。" : $"预览服务：正常，会话 revision={session.Revision}，updatedAt={session.UpdatedAt}";
             RenderSession(session);
 
-            var shouldNavigate = forceNavigate || lastRevision != session.Revision || lastPreviewUrl != session.PreviewUrl.Url;
-            lastRevision = session.Revision;
             lastPreviewUrl = session.PreviewUrl.Url;
-            if (previewTabs.SelectedIndex == 0 && shouldNavigate && !string.IsNullOrWhiteSpace(session.Context.FilePath))
+            if (previewTabs.SelectedIndex == 0 && webView.CoreWebView2 is not null)
             {
-                await RefreshValidationAsync(baseUrl, session);
-            }
-            if (previewTabs.SelectedIndex == 0 && shouldNavigate && !string.IsNullOrWhiteSpace(lastPreviewUrl) && webView.CoreWebView2 is not null)
-            {
-                webView.CoreWebView2.Navigate(lastPreviewUrl);
+                var playerUrl = new Uri(new Uri(baseUrl), "?embed=1").AbsoluteUri;
+                if (navigate || embeddedPreviewUrl != playerUrl)
+                {
+                    webView.CoreWebView2.Navigate(playerUrl);
+                    embeddedPreviewUrl = playerUrl;
+                }
+                if (!string.IsNullOrWhiteSpace(session.Context.FilePath))
+                    await RefreshValidationAsync(baseUrl, session, navigate);
+                else
+                    validationLabel.Text = "验证：等待角色资源";
             }
             await RefreshAgentConnectionAsync(baseUrl);
         }
         catch (Exception ex)
         {
             connectionLabel.Text = $"连接：失败。{ex.Message}";
+            workspaceLabel.Text = "工作区：等待连接";
             agentConnectionLabel.Text = "Agent：灰灯，预览服务不可用，实时连接状态未知。";
             AppendLocalLog($"无法读取 /api/session：{ex.Message}");
+        }
+        finally
+        {
+            refreshingSession = false;
         }
     }
 
@@ -414,7 +439,7 @@ public sealed class MainForm : Form
             .Append($"说明：{op.Detail ?? "-"}")
             .ToString();
 
-        logBox.Text = string.Join(Environment.NewLine, session.Logs
+        var logs = string.Join(Environment.NewLine, session.Logs
             .TakeLast(80)
             .Select(entry => $"{entry.Time} {entry.Level} {FormatTool(entry.ToolName)}{entry.Message}"));
 
@@ -424,15 +449,16 @@ public sealed class MainForm : Form
             contextLabel.Text = "当前上下文：以 Host 工作台内的工程、文档和完整版本为准。";
             operationLabel.Text = "Host 操作与审查：以工作台状态为准；下方日志属于预览服务会话。";
             validationLabel.Text = "验证：Host 内分别显示数值、截图准入、视觉和编辑器导入状态。";
-            logBox.Text = "预览服务会话日志（不代表当前 Host 操作）" + Environment.NewLine + logBox.Text;
+            logs = "预览服务会话日志（不代表当前 Host 操作）" + Environment.NewLine + logs;
             urlBox.Text = hostPanel.Connection?.Endpoint.AbsoluteUri ?? string.Empty;
         }
+        if (logBox.Text != logs) logBox.Text = logs;
     }
 
-    private async Task RefreshValidationAsync(string baseUrl, PreviewSessionResponse session)
+    private async Task RefreshValidationAsync(string baseUrl, PreviewSessionResponse session, bool force)
     {
-        var key = $"{session.Context.FilePath}|{session.Context.AtlasPath}|{session.Context.Animation}|{session.Context.Skin}|{session.Revision}";
-        if (lastValidationKey == key) return;
+        var key = $"{baseUrl}|{session.PreviewUrl.Url}|{session.Revision}";
+        if (!force && lastValidationKey == key) return;
         lastValidationKey = key;
         validationLabel.Text = "验证：正在运行验证流水线...";
 

@@ -102,7 +102,7 @@ async function openDraft(args: Json, context: ToolContext) {
   const draft: Draft = { version: 1, draftId, project, skeleton: source.name, animation: name, revision: 0, revisions: [hash], past: [], future: [] };
   checkpoint('创建动画草稿');
   await atomicRecord(draftState(draftId), draft, context);
-  await observeDraft({ draftId, animation: name, revision: 0, status: 'edited' }, context);
+  await observeDraft({ draftId, animation: name, revision: 0, status: 'edited' }, context, { opened: true });
   return { ...draftSummary(draft), resources: { atlasPath: source.atlasPath ?? null, imagesDirectory: source.imageDir ?? null, files: source.files.length } };
 }
 
@@ -187,7 +187,8 @@ async function previewDraft(args: Json, context: ToolContext) {
     const material = await materializeRuntime(candidate.json, selected, candidate.assets, dir, within(output, 'runtime'), context);
     return { ...result, measurements: measureDraft(material.runtime, draft.animation, args.skin, args.measurements), formalEligible: null };
   }
-  const observe = (state: Parameters<typeof observeDraft>[0]) => revision === draft.revision ? observeDraft(state, context) : Promise.resolve();
+  const observe = (state: Parameters<typeof observeDraft>[0], options?: Parameters<typeof observeDraft>[2]) =>
+    revision === draft.revision ? observeDraft(state, context, options) : Promise.resolve();
   const identity = { draftId: draft.draftId, revision, animation: draft.animation, jobId };
   await observe({ ...identity, status: 'rendering' });
   try {
@@ -210,7 +211,10 @@ async function previewDraft(args: Json, context: ToolContext) {
     }
     await verifyFiles(sourceDependencies(draft.project, candidate.assets), context);
     await observe({ ...identity, status: 'ready', preview: { id: jobId, revision, frames: 'overlay' in preview ? [preview.overlay] : preview.frames,
-      times: preview.times, duration: preview.duration, gifPath: preview.gifPath } });
+      times: preview.times, duration: preview.duration, gifPath: preview.gifPath } }, {
+      playback: { filePath: material.filePath, atlasPath: material.atlasPath, skin: preview.skin ?? '',
+        premultipliedAlpha: material.runtime.atlas.pages.some(page => page.pma) },
+    });
     return { ...result, ...preview, formalEligible: null };
   } catch (error) {
     await observe({ ...identity, status: 'error', error: (error as Error).message });
@@ -236,10 +240,12 @@ async function publishDraft(args: Json, context: ToolContext) {
     if (await available(output, context)) throw new HostError('OUTPUT_EXISTS', `交付目录已存在：${output}。`, 409);
     const info = { draftId: draft.draftId, revision: draft.revision, candidateHash: hash, outputPath: output, format, formalEligible: null };
     if (args.dryRun !== false) return { ...info, dryRun: true };
+    const observation = { draftId: draft.draftId, revision: draft.revision, animation: draft.animation, jobId: randomUUID() };
     const pending = within(path.posix.dirname(output), '.authoring-' + randomUUID());
     const work = within(dir, '.authoring-' + randomUUID());
     await mkdir(path.dirname(absolute), { recursive: true });
     await mkdir(resolveWorkspacePath(pending, context));
+    await observeDraft({ ...observation, status: 'publishing' }, context, { detail: output });
     try {
       const selected = selectSkeleton(draft.project, draft.skeleton);
       const delivery = format === 'spine' ? await buildNativeProject(draft.project, draft.skeleton, draft.animation, candidate.json, candidate.assets, dir, pending, work, context) :
@@ -254,7 +260,11 @@ async function publishDraft(args: Json, context: ToolContext) {
       checkpoint('交付动画工程');
       if (await available(output, context)) throw new HostError('OUTPUT_EXISTS', `交付目录已存在：${output}。`, 409);
       await rename(resolveWorkspacePath(pending, context), absolute);
+      await observeDraft({ ...observation, status: 'published' }, context, { detail: receipt.filePath });
       return receipt;
+    } catch (error) {
+      await observeDraft({ ...observation, status: 'publishError', error: (error as Error).message }, context);
+      throw error;
     } finally {
       await cleanDirectory(pending, context);
       await cleanDirectory(work, context);

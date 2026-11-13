@@ -290,10 +290,93 @@ const defaults: Record<string, Record<string, unknown>> = {
   mesh: { color: 'ffffffff' },
 };
 
+function orderedTriangleKeys(indices: number[]) {
+  const keys = [];
+  for (let i = 0; i < indices.length; i += 3) {
+    const triangle = indices.slice(i, i + 3);
+    const start = triangle.indexOf(Math.min(...triangle));
+    keys.push([...triangle.slice(start), ...triangle.slice(0, start)].join(','));
+  }
+  return keys.sort();
+}
+
+function weightedVerticesByBone(mesh: Json) {
+  const { vertices, uvs } = mesh;
+  if (!Array.isArray(vertices) || !Array.isArray(uvs) || vertices.length === uvs.length) return undefined;
+  const points: number[][] = [];
+  let offset = 0;
+  for (let i = 0; i < uvs.length / 2; i++) {
+    const count = vertices[offset++];
+    if (!Number.isInteger(count) || count < 1 || offset + count * 4 > vertices.length) return undefined;
+    const influences = Array.from({ length: count }, () => {
+      const values = vertices.slice(offset, offset + 4) as number[];
+      offset += 4;
+      return values;
+    });
+    if (new Set(influences.map(([bone]) => bone)).size !== count) return undefined;
+    points.push(influences.sort(([left], [right]) => left - right).flat());
+  }
+  return offset === vertices.length ? points : undefined;
+}
+
+function normalizeIndependentMeshWeights(json: Json) {
+  const result = structuredClone(json);
+  for (const skin of result.skins ?? []) {
+    for (const [slot, entries] of Object.entries(skin.attachments ?? {}) as Array<[string, Json]>) {
+      for (const [name, mesh] of Object.entries(entries)) {
+        if (mesh.type !== 'mesh') continue;
+        const hasDeform = (Object.values(result.animations ?? {}) as Json[]).some(animation =>
+          animation.attachments?.[skin.name]?.[slot]?.[name]?.deform !== undefined ||
+          animation.deform?.[skin.name]?.[slot]?.[name] !== undefined);
+        const hasLinkedMesh = (result.skins ?? []).some((other: Json) =>
+          (Object.values(other.attachments?.[slot] ?? {}) as Json[]).some(entry =>
+            entry.type === 'linkedmesh' && entry.parent === name && (entry.skin ?? other.name) === skin.name));
+        if (hasDeform || hasLinkedMesh) continue;
+        const points = weightedVerticesByBone(mesh);
+        if (points) mesh.vertices = points.flatMap(point => [point.length / 4, ...point]);
+      }
+    }
+  }
+  return result;
+}
+
+function sameMeshVertices(expected: Json, actual: Json) {
+  if (!Array.isArray(expected.vertices) || !Array.isArray(actual.vertices) ||
+      !Array.isArray(expected.uvs) || !Array.isArray(actual.uvs) ||
+      expected.uvs.length !== actual.uvs.length || expected.vertices.length !== actual.vertices.length) return false;
+  const sameCoordinates = (left: number, right: number) => Math.abs(left - right) <= 0.00501;
+  if (expected.vertices.length === expected.uvs.length) {
+    return expected.vertices.every((value: number, i: number) => sameCoordinates(value, actual.vertices[i]));
+  }
+  let offset = 0;
+  for (let i = 0; i < expected.uvs.length / 2; i++) {
+    const count = expected.vertices[offset];
+    if (!Number.isInteger(count) || count < 1 || count !== actual.vertices[offset++]) return false;
+    for (let n = 0; n < count; n++, offset += 4) {
+      if (expected.vertices[offset] !== actual.vertices[offset] ||
+          !sameCoordinates(expected.vertices[offset + 1], actual.vertices[offset + 1]) ||
+          !sameCoordinates(expected.vertices[offset + 2], actual.vertices[offset + 2]) ||
+          !(Math.abs(expected.vertices[offset + 3] - actual.vertices[offset + 3]) <= 0.00051)) return false;
+    }
+  }
+  return offset === expected.vertices.length;
+}
+
+function isGeneratedHullEdges(hull: number, edges: unknown) {
+  if (!Number.isInteger(hull) || hull < 3 || !Array.isArray(edges) || edges.length !== hull * 2) return false;
+  const expected = [0, 2 * (hull - 1)];
+  for (let i = 0; i < hull - 1; i++) expected.push(2 * i, 2 * (i + 1));
+  return edges.every((value, i) => value === expected[i]);
+}
+
 function roundtripDifferences(expected: any, actual: any, key = '', location = '', differences: string[] = []) {
   if (differences.length >= 20 || Object.is(expected, actual)) return differences;
   if (typeof expected === 'number' && typeof actual === 'number' && Math.abs(expected - actual) <= 0.00051) return differences;
   if (Array.isArray(expected) && Array.isArray(actual) && expected.length === actual.length) {
+    // The editor can reorder mesh triangles while preserving their indices and winding.
+    if (key === 'triangles' && location.startsWith('/skins/') && location.includes('/attachments/') &&
+        expected.length % 3 === 0 && expected.every(Number.isInteger) && actual.every(Number.isInteger) &&
+        JSON.stringify(orderedTriangleKeys(expected)) === JSON.stringify(orderedTriangleKeys(actual))) return differences;
     expected.forEach((value, i) => {
       const candidate = actual[i], next = expected[i + 1];
       const channels = key === 'rotate' ? ['value'] : ['translate', 'scale', 'shear'].includes(key) ? ['x', 'y'] : [];
@@ -311,6 +394,10 @@ function roundtripDifferences(expected: any, actual: any, key = '', location = '
       if (location === '/skeleton' && field === 'hash') continue;
       if ((expected[field] === undefined && empty(actual[field])) || (actual[field] === undefined && empty(expected[field]))) continue;
       if (location.includes('/attachments/') && field === 'path' && (expected[field] ?? key) === (actual[field] ?? key)) continue;
+      // The editor exports mesh coordinates at two decimal places. Bone indices and weights are checked separately.
+      if (location.startsWith('/skins/') && scope === 'mesh' && field === 'vertices' && sameMeshVertices(expected, actual)) continue;
+      if (location.startsWith('/skins/') && scope === 'mesh' && field === 'edges' &&
+          !expected.edges?.length && isGeneratedHullEdges(expected.hull, actual.edges)) continue;
       const fallback = defaults[scope]?.[field];
       roundtripDifferences(expected[field] === undefined ? fallback : expected[field], actual[field] === undefined ? fallback : actual[field], field, `${location}/${field}`, differences);
     }
@@ -349,13 +436,28 @@ export async function buildNativeProject(project: ProjectSource, selected: strin
     const entry = readback.find(value => value.name === item.name);
     if (!entry) throw new HostError('CLI_READBACK_MISMATCH', `复开缺少骨架 ${item.name}。`, 422);
     const actual = await readJson(entry.jsonFile, context);
-    const differences = roundtripDifferences(item.json, actual);
+    const differences = roundtripDifferences(normalizeIndependentMeshWeights(item.json), normalizeIndependentMeshWeights(actual));
     if (differences.length) throw new HostError('CLI_READBACK_MISMATCH', `复开后骨架 ${item.name} 数据与候选不一致。`, 422, { differences });
     const material = await materializeRuntime(actual, { ...item.source, atlasPath: undefined, imageDir: within(output, actual.skeleton.images) },
       [], dir, within(work, 'runtime', item.name), context);
     const original = await readJson(item.source.jsonFile, context);
     const baseline = item.name === selected && assets.length ? await materializeRuntime(original, item.source, [], dir,
       within(work, 'baseline', item.name), context) : null;
+    const replaced = new Map<string, Set<string>>();
+    if (baseline) {
+      const generatedRegions = new Set(assets.map(asset => asset.region));
+      for (const oldSkin of original.skins ?? []) {
+        const nextSkin = item.json.skins?.find((skin: Json) => skin.name === oldSkin.name);
+        const keys = new Set<string>();
+        for (const [slot, entries] of Object.entries(oldSkin.attachments ?? {}) as Array<[string, Json]>) {
+          for (const [name, old] of Object.entries(entries)) {
+            const next = nextSkin?.attachments?.[slot]?.[name];
+            if (next && next.path !== old.path && generatedRegions.has(next.path)) keys.add(slot + ':' + (old.name ?? name));
+          }
+        }
+        replaced.set(oldSkin.name, keys);
+      }
+    }
     let preservedAnimationSamples = 0;
     for (const name of Object.keys(actual.animations ?? {})) {
       const duration = material.runtime.data.findAnimation(name)?.duration ?? 0;
@@ -369,8 +471,10 @@ export async function buildNativeProject(project: ProjectSource, selected: strin
           const before = worldVertices(baseline.runtime.sample(name, time, skin.name));
           const after = worldVertices(runtime.sample(name, time, skin.name));
           const keys = Object.keys(before);
+          const selectedReplacements = replaced.get(skin.name), defaultReplacements = replaced.get('default');
+          const affected = (key: string) => selectedReplacements?.has(key) || defaultReplacements?.has(key);
           if (JSON.stringify(keys) !== JSON.stringify(Object.keys(after)) ||
-              keys.some(key => before[key].length !== after[key].length || before[key].some((value, i) => Math.abs(value - after[key][i]) > 0.15))) {
+              keys.some(key => !affected(key) && (before[key].length !== after[key].length || before[key].some((value, i) => Math.abs(value - after[key][i]) > 0.15)))) {
             throw new HostError('CLI_READBACK_MISMATCH', `旧动画 ${name} 的 ${skin.name} 皮肤在 ${time}s 的切片回读发生变化。`, 422);
           }
           preservedAnimationSamples++;

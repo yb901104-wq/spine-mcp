@@ -20,6 +20,16 @@ const frame = object({
 const op = (name: string, fields: Record<string, unknown>, required: string[]) =>
   object({ op: { const: name }, ...fields }, ['op', ...required]);
 const range = { track, start: time, end: time };
+const attachmentFields = {
+  name: str, skin: str, slot: str, region: str, imagePath: str,
+  crop: object({ left: int, top: int, width: { type: 'integer', minimum: 1 }, height: { type: 'integer', minimum: 1 } }, ['left', 'top', 'width', 'height']),
+  attachment: { oneOf: [
+    object({ type: { const: 'region' }, ...pairs, rotation: number, scaleX: number, scaleY: number, width: size, height: size }, ['type']),
+    object({ type: { const: 'mesh' }, width: size, height: size, uvs: array(number, 6, 16384), vertices: array(number, 6, 131072),
+      triangles: array(int, 3, 65536), hull: int, edges: array(int, 0, 65536) }, ['type', 'uvs', 'vertices', 'triangles', 'hull']),
+  ] },
+};
+const attachmentRequired = ['name', 'skin', 'slot', 'region', 'imagePath', 'attachment'];
 const ops = [
   op('setFrames', { track, frames: array(frame, 1, 4096) }, ['track', 'frames']),
   op('deleteFrames', range, ['track', 'start', 'end']),
@@ -29,15 +39,8 @@ const ops = [
     transform: values(['normal', 'onlyTranslation', 'noRotationOrReflection', 'noScale', 'noScaleOrReflection']) }, ['name', 'parent']) }, ['bone']),
   op('addSlot', { slot: object({ name: str, bone: str, color: { type: 'string', pattern: '^[0-9a-fA-F]{8}$' },
     blend: values(['normal', 'additive', 'multiply', 'screen']) }, ['name', 'bone']) }, ['slot']),
-  op('addAttachment', {
-    name: str, skin: str, slot: str, region: str, imagePath: str,
-    crop: object({ left: int, top: int, width: { type: 'integer', minimum: 1 }, height: { type: 'integer', minimum: 1 } }, ['left', 'top', 'width', 'height']),
-    attachment: { oneOf: [
-      object({ type: { const: 'region' }, ...pairs, rotation: number, scaleX: number, scaleY: number, width: size, height: size }, ['type']),
-      object({ type: { const: 'mesh' }, width: size, height: size, uvs: array(number, 6, 16384), vertices: array(number, 6, 131072),
-        triangles: array(int, 3, 65536), hull: int, edges: array(int, 0, 65536) }, ['type', 'uvs', 'vertices', 'triangles', 'hull']),
-    ] },
-  }, ['name', 'skin', 'slot', 'region', 'imagePath', 'attachment']),
+  op('addAttachment', attachmentFields, attachmentRequired),
+  op('replaceAttachment', attachmentFields, attachmentRequired),
 ];
 const dryRun = { ...bool, default: true, description: '默认只预演。false 执行所声明的操作。' };
 const project = { filePath: str, atlasPath: str, skeleton: str };
@@ -58,7 +61,7 @@ export const authoringDefinitions = [
   define('spine_open_animation_draft', '创建独立动画草稿，或从已有动画建立编辑草稿。返回草稿标识、修订与候选哈希。', {
     ...project, animation: str, mode: values(['create', 'edit']),
   }, ['filePath', 'animation', 'mode']),
-  define('spine_edit_animation_draft', '对指定修订执行批量关键帧、区间、骨骼、插槽、贴图和附件操作，或执行撤销与重做。', {
+  define('spine_edit_animation_draft', '对指定修订执行批量关键帧、骨骼、插槽、贴图和附件操作。可指定独立贴图替换既有附件的轮廓与网格，并保留插槽及动画引用。支持撤销与重做。', {
     ...draft, ops: array({ oneOf: ops }, 1, 512), history: values(['undo', 'redo']), dryRun,
   }, ['draftId', 'expectedRevision']),
   define('spine_preview_animation_draft', '按草稿修订读取实际 runtime 的帧、GIF、联系表、调试叠加或同步对比。', {

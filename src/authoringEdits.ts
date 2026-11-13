@@ -149,25 +149,50 @@ function validateMesh(mesh: Data, boneCount: number) {
   if (offset !== mesh.vertices.length) invalid('网格权重含多余数据。');
 }
 
-function addAttachment(json: Data, animationName: string, op: Data, asset: DraftAsset) {
-  const name = authoringName(op.name, '附件'), skinName = authoringName(op.skin, '皮肤');
+function attachmentEntries(json: Data, op: Data, create: boolean): Data | undefined {
+  const skinName = authoringName(op.skin, '皮肤');
   const target = json.slots?.find((slot: Data) => slot.name === op.slot);
   if (!target) invalid(`附件的插槽不存在：${op.slot}。`);
-  if (target.attachment === name || Object.entries(json.animations).some(([animation, value]) => animation !== animationName &&
-      (value as Data).slots?.[op.slot]?.attachment?.some((frame: Data) => frame.name === name))) {
-    invalid(`附件 ${op.slot}/${name} 会影响已有 setup 或未选中的动画，请使用新的附件名称。`);
-  }
   const skins = json.skins ??= [];
   let skin = skins.find((entry: Data) => entry.name === skinName);
-  if (!skin) {
+  if (!skin && create) {
     skin = { name: skinName, attachments: {} };
     skins.push(skin);
   }
-  authoringName(op.slot, '插槽');
+  if (!skin) return undefined;
+  const slot = authoringName(op.slot, '插槽');
+  if (!create) return skin.attachments?.[slot];
   const slots = skin.attachments ??= {};
-  const attachments = Object.hasOwn(slots, op.slot) ? slots[op.slot] : (slots[op.slot] = {});
-  if (Object.hasOwn(attachments, name)) invalid(`附件已存在：${skinName}/${op.slot}/${name}。`);
-  const attachment: Data = { ...op.attachment, width: asset.width, height: asset.height, path: asset.region };
+  return Object.hasOwn(slots, slot) ? slots[slot] : (slots[slot] = {});
+}
+
+function writeAttachment(json: Data, animationName: string, op: Data, asset: DraftAsset) {
+  const name = authoringName(op.name, '附件');
+  const replace = op.op === 'replaceAttachment';
+  const attachments = attachmentEntries(json, op, !replace);
+  const previous = attachments && Object.hasOwn(attachments, name) ? attachments[name] : undefined;
+  const target = json.slots.find((slot: Data) => slot.name === op.slot);
+  if (!replace && (target.attachment === name || Object.entries(json.animations).some(([animation, value]) => animation !== animationName &&
+      (value as Data).slots?.[op.slot]?.attachment?.some((frame: Data) => frame.name === name)))) {
+    invalid(`附件 ${op.slot}/${name} 会影响已有 setup 或未选中的动画，请使用新的附件名称。`);
+  }
+  if (replace) {
+    if (!previous) invalid(`找不到待替换附件：${op.skin}/${op.slot}/${name}。`);
+    if (!['mesh', 'region'].includes(previous.type ?? 'region') || previous.sequence) {
+      invalid(`附件 ${op.slot}/${name} 的类型或序列需要单独迁移。`);
+    }
+    const hasDeform = (Object.values(json.animations) as Data[]).some(animation =>
+      animation.attachments?.[op.skin]?.[op.slot]?.[name]?.deform !== undefined ||
+      animation.deform?.[op.skin]?.[op.slot]?.[name] !== undefined);
+    const hasLinkedMesh = (json.skins ?? []).some((skin: Data) =>
+      (Object.values(skin.attachments?.[op.slot] ?? {}) as Data[]).some(entry =>
+        entry.type === 'linkedmesh' && entry.parent === name && (entry.skin ?? skin.name) === op.skin));
+    if (hasDeform || hasLinkedMesh) invalid(`附件 ${op.slot}/${name} 有 deform 或链接网格引用，需要先保留其拓扑并迁移引用。`);
+  } else if (previous) {
+    invalid(`附件已存在：${op.skin}/${op.slot}/${name}。`);
+  }
+  const inherited = previous ? { ...(previous.color ? { color: previous.color } : {}), ...(previous.name ? { name: previous.name } : {}) } : {};
+  const attachment: Data = { ...inherited, ...op.attachment, width: asset.width, height: asset.height, path: asset.region };
   if (attachment.type === 'mesh') {
     validateMesh(attachment, json.bones.length);
   } else {
@@ -175,7 +200,7 @@ function addAttachment(json: Data, animationName: string, op: Data, asset: Draft
     attachment.scaleX = (op.attachment.scaleX ?? 1) * (op.attachment.width ?? asset.width) / asset.width;
     attachment.scaleY = (op.attachment.scaleY ?? 1) * (op.attachment.height ?? asset.height) / asset.height;
   }
-  attachments[name] = attachment;
+  attachments![name] = attachment;
 }
 
 export async function editCandidate(base: Data, animationName: string, operations: Data[], loadAsset: (op: Data) => Promise<DraftAsset>) {
@@ -184,9 +209,15 @@ export async function editCandidate(base: Data, animationName: string, operation
   addBones(json, operations.filter(op => op.op === 'addBone'));
   for (const op of operations.filter(op => op.op === 'addSlot')) addSlot(json, op.slot);
   const assets: DraftAsset[] = [];
-  for (const op of operations.filter(op => op.op === 'addAttachment')) {
+  const replacements = new Set<string>();
+  for (const op of operations.filter(op => op.op === 'addAttachment' || op.op === 'replaceAttachment')) {
+    if (op.op === 'replaceAttachment') {
+      const key = JSON.stringify([op.skin, op.slot, op.name]);
+      if (replacements.has(key)) invalid(`批次重复替换附件：${op.skin}/${op.slot}/${op.name}。`);
+      replacements.add(key);
+    }
     const asset = await loadAsset(op);
-    addAttachment(json, animationName, op, asset);
+    writeAttachment(json, animationName, op, asset);
     assets.push(asset);
   }
   for (const op of operations) {
@@ -195,7 +226,7 @@ export async function editCandidate(base: Data, animationName: string, operation
   }
   const audit = validateSpineJson(json);
   if (!audit.ok) throw new HostError('VALIDATION_FAILED', '动画草稿未通过 Spine 结构或关键帧校验。', 400, audit.issues);
-  // 只允许追加结构；已有数据及未选中的动画逐项比较。
+  // 仅允许追加结构及显式替换目标附件；已有轨道与其他附件逐项比较。
   for (const key of Object.keys(base)) {
     if (!['bones', 'slots', 'skins', 'animations'].includes(key) && !equal(json[key], base[key])) invalid(`补丁超出范围：${key}。`);
   }
@@ -209,9 +240,11 @@ export async function editCandidate(base: Data, animationName: string, operation
     const next = json.skins.find((skin: Data) => skin.name === old.name);
     for (const [slot, entries] of Object.entries(old.attachments ?? {})) {
       for (const [name, value] of Object.entries(entries as Data)) {
-        if (!equal(next?.attachments?.[slot]?.[name], value)) invalid(`补丁改动了已有附件 ${old.name}/${slot}/${name}。`);
+        if (!replacements.has(JSON.stringify([old.name, slot, name])) && !equal(next?.attachments?.[slot]?.[name], value)) {
+          invalid(`补丁改动了已有附件 ${old.name}/${slot}/${name}。`);
+        }
       }
     }
   }
-  return { json, assets };
+  return { json, assets, replacedAttachments: replacements.size };
 }

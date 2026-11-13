@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spine JSON 预览</title>
+    <link rel="stylesheet" href="/vendor/spine-player/dist/spine-player.css">
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --line: #d8dde6;
+        --text: #172033;
+        --muted: #667085;
+        --accent: #2364aa;
+        --danger: #b42318;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      aside {
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+        padding: 18px;
+      }
+
+      .stage {
+        min-width: 0;
+        padding: 18px;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: 20px;
+        font-weight: 650;
+      }
+
+      label {
+        display: block;
+        margin: 12px 0 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      input,
+      select,
+      button {
+        width: 100%;
+        min-height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text);
+        font: inherit;
+      }
+
+      input,
+      select {
+        padding: 7px 9px;
+      }
+
+      button {
+        margin-top: 12px;
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: #fff;
+        color: var(--text);
+        border-color: var(--line);
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        margin-top: 12px;
+        color: var(--text);
+      }
+
+      .check-row input {
+        width: 16px;
+        min-height: 16px;
+        margin: 0;
+      }
+
+      .check-row label {
+        margin: 0;
+        color: var(--text);
+        font-size: 13px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .status {
+        margin-top: 14px;
+        min-height: 42px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fafbfc;
+        color: var(--muted);
+        line-height: 1.5;
+        word-break: break-word;
+      }
+
+      .status.error {
+        color: var(--danger);
+        border-color: #fecdca;
+        background: #fff5f5;
+      }
+
+      .agent-panel {
+        margin-top: 14px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+      }
+
+      .agent-panel h2 {
+        margin: 0 0 8px;
+        font-size: 14px;
+      }
+
+      .agent-panel p {
+        margin: 4px 0;
+        color: var(--muted);
+        line-height: 1.5;
+        word-break: break-word;
+      }
+
+      .agent-log {
+        margin-top: 8px;
+        max-height: 120px;
+        overflow: auto;
+        font-size: 12px;
+      }
+
+      #player {
+        width: 100%;
+        height: calc(100vh - 36px);
+        min-height: 0;
+        border: 1px solid var(--line);
+        background: #1b1f2a;
+      }
+
+      body.embedded main {
+        display: block;
+        height: 100dvh;
+      }
+
+      body.embedded aside {
+        display: none;
+      }
+
+      body.embedded .stage {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 8px;
+        padding: 8px;
+      }
+
+      body.embedded #player {
+        flex: 1 1 0;
+        height: auto;
+      }
+
+      body.embedded .status {
+        margin: 0;
+        min-height: 0;
+        padding: 6px 9px;
+        font-size: 12px;
+      }
+
+      @media (max-width: 700px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          border-right: none;
+          border-bottom: 1px solid var(--line);
+        }
+
+        #player {
+          height: 62vh;
+          min-height: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <aside>
+        <h1>Spine JSON 预览</h1>
+
+        <label for="jsonPath">JSON 路径</label>
+        <input id="jsonPath" value="" placeholder="当前项目内的角色 JSON 路径">
+
+        <label for="atlasPath">Atlas 路径</label>
+        <input id="atlasPath" value="" placeholder="配套 atlas 路径">
+
+        <label for="animationSelect">动画</label>
+        <select id="animationSelect"></select>
+
+        <div class="row">
+          <div>
+            <label for="skinName">皮肤</label>
+            <select id="skinName"></select>
+          </div>
+          <div>
+            <label for="speed">速度</label>
+            <input id="speed" type="number" value="1" min="0.1" max="3" step="0.1">
+          </div>
+        </div>
+
+        <div class="check-row">
+          <input id="premultipliedAlpha" type="checkbox" checked>
+          <label for="premultipliedAlpha">预乘 Alpha</label>
+        </div>
+
+        <div class="check-row">
+          <input id="mipmaps" type="checkbox">
+          <label for="mipmaps">Mipmaps</label>
+        </div>
+
+        <button id="loadButton">载入预览</button>
+        <button id="refreshButton" class="secondary">刷新动画列表</button>
+
+        <div class="status" id="status">等待载入。需要 JSON、atlas 和 images 资源都存在。</div>
+        <div class="agent-panel">
+          <h2>Agent 操作</h2>
+          <p id="agentTitle">等待 Agent 操作。</p>
+          <p id="agentDetail">当前页面会轮询 MCP 写入的预览会话状态。</p>
+          <div class="agent-log" id="agentLog"></div>
+        </div>
+      </aside>
+
+      <section class="stage">
+        <div id="player"></div>
+      </section>
+    </main>
+
+    <script src="/vendor/spine-player/dist/iife/spine-player.min.js"></script>
+    <script>
+      const jsonPathInput = document.querySelector("#jsonPath");
+      const atlasPathInput = document.querySelector("#atlasPath");
+      const animationSelect = document.querySelector("#animationSelect");
+      const skinNameSelect = document.querySelector("#skinName");
+      const speedInput = document.querySelector("#speed");
+      const premultipliedAlphaInput = document.querySelector("#premultipliedAlpha");
+      const mipmapsInput = document.querySelector("#mipmaps");
+      const statusElement = document.querySelector("#status");
+      const agentTitleElement = document.querySelector("#agentTitle");
+      const agentDetailElement = document.querySelector("#agentDetail");
+      const agentLogElement = document.querySelector("#agentLog");
+      const playerElement = document.querySelector("#player");
+      let player = null;
+      let loadedAssets = null;
+      let loadGeneration = 0;
+      let reloadTimer = null;
+      let sessionTimer = null;
+      let sessionKey = null;
+      let sessionContextKey = null;
+      const initialParams = readInitialParams();
+      let preferredAnimation = initialParams.animation || "walktest2";
+      let preferredSkin = initialParams.skin || "";
+
+      class FittedSpinePlayer extends (window.spine?.SpinePlayer ?? Object) {
+        constructor(element, config) {
+          super(element, config);
+          this.fitViewport = config.viewport;
+          this.boundsBySkin = new Map();
+          this.transparentRegions = new WeakMap();
+          this.pagePixels = new WeakMap();
+        }
+
+        setViewport(value) {
+          const animation = typeof value === "string" ? this.skeleton.data.findAnimation(value) : value;
+          if (!animation) return super.setViewport(value);
+          this.fittedSkin = this.skeleton.skin;
+          if (!this.boundsBySkin.has(this.fittedSkin)) this.boundsBySkin.set(this.fittedSkin, new Map());
+          const bounds = this.boundsBySkin.get(this.fittedSkin);
+          if (!bounds.has(animation)) bounds.set(animation, this.measureAnimation(animation));
+          Object.assign(this.fitViewport, bounds.get(animation));
+          if (initialParams.embedded) setStatus(`已载入 ${animation.name}`);
+          return super.setViewport(animation);
+        }
+
+        measureAnimation(animation) {
+          const sample = new spine.Skeleton(this.skeleton.data);
+          sample.setSkin(this.fittedSkin);
+          const times = new Set(Array.from({ length: 101 }, (_, i) => animation.duration * i / 100));
+          for (const timeline of animation.timelines) {
+            if (timeline instanceof spine.AttachmentTimeline || timeline instanceof spine.SequenceTimeline) {
+              for (let i = 0; i < timeline.frames.length; i += timeline.getFrameEntries()) times.add(timeline.frames[i]);
+            }
+          }
+          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+          const vertices = [];
+          const includePose = () => {
+            sample.updateWorldTransform();
+            for (const slot of sample.drawOrder) {
+              const attachment = slot.getAttachment();
+              if (!slot.bone.active || !slot.color.a || !attachment?.color?.a) continue;
+              let length;
+              if (attachment instanceof spine.RegionAttachment) {
+                length = 8;
+                attachment.computeWorldVertices(slot, vertices, 0, 2);
+              } else if (attachment instanceof spine.MeshAttachment) {
+                length = attachment.worldVerticesLength;
+                attachment.computeWorldVertices(slot, 0, length, vertices, 0, 2);
+              } else {
+                continue;
+              }
+              if (this.isTransparent(attachment.region)) continue;
+              for (let i = 0; i < length; i += 2) {
+                const x = vertices[i], y = vertices[i + 1];
+                if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+                minX = Math.min(minX, x);
+                minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+              }
+            }
+          };
+          for (const time of times) {
+            sample.setToSetupPose();
+            animation.apply(sample, time, time, false, null, 1, spine.MixBlend.setup, spine.MixDirection.mixIn);
+            includePose();
+          }
+          if (!Number.isFinite(minX)) {
+            sample.setToSetupPose();
+            includePose();
+          }
+          if (Number.isFinite(minX)) {
+            const width = Math.max(1, maxX - minX), height = Math.max(1, maxY - minY);
+            return { x: (minX + maxX - width) / 2, y: (minY + maxY - height) / 2, width, height };
+          }
+          const { x, y, width, height } = this.exportedBounds ?? {};
+          return [x, y, width, height].every(Number.isFinite) && width > 0 && height > 0
+            ? { x, y, width, height }
+            : { x: -100, y: -100, width: 200, height: 200 };
+        }
+
+        isTransparent(region) {
+          const page = region?.page;
+          const source = page?.texture?.getImage();
+          if (!source) return false;
+          if (this.transparentRegions.has(region)) return this.transparentRegions.get(region);
+          if (!this.pagePixels.has(page)) {
+            const canvas = document.createElement("canvas");
+            canvas.width = page.width;
+            canvas.height = page.height;
+            const context = canvas.getContext("2d");
+            try {
+              context.drawImage(source, 0, 0);
+              this.pagePixels.set(page, context.getImageData(0, 0, page.width, page.height).data);
+            } catch {
+              this.pagePixels.set(page, null);
+            }
+          }
+          const pixels = this.pagePixels.get(page);
+          const rotated = region.degrees === 90 || region.degrees === 270;
+          const right = Math.min(page.width, region.x + (rotated ? region.height : region.width));
+          const bottom = Math.min(page.height, region.y + (rotated ? region.width : region.height));
+          let transparent = Boolean(pixels && right > region.x && bottom > region.y);
+          for (let y = Math.max(0, region.y); transparent && y < bottom; y++) {
+            for (let x = Math.max(0, region.x); x < right; x++) {
+              if (pixels[(y * page.width + x) * 4 + 3] > 0) {
+                transparent = false;
+                break;
+              }
+            }
+          }
+          this.transparentRegions.set(region, transparent);
+          return transparent;
+        }
+      }
+
+      document.querySelector("#loadButton").addEventListener("click", () => loadPlayer());
+      document.querySelector("#refreshButton").addEventListener("click", () => refreshAnimations());
+      jsonPathInput.addEventListener("change", () => refreshAnimations());
+      animationSelect.addEventListener("change", () => {
+        preferredAnimation = animationSelect.value;
+        if (player) void loadPlayer();
+      });
+      skinNameSelect.addEventListener("change", () => {
+        preferredSkin = skinNameSelect.value;
+        if (player) void loadPlayer();
+      });
+      premultipliedAlphaInput.addEventListener('change', () => { if(player) loadPlayer(); });
+
+      if (initialParams.embedded) {
+        document.body.classList.add("embedded");
+        playerElement.before(statusElement);
+      }
+      applyInitialParams(initialParams);
+      void initialize();
+
+      async function initialize() {
+        try {
+          const session = await getJson("/api/session");
+          if (session.ok) {
+            await applySession(session, !(initialParams.json && initialParams.atlas));
+          }
+          if (initialParams.json && initialParams.atlas) {
+            await refreshAnimations();
+            if (initialParams.autoload) await loadPlayer();
+          }
+        } catch (error) {
+          setStatus(error.message, true);
+        } finally {
+          startSessionPolling();
+        }
+      }
+
+      async function refreshAnimations() {
+        if (!jsonPathInput.value) { setStatus('请填写当前项目的 JSON 和 atlas 路径。'); return; }
+        try {
+          const data = await getJson(`/api/animations?file=${encodeURIComponent(jsonPathInput.value)}`);
+          if (!data.ok) throw new Error(data.message || "读取动画列表失败。");
+
+          const selectedAnimation = data.animations.includes(preferredAnimation)
+            ? preferredAnimation
+            : data.animations.includes(animationSelect.value)
+              ? animationSelect.value
+              : data.animations.includes("walktest2")
+                ? "walktest2"
+                : data.animations[0];
+          const skinValues = ["", ...data.skins];
+          const selectedSkin = skinValues.includes(preferredSkin) ? preferredSkin : "";
+          fillSelect(animationSelect, data.animations, selectedAnimation);
+          fillSelect(skinNameSelect, skinValues, selectedSkin);
+          preferredAnimation = selectedAnimation || preferredAnimation;
+          preferredSkin = selectedSkin;
+          setStatus(`已读取 ${data.animations.length} 个动画。JSON 版本：${data.version || "未知"}。`);
+        } catch (error) {
+          fillSelect(animationSelect, [], "");
+          fillSelect(skinNameSelect, [""], "");
+          setStatus(error.message, true);
+        }
+      }
+
+      function projectUrl(url) { const projectId = new URLSearchParams(window.location.search).get("projectId"); return projectId ? "/projects/" + encodeURIComponent(projectId) + url : url; }
+      async function loadPlayer() {
+        clearTimeout(reloadTimer);
+        const generation = ++loadGeneration;
+        const jsonPath = jsonPathInput.value.trim();
+        const atlasPath = atlasPathInput.value.trim();
+        const animation = animationSelect.value;
+        const skin = skinNameSelect.value;
+        const speed = Number(speedInput.value || 1);
+        const premultipliedAlpha = premultipliedAlphaInput.checked;
+        const mipmaps = mipmapsInput.checked;
+
+        if (!window.spine || !window.spine.SpinePlayer) {
+          setStatus("Spine Player runtime 未加载。请确认本地 node_modules 中存在 @esotericsoftware/spine-player。", true);
+          return;
+        }
+        if (!jsonPath || !atlasPath || !animation) {
+          setStatus("请先填写 JSON、Atlas，并选择动画。", true);
+          return;
+        }
+
+        try {
+          const [jsonHash, atlasHash] = await Promise.all([getHash(jsonPath), getHash(atlasPath)]);
+          const version = `${jsonHash.hash}-${atlasHash.hash}`;
+          const skeletonData = await getJson(`/workspace/${encodePath(jsonPath)}?v=${version}`);
+          const atlasUrl=projectUrl(`/workspace/${encodePath(atlasPath)}?v=${version}`);
+          const alphaAssets=await getJson(`/api/preview-alpha-assets?atlas=${encodeURIComponent(atlasPath)}&pma=${premultipliedAlpha}`);
+          if (generation !== loadGeneration) return;
+          if(!alphaAssets.ok)throw new Error(alphaAssets.message||'预览纹理 Alpha 转换失败。');
+          const rawDataURIs={};
+          const parent=atlasUrl.substring(0,atlasUrl.lastIndexOf('/')+1);
+          for(const [page,dataUri] of Object.entries(alphaAssets.images))rawDataURIs[parent+page]=dataUri;
+          if(player&&typeof player.dispose==='function')player.dispose();
+          playerElement.innerHTML = "";
+          player = new FittedSpinePlayer("player", {
+            jsonUrl: projectUrl(`/workspace/${encodePath(jsonPath)}?v=${version}`),
+            atlasUrl,
+            rawDataURIs,
+            animation,
+            skin: skin || undefined,
+            alpha: true,
+            backgroundColor: "#1b1f2a",
+            premultipliedAlpha,
+            mipmaps,
+            preserveDrawingBuffer: true,
+            showControls: true,
+            viewport: { transitionTime: 0 },
+            success: (instance) => {
+              if (generation !== loadGeneration) return;
+              instance.exportedBounds = skeletonData.skeleton;
+              loadedAssets = { jsonPath, atlasPath, jsonHash: jsonHash.hash, atlasHash: atlasHash.hash };
+              if (Number.isFinite(speed) && speed > 0) instance.speed = speed;
+              const conversions=alphaAssets.pages.filter(p=>p.converted).length;
+              setStatus(initialParams.embedded ? `已载入 ${animation}` : `已载入 ${animation}。PMA=${premultipliedAlpha ? "开" : "关"}（${conversions ? `${conversions} 张预览纹理已转换` : '原贴图格式匹配'}），Mipmaps=${mipmaps ? "开" : "关"}，hash=${jsonHash.hash.slice(0, 12)}。`);
+            },
+            update: (instance) => {
+              const entry = instance.animationState.getCurrent(0);
+              if (entry && instance.fittedSkin !== instance.skeleton.skin) instance.setViewport(entry.animation);
+            },
+            error: (_instance, message) => {
+              if (generation === loadGeneration) setStatus(`预览载入失败：${message}`, true);
+            },
+          });
+        } catch (error) {
+          if (generation === loadGeneration) setStatus(error.message, true);
+        } finally {
+          if (generation === loadGeneration) startHashPolling();
+        }
+      }
+
+      function startHashPolling() {
+        clearTimeout(reloadTimer);
+        reloadTimer = setTimeout(async () => {
+          try {
+            const assets = loadedAssets;
+            if (assets && assets.jsonPath === jsonPathInput.value.trim() && assets.atlasPath === atlasPathInput.value.trim()) {
+              const generation = loadGeneration;
+              const [json, atlas] = await Promise.all([getHash(assets.jsonPath), getHash(assets.atlasPath)]);
+              if (generation !== loadGeneration) return;
+              if (json.hash !== assets.jsonHash || atlas.hash !== assets.atlasHash) {
+                setStatus("检测到 JSON 或 atlas 已变化，正在重新载入预览。");
+                await refreshAnimations();
+                await loadPlayer();
+                return;
+              }
+            }
+          } catch {
+            // 轮询失败不打断当前预览。
+          }
+          startHashPolling();
+        }, 1500);
+      }
+
+      function startSessionPolling() {
+        clearTimeout(sessionTimer);
+        sessionTimer = setTimeout(async () => {
+          try {
+            const session = await getJson("/api/session");
+            if (session.ok) await applySession(session);
+          } catch {
+            // 会话轮询失败不打断当前预览。
+          }
+          startSessionPolling();
+        }, 1200);
+      }
+
+      async function applySession(session, loadContext = true) {
+        const key = JSON.stringify([session.revision, session.updatedAt]);
+        if (sessionKey === key) return;
+        sessionKey = key;
+        const context = session.context || {};
+        renderAgentOperation(session);
+        const contextKey = JSON.stringify(context);
+        if (contextKey === sessionContextKey) return;
+        sessionContextKey = contextKey;
+        if (!loadContext) return;
+        jsonPathInput.value = context.filePath || "";
+        atlasPathInput.value = context.atlasPath || "";
+        preferredAnimation = context.animation || "";
+        preferredSkin = context.skin || "";
+        speedInput.value = context.speed || 1;
+        premultipliedAlphaInput.checked = context.premultipliedAlpha !== false;
+        mipmapsInput.checked = context.mipmaps === true;
+        if (!context.filePath || !context.atlasPath) {
+          ++loadGeneration;
+          clearTimeout(reloadTimer);
+          player?.dispose();
+          player = null;
+          loadedAssets = null;
+          playerElement.replaceChildren();
+        }
+        await refreshAnimations();
+        if (context.autoload !== false && context.filePath && context.atlasPath) await loadPlayer();
+      }
+
+      function renderAgentOperation(session) {
+        const operation = session.operation || {};
+        agentTitleElement.textContent = operation.title || "Agent 已更新预览会话。";
+        agentDetailElement.textContent = [
+          operation.status ? `状态：${operation.status}` : null,
+          operation.toolName ? `工具：${operation.toolName}` : null,
+          operation.dryRun !== undefined ? `dryRun：${operation.dryRun ? "是" : "否"}` : null,
+          operation.detail || null,
+        ].filter(Boolean).join("；") || "等待下一步操作。";
+        agentLogElement.innerHTML = "";
+        for (const entry of (session.logs || []).slice(-8).reverse()) {
+          const line = document.createElement("p");
+          line.textContent = `${entry.time || ""} ${entry.level || "info"} ${entry.toolName ? `[${entry.toolName}] ` : ""}${entry.message || ""}`;
+          agentLogElement.append(line);
+        }
+      }
+
+      async function getHash(filePath) {
+        const data = await getJson(`/api/hash?file=${encodeURIComponent(filePath)}`);
+        if (!data.ok) throw new Error(data.message || "读取 hash 失败。");
+        return data;
+      }
+
+      async function getJson(url) {
+        const response = await fetch(projectUrl(url), { cache: "no-store" });
+        return response.json();
+      }
+
+      function fillSelect(select, values, selected) {
+        select.innerHTML = "";
+        for (const value of values) {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value || "默认";
+          option.selected = value === selected;
+          select.append(option);
+        }
+      }
+
+      function readInitialParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          json: params.get("json"),
+          atlas: params.get("atlas"),
+          animation: params.get("animation"),
+          skin: params.get("skin"),
+          speed: params.get("speed"),
+          pma: parseBooleanParam(params.get("pma")),
+          mipmaps: parseBooleanParam(params.get("mipmaps")),
+          autoload: parseBooleanParam(params.get("autoload")) === true,
+          embedded: params.get("embed") === "1",
+        };
+      }
+
+      function applyInitialParams(params) {
+        if (params.json) jsonPathInput.value = params.json;
+        if (params.atlas) atlasPathInput.value = params.atlas;
+        if (params.speed) speedInput.value = params.speed;
+        if (params.pma !== null) premultipliedAlphaInput.checked = params.pma;
+        if (params.mipmaps !== null) mipmapsInput.checked = params.mipmaps;
+      }
+
+      function parseBooleanParam(value) {
+        if (value === null) return null;
+        return ["1", "true", "yes", "on"].includes(value.toLowerCase());
+      }
+
+      function encodePath(filePath) {
+        return filePath.split(/[\\/]+/).map(encodeURIComponent).join("/");
+      }
+
+      function setStatus(message, isError = false) {
+        statusElement.textContent = message;
+        statusElement.classList.toggle("error", isError);
+      }
+    </script>
+  </body>
+</html>

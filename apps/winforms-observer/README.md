@@ -142,11 +142,13 @@ dotnet run --project apps/winforms-observer/SpineMcp.WinFormsObserver.csproj -- 
 ## 工作方式
 
 1. Agent 通过 MCP 调用 `spine_preview_set_session` 设置当前 JSON、atlas、动画和操作说明。
-2. WinForms 每 1.2 秒读取 `/api/session`。
+2. WinForms 每 1.2 秒读取 `/api/session`，在「会话」页显示当前工作区、动画和操作信息。
 3. WinForms 读取 `/api/agent-connection` 展示 Agent 连接灯和配置片段。
 4. WinForms 读取 `.spine-mcp/observer-runtime.json` 展示 preview server PID、WinForms PID、端口、日志路径和停止命令。
-5. 如果 `revision` 或预览 URL 变化，WinForms 自动调用 `/api/validation-pipeline`。
-6. WinForms 更新文本信息、验证结果，并让 WebView2 载入新预览。
+5. 会话修订或预览 URL 变化后，WinForms 自动验证。WebView2 自行同步播放上下文和资源哈希，按动画范围和窗口大小等比取景。日志更新可以保持当前播放进度。
+6. 左侧「会话」「连接」「日志」可分别查看。内容较长时可在对应页面纵向滚动。
+
+MCP 程序可以安装在独立目录。让 Agent 的 MCP 工作区与「会话」页显示的工作区一致，角色文件可以放在这个根目录的子目录中。正常调用后会自动更新，「刷新会话」用于手动重连。
 
 ## 运行状态
 
