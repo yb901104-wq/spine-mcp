@@ -125,7 +125,6 @@ const projectIdProperty = {
 const writeProperties = {
   dryRun: { type: "boolean", default: true },
   expectedHash: { type: "string" },
-  allowUnsupportedVersion: { type: "boolean", default: false },
 };
 
 const rangeProperty = {
@@ -258,7 +257,7 @@ const tools = [
   },
   {
     name: "spine_get_official_spec_summary",
-    description: "返回当前 MCP 内置的 Spine 官方 JSON 规范审查摘要、可写 timeline 规则和 4.1.24 字段适配说明。",
+    description: "返回当前 MCP 的 Spine 版本声明要求、官方 JSON 规范审查摘要及可写 timeline 字段。",
     inputSchema: {
       type: "object",
       properties: {},
@@ -1053,7 +1052,6 @@ async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progr
         overwrite: args.overwrite,
         dryRun: args.dryRun,
         expectedHash: args.expectedHash,
-        allowUnsupportedVersion: args.allowUnsupportedVersion,
       }, context);
     }
     case "spine_extract_motion": {
@@ -1073,7 +1071,6 @@ async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progr
         useCurves: args.useCurves,
         dryRun: args.dryRun,
         expectedHash: args.expectedHash,
-        allowUnsupportedVersion: args.allowUnsupportedVersion,
       }, context);
     }
     case "spine_batch_retarget": {

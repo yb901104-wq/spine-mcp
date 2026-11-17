@@ -2,7 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { link, lstat, open, readFile, realpath, stat, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { TextureAtlas } from '@esotericsoftware/spine-core';
-import { resolveWorkspacePath, SUPPORTED_SPINE_VERSION, type ToolContext } from './spineJson.js';
+import { isDeclaredSpineVersion, resolveWorkspacePath, type ToolContext } from './spineJson.js';
 import { getRegisteredWorkspace, getWorkspaceRoot } from './workspaceTools.js';
 import { withFileLock } from './jobTools.js';
 import { validateMapping, validateMotion } from './motionEngine.js';
@@ -152,6 +152,7 @@ export async function validateProjectManifest(value: unknown, inputContext: Tool
   for (const [id, character] of Object.entries(manifest.characters)) {
     const skeleton = await json(character.skeletonPath), mapping = await json(character.mappingPath);
     if (skeleton.skeleton?.spine !== character.spineVersion) conflict(`角色 ${id} 的 spineVersion 与 skeleton.spine 不一致。`);
+    if (!isDeclaredSpineVersion(character.spineVersion)) incomplete(`角色 ${id} 的 spineVersion 必须声明完整的 Spine 版本号。`);
     if (!Array.isArray(skeleton.bones) || !skeleton.bones.length) incomplete(`角色 ${id} 缺少骨骼结构。`);
     try { validateMapping(mapping as any, skeleton); }
     catch (error) { incomplete(`角色 ${id} 的 mapping 无效。${String(error)}`); }
@@ -167,7 +168,6 @@ export async function validateProjectManifest(value: unknown, inputContext: Tool
       matchPath(rig.mappingPath, character.mappingPath, `${id}.visualRig.mappingPath`, true);
       if (rig.skin !== undefined && rig.skin !== (character.skin ?? '')) conflict(`角色 ${id} 的 visualRig.skin 冲突。`);
     }
-    if (character.spineVersion !== SUPPORTED_SPINE_VERSION) warnings.push(`角色 ${id} 使用 ${character.spineVersion}；V1 动画写入仅支持 ${SUPPORTED_SPINE_VERSION}。`);
     let pages: string[];
     try { pages = new TextureAtlas((await readBytes(character.atlasPath)).toString('utf8')).pages.map(p => p.name); }
     catch (error) { if (error instanceof ProjectError) throw error; incomplete(`角色 ${id} 的 atlas 无法解析。${String(error)}`); }

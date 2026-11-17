@@ -2,7 +2,7 @@
 
 ## 2026-10-21 Host 只读导出适配
 
-Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后，只在 `.spine-mcp/live/` 生成不可变 player 候选；发布前复用现有结构与官方规范审查，并用官方 runtime 比较骨骼世界变换、附件、完整 drawOrder 与可见顶点，最大误差上限仍为 1e-4。live 文件不是可提交源资产，也不能借此修改 setup。规范字段、曲线敏感规则和 4.1.24 写入边界未放宽。C2 动画提交尚未接入。
+Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后，只在 `.spine-mcp/live/` 生成不可变 player 候选；发布前复用现有结构与官方规范审查，并用官方 runtime 比较骨骼世界变换、附件、完整 drawOrder 与可见顶点，最大误差上限仍为 1e-4。live 文件的用途限于预览。C2 动画提交尚未接入。
 
 
 本文档记录当前 MCP 如何把 Spine 官方 JSON 导出格式转成可执行的写入审查规则。后续新增、修改或删除写入能力时，必须同步更新本文档和 `docs/MCP操作清单.md`。
@@ -10,10 +10,10 @@ Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后�
 ## 规范来源
 
 - 官方文档：[Spine JSON export format](https://esotericsoftware.com/spine-json-format#JSON-export-format)
-- 当前写入版本：`skeleton.spine === "4.1.24"`
+- 写入版本声明：`skeleton.spine` 必须是完整版本号，例如 `4.3.26` 或 `4.4.01-beta`。
 - 当前真实样本：`example-json/skeleton-Empty-4.1.json` 和 `example-json/skeleton-4.1.json`
 
-官方在线文档可能随 Spine 当前版本更新，因此本项目采用“官方文档字段含义 + 4.1.24 样本字段形态”的双重规则。若两者存在差异，必须在版本适配说明中记录，不盲目套用最新网页字段。
+本项目采用官方文档字段含义和 `4.1.24` 样本字段形态审查当前可写子集。完整的版本声明允许进入写入流程，实际 timeline 仍须符合下表。涉及 runtime 或编辑器导入的验证应使用与该文件匹配的版本。
 
 ## 审查边界
 
@@ -34,7 +34,7 @@ Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后�
 
 ## 当前可写 timeline 规则
 
-| timeline | 官方字段含义 | 4.1.24 写入字段 | 允许 JSON path | 备注 |
+| timeline | 官方字段含义 | MCP 可写字段 | 允许 JSON path | 备注 |
 |---|---|---|---|---|
 | bone `rotate` | `time`、旋转角度、`curve` | `time`、`value`、`curve` | `/animations/*/bones/*/rotate` | 官方在线文档中旋转角度字段可能写作 `angle`；当前 4.1.24 样本导出使用 `value`，因此 V1 写入 `value`。 |
 | bone `translate` | `time`、`x`、`y`、`curve` | 同官方字段 | `/animations/*/bones/*/translate` | `x/y` 至少写入一个。 |
@@ -49,7 +49,7 @@ Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后�
 每个写入工具都必须经过以下流程：
 
 1. 读取 JSON 文件并确认路径在工作区内。
-2. 校验 `skeleton.spine`，默认只允许 `4.1.24` 写入。
+2. 校验 `skeleton.spine` 是否为完整版本号。缺失或格式无效时拒绝写入。
 3. 校验 `expectedHash`，防止覆盖基于旧文件的修改。
 4. 在 clone 后的 JSON 上应用操作。
 5. 生成真实 diff，并检查 diff 是否只落在允许 path。

@@ -394,7 +394,7 @@ Host 同时核对运行态严格字节哈希与持久审查证据哈希，禁止
 
 入口先校验调用凭据，再查询工作区持久化的 requestId：同一请求的终态结果直接返回其原 committed version，不重新检查旧授权或重做写入；请求内容不同则 `REQUEST_CONFLICT`。没有终态的 prepare 先按 §5.2 恢复裁决，不能当作新事务重试。
 
-1. MCP 读取精确快照和 commit dryRun 候选，执行适用门禁：Spine `4.1.24`、官方 JSON 规范、diff 白名单、结构引用、官方 runtime，以及参考任务要求的参考/绑定/阶段关系/视觉/完整动画审查。沿用既有 expectedHash/reviewToken 语义；draft 走其工作流校验和新修订规则，不伪造动画通过记录。
+1. MCP 读取精确快照和 commit dryRun 候选，检查 Spine 完整版本声明、官方 JSON 规范、diff 白名单、结构引用和官方 runtime。参考任务还须通过参考、绑定、阶段关系、视觉和完整动画审查。沿用既有 expectedHash/reviewToken 语义；draft 走其工作流校验和新修订规则，不伪造动画通过记录。
 2. MCP 经控制通道调用 `/api/authorize`，携带完整版本、snapshot/依赖/derived/review 指纹、candidateHash、规范 outputPath、intent、基线/输出文件预期哈希、gateRecord 和适用 reviewToken。Host 仅登记可信控制通道的门禁结果，并核对它们属于同一候选；返回短期、单次使用的 opaque `authorizationId`。页面 token 或 Agent 自填 `approved:true` 不能签发授权。
 3. 新的 `commit{dryRun:false,expectedRevision,authorizationId,requestId}` 在互斥区重新验证完整版本、精确候选字节、依赖/派生/审查指纹、target/pin、写入权 generation 及所有相关文件的预期哈希。任一变化返回冲突，原文件不变，必须重新 dryRun 和审查；force/pin/reopen 不能续用旧授权。
 4. 事务写入持久 journal prepare 记录后，先为将被覆盖的文件生成备份；新增输出也记录源基线备份。临时文件与目标同卷，flush 后 rename 原子替换；备份或临时文件失败则不替换目标。不存在的输出按“预期不存在”保护，已存在输出必须显式绑定其哈希，不能无条件覆盖。
@@ -433,7 +433,7 @@ interface ProjectManifest {
 
 - 所有路径相对当前工作区，经过 resolveWorkspacePath 与 realpath 祖先校验；manifest 不允许携带另一个 workspaceRoot。characters 至少一项，documents/references 可为空；文档 path 规范化后唯一，characterId、defaults 及参考引用必须有效。先检查结构与路径再读取依赖；省略 optional 不表示对应能力通过。
 - 角色资源来自 characters；pose 自带的 filePath/mappingPath/visualRigPath、reference/sequence 等若存在，必须与工程声明相符；冲突返回 `PROJECT_BINDING_CONFLICT`，不自行选择一边。motion 按 documents.characterId 绑定角色与 mapping，不向旧 motion 强加一个不存在的字段。
-- `spineVersion` 是声明，打开时仍读取 skeleton.spine 比对。版本不同或未支持版本可诊断，动画写入能力只能按 V1 的 4.1.24 审查返回。
+- `spineVersion` 必须声明完整版本并与打开的 `skeleton.spine` 一致。动画写入还须通过当前 timeline 规范及适用的 runtime 校验。
 - `spine_host_open{manifestPath}` 只打开工程并返回能力概览，activeDoc 为 null；再用 path 显式打开文档。两者一起提供可一步完成；只给 path 时读取工作区根 manifest。defaults 只用于建议，不默选、自动 pin 或批准文档。所有文档回执通过 activeDoc 返回，未打开文档的版本为 null。
 - 已打开文档时调用 project-only open 视为关闭活动文档，须带完整 expectedRevision，并先持久化旧 journal；创建新的打开周期，不复用旧 pin。manifest 或其绑定在磁盘改变后返回 stale，清除派生/批准/授权；无未提交内容时才允许显式 reload，不在每次 state 中悄悄接纳新配置。
 - 缺 manifest 的旧项目按 `mode:'legacy'` 返回可验证的显式路径信息，现有 detached 工具保持原有行为；不全盘猜测角色，也不自动生成文件。C 写入前必须初始化并重新打开受管工程。
@@ -719,7 +719,7 @@ header: { documentId, docPath, sessionId, lastCommittedHash, lastCommittedRevisi
 | 工程/活动资产 | 一个受管工程、一个已绑定真实角色、一个 pose；其依赖只读 | 在同一模型下接通其他 pose、motion 与 skeleton 动画 |
 | op | 每次真实 patch 仅一个 setPoseTarget，role 为 leftHand 或 rightHand，仅修改 x/y/angle；默认 dryRun | setPoseParameters、其他目标、受控附件/层序及时间线命令，逐项独立 schema |
 | 固定条件 | 解剖身份、支撑脚、弯曲分支、mapping、visualRig、参考与相机不随局部修改改变 | 需要改这些条件时走各自已有校准/审查流程，不作为普通姿态补丁 |
-| 保存 | 仅 intent:draft 的 pose 新路径/新修订；源角色、atlas/PNG、mapping、rig 不变 | 受支持 motion 草稿及 4.1.24 动画写入，沿用所有适用门禁 |
+| 保存 | 仅 intent:draft 的 pose 新路径/新修订；源角色、atlas/PNG、mapping、rig 不变 | 受支持 motion 草稿及已声明完整版本的动画写入，沿用所有适用门禁 |
 | 呈现 | 当前 pose 的实际 runtime 节点、干净/诊断图及 player 候选，完整版本绑定 | 多关键姿态、时间采样、完整动画对比；增加 animation/time 选择契约后才开放 |
 | 历史/恢复 | 当前 pose undo/redo、合法审查桥接、授权、备份、崩溃/响应丢失恢复、工程重开 | 多文档切换恢复、跨 kind 及较大批次的扩展覆盖；共用安全约束不后移 |
 

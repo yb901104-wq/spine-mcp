@@ -99,7 +99,10 @@ test('工程绑定：pose、mapping、版本、皮肤与标准姿态不能互相
   await assert.rejects(validateProjectManifest(changed, context(root)), /PROJECT_BINDING_CONFLICT/);
   await save(root, 'assets/body.json', { skeleton: { spine: '4.2.0' }, bones: [{ name: 'root' }] });
   changed.characters.hero.spineVersion = '4.2.0'; delete changed.characters.hero.skin;
-  assert.match((await validateProjectManifest(changed, context(root))).warnings.join(), /仅支持 4.1.24/);
+  assert.deepEqual((await validateProjectManifest(changed, context(root))).warnings, []);
+  await save(root, 'assets/body.json', { skeleton: { spine: 'unknown' }, bones: [{ name: 'root' }] });
+  changed.characters.hero.spineVersion = 'unknown';
+  await assert.rejects(validateProjectManifest(changed, context(root)), /spineVersion 必须声明完整的 Spine 版本号/);
 }));
 
 test('工程重开：未知 schema 只诊断，损坏清单与丢失依赖不降级 legacy', async () => fixture(async (root, manifest) => {

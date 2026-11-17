@@ -82,7 +82,7 @@ WinForms 源码已嵌入 Host 工作台，读取相同工作区的观察发现�
 - 所有文件路径都通过 `filePath` 传入，且必须位于工作区根目录内。
 - 写入工具默认 `dryRun: true`，只返回差异，不修改文件。
 - 真正写入时传 `dryRun: false`，工具会先在 `backups/` 生成备份。
-- 写入操作默认只支持 `skeleton.spine === "4.1.24"`。
+- 写入接受 `skeleton.spine` 声明的任意完整版本号，例如 `4.3.26`。缺失或格式无效的版本拒绝写入。
 - `expectedHash` 用于防止基于旧文件覆盖新文件。
 - V1/V1.5 不修改 setup pose、bones、slots、skins、mesh/deform、constraints 和 events。
 - 写入后会对真实 diff 做白名单检查。当前写工具只允许修改 `/animations/{animation}` 子树。
@@ -95,8 +95,8 @@ WinForms 源码已嵌入 Host 工作台，读取相同工作区的观察发现�
 
 | 工具 | 能做什么 | 备注 |
 |---|---|---|
-| `spine_get_document_summary` | 查看 Spine JSON 文档摘要。 | 返回版本、hash、顶层字段、骨骼/插槽/皮肤/动画数量，以及当前版本是否允许写入。 |
-| `spine_get_official_spec_summary` | 查看 MCP 内置的官方 JSON 规范审查规则。 | 返回官方文档来源、当前支持版本、可写 timeline 字段表和 `4.1.24` 字段适配说明。 |
+| `spine_get_document_summary` | 查看 Spine JSON 文档摘要。 | 返回版本、hash、顶层字段和骨骼/插槽/皮肤/动画数量。`writable` 表示版本声明通过。 |
+| `spine_get_official_spec_summary` | 查看 MCP 内置的官方 JSON 规范审查规则。 | 返回官方文档来源、版本声明要求、可写 timeline 字段表和字段参考样本版本 `timelineReferenceVersion`。 |
 | `spine_get_skeleton_hierarchy` | 查看骨骼树。 | `includeSetupPose: true` 时返回 setup pose 局部变换；只读，不修改骨架。 |
 | `spine_get_slots` | 查看插槽列表。 | 按绘制顺序返回 slot、绑定 bone、默认 attachment，适合判断层级遮挡关系。 |
 | `spine_get_skins` | 查看皮肤和附件摘要。 | `includeAttachments: true` 时列出每个 slot 下的 attachment 名称和类型。 |
@@ -246,7 +246,7 @@ Codex 桌面一键配置默认推荐用户级，写入后完全退出重开客�
 
 | timeline | 允许字段 | 备注 |
 |---|---|---|
-| bone `rotate` | `time`, `value`, `curve` | `value` 必须是数字。官方在线文档可能以 `angle` 描述旋转角度；当前 `4.1.24` 写入使用样本导出的 `value` 字段。 |
+| bone `rotate` | `time`, `value`, `curve` | `value` 必须是数字。官方在线文档可能以 `angle` 描述旋转角度，当前可写子集采用 `4.1.24` 样本导出的 `value` 字段。 |
 | bone `translate` | `time`, `x`, `y`, `curve` | `x/y` 必须是数字。 |
 | bone `scale` | `time`, `x`, `y`, `curve` | `x/y` 必须是数字。 |
 | bone `shear` | `time`, `x`, `y`, `curve` | `x/y` 必须是数字。 |

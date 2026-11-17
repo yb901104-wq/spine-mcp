@@ -185,7 +185,7 @@ export async function retargetMotion(args: MotionBuildOptions, context: ToolCont
   if (args.dryRun === false) throw new Error("旧版角度生成器仅支持 dryRun；真实写入请使用已确认 mapping 和 v2 语义 motion。");
   const document = await readSpineDocument(args.filePath, context); const mapping = await readCharacterMapping(args.mappingPath, context); validateMapping(mapping, document.json);
   const motion = args.motionPath ? await readMotionDefinition(args.motionPath, context) : builtInMotion(args.animation, args.duration); const duration = args.duration ?? motion.duration; const poses = generateMotionPoses(mapping, motion, duration);
-  return applyPoseSequence(args.filePath, { animation: args.animation, overwrite: args.overwrite, duration, closeLoop: motion.loop, poses, dryRun: args.dryRun, expectedHash: args.expectedHash, allowUnsupportedVersion: args.allowUnsupportedVersion }, context);
+  return applyPoseSequence(args.filePath, { animation: args.animation, overwrite: args.overwrite, duration, closeLoop: motion.loop, poses, dryRun: args.dryRun, expectedHash: args.expectedHash }, context);
 }
 
 export interface BatchJob extends MotionBuildOptions { name?: string; }

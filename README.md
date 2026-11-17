@@ -20,7 +20,7 @@ WinForms 源码已加入“动画预览 / Host 工作台”页签。Host 页从�
 
 本轮细节工具实测与 idle runtime 优化见 [细节工具实测验收](docs/细节工具实测验收.md)。曲线拟合可传 `atlasPath` 回读验证实际误差；`useCurves:true` 输出三次贝塞尔，默认 false 使用线性简化。
 
-这是一个 TypeScript MCP 服务器，用于受控地读取、校验和修改 Spine `4.1.24` 导出的 JSON 文件。第一版聚焦动画时间线，不直接修改 setup pose、骨骼结构、插槽结构或皮肤资源结构。
+这是一个 TypeScript MCP 服务器，用于受控地读取、校验和修改 Spine 导出的 JSON 文件。第一版的写入范围为动画时间线。
 
 ## 安装与构建
 
@@ -164,7 +164,7 @@ WinForms 的“一键配置”支持 Codex、Claude Code、opencode；Codex 默�
 
 ## 版本策略
 
-写入操作锁定 `skeleton.spine === "4.1.24"`。如果文件版本不是 `4.1.24`，默认只允许读取和校验；除非工具调用显式传入 `allowUnsupportedVersion: true`，否则拒绝写入。
+写入工具接受 `skeleton.spine` 声明的任意完整版本号，例如 `4.3.26` 或 `4.4.01-beta`。版本缺失、格式无效或仅有主次版本时拒绝写入。写入仍需通过当前 timeline 字段审查、diff 白名单和结构引用校验。`spine_get_document_summary` 的 `writable` 表示版本声明通过，`timelineReferenceVersion` 表示编写可写子集时采用的样本版本。需要 runtime 验证的流程仍要求匹配的 runtime。
 
 ## 项目规则
 

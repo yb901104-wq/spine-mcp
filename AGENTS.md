@@ -17,7 +17,7 @@
 
 ## 实现边界
 
-- V1 只支持 Spine `4.1.24` JSON 的写入；其他版本默认只读或校验。
+- Spine JSON 必须在 `skeleton.spine` 声明完整版本号，例如 `4.3.26`。任何明确声明的版本都可进入写入审查，缺失或无法识别的版本拒绝写入。
 - 写入工具默认 `dryRun: true`，提交写入必须生成备份。
 - 写入工具必须经过官方 JSON 规范审查层、diff 白名单和结构引用校验；Agent 和未来 Skill 不允许绕过 MCP 直接自由编辑 Spine JSON。
 - 官方 JSON 规范审查必须覆盖 Spine 导入器敏感规则，例如 `curve` 只描述当前关键帧到下一关键帧的插值，timeline 最后一帧不能包含 `curve`。

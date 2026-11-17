@@ -9,7 +9,9 @@ import { withWorkspaceWrite } from './writerOwnership.js';
 import { checkpoint } from './taskControl.js';
 import { cachedDocument,invalidate } from './runtimeCache.js';
 
-export const SUPPORTED_SPINE_VERSION = "4.1.24";
+const TIMELINE_REFERENCE_VERSION = "4.1.24";
+const SPINE_VERSION_FORMAT = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+const SPINE_VERSION_REQUIRED = "skeleton.spine 必须声明完整的 Spine 版本号，例如 4.3.26。";
 export const OFFICIAL_JSON_SPEC_URL = "https://esotericsoftware.com/spine-json-format#JSON-export-format";
 
 type JsonObject = Record<string, any>;
@@ -52,7 +54,6 @@ export interface JsonDiff {
 export interface WriteOptions {
   dryRun?: boolean;
   expectedHash?: string;
-  allowUnsupportedVersion?: boolean;
 }
 
 export interface WriteResult {
@@ -138,7 +139,7 @@ export interface TimelineSpecSummary {
 export interface OfficialSpecValidationResult {
   ok: boolean;
   source: string;
-  supportedVersion: string;
+  timelineReferenceVersion: string;
   checkedTimelineCount: number;
   checkedKeyframeCount: number;
   rulesApplied: string[];
@@ -160,7 +161,7 @@ const WRITABLE_TIMELINE_SPECS: TimelineSpecSummary[] = [
     spine4124Fields: ["time", "value", "curve"],
     allowedKeys: ["time", "value", "curve"],
     writablePath: "/animations/*/bones/*/rotate",
-    note: "官方在线文档的 rotate 示例字段常写作 angle；当前 4.1.24 样本导出使用 value，V1 写入按 4.1.24 适配为 value。",
+    note: "当前写入子集以 4.1.24 导出样本为参考，rotate 使用 value；官方在线文档的示例可能使用 angle。",
   },
   {
     targetType: "bone",
@@ -273,8 +274,8 @@ export function getDocumentSummary(document: SpineDocument) {
     absolutePath: document.absolutePath,
     hash: document.hash,
     version,
-    supportedVersion: SUPPORTED_SPINE_VERSION,
-    writable: version === SUPPORTED_SPINE_VERSION,
+    timelineReferenceVersion: TIMELINE_REFERENCE_VERSION,
+    writable: isDeclaredSpineVersion(version),
     topKeys: Object.keys(json),
     counts: {
       bones: asArray(json.bones).length,
@@ -466,13 +467,13 @@ export function getAnimationSheet(
 export function getOfficialSpecSummary() {
   return {
     source: OFFICIAL_JSON_SPEC_URL,
-    supportedVersion: SUPPORTED_SPINE_VERSION,
+    timelineReferenceVersion: TIMELINE_REFERENCE_VERSION,
     scope: "当前 MCP 只把官方 JSON 规范中的动画时间线子集做成可写规则；未纳入的字段保持只读保留。",
     writePolicy: [
-      "写入前先校验输入参数。",
+      "写入前校验输入参数及 skeleton.spine 声明的完整版本号，具体版本号不限制写入资格。",
       "写入后对真实 JSON diff 做白名单审查。",
       "写入后对当前可写 timeline 子集做官方规范审查。",
-      "官方在线文档和 Spine 4.1.24 样本存在字段差异时，按 4.1.24 版本适配规则写入，并在规则中记录差异。",
+      "当前可写字段参考 Spine 4.1.24 导出样本；版本声明通过后仍须满足这一 timeline 子集。",
     ],
     writableTimelineSpecs: WRITABLE_TIMELINE_SPECS,
   };
@@ -933,8 +934,9 @@ export async function makeLoop(
 export function validateSpineJson(json: JsonObject): ValidationResult {
   const issues: ValidationIssue[] = [];
   const version = getVersion(json);
-  if (!version) {
-    issues.push({ path: "/skeleton/spine", message: "Missing skeleton.spine version.", severity: "error" });
+  const writable = isDeclaredSpineVersion(version);
+  if (!writable) {
+    issues.push({ path: "/skeleton/spine", message: SPINE_VERSION_REQUIRED, severity: "error" });
   }
 
   const bones = asArray(json.bones);
@@ -981,7 +983,7 @@ export function validateSpineJson(json: JsonObject): ValidationResult {
   return {
     ok: !issues.some((issue) => issue.severity === "error"),
     version,
-    writable: version === SUPPORTED_SPINE_VERSION,
+    writable,
     issues,
   };
 }
@@ -1047,7 +1049,7 @@ export function validateOfficialAnimationSpec(json: JsonObject): OfficialSpecVal
   return {
     ok: !issues.some((issue) => issue.severity === "error"),
     source: OFFICIAL_JSON_SPEC_URL,
-    supportedVersion: SUPPORTED_SPINE_VERSION,
+    timelineReferenceVersion: TIMELINE_REFERENCE_VERSION,
     checkedTimelineCount,
     checkedKeyframeCount,
     rulesApplied: [...rulesApplied].sort(),
@@ -1217,9 +1219,8 @@ async function writeTransaction(
 }
 async function writeTransactionLocked(filePath: string, options: WriteOptions, context: ToolContext, guard: WriteGuard, mutate: (json: JsonObject, diff: JsonDiff[]) => string | Promise<string>): Promise<WriteResult> {
   const document = await readSpineDocument(filePath, context);
-  const version = getVersion(document.json);
-  if (version !== SUPPORTED_SPINE_VERSION && !options.allowUnsupportedVersion) {
-    throw new Error(`Writes support Spine ${SUPPORTED_SPINE_VERSION}; file is ${version ?? "unknown"}.`);
+  if (!isDeclaredSpineVersion(getVersion(document.json))) {
+    throw new Error(SPINE_VERSION_REQUIRED);
   }
   if (options.expectedHash && options.expectedHash !== document.hash) {
     throw new Error(`expectedHash mismatch. Current hash is ${document.hash}.`);
@@ -1698,12 +1699,12 @@ function validateOfficialKeyframe(
 
   if (spec.targetType === "bone" && spec.timeline === "rotate") {
     if (keyframe.value !== undefined && (typeof keyframe.value !== "number" || !Number.isFinite(keyframe.value))) {
-      issues.push({ path: `${pathBase}/${index}/value`, message: "官方规范审查失败：4.1.24 rotate.value 必须是数字。", severity: "error" });
+      issues.push({ path: `${pathBase}/${index}/value`, message: "官方规范审查失败：rotate.value 必须是数字。", severity: "error" });
     }
     if (keyframe.angle !== undefined) {
       issues.push({
         path: `${pathBase}/${index}/angle`,
-        message: "官方规范审查失败：当前写入版本锁定 4.1.24，rotate 使用 value 字段；angle 只作为官方文档字段差异记录，不在 V1 写入子集中。",
+        message: "官方规范审查失败：当前可写 rotate 子集使用 value 字段，angle 不在该子集中。",
         severity: "error",
       });
     }
@@ -1968,6 +1969,10 @@ async function backupFile(document: SpineDocument, context: ToolContext): Promis
 
 function getVersion(json: JsonObject): string | null {
   return typeof json.skeleton?.spine === "string" ? json.skeleton.spine : null;
+}
+
+export function isDeclaredSpineVersion(version: unknown): boolean {
+  return typeof version === "string" && SPINE_VERSION_FORMAT.test(version);
 }
 
 function asArray(value: unknown): JsonObject[] {

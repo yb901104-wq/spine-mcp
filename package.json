@@ -1,7 +1,7 @@
 {
   "name": "spine-json-mcp",
   "version": "0.2.0",
-  "description": "用于受控读取、校验和修改 Spine 4.1.24 JSON 动画时间线的 MCP 工具。",
+  "description": "用于受控读取、校验和修改 Spine JSON 动画时间线的 MCP 工具。",
   "type": "module",
   "bin": {
     "spine-json-mcp": "dist/server.js"

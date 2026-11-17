@@ -39,7 +39,7 @@ export const projectManifestSchema = object({
     additionalProperties: object({
       skeletonPath: file, atlasPath: file, mappingPath: file, visualRigPath: file,
       skin: { type: 'string', description: '已存在的皮肤名；空字符串表示默认皮肤。' },
-      spineVersion: text('必须与 skeleton.spine 一致；动画写入仍只支持 4.1.24。'),
+      spineVersion: text('完整的 Spine 版本号，必须与 skeleton.spine 一致，例如 4.3.26。'),
     }, ['skeletonPath', 'atlasPath', 'mappingPath', 'spineVersion']),
   },
   documents: {

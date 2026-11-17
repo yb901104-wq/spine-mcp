@@ -199,7 +199,7 @@ test("queries hierarchy, slots, and animations", async () => {
 
 test("official spec summary exposes writable timeline rules", async () => {
   const summary = getOfficialSpecSummary();
-  assert.equal(summary.supportedVersion, "4.1.24");
+  assert.equal(summary.timelineReferenceVersion, "4.1.24");
   assert.ok(summary.source.includes("spine-json-format"));
   assert.ok(summary.writableTimelineSpecs.some((spec) => spec.timeline === "rotate" && spec.spine4124Fields.includes("value")));
   assert.ok(summary.writableTimelineSpecs.some((spec) => spec.timeline === "attachment"));
@@ -283,24 +283,61 @@ test("slot attachment keyframe supports visible and hidden attachments", async (
   assert.equal("name" in attachment.find((keyframe: any) => keyframe.time === 0.5), false);
 });
 
-test("unsupported version and expectedHash reject writes", async () => {
-  const target = await copyFixture(contentFixture, "unsupported.json");
-  const document = await readSpineDocument(target);
-  document.json.skeleton.spine = "4.2.0";
-  await writeFile(path.join(workspaceRoot, target), JSON.stringify(document.json), "utf8");
+test("declared Spine versions pass the write gate without a version override", async () => {
+  for (const version of ["3.8.99", "4.3.26", "4.4.01-beta"]) {
+    const target = await copyFixture(contentFixture, `declared-${version}.json`);
+    const fixture = (await readSpineDocument(target)).json;
+    fixture.skeleton.spine = version;
+    await writeFile(path.join(workspaceRoot, target), JSON.stringify(fixture), "utf8");
+    const document = await readSpineDocument(target);
+    assert.equal(getDocumentSummary(document).writable, true);
+    assert.equal(validateSpineJson(document.json).writable, true);
 
-  await assert.rejects(
-    () => setBoneKeyframe(target, {
+    const result = await setBoneKeyframe(target, {
       animation: "idle",
       bone: "3",
       timeline: "rotate",
       time: 0.2,
       value: 1,
-      dryRun: true,
-    }),
-    /Writes support Spine 4\.1\.24/,
-  );
+      dryRun: false,
+      expectedHash: document.hash,
+    }, testContext);
 
+    assert.ok(result.backupPath);
+    const updated = (await readSpineDocument(target)).json;
+    assert.equal(updated.skeleton.spine, version);
+    assert.ok(updated.animations.idle.bones["3"].rotate.some((key: any) => key.time === 0.2 && key.value === 1));
+  }
+});
+
+test("missing and unrecognizable Spine versions reject writes", async () => {
+  const target = await copyFixture(contentFixture, "unknown-version.json");
+  const document = await readSpineDocument(target);
+
+  for (const version of [undefined, "", "unknown", "4.3", 4.3]) {
+    document.json.skeleton.spine = version;
+    await writeFile(path.join(workspaceRoot, target), JSON.stringify(document.json), "utf8");
+    const current = await readSpineDocument(target);
+    assert.equal(getDocumentSummary(current).writable, false);
+    const validation = validateSpineJson(current.json);
+    assert.equal(validation.writable, false);
+    assert.ok(validation.issues.some((issue) => issue.path === "/skeleton/spine"));
+
+    await assert.rejects(
+      () => setBoneKeyframe(target, {
+        animation: "idle",
+        bone: "3",
+        timeline: "rotate",
+        time: 0.2,
+        value: 1,
+        dryRun: true,
+      }),
+      /skeleton\.spine 必须声明完整的 Spine 版本号/,
+    );
+  }
+});
+
+test("expectedHash still rejects writes to a different revision", async () => {
   const supported = await copyFixture(contentFixture, "hash-mismatch.json");
   await assert.rejects(
     () => setBoneKeyframe(supported, {
