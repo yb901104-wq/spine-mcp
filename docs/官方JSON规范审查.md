@@ -61,6 +61,8 @@ Host 不自行生成或写入角色动画。MCP 从当前内存快照求解后�
 
 ## Agent 使用要求
 
+独立 Mesh CLI 使用 Spine 4.3.26 的二进制 Mesh 记录生成新目录中的候选工程。它以原生 JSON 导出为只读校验依据，比较回读后骨架、时间线和其他附件。候选流程和验收见 [Mesh 布点工具](Mesh布点工具.md)。
+
 - Agent 和未来 Skill 不允许绕过 MCP 自由编辑 Spine JSON。
 - Agent 在解释写入结果时，应优先引用 `officialSpecValidation`、`operationValidation` 和 `summary`。
 - 对复杂自然语言请求，Agent 应先形成 MCP 调用计划，说明目标动画、目标 timeline、预期 JSON path 和是否需要查询关键帧表。

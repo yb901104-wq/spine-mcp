@@ -4,11 +4,13 @@
   "description": "用于受控读取、校验和修改 Spine JSON 动画时间线的 MCP 工具。",
   "type": "module",
   "bin": {
-    "spine-json-mcp": "dist/server.js"
+    "spine-json-mcp": "dist/server.js",
+    "mesh": "dist/meshCli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "tsx --test test/*.test.ts",
+    "mesh": "node dist/meshCli.js",
     "preview": "node dist/previewServer.js",
     "host": "node dist/hostServer.js",
     "host:benchmark": "tsx scripts/benchmark-host.ts",

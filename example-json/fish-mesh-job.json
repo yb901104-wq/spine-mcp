@@ -1,0 +1,19 @@
+{
+  "projects": [
+    {"id": "Tuna", "project": "Tuna/Tuna.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "tuna", "png": "Tuna/images/tuna.png"}]},
+    {"id": "Swordfish", "project": "Swordfish/Swordfish.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "swordfish", "png": "Swordfish/images/swordfish.png"}]},
+    {"id": "Dorado", "project": "Dorado/Dorado.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "dorado", "png": "Dorado/images/dorado.png"}]},
+    {"id": "Tilapia", "project": "Tilapia/Tilapia.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "tilapia", "png": "Tilapia/images/tilapia.png"}]},
+    {"id": "Sterlet", "project": "Sterlet/Sterlet.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "sterlet", "png": "Sterlet/images/sterlet.png"}]},
+    {"id": "Codfish", "project": "Codfish/Codfish.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "codfish", "png": "Codfish/images/codfish.png"}]},
+    {"id": "Trout", "project": "Trout/Trout.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "trout", "png": "Trout/images/trout.png"}]},
+    {"id": "Halibut", "project": "Halibut/Halibut.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "halibut", "png": "Halibut/images/halibut.png"}]},
+    {"id": "Sardine", "project": "Sardine/Sardine.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "sardine", "png": "Sardine/images/sardine.png"}]},
+    {"id": "Bream", "skip": "沿用人工调整的网格"},
+    {"id": "Perch", "project": "Perch/Perch.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "perch", "png": "Perch/images/perch.png"}]},
+    {"id": "Salmon", "project": "Salmon/Salmon.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "salmon", "png": "Salmon/images/salmon.png"}]},
+    {"id": "Catfish", "project": "Catfish/Catfish.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "catfish", "png": "Catfish/images/catfish.png"}]},
+    {"id": "Mackerel", "project": "Mackerel/Mackerel.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "mackerel", "png": "Mackerel/images/mackerel.png"}]},
+    {"id": "SeaPerch", "project": "SeaPerch/SeaPerch.spine", "targets": [{"skin": "default", "slot": "fish", "attachment": "seaperch", "png": "SeaPerch/images/seaperch.png"}]}
+  ]
+}
