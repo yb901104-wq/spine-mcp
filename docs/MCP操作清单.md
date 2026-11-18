@@ -2,7 +2,7 @@
 
 ## Host 入口与当前开放范围（2026-10-21）
 
-新增以下 10 个入口，当前共 101 个 MCP 工具。工程初始化、观察、镜像与截图已接入；C1 已在真实 npc1 无参考站姿的隔离工程完成单手编辑、独立视觉审查、保存和重开复验，生产 Host 保持观察模式。**接口已注册不代表阶段通过或写入已开放**。完整状态见 [实施与验收](Host实施与验收-20261021.md)，契约仍以 [主工单](plans/host-evolution.md) 为准。
+当时新增以下 10 个入口。工程初始化、观察、镜像与截图已接入；C1 已在真实 npc1 无参考站姿的隔离工程完成单手编辑、独立视觉审查、保存和重开复验，生产 Host 保持观察模式。**接口已注册不代表阶段通过或写入已开放**。完整状态见 [实施与验收](Host实施与验收-20261021.md)，契约仍以 [主工单](plans/host-evolution.md) 为准。
 
 | 工具 | 当前行为与边界 |
 |---|---|
@@ -90,6 +90,17 @@ WinForms 源码已嵌入 Host 工作台，读取相同工作区的观察发现�
 - 写工具返回 `affectedPaths`、`diff`、`summary` 和 `operationValidation`，用于让 Agent 判断“改了什么、是否越权、下一步做什么”。
 - `affectedPaths` 是去重后的受影响 JSON path；`diff` 保留完整差异条目；`summary.changedPathCount` 等于去重后的 path 数量，`summary.diffEntryCount` 等于原始 diff 条目数量。
 - 写工具返回 `officialSpecValidation`，用于说明本次写入按哪些 Spine JSON 规范规则检查过。
+
+## Mesh 布点与候选工程
+
+| 工具 | 必填参数 | 可选参数 | 中文说明 |
+| --- | --- | --- | --- |
+| `spine_mesh_plan` | `inputPath`、`outputDir` | `landmarksPath`、`projectId` | 读取透明 PNG 或 PNG 目录，写出点位、三角索引、叠图和批次摘要。 |
+| `spine_mesh_build_candidate` | `jobPath`、`outputDir` | `landmarksPath`、`projectId` | 为已有加权 Mesh 批量生成独立候选工程，用 Spine 4.3.26 导入、重新导出并核验。 |
+
+输入、清单、地标和输出目录都限定在已解析工作区内。`outputDir` 必须是新目录，父目录须已存在。候选入口只读源工程，并在创建输出目录前验证服务启动环境中的 `SPINE_MCP_MESH_EDITOR`。完整网格、权重和叠图保存在产物中。调用结果返回批次状态、点数、原因和工作区相对路径。
+
+有进度令牌的长批次会发送进度通知。取消时，已经启动的编辑器步骤结束后清理当前未发布项目的临时产物，保留此前发布的项目并停止后续项目。配置和调用示例见 [Mesh 布点工具](Mesh布点工具.md)。
 
 ## 读取与分析
 

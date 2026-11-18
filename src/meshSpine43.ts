@@ -37,6 +37,11 @@ async function spine(editor: string, args: string[], cwd: string): Promise<strin
   }
 }
 
+export async function validateMeshEditor(editor: string, workspace: string): Promise<void> {
+  if (!path.isAbsolute(editor) || !(await lstat(editor)).isFile()) throw new Error('编辑器路径必须指向本地可执行文件。');
+  await spine(editor, ['--version'], workspace);
+}
+
 function ints(values: readonly number[]): Buffer {
   const bytes: number[] = [];
   for (const value of values) {
@@ -188,7 +193,17 @@ async function json(file: string): Promise<Document> {
 
 type Candidate = { targets: TargetReport[]; artifacts: { project: string; json: string; atlas: string }; native: { version: string; imported: boolean; exportVerified: boolean } };
 
-export async function buildCandidate(workspace: string, editor: string, job: ProjectJob, temporary: string): Promise<Candidate> {
+export async function buildCandidate(
+  workspace: string, editor: string, job: ProjectJob, temporary: string,
+  checkpoint?: (stage: string) => Promise<void>,
+): Promise<Candidate> {
+  async function runEditor(stage: string, args: string[]) {
+    await checkpoint?.(stage);
+    const output = await spine(editor, args, temporary);
+    await checkpoint?.(stage);
+    return output;
+  }
+
   const source = resolveWorkspacePath(job.project, { workspaceRoot: workspace });
   if (path.extname(source).toLowerCase() !== '.spine' || !(await lstat(source)).isFile()) throw new Error('源工程必须是 .spine 文件。');
   const images = await Promise.all(job.targets.map(async target => {
@@ -198,11 +213,11 @@ export async function buildCandidate(workspace: string, editor: string, job: Pro
   const sourceHash = hash(await readFile(source));
   const beforeDir = path.join(temporary, 'before'), bundle = path.join(temporary, 'project'), unpacked = path.join(temporary, 'unpacked');
   for (const dir of [beforeDir, bundle, unpacked]) await mkdir(dir);
-  checkProjectInfo(await spine(editor, ['-i', source], temporary));
+  checkProjectInfo(await runEditor('检查 Spine 工程', ['-i', source]));
 
   const settings = path.join(temporary, 'binary-settings.json');
   await writeFile(settings, JSON.stringify({ class: 'export-binary', nonessential: true, extension: '.skel', pack: false }));
-  await spine(editor, ['-i', source, '-o', beforeDir, '-e', 'json', '-i', source, '-o', beforeDir, '-e', settings], temporary);
+  await runEditor('导出源 Spine 工程', ['-i', source, '-o', beforeDir, '-e', 'json', '-i', source, '-o', beforeDir, '-e', settings]);
   const names = (await readdir(beforeDir)).filter(name => name.endsWith('.json'));
   if (names.length !== 1 || !/^[^./\\:][^/\\:]*[.]json$/.test(names[0])) throw new Error('无法确定导出的单骨架名称。');
   const stem = names[0].slice(0, -5);
@@ -236,12 +251,13 @@ export async function buildCandidate(workspace: string, editor: string, job: Pro
   await cp(sourceImages, path.join(bundle, imagePath), { recursive: true, errorOnExist: true, force: false });
   const project = stem + '.spine', atlas = stem + '.atlas';
   const targetProject = path.join(bundle, project);
-  await spine(editor, ['-i', binary, '-o', targetProject, '-r', stem, '-i', targetProject, '-o', bundle, '-e', 'json+pack'], temporary);
-  await spine(editor, ['-i', bundle, '-o', unpacked, '-c', path.join(bundle, atlas)], temporary);
+  await runEditor('导入并重新导出 Mesh 候选', ['-i', binary, '-o', targetProject, '-r', stem, '-i', targetProject, '-o', bundle, '-e', 'json+pack']);
+  await runEditor('解包候选图集', ['-i', bundle, '-o', unpacked, '-c', path.join(bundle, atlas)]);
   const actual = await json(path.join(bundle, names[0]));
   checkExportDiff(original, actual, job.targets);
   const reports: TargetReport[] = [];
   for (const [index, target] of job.targets.entries()) {
+    await checkpoint?.('验证 Mesh ' + target.attachment);
     const mesh = select(actual, target);
     const { slice, png } = images[index];
     const old = replacements[index].mesh;

@@ -1,6 +1,6 @@
 # 通用 Spine Mesh 布点工具
 
-## 使用
+## 终端 CLI
 
 在仓库执行 `npm ci` 和 `npm run build`，之后可从仓库调用以下命令。默认工作区是当前目录，通过 `--workspace` 可指定资产根目录。输入、清单、地标和输出目录均按该工作区解析，`--spine` 指向本机已安装的编辑器。输出目录必须尚不存在，其父目录须已存在。
 
@@ -22,6 +22,24 @@ npm run mesh -- candidate --workspace 'D:\鱼项目' --job fish-mesh-job.json --
 ]
 ~~~
 
+CLI 与 MCP 共用布点、批处理和编辑器回读模块。终端仍按原有参数独立执行，独立 CLI 的迁移基线保存在 Git 提交 `1b9420f`。
+
+## MCP 配置与调用
+
+在服务启动环境中设置本机编辑器的绝对路径。下面是在仓库目录直接启动 stdio 服务的 PowerShell 示例。由 MCP 客户端启动时，在该服务的环境变量配置中设置同一个值，再重新启动服务。
+
+~~~powershell
+$env:SPINE_MCP_WORKSPACE = 'D:\鱼项目'
+$env:SPINE_MCP_MESH_EDITOR = 'D:\Program Files\Spine\Spine.com'
+node dist/server.js
+~~~
+
+先构建服务，再通过 `tools/list` 发现工具。`spine_mesh_plan` 的调用参数示例为 `{"inputPath":"Tuna/images","outputDir":"mesh-plan-mcp"}`。`spine_mesh_build_candidate` 的调用参数示例为 `{"jobPath":"fish-mesh-job.json","outputDir":"mesh-candidates-mcp"}`。先将上文的鱼项目样例清单放到资产工作区，再调用候选工具。
+
+两个工具都支持 `landmarksPath` 和已登记工作区的 `projectId`。输出目录必须尚不存在，父目录须已存在。布点入口直接读取 PNG。候选入口只接受服务侧配置的编辑器，配置缺失、无法启动或版本不符时会在创建输出目录前报错。
+
+MCP 响应包含 `summaryPath` 和每项产物的工作区相对路径。完整数据保存在 `mesh.json`、候选工程导出物、`mesh-report.json` 和叠图中。显式跳过属于有效结果，失败或因不支持而跳过会令批次 `ok` 为 `false`，其余项目继续处理。取消会等待正在运行的编辑器步骤结束，清理当前未发布的临时目录，并保留已发布的项目目录。
+
 ## 候选边界
 
 候选模式要求源工程为 **Spine 4.3.26**、单骨架，目标为已有权重的独立 Mesh。工程使用内部相对贴图目录，目标 PNG 对应附件原始贴图。首版对标准继承的骨骼和 `rotate`、`translate`、`scale`、`shear` 采样。有 `deform`、关联 Mesh、约束、其他骨骼求值模式或无法可靠覆盖的工程会给出原因。PNG 布点模式独立于 Spine 版本。
@@ -33,3 +51,4 @@ npm run mesh -- candidate --workspace 'D:\鱼项目' --job fish-mesh-job.json --
 - `summary.json` 和标准输出只列状态、点数变化、失败原因及产物路径。未预期的跳过或失败会返回非零退出码，其他项目继续处理。
 - 候选目录中的 `mesh-report.json` 分开记录数值与 Spine 编辑器回读状态。数值检查包含可见像素覆盖、三角翻折和关键帧及帧间采样的形变偏差。最大偏差为切片长边的 `0.6%`，下限 `1 px`。布点叠图供人工查看局部走线。
 - 用 `npm run build` 和 `npm test` 验证自动布点、权重转移、超范围输入和差异限制。鱼项目验收时，核对 14 个候选工程的点数下降、`idle` 关键帧和原始文件哈希，确认 `Bream` 为显式跳过项。
+- 验证 MCP 与 CLI 的真实候选时，将 `SPINE_TEST_MESH_TUNA` 指向金枪鱼源工程目录，并在同一测试环境设置 `SPINE_MCP_MESH_EDITOR`。测试复制源工程到隔离目录，通过真实 stdio 核对布点、`idle` 时间线、原生回读、形变报告、源文件字节和混合批次状态。

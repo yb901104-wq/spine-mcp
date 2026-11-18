@@ -67,6 +67,7 @@ import {
   shiftKeyframes,
   validateSpineJson,
   resolveWorkspacePath,
+  type ToolContext,
 } from "./spineJson.js";
 import { readFile } from "node:fs/promises";
 import {
@@ -97,6 +98,7 @@ import { getWorkspaceTree } from './workspaceTree.js';
 import { AjvJsonSchemaValidator } from '@modelcontextprotocol/sdk/validation/ajv';
 import { ToolError } from './toolError.js';
 import { frameInputSchema, posePatchInputSchema, weaponInputSchema } from './poseSchemas.js';
+import { buildMeshTool, meshToolDefinitions, planMeshTool } from './meshTools.js';
 
 type ToolArgs = Record<string, any>;
 
@@ -892,6 +894,7 @@ tools.push(...poseToolDefinitions.map(([name,description,_fn,required])=>{
 }) as any);
 tools.push(...auxiliaryTools as any);
 tools.push(...hostToolDefinitions as any);
+tools.push(...meshToolDefinitions as any);
 tools.push({name:'spine_get_workspace_tree',description:'有界只读工程树，忽略生成/凭据目录和链接；支持稳定分页，不执行求解。',inputSchema:{type:'object',additionalProperties:false,properties:{projectId:projectIdProperty,root:{type:'string'},depth:{type:'integer',minimum:0,maximum:6,default:3},maxEntries:{type:'integer',minimum:1,maximum:2000,default:500},pageSize:{type:'integer',minimum:1,maximum:500,default:500},cursor:{type:'string'},details:{type:'boolean',default:false},kinds:{type:'array',items:{type:'string'}}}}} as any);
 for (const tool of tools) {
   const props = tool.inputSchema.properties as Record<string, any>;
@@ -977,7 +980,7 @@ function pickImages(r: any): string[] {
   return [...new Set(list)].slice(0, 3);
 }
 async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progress?:(stage:string)=>void) {
-  const context = name.includes('workspace') ? {} : getWorkspaceContext(args.projectId);
+  const context: ToolContext = name.includes('workspace') ? {} : getWorkspaceContext(args.projectId);
   validatePoseOperationArguments(name,args,poseToolDefinitions.find(tool=>tool[0]===name)?.[3]);
   if(hostToolDefinitions.some(tool=>tool.name===name))return callHostTool(name,args,context,signal,progress);
   if(poseToolDefinitions.some(tool=>tool[0]===name)&&(await readWriter(context))?.mode==='attached'){
@@ -995,6 +998,12 @@ async function callTool(name: string, args: ToolArgs, signal?:AbortSignal, progr
   if (['spine_set_foot_target','spine_lock_foot_contact','spine_set_hand_target','spine_adjust_body_motion','spine_adjust_step_length','spine_adjust_arm_swing'].includes(name)) return adjustMotion(name, args as any, context);
   switch (name) {
     case 'spine_get_workspace_tree':return getWorkspaceTree(args,context);
+    case 'spine_mesh_plan':
+      return planMeshTool({ workspace: context.workspaceRoot!, inputPath: args.inputPath,
+        outputDir: args.outputDir, landmarksPath: args.landmarksPath });
+    case 'spine_mesh_build_candidate':
+      return buildMeshTool({ workspace: context.workspaceRoot!, jobPath: args.jobPath,
+        outputDir: args.outputDir, landmarksPath: args.landmarksPath });
     case 'spine_set_curve': return setCurve(args.filePath, args as any, context);
     case 'spine_get_preview_report': return getPreviewReport(args as any, context);
     case 'spine_analyze_reference_gif': return analyzeReferenceGif(args as any, context);

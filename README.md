@@ -41,9 +41,11 @@ node dist/server.js
 
 服务器使用 MCP stdio 传输。默认情况下，所有文件工具只能访问当前工作目录内的文件。可以通过 `SPINE_MCP_WORKSPACE` 指定工作区根目录。
 
-## 通用 Mesh 布点 CLI
+## 通用 Mesh 布点
 
-构建后可用 `npm run mesh -- plan` 为透明 PNG 生成点位和布点图，用 `npm run mesh -- candidate` 批量生成经过 Spine 4.3.26 回读的加权 Mesh 候选工程。候选交付到独立的新目录。用法、能力边界和验收方法见 [Mesh 布点工具](docs/Mesh布点工具.md)。
+构建后可用 `npm run mesh -- plan` 为透明 PNG 生成点位和布点图，用 `npm run mesh -- candidate` 批量生成经过 Spine 4.3.26 回读的加权 Mesh 候选工程。
+
+MCP 提供同一实现的 `spine_mesh_plan` 和 `spine_mesh_build_candidate`，使用已选工作区，并将产物写入独立的新目录。候选工具从服务启动环境的 `SPINE_MCP_MESH_EDITOR` 读取本机编辑器路径。布点工具直接读取 PNG。服务配置、调用示例及验收方法见 [Mesh 布点工具](docs/Mesh布点工具.md)。
 
 ## 浏览器预览
 
